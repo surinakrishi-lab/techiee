@@ -594,7 +594,7 @@
         
         .mega-feature-btn {
             margin-top: 6px;
-            background: rgba(255, 255, 255, 0.14);
+            background: rgba(244, 242, 242, 0.14);
             border: 1px solid rgba(255, 255, 255, 0.4);
             color: #fff;
             padding: 10px 22px;
@@ -611,6 +611,7 @@
             background: rgba(255, 255, 255, 0.26);
         }
         /* Dark purple feature cards -> always white, readable text */
+        
         .mega-feature,
         .mega-feature h4,
         .mega-feature p,
@@ -622,9 +623,17 @@
         
         @media (max-width: 860px) {
             /* Mega menu -> in-menu accordion on mobile */
-            .nav-item { width: 100%; }
-            .nav-item > a { display: flex; align-items: center; justify-content: space-between; }
-            .navLinks .caret { display: inline-block; }
+            .nav-item {
+                width: 100%;
+            }
+            .nav-item>a {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .navLinks .caret {
+                display: inline-block;
+            }
             .mega {
                 position: static;
                 opacity: 1;
@@ -637,12 +646,27 @@
                 display: none;
                 margin-top: 8px;
             }
-            .mega::before { display: none; }
-            .nav-item.active-mega .mega { display: block; }
-            .mega-inner { flex-direction: column; padding: 14px 16px; gap: 16px; }
-            .mega-cols { flex-direction: column; gap: 18px; }
-            .mega-col { min-width: 0; }
-            .mega-feature { display: none; }
+            .mega::before {
+                display: none;
+            }
+            .nav-item.active-mega .mega {
+                display: block;
+            }
+            .mega-inner {
+                flex-direction: column;
+                padding: 14px 16px;
+                gap: 16px;
+            }
+            .mega-cols {
+                flex-direction: column;
+                gap: 18px;
+            }
+            .mega-col {
+                min-width: 0;
+            }
+            .mega-feature {
+                display: none;
+            }
         }
         /* ===== Hamburger (mobile) ===== */
         
@@ -1078,24 +1102,29 @@
 
     <!-- Header: mobile toggle + mega (desktop hover / mobile accordion) -->
     <script>
-        (function () {
+        (function() {
             var hb = document.getElementById('heroHamburger');
             var nav = document.querySelector('.nav');
             var megaItems = Array.prototype.slice.call(document.querySelectorAll('.nav-item[data-mega]'));
-            function isMobile() { return window.matchMedia('(max-width: 860px)').matches; }
+
+            function isMobile() {
+                return window.matchMedia('(max-width: 860px)').matches;
+            }
 
             // Move each mega panel inside its nav-item -> desktop dropdown + mobile accordion
-            megaItems.forEach(function (it) {
+            megaItems.forEach(function(it) {
                 var p = document.getElementById('mega-' + it.getAttribute('data-mega'));
                 if (p) it.appendChild(p);
             });
 
             if (hb && nav) {
-                hb.addEventListener('click', function () { nav.classList.toggle('open'); });
+                hb.addEventListener('click', function() {
+                    nav.classList.toggle('open');
+                });
             }
 
             function closeMega() {
-                megaItems.forEach(function (it) {
+                megaItems.forEach(function(it) {
                     it.classList.remove('active-mega');
                     var p = it.querySelector('.mega');
                     if (p) p.classList.remove('open');
@@ -1103,24 +1132,31 @@
             }
 
             // Desktop: hover to open
-            megaItems.forEach(function (it) {
-                it.addEventListener('mouseenter', function () {
+            megaItems.forEach(function(it) {
+                it.addEventListener('mouseenter', function() {
                     if (isMobile()) return;
                     closeMega();
                     var p = it.querySelector('.mega');
-                    if (p) { p.classList.add('open'); it.classList.add('active-mega'); }
+                    if (p) {
+                        p.classList.add('open');
+                        it.classList.add('active-mega');
+                    }
                 });
             });
-            document.querySelectorAll('.navLinks li:not(.nav-item)').forEach(function (li) {
-                li.addEventListener('mouseenter', function () { if (!isMobile()) closeMega(); });
+            document.querySelectorAll('.navLinks li:not(.nav-item)').forEach(function(li) {
+                li.addEventListener('mouseenter', function() {
+                    if (!isMobile()) closeMega();
+                });
             });
-            if (nav) nav.addEventListener('mouseleave', function () { if (!isMobile()) closeMega(); });
+            if (nav) nav.addEventListener('mouseleave', function() {
+                if (!isMobile()) closeMega();
+            });
 
             // Mobile: tap parent to expand/collapse its accordion
-            megaItems.forEach(function (it) {
+            megaItems.forEach(function(it) {
                 var link = it.querySelector('a');
                 if (!link) return;
-                link.addEventListener('click', function (e) {
+                link.addEventListener('click', function(e) {
                     if (!isMobile()) return;
                     e.preventDefault();
                     var open = it.classList.contains('active-mega');
@@ -1134,8 +1170,11 @@
             });
 
             // Tapping an actual destination link closes the mobile menu
-            document.querySelectorAll('.navLinks li:not(.nav-item) > a, .mega a').forEach(function (a) {
-                a.addEventListener('click', function () { if (nav) nav.classList.remove('open'); closeMega(); });
+            document.querySelectorAll('.navLinks li:not(.nav-item) > a, .mega a').forEach(function(a) {
+                a.addEventListener('click', function() {
+                    if (nav) nav.classList.remove('open');
+                    closeMega();
+                });
             });
         })();
     </script>
