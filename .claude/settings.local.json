@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"C:/Users/hs620/OneDrive/Desktop/Cross\" *)",
+      "Bash(\n# Add closing html tag\necho \"</html>\" >> /tmp/result.html\n\n# Verify key sections\necho \"=== Products section present ===\"\ngrep -n \"productsSection\\\\|PRODUCTS SECTION\" /tmp/result.html | head -5\n\necho \"=== Tech belt NOT present ===\"\ngrep -n \"techBelt\\\\|beltIcons\" /tmp/result.html | head -5\n\necho \"=== Final structure ===\"\ngrep -n \"<!DOCTYPE\\\\|^<html\\\\|^</html\\\\|^<head\\\\|^</head\\\\|^<body\\\\|^</body>\" /tmp/result.html\n\necho \"=== Total lines ===\"\nwc -l /tmp/result.html)",
+      "Bash(python3 -c ' *)"
+    ]
+  }
+}

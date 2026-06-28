@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Services – CrossTecch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 24px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* Subtle dot grid background */
+        
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Abstract fluid gradient blobs matching the purple/pink fluid art */
+        
+        .bg-blob-1 {
+            position: fixed;
+            width: 750px;
+            height: 750px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(236, 72, 153, 0.12) 50%, transparent 100%);
+            top: -200px;
+            right: -100px;
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            animation: morph-blob-1 18s infinite alternate ease-in-out;
+        }
+        
+        .bg-blob-2 {
+            position: fixed;
+            width: 850px;
+            height: 850px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(168, 85, 247, 0.08) 60%, transparent 100%);
+            bottom: -300px;
+            left: -200px;
+            filter: blur(90px);
+            z-index: 0;
+            pointer-events: none;
+            animation: morph-blob-2 22s infinite alternate ease-in-out;
+        }
+        
+        @keyframes morph-blob-1 {
+            0% {
+                border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
+                transform: translate(0, 0) rotate(0deg);
+            }
+            100% {
+                border-radius: 60% 40% 40% 60% / 60% 60% 40% 40%;
+                transform: translate(-40px, 60px) rotate(180deg);
+            }
+        }
+        
+        @keyframes morph-blob-2 {
+            0% {
+                border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%;
+                transform: translate(0, 0) rotate(0deg);
+            }
+            100% {
+                border-radius: 30% 70% 70% 30% / 60% 30% 70% 40%;
+                transform: translate(50px, -50px) rotate(-180deg);
+            }
+        }
+        
+        .section {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+        }
+        /* ── Header ── */
+        
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #6366f1;
+            margin-bottom: 12px;
+        }
+        
+        .headline {
+            font-size: clamp(28px, 4vw, 50px);
+            font-weight: 900;
+            color: #94a3b8;
+            /* Silver / slate matching screenshot */
+            letter-spacing: -1.5px;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+        
+        .headline span {
+            color: transparent;
+            background: linear-gradient(90deg, #ec4899, #a855f7, #3b82f6);
+            /* Vibrant pink-to-blue gradient */
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        
+        .subline {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 60px;
+            font-weight: 400;
+        }
+        /* ══════════════════════════════════
+       CARD DECK
+    ══════════════════════════════════ */
+        
+        .cards {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: stretch;
+            height: 440px;
+        }
+        /* Base card */
+        
+        .card {
+            position: relative;
+            width: 185px;
+            border-radius: 24px;
+            overflow: hidden;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: width 0.7s cubic-bezier(0.4, 0, 0.15, 1), box-shadow 0.5s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        /* ── When deck is active: shrink all, grow hovered ── */
+        
+        .cards.deck-active .card {
+            width: 72px;
+        }
+        
+        .cards.deck-active .card.card-open {
+            width: 420px;
+        }
+        /* ══ Card background layers ══ */
+        
+        .card-bg {
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            transition: opacity 0.5s ease;
+        }
+        /* Default: light tinted glass bg */
+        
+        .card-bg-default {
+            opacity: 1;
+        }
+        /* Active: vivid soft gradient bg */
+        
+        .card-bg-active {
+            opacity: 0;
+        }
+        
+        .card-open .card-bg-default {
+            opacity: 0;
+        }
+        
+        .card-open .card-bg-active {
+            opacity: 1;
+        }
+        /* Sheen / gloss overlay */
+        
+        .card-sheen {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+            border-radius: 24px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+        
+        .card-open .card-sheen {
+            opacity: 1;
+        }
+        /* Border glow */
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 25px;
+            padding: 1px;
+            background: var(--glow);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .card-open::before {
+            opacity: 1;
+        }
+        /* ══ COLLAPSED STATE — vertical layout ══ */
+        
+        .card-collapsed {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0;
+            z-index: 4;
+            transition: opacity 0.3s ease;
+        }
+        
+        .card-open .card-collapsed {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .card-collapsed-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.04);
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            flex-shrink: 0;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        
+        .card:not(.card-open):hover .card-collapsed-icon {
+            transform: scale(1.1);
+            background: rgba(15, 23, 42, 0.08);
+        }
+        
+        .card-collapsed-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+        
+        .card-collapsed-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #475569;
+            white-space: nowrap;
+        }
+        /* ══ EXPANDED STATE — full layout ══ */
+        
+        .card-expanded {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 36px 32px;
+            gap: 18px;
+            z-index: 4;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease 0.15s;
+            min-width: 380px;
+            /* prevent text wrap during transition */
+        }
+        
+        .card-open .card-expanded {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .card-expanded-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #334155;
+            background: rgba(15, 23, 42, 0.06);
+            padding: 5px 12px;
+            border-radius: 20px;
+            width: fit-content;
+        }
+        
+        .card-expanded-icon {
+            width: 62px;
+            height: 62px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+        }
+        
+        .card-expanded-icon svg {
+            width: 30px;
+            height: 30px;
+        }
+        /* PNG service icons */
+        .card-collapsed-icon img {
+            width: 26px;
+            height: 26px;
+            object-fit: contain;
+        }
+        .card-expanded-icon img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+        }
+        
+        .card-expanded-title {
+            font-size: 26px;
+            font-weight: 900;
+            color: #0f172a;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        
+        .card-expanded-desc {
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.75;
+            flex: 1;
+        }
+        
+        .card-expanded-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--glow);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 12px 22px;
+            border-radius: 40px;
+            width: fit-content;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        
+        .card-expanded-cta:hover {
+            transform: translateX(3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-expanded-cta svg {
+            width: 16px;
+            height: 16px;
+        }
+        /* ── Services Footer & View All Button ── */
+        
+        .services-footer {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .btn-view-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, #ec4899, #a855f7, #3b82f6);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 40px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        }
+        
+        .btn-view-all:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.35);
+        }
+        
+        .btn-view-all:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+        /* ══ CARD THEMES (LIGHT VERSION) ══ */
+        /* 1 – Blue */
+        
+        .card-1 {
+            --glow: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+        
+        .card-1 .card-bg-default {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(219, 234, 254, 0.5);
+        }
+        
+        .card-1 .card-bg-active {
+            background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
+        }
+        
+        .card-1:hover:not(.card-open) {
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.06);
+        }
+        
+        .card-1.card-open {
+            box-shadow: 0 25px 60px rgba(37, 99, 235, 0.12);
+        }
+        
+        .card-1 .card-expanded-icon {
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+        }
+        /* 2 – Violet */
+        
+        .card-2 {
+            --glow: linear-gradient(135deg, #a855f7, #8b5cf6);
+        }
+        
+        .card-2 .card-bg-default {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(243, 232, 255, 0.5);
+        }
+        
+        .card-2 .card-bg-active {
+            background: linear-gradient(145deg, #f5f3ff 0%, #e9d5ff 100%);
+        }
+        
+        .card-2:hover:not(.card-open) {
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.06);
+        }
+        
+        .card-2.card-open {
+            box-shadow: 0 25px 60px rgba(139, 92, 246, 0.12);
+        }
+        
+        .card-2 .card-expanded-icon {
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+        }
+        /* 3 – Amber */
+        
+        .card-3 {
+            --glow: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .card-3 .card-bg-default {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(254, 243, 199, 0.5);
+        }
+        
+        .card-3 .card-bg-active {
+            background: linear-gradient(145deg, #fffbeb 0%, #fef3c7 100%);
+        }
+        
+        .card-3:hover:not(.card-open) {
+            box-shadow: 0 10px 30px rgba(217, 119, 6, 0.06);
+        }
+        
+        .card-3.card-open {
+            box-shadow: 0 25px 60px rgba(217, 119, 6, 0.12);
+        }
+        
+        .card-3 .card-expanded-icon {
+            background: rgba(217, 119, 6, 0.08);
+            border: 1px solid rgba(217, 119, 6, 0.15);
+        }
+        /* 4 – Emerald */
+        
+        .card-4 {
+            --glow: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .card-4 .card-bg-default {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(209, 250, 229, 0.5);
+        }
+        
+        .card-4 .card-bg-active {
+            background: linear-gradient(145deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+        
+        .card-4:hover:not(.card-open) {
+            box-shadow: 0 10px 30px rgba(5, 150, 105, 0.06);
+        }
+        
+        .card-4.card-open {
+            box-shadow: 0 25px 60px rgba(5, 150, 105, 0.12);
+        }
+        
+        .card-4 .card-expanded-icon {
+            background: rgba(5, 150, 105, 0.08);
+            border: 1px solid rgba(5, 150, 105, 0.15);
+        }
+        /* 5 – Cyan */
+        
+        .card-5 {
+            --glow: linear-gradient(135deg, #06b6d4, #0891b2);
+        }
+        
+        .card-5 .card-bg-default {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(207, 250, 254, 0.5);
+        }
+        
+        .card-5 .card-bg-active {
+            background: linear-gradient(145deg, #ecfeff 0%, #cffafe 100%);
+        }
+        
+        .card-5:hover:not(.card-open) {
+            box-shadow: 0 10px 30px rgba(8, 145, 178, 0.06);
+        }
+        
+        .card-5.card-open {
+            box-shadow: 0 25px 60px rgba(8, 145, 178, 0.12);
+        }
+        
+        .card-5 .card-expanded-icon {
+            background: rgba(8, 145, 178, 0.08);
+            border: 1px solid rgba(8, 145, 178, 0.15);
+        }
+        /* Collapsed icon tints */
+        
+        .card-1 .card-collapsed-icon svg {
+            stroke: #2563eb;
+        }
+        
+        .card-2 .card-collapsed-icon svg {
+            stroke: #8b5cf6;
+        }
+        
+        .card-3 .card-collapsed-icon svg {
+            stroke: #d97706;
+        }
+        
+        .card-4 .card-collapsed-icon svg {
+            stroke: #059669;
+        }
+        
+        .card-5 .card-collapsed-icon svg {
+            stroke: #0891b2;
+        }
+        /* Expanded icon tints */
+        
+        .card-1 .card-expanded-icon svg {
+            stroke: #2563eb;
+        }
+        
+        .card-2 .card-expanded-icon svg {
+            stroke: #8b5cf6;
+        }
+        
+        .card-3 .card-expanded-icon svg {
+            stroke: #d97706;
+        }
+        
+        .card-4 .card-expanded-icon svg {
+            stroke: #059669;
+        }
+        
+        .card-5 .card-expanded-icon svg {
+            stroke: #0891b2;
+        }
+        /* ── Responsive ── */
+        
+        @media (max-width: 900px) {
+            .cards {
+                flex-direction: column;
+                height: auto;
+                align-items: center;
+            }
+            .card {
+                width: 100% !important;
+                max-width: 400px;
+                height: 72px;
+            }
+            .card-open {
+                height: 420px !important;
+            }
+            .cards.deck-active .card {
+                width: 100% !important;
+                max-width: 400px;
+            }
+            .card-collapsed {
+                flex-direction: row;
+            }
+            .card-collapsed-label {
+                writing-mode: horizontal-tb;
+                transform: none;
+            }
+            .card-expanded {
+                min-width: unset;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Fluid Background Blobs -->
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+
+    <div class="section">
+        <p class="eyebrow">What We Offer</p>
+        <h2 class="headline">Our <span>Services</span></h2>
+
+        <div class="cards" id="deck">
+
+            <!-- ── Card 1: Manual QA ── -->
+            <div class="card card-1" data-index="0">
+                <div class="card-bg card-bg-default"></div>
+                <div class="card-bg card-bg-active"></div>
+                <div class="card-sheen"></div>
+
+                <!-- Collapsed -->
+                <div class="card-collapsed">
+                    <div class="card-collapsed-icon">
+                        <img src="manual-qa.png" alt="Manual QA" />
+                    </div>
+                    <span class="card-collapsed-label">Manual QA</span>
+                </div>
+
+                <!-- Expanded -->
+                <div class="card-expanded">
+                    <span class="card-expanded-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg>
+          Testing
+        </span>
+                    <div class="card-expanded-icon">
+                        <img src="manual-qa.png" alt="Manual QA" />
+                    </div>
+                    <h3 class="card-expanded-title">Manual QA<br>Testing</h3>
+                    <p class="card-expanded-desc">Human-driven test cycles that catch edge cases no automation can predict. We validate every single user flow, interaction, and edge case before release.</p>
+                    <div class="card-expanded-cta">
+                        Explore Service
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Card 2: Automation Testing ── -->
+            <div class="card card-2" data-index="1">
+                <div class="card-bg card-bg-default"></div>
+                <div class="card-bg card-bg-active"></div>
+                <div class="card-sheen"></div>
+
+                <div class="card-collapsed">
+                    <div class="card-collapsed-icon">
+                        <img src="automation.png" alt="Automation Testing" />
+                    </div>
+                    <span class="card-collapsed-label">Automation</span>
+                </div>
+
+                <div class="card-expanded">
+                    <span class="card-expanded-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+          Automation
+        </span>
+                    <div class="card-expanded-icon">
+                        <img src="automation.png" alt="Automation Testing" />
+                    </div>
+                    <h3 class="card-expanded-title">Automation<br>Testing</h3>
+                    <p class="card-expanded-desc">Scalable test suites powered by Selenium, Playwright & Cypress. Ship at speed with zero regressions and full CI/CD integration built in from day one.</p>
+                    <div class="card-expanded-cta">
+                        Explore Service
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Card 3: DevOps ── -->
+            <div class="card card-3" data-index="2">
+                <div class="card-bg card-bg-default"></div>
+                <div class="card-bg card-bg-active"></div>
+                <div class="card-sheen"></div>
+
+                <div class="card-collapsed">
+                    <div class="card-collapsed-icon">
+                        <img src="devops.png" alt="DevOps" />
+                    </div>
+                    <span class="card-collapsed-label">DevOps</span>
+                </div>
+
+                <div class="card-expanded">
+                    <span class="card-expanded-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          DevOps
+        </span>
+                    <div class="card-expanded-icon">
+                        <img src="devops.png" alt="DevOps" />
+                    </div>
+                    <h3 class="card-expanded-title">DevOps<br>Pipeline</h3>
+                    <p class="card-expanded-desc">CI/CD automation, container orchestration with Docker & Kubernetes, and infrastructure-as-code. Accelerate your release velocity and maximise uptime.</p>
+                    <div class="card-expanded-cta">
+                        Explore Service
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Card 4: Content Engine ── -->
+            <div class="card card-4" data-index="3">
+                <div class="card-bg card-bg-default"></div>
+                <div class="card-bg card-bg-active"></div>
+                <div class="card-sheen"></div>
+
+                <div class="card-collapsed">
+                    <div class="card-collapsed-icon">
+                        <img src="content.png" alt="Content Engine" />
+                    </div>
+                    <span class="card-collapsed-label">Content</span>
+                </div>
+
+                <div class="card-expanded">
+                    <span class="card-expanded-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Content
+        </span>
+                    <div class="card-expanded-icon">
+                        <img src="content.png" alt="Content Engine" />
+                    </div>
+                    <h3 class="card-expanded-title">Content<br>Engine</h3>
+                    <p class="card-expanded-desc">AI-powered content pipelines producing SEO-ready, brand-consistent copy at scale. From blogs to campaigns — every channel, every audience, every time.</p>
+                    <div class="card-expanded-cta">
+                        Explore Service
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Card 5: Cloud Services ── -->
+            <div class="card card-5" data-index="4">
+                <div class="card-bg card-bg-default"></div>
+                <div class="card-bg card-bg-active"></div>
+                <div class="card-sheen"></div>
+
+                <div class="card-collapsed">
+                    <div class="card-collapsed-icon">
+                        <img src="cloud.png" alt="Cloud Services" />
+                    </div>
+                    <span class="card-collapsed-label">Cloud</span>
+                </div>
+
+                <div class="card-expanded">
+                    <span class="card-expanded-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          Cloud
+        </span>
+                    <div class="card-expanded-icon">
+                        <img src="cloud.png" alt="Cloud Services" />
+                    </div>
+                    <h3 class="card-expanded-title">Cloud<br>Services</h3>
+                    <p class="card-expanded-desc">AWS, GCP & Azure architecture, seamless migration, and ongoing cost optimisation. Built for reliability, scalability, and security at every level of scale.</p>
+                    <div class="card-expanded-cta">
+                        Explore Service
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /cards -->
+
+        <!-- Centered "View All Services" Button -->
+        <div class="services-footer">
+            <a href="#" class="btn-view-all">
+      View All Services
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+        </div>
+
+    </div>
+    <!-- /section -->
+
+    <script>
+        const deck = document.getElementById('deck');
+        const cards = Array.from(deck.querySelectorAll('.card'));
+
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                deck.classList.add('deck-active');
+                cards.forEach(c => c.classList.remove('card-open'));
+                card.classList.add('card-open');
+            });
+        });
+
+        deck.addEventListener('mouseleave', () => {
+            deck.classList.remove('deck-active');
+            cards.forEach(c => c.classList.remove('card-open'));
+        });
+    </script>
+    <!-- ===== EMBED MODE (sirf index1.html ke andar; standalone par koi asar nahi) ===== -->
+    <script>
+        (function () {
+            if (window.self === window.top) return;
+            var s = document.createElement('style');
+            s.textContent = 'body{min-height:0!important;display:block!important}';
+            document.head.appendChild(s);
+            function report() {
+                var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                if (h > 0) parent.postMessage({ ctSection: true, height: h }, '*');
+            }
+            window.__ctReport = report;
+            window.addEventListener('load', function () { report();[200, 600, 1200, 2500].forEach(function (d) { setTimeout(report, d); }); });
+            window.addEventListener('resize', report);
+            if (window.ResizeObserver) { try { new ResizeObserver(report).observe(document.body); } catch (e) {} }
+        })();
+    </script>
+    <script src="darkmode.js"></script>
+</body>
+
+</html>

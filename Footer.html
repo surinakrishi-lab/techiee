@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CROSS TECCH - Building modern digital products, enterprise architectures, and seamless framework integrations with Next.js, React, Angular, Vue, and Laravel.">
+    <title>Modern SaaS Footer - CROSS TECCH</title>
+    <link rel="icon" type="image/png" href="media__1782501664527.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, Segoe UI, sans-serif
+        }
+        
+        body {
+            background: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: end
+        }
+        /* Footer Background - Updated to a premium subtle gradient that makes the white-accented logo stand out clearly */
+        
+        .footer {
+            width: 100%;
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+            border-top: 1px solid #e2e8f0;
+            padding: 80px 60px 40px 60px;
+        }
+        /* CTA Styles */
+        
+        .cta {
+            background: linear-gradient(135deg, #eef4ff, #f5ecff);
+            border: 1px solid rgba(79, 70, 229, 0.08);
+            border-radius: 30px;
+            padding: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.08);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta:hover {
+            border-color: rgba(79, 70, 229, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.12);
+        }
+        
+        .heading {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 52px;
+            font-weight: 800;
+            color: #111827;
+            line-height: 1.2
+        }
+        
+        .heading-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px
+        }
+        
+        .word-box {
+            display: inline-block;
+            position: relative;
+            height: 70px;
+            overflow: visible;
+            vertical-align: top;
+            transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin-left: 2px;
+        }
+        
+        .active-word {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 70px;
+            line-height: 70px;
+            white-space: nowrap;
+            display: inline-block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+            transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1), transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), filter 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+        
+        .sub {
+            margin-top: 15px;
+            color: #6b7280;
+            max-width: 700px;
+            line-height: 1.7
+        }
+        
+        .btns {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .primary {
+            background: #4f46e5;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.15);
+        }
+        
+        .primary:hover {
+            background: #3b32c4;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.35);
+        }
+        
+        .secondary {
+            background: #fff;
+            color: #4b5563;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .secondary:hover {
+            transform: translateY(-3px);
+            background: #f9fafb;
+            color: #111827;
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+        /* Brand logo component (consistent design) */
+        
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            user-select: none;
+        }
+        
+        .brand-logo:hover {
+            transform: scale(1.02);
+        }
+        
+        .logo-icon {
+            width: 156px;
+            height: 186px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06));
+        }
+        
+        .logo-text {
+            font-size: 120px;
+            font-weight: 800;
+            color: #111827;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-family: Inter, Segoe UI, sans-serif;
+        }
+        /* Tech Marquee Section */
+        
+        .tech {
+            padding: 35px 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            margin: 40px 0;
+            background: #ffffff;
+            overflow: hidden;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.01);
+        }
+        
+        .tech-title {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #9ca3af;
+            margin-bottom: 24px;
+        }
+        
+        .marquee {
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+        }
+        
+        .track {
+            display: flex;
+            width: max-content;
+            animation: scroll 42s linear infinite;
+        }
+        
+        .marquee:hover .track {
+            animation-play-state: paused;
+        }
+        
+        .tech-item {
+            width: 90px;
+            height: 90px;
+            margin: 0 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        
+        .tech-item:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e1;
+        }
+        
+        .tech-item img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            filter: none;
+            opacity: 1;
+            transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+        /* Clerk-Style Main Links Layout at the very bottom */
+        
+        .main-clerk-style {
+            display: grid;
+            grid-template-columns: 1.8fr repeat(5, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+            margin-bottom: 50px;
+            padding-top: 40px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .brand-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        /* Links Columns */
+        
+        .links-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .col-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #4b5563;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .col-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 15px;
+            height: 2px;
+            background: linear-gradient(90deg, #4f46e5, #8b5cf6);
+            border-radius: 99px;
+            transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .links-col:hover .col-title::after {
+            width: 32px;
+        }
+        
+        .links-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        /* Spotlight fade-out effect: fade out other links in the column when one is hovered */
+        
+        .links-col ul:hover li a:not(:hover) {
+            opacity: 0.45;
+            color: #6b7280;
+        }
+        
+        .footer-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: #111827;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .footer-link:hover {
+            color: #4f46e5;
+            transform: translateX(6px);
+        }
+        /* Premium Badges for Footer Links */
+        
+        .badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 6px;
+            margin-left: 8px;
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+        
+        .badge-indigo {
+            background: rgba(79, 70, 229, 0.08);
+            color: #4f46e5;
+            border: 1px solid rgba(79, 70, 229, 0.15);
+        }
+        
+        .badge-violet {
+            background: rgba(139, 92, 246, 0.08);
+            color: #8b5cf6;
+            border: 1px solid rgba(139, 92, 246, 0.15);
+        }
+        
+        .badge-amber {
+            background: rgba(245, 158, 11, 0.08);
+            color: #d97706;
+            border: 1px solid rgba(245, 158, 11, 0.15);
+        }
+        
+        .badge-emerald {
+            background: rgba(16, 185, 129, 0.08);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.15);
+        }
+        /* Clerk-Style Bottom Bar */
+        
+        .bottom-clerk-style {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #9ca3af;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            color: #4b5563;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+        
+        .social-icon[data-platform="X (Twitter)"]:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .social-icon[data-platform="LinkedIn"]:hover {
+            background: #0077b5;
+            color: #ffffff;
+            border-color: #0077b5;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 119, 181, 0.3);
+        }
+        
+        .social-icon[data-platform="Discord"]:hover {
+            background: #5865F2;
+            color: #ffffff;
+            border-color: #5865F2;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
+        }
+        
+        .social-icon[data-platform="GitHub"]:hover {
+            background: #24292e;
+            color: #ffffff;
+            border-color: #24292e;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(36, 41, 46, 0.25);
+        }
+        
+        .social-icon[data-platform="YouTube"]:hover {
+            background: #FF0000;
+            color: #ffffff;
+            border-color: #FF0000;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+        }
+        /* 3D Coming Toward Screen Popup Styles */
+        
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .modal-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        /* Popup Content - Coming toward screen (Zoom In 3D effect) */
+        
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.05);
+            border-radius: 24px;
+            padding: 40px;
+            width: 90%;
+            max-width: 440px;
+            position: relative;
+            /* Initial State (far back and scaled down) */
+            transform: scale(0.6) translateZ(-200px);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease-out;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        /* Active State (zoomed forward / closer to user screen) */
+        
+        .modal-backdrop.active .modal-content {
+            transform: scale(1) translateZ(0);
+            opacity: 1;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5563;
+            transition: background 0.2s, transform 0.2s, color 0.2s;
+        }
+        
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+            transform: scale(1.1);
+            color: #111827;
+        }
+        
+        .modal-info {
+            text-align: center;
+        }
+        
+        .modal-icon-wrapper {
+            width: 72px;
+            height: 72px;
+            background: #111827;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            color: white;
+            font-size: 32px;
+        }
+        
+        .modal-icon-wrapper img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+        
+        .modal-desc {
+            font-size: 15px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        /* Custom progress bar for redirecting visual effect */
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #edf2f7;
+            border-radius: 3px;
+            margin-top: 24px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #4f46e5;
+            border-radius: 3px;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Responsiveness overrides for the bottom link columns */
+        
+        @media (max-width: 1024px) {
+            .main-clerk-style {
+                grid-template-columns: 1fr repeat(3, 1fr);
+                gap: 30px;
+            }
+            .brand-area {
+                grid-column: span 4;
+                align-items: center;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .footer {
+                padding: 40px 20px;
+            }
+            .cta {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+            .heading {
+                align-items: center;
+            }
+            .heading-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .main-clerk-style {
+                grid-template-columns: 1fr 1fr;
+            }
+            .brand-area {
+                grid-column: span 2;
+            }
+            .bottom-clerk-style {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-clerk-style {
+                grid-template-columns: 1fr;
+            }
+            .brand-area {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <footer class="footer">
+        <!-- Call to Action Section -->
+        <div class="cta">
+            <div>
+                <div class="heading">
+                    <div class="heading-row">
+                        <span>We Don't Just</span>
+                        <span class="word-box">
+          <span class="active-word gradient-text">Build.</span>
+                        </span>
+                    </div>
+                    <span>We Deliver.</span>
+                </div>
+                <p class="sub">We help startups and enterprises build, test and deploy high-quality digital products with speed and reliability.</p>
+            </div>
+            <div class="btns">
+                <button class="btn primary" id="btnSchedule">Schedule a Call</button>
+                <button class="btn secondary" id="btnContact" onclick="window.top.location.href='ContactUs.html'">Contact Us</button>
+            </div>
+        </div>
+
+
+
+        <!-- Tech Marquee Section -->
+        <div class="tech">
+            <div class="tech-title">TECHNOLOGIES WE WORK WITH</div>
+            <div class="marquee">
+                <div class="track" id="track"></div>
+            </div>
+        </div>
+
+        <!-- NEW Clerk-style CROSS TECCH Links Grid at the very bottom -->
+        <div class="main-clerk-style">
+            <!-- Brand Area -->
+            <div class="brand-area">
+                <div class="brand-logo" id="footerLogo">
+                    <img src="bg.png" alt="CROSSTECCH Logo" style="height: 158px; width: auto; object-fit: contain; display: block;">
+                </div>
+            </div>
+
+            <!-- Link Columns -->
+            <div class="links-col">
+                <span class="col-title">Product</span>
+                <ul>
+                    <li><a href="#" class="footer-link">Authentication</a></li>
+                    <li><a href="#" class="footer-link">B2B Authentication <span class="badge badge-indigo">New</span></a></li>
+                    <li><a href="#" class="footer-link">Billing <span class="badge badge-violet">Beta</span></a></li>
+                    <li><a href="#" class="footer-link">User Management</a></li>
+                    <li><a href="#" class="footer-link">CLI</a></li>
+                </ul>
+            </div>
+
+            <div class="links-col">
+                <span class="col-title">SDKs</span>
+                <ul>
+                    <li><a href="#" class="footer-link">React</a></li>
+                    <li><a href="#" class="footer-link">Next.js</a></li>
+                    <li><a href="#" class="footer-link">Expo</a></li>
+                    <li><a href="#" class="footer-link">Astro <span class="badge badge-indigo">New</span></a></li>
+                    <li><a href="#" class="footer-link">View all</a></li>
+                </ul>
+            </div>
+
+            <div class="links-col">
+                <span class="col-title">Resources</span>
+                <ul>
+                    <li><a href="#" class="footer-link">Documentation</a></li>
+                    <li><a href="#" class="footer-link">Changelog</a></li>
+                    <li><a href="#" class="footer-link">System Status <span class="badge badge-emerald">Stable</span></a></li>
+                    <li><a href="#" class="footer-link">Support</a></li>
+                    <li><a href="#" class="footer-link">LLM Leaderboard</a></li>
+                </ul>
+            </div>
+
+            <div class="links-col">
+                <span class="col-title">Company</span>
+                <ul>
+                    <li><a href="#" class="footer-link">About</a></li>
+                    <li><a href="#" class="footer-link">Careers <span class="badge badge-indigo">Hiring</span></a></li>
+                    <li><a href="#" class="footer-link">Blog</a></li>
+                    <li><a href="#" class="footer-link">Contact</a></li>
+                    <li><a href="#" class="footer-link">Brand assets</a></li>
+                </ul>
+            </div>
+
+            <div class="links-col">
+                <span class="col-title">Legal</span>
+                <ul>
+                    <li><a href="#" class="footer-link">Terms and conditions</a></li>
+                    <li><a href="#" class="footer-link">Privacy policy</a></li>
+                    <li><a href="#" class="footer-link">DPA <span class="badge badge-violet">Updated</span></a></li>
+                    <li><a href="#" class="footer-link">Legal Resources</a></li>
+                    <li><a href="#" class="footer-link">Cookie manager</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Clerk-style Bottom Copyright and Socials -->
+        <div class="bottom-clerk-style">
+            <div class="copyright">© 2026 CROSS TECCH, Inc.</div>
+            <div class="social-icons">
+                <a class="social-icon" data-platform="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                <a class="social-icon" data-platform="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a class="social-icon" data-platform="Discord"><i class="fa-brands fa-discord"></i></a>
+                <a class="social-icon" data-platform="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a class="social-icon" data-platform="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 3D Zooming Popup Modal -->
+    <div class="modal-backdrop" id="modalBackdrop">
+        <div class="modal-content" id="modalContent">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Load Tech Logos into Marquee
+        const logos = [
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rabbitmq/rabbitmq-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg",
+            "https://playwright.dev/img/playwright-logo.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cypressio/cypressio-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg"
+        ];
+
+        const t = document.getElementById("track");
+        [...logos, ...logos].forEach(s => {
+            const d = document.createElement("div");
+            d.className = "tech-item";
+            d.innerHTML = `<img src="${s}" alt="technology logo">`;
+            t.appendChild(d);
+        });
+
+        // Modal Logic
+        const modalBackdrop = document.getElementById("modalBackdrop");
+        const modalBody = document.getElementById("modalBody");
+        const modalClose = document.getElementById("modalClose");
+
+        function openModal() {
+            modalBackdrop.classList.add("active");
+        }
+
+        function closeModal() {
+            modalBackdrop.classList.remove("active");
+        }
+
+        modalClose.onclick = closeModal;
+        modalBackdrop.onclick = (e) => {
+            if (e.target === modalBackdrop) closeModal();
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeModal();
+        });
+
+        // Services cards descriptions
+        const serviceDetails = {
+            "CRM Platform": {
+                icon: "fa-chart-line",
+                title: "CRM Platform Integration",
+                desc: "Build strong customer relationships. We develop robust CRM automation workflows, custom sales dashboards, and deep contact management architectures to accelerate your sales pipelines."
+            },
+            "Web Development": {
+                icon: "fa-globe",
+                title: "Modern Web Development",
+                desc: "Engineered for speed, scale, and accessibility. We craft gorgeous user interfaces using React, Next.js, and custom styling systems to captivate your audience immediately."
+            },
+            "Cloud Solutions": {
+                icon: "fa-cloud",
+                title: "Next-Gen Cloud Solutions",
+                desc: "Highly available, cost-effective infrastructure. We specialize in serverless deployments, autoscaling container architectures, and fully automated multi-region backup systems."
+            },
+            "AI Automation": {
+                icon: "fa-robot",
+                title: "AI & Workflow Automation",
+                desc: "Harness the power of AI. We integrate generative language models, smart agents, and automated robotic process pipelines to save hours of manual tasks every single day."
+            }
+        };
+
+        // Tech Logos Name Map
+        const techNames = {
+            "react": "React.js",
+            "nextjs": "Next.js",
+            "nodejs": "Node.js",
+            "typescript": "TypeScript",
+            "javascript": "JavaScript",
+            "python": "Python",
+            "java": "Java",
+            "github": "GitHub Platform",
+            "docker": "Docker Containers",
+            "kubernetes": "Kubernetes orchestration",
+            "amazonwebservices": "AWS Cloud Services",
+            "jenkins": "Jenkins CI/CD",
+            "terraform": "Terraform Infrastructure",
+            "linux": "Linux OS environment",
+            "mongodb": "MongoDB database",
+            "postgresql": "PostgreSQL relational DB",
+            "redis": "Redis caching",
+            "apachekafka": "Apache Kafka events",
+            "rabbitmq": "RabbitMQ broker",
+            "selenium": "Selenium browser automation",
+            "playwright": "Playwright testing",
+            "cypressio": "Cypress modern testing",
+            "postman": "Postman API testing",
+            "grafana": "Grafana monitoring dashboards"
+        };
+
+
+
+        // Bind Events to Tech items
+        document.querySelectorAll(".tech-item").forEach(item => {
+            item.onclick = () => {
+                const img = item.querySelector("img");
+                const src = img.getAttribute("src");
+                let detectedKey = Object.keys(techNames).find(key => src.toLowerCase().includes(key)) || "technology";
+                let techName = techNames[detectedKey] || "Modern Tech Stack Integration";
+
+                modalBody.innerHTML = `
+      <div class="modal-info">
+        <div class="modal-icon-wrapper" style="background: #f8fafc; border: 1.5px solid #e2e8f0; width: 72px; height: 72px;">
+          <img src="${src}" alt="${techName} Logo">
+        </div>
+        <div class="modal-title">${techName}</div>
+        <div class="modal-desc">CROSS TECCH integrates ${techName} natively to deliver state-of-the-art software systems with optimal performance, durability, and standard-setting design patterns.</div>
+      </div>
+    `;
+                openModal();
+            };
+        });
+
+        // Bind Events to Social Icons (Clerk and original sections)
+        document.querySelectorAll(".social-icon, .social-link").forEach(icon => {
+            icon.onclick = () => {
+                const platform = icon.getAttribute("data-platform") || icon.getAttribute("data-social");
+                const iconHTML = icon.innerHTML;
+
+                modalBody.innerHTML = `
+      <div class="modal-info">
+        <div class="modal-icon-wrapper" style="background: #111827">
+          ${iconHTML}
+        </div>
+        <div class="modal-title">Connecting to ${platform}</div>
+        <div class="modal-desc">We are launching our official ${platform} portal. Preparing secure connection tunnel...</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="socialProgress"></div>
+        </div>
+      </div>
+    `;
+                openModal();
+
+                setTimeout(() => {
+                    const bar = document.getElementById("socialProgress");
+                    if (bar) {
+                        bar.style.width = "100%";
+                    }
+                }, 100);
+            };
+        });
+
+        // Bind Events to Footer Navigation Links
+        document.querySelectorAll(".footer-link").forEach(link => {
+            link.onclick = (e) => {
+                e.preventDefault();
+                // Exclude badges from link text for clean modal title
+                const linkText = Array.from(link.childNodes)
+                    .filter(node => node.nodeType === Node.TEXT_NODE)
+                    .map(node => node.textContent.trim())
+                    .join(" ") || link.textContent;
+
+                const colName = link.closest(".links-col").querySelector(".col-title").textContent;
+
+                modalBody.innerHTML = `
+      <div class="modal-info">
+        <div class="modal-icon-wrapper" style="background: #111827">
+          <i class="fas fa-layer-group" style="color: white;"></i>
+        </div>
+        <div class="modal-title">${linkText}</div>
+        <div class="modal-desc">You clicked the <strong>${linkText}</strong> resource in the <strong>${colName}</strong> column. This section is ready to link to your custom database entry.</div>
+      </div>
+    `;
+                openModal();
+            };
+        });
+
+        // Brand Logo popup helper
+        const showBrandLogoPopup = () => {
+            modalBody.innerHTML = `
+    <div class="modal-info">
+      <div style="margin-bottom: 24px; display: flex; justify-content: center;">
+        <img src="media__1782501664527.png" alt="CROSSTECCH Logo" style="height: 44px; width: auto; object-fit: contain;">
+      </div>
+      <div class="modal-title">CROSSTECCH Platform</div>
+      <div class="modal-desc">Delivering world-class frontend engineering, cloud infrastructure scale, and beautiful automated digital workflows. Built to execute, born to lead.</div>
+    </div>
+  `;
+            openModal();
+        };
+
+        const devSolutionsLogo = document.getElementById("devSolutionsLogo");
+        if (devSolutionsLogo) devSolutionsLogo.onclick = showBrandLogoPopup;
+        document.getElementById("footerLogo").onclick = showBrandLogoPopup;
+
+        // Original Newsletter Subscribe Popup (Guarded)
+        const subscribeBtn = document.getElementById("subscribe");
+        if (subscribeBtn) {
+            subscribeBtn.onclick = () => {
+                const emailInput = document.getElementById("email");
+                const emailVal = emailInput ? emailInput.value.trim() : "";
+                if (!emailVal) {
+                    modalBody.innerHTML = `
+        <div class="modal-info">
+          <div class="modal-icon-wrapper" style="background: linear-gradient(135deg, #ef4444, #dc2626)">
+            <i class="fas fa-exclamation-triangle" style="color: white;"></i>
+          </div>
+          <div class="modal-title">Registration Error</div>
+          <div class="modal-desc">Please enter a valid email address before subscribing to our tech newsletter.</div>
+        </div>
+      `;
+                    openModal();
+                    return;
+                }
+                modalBody.innerHTML = `
+      <div class="modal-info">
+        <div class="modal-icon-wrapper" style="background: linear-gradient(135deg, #10b981, #059669)">
+          <i class="fas fa-check-circle" style="color: white;"></i>
+        </div>
+        <div class="modal-title">Subscribed Successfully!</div>
+        <div class="modal-desc">Welcome onboard! We have registered <strong>${emailVal}</strong>. Get ready to receive premium dev updates directly in your inbox.</div>
+      </div>
+    `;
+                openModal();
+                if (emailInput) emailInput.value = "";
+            };
+        }
+
+        // CTA Buttons
+        document.getElementById("btnSchedule").onclick = () => {
+            modalBody.innerHTML = `
+    <div class="modal-info">
+      <div class="modal-icon-wrapper" style="background: linear-gradient(135deg, #10b981, #34d399)">
+        <i class="fas fa-phone-alt" style="color: white;"></i>
+      </div>
+      <div class="modal-title">Schedule a Consultation</div>
+      <div class="modal-desc">Let's build together. Pick a slot with our tech architects to map out your digital product pipeline. We will send an invite to your inbox immediately.</div>
+    </div>
+  `;
+            openModal();
+        };
+
+        document.getElementById("btnContact").onclick = () => {
+            // Open the full Contact Us page (works standalone and inside an iframe)
+            (window.top || window).location.href = "ContactUs.html";
+        };
+
+        // Dynamic Word Rotator with Fade, Blur, and Auto-Width adjustment
+        const rotWords = ["Build.", "Test.", "Deploy."];
+        let rotIndex = 0;
+        const rotBox = document.querySelector(".word-box");
+        const rotActive = document.querySelector(".active-word");
+
+        function rotateText() {
+            const nextIdx = (rotIndex + 1) % rotWords.length;
+            const nextWordText = rotWords[nextIdx];
+
+            // Measure next word width using a temp span
+            const tempMeasure = document.createElement("span");
+            tempMeasure.style.visibility = "hidden";
+            tempMeasure.style.position = "absolute";
+            tempMeasure.style.fontSize = window.getComputedStyle(rotActive).fontSize;
+            tempMeasure.style.fontWeight = window.getComputedStyle(rotActive).fontWeight;
+            tempMeasure.style.fontFamily = window.getComputedStyle(rotActive).fontFamily;
+            tempMeasure.textContent = nextWordText;
+            document.body.appendChild(tempMeasure);
+            const measuredWidth = tempMeasure.offsetWidth;
+            document.body.removeChild(tempMeasure);
+
+            // Slide up, fade, and blur current word out
+            rotActive.style.opacity = "0";
+            rotActive.style.transform = "translateY(-15px) scale(0.95)";
+            rotActive.style.filter = "blur(8px)";
+
+            // Resize container smoothly
+            rotBox.style.width = `${measuredWidth}px`;
+
+            setTimeout(() => {
+                // Set next word content and position below
+                rotActive.textContent = nextWordText;
+                rotActive.style.transform = "translateY(15px) scale(0.95)";
+                rotActive.style.filter = "blur(8px)";
+
+                // Reflow
+                rotActive.offsetHeight;
+
+                // Slide up to center, fade in, and focus
+                rotActive.style.opacity = "1";
+                rotActive.style.transform = "translateY(0) scale(1)";
+                rotActive.style.filter = "blur(0px)";
+
+                rotIndex = nextIdx;
+            }, 350);
+        }
+
+        // Stagger initialization to ensure styles are loaded
+        setTimeout(() => {
+            if (rotActive && rotBox) {
+                const tempInit = document.createElement("span");
+                tempInit.style.visibility = "hidden";
+                tempInit.style.position = "absolute";
+                tempInit.style.fontSize = window.getComputedStyle(rotActive).fontSize;
+                tempInit.style.fontWeight = window.getComputedStyle(rotActive).fontWeight;
+                tempInit.textContent = rotWords[0];
+                document.body.appendChild(tempInit);
+                rotBox.style.width = `${tempInit.offsetWidth}px`;
+                document.body.removeChild(tempInit);
+
+                setInterval(rotateText, 3200);
+            }
+        }, 200);
+    </script>
+    <!-- ===== EMBED MODE (sirf index1.html ke andar; standalone par koi asar nahi) ===== -->
+    <script>
+        (function() {
+            if (window.self === window.top) return;
+            var s = document.createElement('style');
+            s.textContent = 'body{min-height:0!important;display:block!important}';
+            document.head.appendChild(s);
+
+            function report() {
+                var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                if (h > 0) parent.postMessage({
+                    ctSection: true,
+                    height: h
+                }, '*');
+            }
+            window.__ctReport = report;
+            window.addEventListener('load', function() {
+                report();
+                [200, 600, 1200, 2500].forEach(function(d) {
+                    setTimeout(report, d);
+                });
+            });
+            window.addEventListener('resize', report);
+            if (window.ResizeObserver) {
+                try {
+                    new ResizeObserver(report).observe(document.body);
+                } catch (e) {}
+            }
+        })();
+    </script>
+    <script src="darkmode.js"></script>
+</body>
+
+</html>

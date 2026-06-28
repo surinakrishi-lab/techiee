@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CROSSTECCH+ — Meet the Future</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Raleway:wght@800;900&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #06070f;
+            --silver: #c8cfde;
+            --muted: #8a93a8;
+            --grad: linear-gradient(90deg, #fb3d64, #d440ad, #8b45dc, #4f61fb);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--silver);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== Animated background ===== */
+        .bg-layer { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .bubble { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.55; }
+        .bubble-orange { width: 480px; height: 480px; background: radial-gradient(circle, #ff7a3d, transparent 70%); top: -120px; left: -80px; animation: float1 16s ease-in-out infinite; }
+        .bubble-blue   { width: 560px; height: 560px; background: radial-gradient(circle, #4f61fb, transparent 70%); bottom: -160px; right: -120px; animation: float2 20s ease-in-out infinite; }
+        .bubble-pink   { width: 360px; height: 360px; background: radial-gradient(circle, #d440ad, transparent 70%); top: 40%; left: 55%; animation: float1 24s ease-in-out infinite; }
+
+        @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(60px,80px) scale(1.1); } }
+        @keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-70px,-60px) scale(1.08); } }
+
+        .noise { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+        /* ===== Nav ===== */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 48px; height: 78px;
+            background: rgba(6, 7, 15, 0.55); backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .nav-logo img { height: 64px; width: auto; object-fit: contain; }
+        .nav-links { display: flex; gap: 36px; list-style: none; }
+        .nav-links a { color: rgba(200, 207, 222, 0.65); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 1.4px; text-transform: uppercase; transition: color 0.25s; }
+        .nav-links a:hover { color: #fff; }
+
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+        .hamburger span { width: 26px; height: 2px; background: #fff; border-radius: 2px; transition: 0.3s; }
+        .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .sidebar {
+            position: fixed; top: 78px; right: 0; width: 260px; max-width: 80vw;
+            height: calc(100vh - 78px); background: rgba(10, 12, 22, 0.97); backdrop-filter: blur(18px);
+            z-index: 49; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+            border-left: 1px solid rgba(255,255,255,0.07); padding: 32px;
+        }
+        .sidebar.open { transform: translateX(0); }
+        .sidebar ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+        .sidebar a { display: block; padding: 14px 10px; color: var(--silver); text-decoration: none; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .sidebar a:hover { color: #fff; padding-left: 18px; transition: 0.25s; }
+
+        /* ===== Content ===== */
+        .content { position: relative; z-index: 2; }
+
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            padding: 120px 24px 60px; position: relative;
+        }
+        .hero-title { font-family: 'Raleway', sans-serif; font-weight: 900; line-height: 0.95; letter-spacing: -2px; }
+        .silverish { display: block; font-size: clamp(34px, 6vw, 72px); color: #aeb6c8;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.4)); }
+        .gradientText { display: block; font-size: clamp(48px, 9vw, 128px); color: transparent;
+            background: var(--grad); background-size: 200% auto; -webkit-background-clip: text; background-clip: text;
+            animation: shine 5s linear infinite; }
+        @keyframes shine { to { background-position: 200% center; } }
+        .hero-sub { margin-top: 24px; max-width: 540px; font-size: 16px; color: var(--muted); line-height: 1.7; }
+
+        .scroll-cue { margin-top: 48px; display: inline-flex; flex-direction: column; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+        .scroll-cue .mouse { width: 24px; height: 38px; border: 2px solid rgba(200,207,222,0.4); border-radius: 14px; position: relative; }
+        .scroll-cue .mouse::after { content: ''; position: absolute; left: 50%; top: 7px; transform: translateX(-50%); width: 4px; height: 7px; border-radius: 3px; background: #fff; animation: wheel 1.6s ease-in-out infinite; }
+        @keyframes wheel { 0% { opacity: 0; top: 7px; } 40% { opacity: 1; } 100% { opacity: 0; top: 18px; } }
+
+        /* ===== Robot showcase ===== */
+        .robo-section { position: relative; padding: 40px 24px 120px; display: flex; flex-direction: column; align-items: center; }
+        .robo-wrap { position: relative; width: min(640px, 90vw); display: flex; justify-content: center; }
+        .robo-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; height: 70%;
+            background: radial-gradient(circle, rgba(139,69,220,0.55), rgba(79,97,251,0.2) 50%, transparent 70%); filter: blur(50px); z-index: 0; animation: pulse 5s ease-in-out infinite; }
+        @keyframes pulse { 0%,100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); } 50% { opacity: 1; transform: translate(-50%,-50%) scale(1.12); } }
+        .robo-img { position: relative; z-index: 1; width: 100%; height: auto; object-fit: contain; animation: floatY 6s ease-in-out infinite; will-change: transform;
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6)); }
+        @keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-22px); } }
+
+        /* ===== Feature cards ===== */
+        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto; padding: 0 24px 120px; }
+        .feature {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px; padding: 34px 28px; position: relative; overflow: hidden;
+            opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1), border-color 0.3s;
+        }
+        .feature.reveal { opacity: 1; transform: translateY(0); }
+        .feature:hover { border-color: rgba(139,69,220,0.5); transform: translateY(-6px); }
+        .feature::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--grad); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+        .feature:hover::before { transform: scaleX(1); }
+        .feature-num { font-family: 'Raleway', sans-serif; font-size: 14px; font-weight: 800; color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text; letter-spacing: 2px; }
+        .feature h3 { margin: 14px 0 12px; font-size: 22px; font-weight: 800; color: #fff; }
+        .feature p { font-size: 14px; line-height: 1.7; color: var(--muted); }
+
+        /* ===== CTA / second robot ===== */
+        .cta-section { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 40px;
+            max-width: 1100px; margin: 0 auto; padding: 60px 24px 140px; flex-wrap: wrap; }
+        .cta-text { flex: 1; min-width: 280px; }
+        .cta-text h2 { font-family: 'Raleway', sans-serif; font-size: clamp(28px, 4vw, 46px); font-weight: 900; color: #fff; line-height: 1.1; letter-spacing: -1px; }
+        .cta-text h2 span { color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text; }
+        .cta-text p { margin: 18px 0 28px; color: var(--muted); font-size: 15px; line-height: 1.7; max-width: 440px; }
+        .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--grad); background-size: 200% auto; color: #fff;
+            font-weight: 700; font-size: 15px; padding: 15px 32px; border-radius: 40px; text-decoration: none; border: none; cursor: pointer;
+            box-shadow: 0 10px 30px rgba(139,69,220,0.35); transition: transform 0.25s, box-shadow 0.25s, background-position 0.5s; }
+        .cta-btn:hover { transform: translateY(-3px); background-position: 100% center; box-shadow: 0 16px 40px rgba(139,69,220,0.5); }
+        .cta-robo { flex: 1; min-width: 260px; display: flex; justify-content: center; }
+        .cta-robo img { width: min(360px, 80vw); height: auto; object-fit: contain; animation: floatY 7s ease-in-out infinite; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5)); }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .features { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav { padding: 12px 20px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .cta-section { flex-direction: column-reverse; text-align: center; }
+            .cta-text p { margin-left: auto; margin-right: auto; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Animated background -->
+    <div class="bg-layer">
+        <div class="bubble bubble-orange"></div>
+        <div class="bubble bubble-blue"></div>
+        <div class="bubble bubble-pink"></div>
+    </div>
+    <div class="noise"></div>
+
+    <!-- Nav -->
+    <nav class="nav">
+        <a href="index1.html" class="nav-logo" aria-label="CROSSTECCH home">
+            <img src="bg.png" alt="Crosstecch Logo" />
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="resource.html">Resources</a></li>
+            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="Product.html">Product</a></li>
+            <li><a href="ContactUs.html">Contact Us</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="resource.html">Resources</a></li>
+            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="Product.html">Product</a></li>
+            <li><a href="ContactUs.html">Contact Us</a></li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- Hero -->
+        <section class="hero">
+            <h1 class="hero-title">
+                <span class="silverish">Meet the</span>
+                <span class="gradientText">CROSSTECCH+</span>
+            </h1>
+            <p class="hero-sub">A glimpse into what we are building next — intelligent systems that test, build and deploy at the speed of thought.</p>
+            <div class="scroll-cue">
+                <span class="mouse"></span>
+                Scroll
+            </div>
+        </section>
+
+        <!-- Robot showcase -->
+        <section class="robo-section">
+            <div class="robo-wrap" id="roboWrap">
+                <div class="robo-glow"></div>
+                <img src="robo2.png" alt="Futuristic Robot" class="robo-img" id="roboImg" />
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features" id="features">
+            <article class="feature">
+                <div class="feature-num">01</div>
+                <h3>Quantum Leap</h3>
+                <p>Experience processing speeds that transcend modern limitations, powered by our next-gen neural architecture.</p>
+            </article>
+            <article class="feature">
+                <div class="feature-num">02</div>
+                <h3>Adaptive AI</h3>
+                <p>A system that evolves with you, learning your preferences and anticipating your needs before they arise.</p>
+            </article>
+            <article class="feature">
+                <div class="feature-num">03</div>
+                <h3>Seamless Integration</h3>
+                <p>Connect effortlessly across all platforms with a unified ecosystem designed for absolute fluidity.</p>
+            </article>
+        </section>
+
+        <!-- CTA + second robot -->
+        <section class="cta-section">
+            <div class="cta-text">
+                <h2>The future is <span>already in motion.</span></h2>
+                <p>Join the teams shipping faster with CROSSTECCH+. Smarter automation, fewer regressions, and an AI that works alongside you.</p>
+                <a href="ContactUs.html" class="cta-btn">
+                    Get Early Access
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <div class="cta-robo">
+                <img src="robok.png" alt="Robot in motion" />
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // 1) Mobile menu toggle
+        var hamburger = document.getElementById('hamburger');
+        var sidebar = document.getElementById('sidebar');
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('open');
+        }
+        hamburger.addEventListener('click', toggleMenu);
+        hamburger.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMenu(); } });
+        sidebar.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () { hamburger.classList.remove('active'); sidebar.classList.remove('open'); });
+        });
+
+        // 2) Scroll-reveal feature cards (staggered)
+        var feats = document.querySelectorAll('.feature');
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    var i = Array.prototype.indexOf.call(feats, entry.target);
+                    setTimeout(function () { entry.target.classList.add('reveal'); }, i * 140);
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        feats.forEach(function (f) { io.observe(f); });
+
+        // 3) Robot mouse-parallax (desktop only)
+        var roboImg = document.getElementById('roboImg');
+        var roboWrap = document.getElementById('roboWrap');
+        if (window.matchMedia('(pointer:fine)').matches && roboWrap) {
+            window.addEventListener('mousemove', function (e) {
+                var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+                var dx = (e.clientX - cx) / cx, dy = (e.clientY - cy) / cy;
+                roboImg.style.transform = 'translate(' + (dx * 18) + 'px,' + (dy * 14) + 'px)';
+            });
+        }
+
+        // 4) Subtle parallax on scroll for background bubbles
+        var bubbles = document.querySelectorAll('.bubble');
+        window.addEventListener('scroll', function () {
+            var y = window.scrollY;
+            bubbles.forEach(function (b, i) {
+                b.style.marginTop = (y * (0.04 + i * 0.02)) + 'px';
+            });
+        }, { passive: true });
+    </script>
+
+    <!-- ===== Site Footer (shared, from Footer.html) ===== -->
+    <iframe id="ctFooterFrame" src="Footer.html" title="Footer" scrolling="no"
+            style="width:100%;border:0;display:block;overflow:hidden;"></iframe>
+    <script>
+        (function () {
+            var f = document.getElementById('ctFooterFrame');
+            if (!f) return;
+            window.addEventListener('message', function (e) {
+                if (e.data && e.data.ctSection && e.data.height) { f.style.height = e.data.height + 'px'; }
+            });
+        })();
+    </script>
+    <script src="darkmode.js"></script>
+</body>
+
+</html>

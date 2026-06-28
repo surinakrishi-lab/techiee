@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crosstecch Landing Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Raleway:wght@800&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base */
+        
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #e8eaf2;
+            overflow-x: hidden;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        /* Header (Header.module.css) */
+        
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            height: 90px;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .navLogo {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .logoImage {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+            margin-top: 5px;
+        }
+        
+        .navLinks {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navLinks li a {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(26, 26, 46, 0.6);
+        }
+        
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .navCta {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a1a2e;
+            border: 1.5px solid rgba(26, 26, 46, 0.5);
+            padding: 10px 24px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+        }
+        
+        .futureBtn {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: linear-gradient(90deg, #fb3d64, #d440ad, #8b45dc, #4f61fb, #fb3d64);
+            background-size: 200% 100%;
+            animation: bgPan 4s linear infinite;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(212, 64, 173, 0.4);
+        }
+        
+        @keyframes bgPan {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: -200% 0%;
+            }
+        }
+        /* Hero Section (HeroAnimation.module.css) */
+        
+        .fixedBackground {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(ellipse 80% 70% at 50% 40%, #e8eaf2 0%, #d0d4e0 30%, #b8bece 60%, #9ea8bc 100%);
+            overflow: hidden;
+        }
+        
+        .heroSection {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .typo {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+            z-index: 20;
+            width: 48%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        
+        .typo.visible {
+            opacity: 1;
+        }
+        
+        .bgLogo {
+            position: absolute;
+            top: 50%;
+            left: -5%;
+            transform: translateY(-50%);
+            width: 140%;
+            max-width: 800px;
+            z-index: 0;
+            opacity: 0.85;
+        }
+        
+        .weLine {
+            font-size: clamp(36px, 7.5vw, 100px);
+            font-weight: 900;
+            letter-spacing: -4px;
+            line-height: 0.9;
+            color: #ffffff;
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.4));
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .verbWrap {
+            font-family: 'Raleway', sans-serif;
+            position: relative;
+            height: clamp(60px, 8vw, 110px);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 12px;
+        }
+        
+        .verb {
+            position: absolute;
+            font-size: clamp(55px, 7.5vw, 105px);
+            font-weight: 800;
+            letter-spacing: 5px;
+            line-height: 1;
+            color: transparent;
+            background: linear-gradient(to right, #fb3d64 0%, #d440ad 35%, #8b45dc 70%, #4f61fb 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        .verb.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .accentLine {
+            display: block;
+            width: 40px;
+            height: 1.5px;
+            background: rgba(100, 116, 150, 0.45);
+            margin: 12px 0 0;
+            border-radius: 2px;
+        }
+        
+        .imageContainer {
+            position: absolute;
+            bottom: 0;
+            right: -5%;
+            width: 55%;
+            max-width: 1000px;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 15;
+        }
+        
+        .girlImage {
+            width: 100%;
+            height: auto;
+            max-height: 100%;
+            object-fit: contain;
+            object-position: bottom;
+            animation: floatImage 6s ease-in-out infinite;
+            filter: drop-shadow(0 -10px 35px rgba(0, 255, 200, 0.4)) drop-shadow(0 0 15px rgba(255, 0, 255, 0.2)) contrast(1.15) brightness(1.05);
+        }
+        
+        @keyframes floatImage {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+        /* Products Section (ProductsSection.module.css) */
+        
+        .productsSection {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 120px 24px;
+            background: transparent;
+            overflow: hidden;
+        }
+        
+        .bgImage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            min-width: 1000px;
+            z-index: 0;
+            opacity: 0.55;
+            animation: floatBg 15s ease-in-out infinite;
+            pointer-events: none;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%);
+        }
+        
+        @keyframes floatBg {
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+            50% {
+                transform: translate(-50%, -48%) scale(1.05) rotate(1deg);
+            }
+        }
+        
+        .sectionTitle {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin: 0 0 60px 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .silverText {
+            color: transparent;
+            background: linear-gradient(135deg, #e0e0e0 0%, #909090 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
+        .gradientText {
+            color: transparent;
+            background: linear-gradient(to right, #fb3d64 0%, #d440ad 35%, #8b45dc 70%, #4f61fb 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 64px;
+            width: 100%;
+            max-width: 1100px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cardWrapper {
+            opacity: 0;
+        }
+        
+        .animateShuffle1 {
+            animation: shuffle1 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        
+        .animateShuffle2 {
+            animation: shuffle2 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        
+        @keyframes shuffle1 {
+            0% {
+                opacity: 0;
+                transform: translate(60%, 100px) rotate(15deg) scale(0.8);
+            }
+            40% {
+                opacity: 1;
+                transform: translate(-10%, -20px) rotate(-5deg) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+        }
+        
+        @keyframes shuffle2 {
+            0% {
+                opacity: 0;
+                transform: translate(-60%, 100px) rotate(-15deg) scale(0.8);
+            }
+            40% {
+                opacity: 1;
+                transform: translate(10%, -20px) rotate(5deg) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+        }
+        
+        .card {
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: #ffffff;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.12);
+        }
+        
+        .cardImageContainer {
+            position: relative;
+            width: 100%;
+            padding-top: 60%;
+            background: #111;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .cardImage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .cardBody {
+            padding: 40px 32px 32px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #111111;
+            margin: 0 0 12px 0;
+        }
+        
+        .description {
+            font-size: 15px;
+            color: #555555;
+            line-height: 1.6;
+            margin: 0 0 24px 0;
+        }
+        
+        .featureList {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 32px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+        }
+        
+        .featureItem {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: #333333;
+        }
+        
+        .actionBtn {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #111111;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: auto;
+        }
+        
+        .actionBtn:hover {
+            background: #f8f9fa;
+            border-color: #d0d0d0;
+        }
+        /* ===== Mega menu (hover dropdown) ===== */
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .navLinks .caret {
+            font-size: 9px;
+            margin-left: 4px;
+            opacity: 0.7;
+            display: inline-block;
+            transition: transform 0.25s ease;
+        }
+        
+        .nav-item.active-mega .caret {
+            transform: rotate(180deg);
+        }
+        
+        .mega {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 245, 255, 0.9)), linear-gradient(115deg, rgba(251, 61, 100, 0.06), rgba(139, 69, 220, 0.06) 45%, rgba(79, 97, 251, 0.06));
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 30px 60px rgba(20, 20, 50, 0.14);
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid rgba(20, 20, 50, 0.06);
+            border-radius: 0 0 20px 20px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+            z-index: 49;
+        }
+        /* subtle top gradient accent line, matching brand */
+        
+        .mega::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #fb3d64, #d440ad, #8b45dc, #4f61fb);
+            opacity: 0.7;
+        }
+        
+        .mega.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .mega-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 40px;
+            padding: 36px 48px;
+        }
+        
+        .mega-cols {
+            display: flex;
+            gap: 64px;
+            flex: 1;
+        }
+        
+        .mega-col {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 210px;
+        }
+        
+        .mega-head {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #9aa0b4;
+        }
+        
+        .mega-link {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        
+        .mega-link strong {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a2e;
+            transition: color 0.2s ease;
+        }
+        
+        .mega-link span {
+            font-size: 13px;
+            color: #6b7185;
+        }
+        
+        .mega-link:hover strong {
+            color: #8b45dc;
+        }
+        
+        .mega-feature {
+            width: 300px;
+            flex-shrink: 0;
+            border-radius: 16px;
+            padding: 28px;
+            background: linear-gradient(160deg, #3a2a6d, #261f49);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mega-feature-img {
+            position: absolute;
+            right: -14px;
+            bottom: -14px;
+            width: 130px;
+            opacity: 0.85;
+            pointer-events: none;
+        }
+        
+        .mega-feature h4 {
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.15;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .mega-feature-sub {
+            font-size: 13px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .mega-feature-btn {
+            margin-top: 6px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            transition: background 0.2s ease;
+        }
+        
+        .mega-feature-btn:hover {
+            background: rgba(255, 255, 255, 0.26);
+        }
+        
+        @media (max-width: 860px) {
+            .mega {
+                display: none !important;
+            }
+            .navLinks .caret {
+                display: none;
+            }
+        }
+        /* ===== Hamburger (mobile) ===== */
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 60;
+        }
+        
+        .hamburger span {
+            width: 26px;
+            height: 2px;
+            background: #1a1a2e;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        
+        .nav.open .hamburger span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        
+        .nav.open .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .nav.open .hamburger span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+        /* ===== Mobile responsive ===== */
+        
+        @media (max-width: 860px) {
+            .nav {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 12px 18px;
+            }
+            .logoImage {
+                height: 60px;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .navLinks,
+            .navActions {
+                display: none;
+                flex-basis: 100%;
+            }
+            .nav.open .navLinks {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                width: 100%;
+                padding: 10px 0 4px;
+            }
+            .nav.open .navActions {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 12px;
+                width: 100%;
+                padding-bottom: 8px;
+            }
+            .heroSection {
+                flex-direction: column;
+                text-align: center;
+                justify-content: flex-start;
+                padding-top: 120px;
+            }
+            .typo {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                width: 100%;
+                padding: 0 22px;
+                opacity: 1;
+            }
+            .typo.visible {
+                opacity: 1;
+            }
+            .verbWrap {
+                justify-content: center;
+            }
+            .accentLine {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .bgLogo {
+                display: none;
+            }
+            .imageContainer {
+                position: relative;
+                right: auto;
+                bottom: auto;
+                width: 84%;
+                max-width: 340px;
+                height: auto;
+                margin: 26px auto 0;
+            }
+            .girlImage {
+                max-height: 50vh;
+            }
+            .productsSection {
+                padding: 70px 18px;
+            }
+            .sectionTitle {
+                margin-bottom: 40px;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .weLine {
+                letter-spacing: -2px;
+            }
+            .imageContainer {
+                width: 92%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <nav class="nav">
+        <a href="/" class="navLogo">
+            <img src="bg.png" alt="Crosstecch Logo" class="logoImage" />
+        </a>
+
+        <ul class="navLinks">
+            <li><a href="index.html" target="_top">Home</a></li>
+            <li class="nav-item" data-mega="about"><a href="about.html" target="_top">About Us <span class="caret">&#9662;</span></a></li>
+            <li class="nav-item" data-mega="services"><a href="services.html" target="_top">Services <span class="caret">&#9662;</span></a></li>
+            <li class="nav-item" data-mega="resources"><a href="resource.html" target="_top">Resources <span class="caret">&#9662;</span></a></li>
+            <li class="nav-item" data-mega="blog"><a href="blog.html" target="_top">Blogs <span class="caret">&#9662;</span></a></li>
+            <li class="nav-item" data-mega="product"><a href="Product.html" target="_top">Product <span class="caret">&#9662;</span></a></li>
+            <li class="nav-item" data-mega="contact"><a href="ContactUs.html" target="_top">Contact Us <span class="caret">&#9662;</span></a></li>
+        </ul>
+
+        <!-- ===== MEGA MENUS ===== -->
+        <div class="mega" id="mega-services">
+            <div class="mega-inner">
+                <div class="mega-cols">
+                    <div class="mega-col">
+                        <span class="mega-head">SERVICES</span>
+                        <a href="services.html" target="_top" class="mega-link"><strong>Manual QA Testing</strong><span>Human-driven test cycles for every flow</span></a>
+                        <a href="services.html" target="_top" class="mega-link"><strong>Automation Testing</strong><span>Selenium, Playwright &amp; Cypress at scale</span></a>
+                        <a href="services.html" target="_top" class="mega-link"><strong>DevOps Pipeline</strong><span>CI/CD, Docker &amp; Kubernetes</span></a>
+                    </div>
+                    <div class="mega-col">
+                        <span class="mega-head">SOLUTIONS</span>
+                        <a href="services.html" target="_top" class="mega-link"><strong>Content Engine</strong><span>AI-powered, SEO-ready content</span></a>
+                        <a href="services.html" target="_top" class="mega-link"><strong>Cloud Services</strong><span>AWS, GCP &amp; Azure architecture</span></a>
+                    </div>
+                </div>
+                <div class="mega-feature">
+                    <img src="robo2.png" alt="" class="mega-feature-img" />
+                    <h4>AI-ready QA<br>foundation</h4>
+                    <p class="mega-feature-sub">Test, build &amp; deploy with confidence.</p>
+                    <a href="future.html" target="_top" class="mega-feature-btn">Book a Demo</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mega" id="mega-resources">
+            <div class="mega-inner">
+                <div class="mega-cols">
+                    <div class="mega-col">
+                        <span class="mega-head">RESOURCES</span>
+                        <a href="blog.html" target="_top" class="mega-link"><strong>Blog</strong><span>Latest articles &amp; insights</span></a>
+                        <a href="resource.html" target="_top" class="mega-link"><strong>Case Studies</strong><span>Real-world client results</span></a>
+                        <a href="resource.html" target="_top" class="mega-link"><strong>Documentation</strong><span>Guides &amp; references</span></a>
+                    </div>
+                    <div class="mega-col">
+                        <span class="mega-head">SUPPORT</span>
+                        <a href="ContactUs.html" target="_top" class="mega-link"><strong>Contact Us</strong><span>Talk to our team</span></a>
+                        <a href="about.html" target="_top" class="mega-link"><strong>About CrossTecch</strong><span>Who we are</span></a>
+                    </div>
+                </div>
+                <div class="mega-feature">
+                    <img src="robok.png" alt="" class="mega-feature-img" />
+                    <h4>See what's<br>next</h4>
+                    <p class="mega-feature-sub">A glimpse into CROSSTECCH+.</p>
+                    <a href="future.html" target="_top" class="mega-feature-btn">See the Future</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mega" id="mega-product">
+            <div class="mega-inner">
+                <div class="mega-cols">
+                    <div class="mega-col">
+                        <span class="mega-head">PRODUCTS</span>
+                        <a href="bug-finder.html" target="_top" class="mega-link"><strong>Bug Finder</strong><span>Detect &amp; resolve issues before production</span></a>
+                        <a href="blog-engine.html" target="_top" class="mega-link"><strong>Blog Engine</strong><span>Create &amp; publish content fast</span></a>
+                    </div>
+                    <div class="mega-col">
+                        <span class="mega-head">PLATFORM</span>
+                        <a href="services.html" target="_top" class="mega-link"><strong>QA Cloud</strong><span>Scalable test infrastructure</span></a>
+                        <a href="services.html" target="_top" class="mega-link"><strong>Integrations</strong><span>Plug into your CI/CD</span></a>
+                    </div>
+                </div>
+                <div class="mega-feature">
+                    <img src="bugf.png" alt="" class="mega-feature-img" />
+                    <h4>Build. Test.<br>Deploy.</h4>
+                    <p class="mega-feature-sub">Everything your team needs.</p>
+                    <a href="Product.html" target="_top" class="mega-feature-btn">Explore Products</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mega" id="mega-about">
+            <div class="mega-inner">
+                <div class="mega-cols">
+                    <div class="mega-col">
+                        <span class="mega-head">COMPANY</span>
+                        <a href="about.html" target="_top" class="mega-link"><strong>Who We Are</strong><span>Our story &amp; mission</span></a>
+                        <a href="about.html" target="_top" class="mega-link"><strong>Our Team</strong><span>The people behind CrossTecch</span></a>
+                        <a href="about.html" target="_top" class="mega-link"><strong>Careers</strong><span>Join us &amp; grow</span></a>
+                    </div>
+                    <div class="mega-col">
+                        <span class="mega-head">WHY US</span>
+                        <a href="about.html" target="_top" class="mega-link"><strong>Our Values</strong><span>What drives our work</span></a>
+                        <a href="services.html" target="_top" class="mega-link"><strong>How We Work</strong><span>Process &amp; approach</span></a>
+                    </div>
+                </div>
+                <div class="mega-feature">
+                    <img src="robo2.png" alt="" class="mega-feature-img" />
+                    <h4>Built by<br>builders</h4>
+                    <p class="mega-feature-sub">A team obsessed with quality.</p>
+                    <a href="about.html" target="_top" class="mega-feature-btn">Meet the Team</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mega" id="mega-blog">
+            <div class="mega-inner">
+                <div class="mega-cols">
+                    <div class="mega-col">
+                        <span class="mega-head">LATEST</span>
+                        <a href="blog.html" target="_top" class="mega-link"><strong>Recent Articles</strong><span>Fresh insights every week</span></a>
+                        <a href="blog.html" target="_top" class="mega-link"><strong>Testing &amp; QA</strong><span>Tips, tools &amp; best practices</span></a>
+                        <a href="blog.html" target="_top" class="mega-link"><strong>AI &amp; DevOps</strong><span>Trends shaping the future</span></a>
+                    </div>
+                    <div class="mega-col">
+                        <span class="mega-head">EXPLORE</span>
+                        <a href="resource.html" target="_top" class="mega-link"><strong>Case Studies</strong><span>Real client results</span></a>
+                        <a href="resource.html" target="_top" class="mega-link"><strong>Guides</strong><span>Deep-dive tutorials</span></a>
+                    </div>
+                </div>
+                <div class="mega-feature">
+                    <img src="blogen.png" alt="" class="mega-feature-img" />
+                    <h4>Read.<br>Learn. Grow.</h4>
+                    <p class="mega-feature-sub">Insights for modern teams.</p>
+                    <a href="blog.html" target="_top" class="mega-feature-btn">Visit the Blog</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mega" id="mega-contact">
+            <div class="mega-inner">
+                <div class="mega-cols">
+                    <div class="mega-col">
+                        <span class="mega-head">GET IN TOUCH</span>
+                        <a href="ContactUs.html" target="_top" class="mega-link"><strong>Talk to Sales</strong><span>Discuss your project</span></a>
+                        <a href="ContactUs.html" target="_top" class="mega-link"><strong>Support</strong><span>We're here to help</span></a>
+                        <a href="future.html" target="_top" class="mega-link"><strong>Book a Demo</strong><span>See CrossTecch in action</span></a>
+                    </div>
+                    <div class="mega-col">
+                        <span class="mega-head">REACH US</span>
+                        <a href="ContactUs.html" target="_top" class="mega-link"><strong>Email</strong><span>Drop us a message</span></a>
+                        <a href="ContactUs.html" target="_top" class="mega-link"><strong>Locations</strong><span>Where to find us</span></a>
+                    </div>
+                </div>
+                <div class="mega-feature">
+                    <img src="robok.png" alt="" class="mega-feature-img" />
+                    <h4>Let's build<br>together</h4>
+                    <p class="mega-feature-sub">Start a conversation today.</p>
+                    <a href="ContactUs.html" target="_top" class="mega-feature-btn">Contact Us</a>
+                </div>
+            </div>
+        </div>
+        <div class="navActions">
+            <div class="navCta">Get Started &rarr;</div>
+            <a href="future.html" target="_top" class="futureBtn">See the Future</a>
+        </div>
+        <div class="hamburger" id="heroHamburger" aria-label="Menu" role="button" tabindex="0">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Background -->
+    <div class="fixedBackground"></div>
+
+    <!-- Hero Section -->
+    <section class="heroSection">
+        <div class="typo" id="typoRef">
+            <img src="flew1.png" alt="Flew Logo" class="bgLogo" />
+            <span class="weLine">CROSSTECCH</span>
+            <div class="verbWrap">
+                <span class="verb active" id="v0">BUILD.</span>
+                <span class="verb" id="v1">TEST.</span>
+                <span class="verb" id="v2">DEPLOY.</span>
+            </div>
+            <span class="accentLine"></span>
+        </div>
+        <div class="imageContainer">
+            <img src="girl.png" alt="Cyberpunk Girl" class="girlImage" />
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="productsSection">
+        <img src="flew2.png" alt="Colorful fluid background" class="bgImage" />
+
+        <h1 class="sectionTitle">
+            <span class="silverText">OUR</span> <span class="gradientText">PRODUCTS</span>
+        </h1>
+
+        <div class="grid" id="productsGrid">
+            <!-- Card 1 -->
+            <div class="cardWrapper" id="card1">
+                <div class="card">
+                    <div class="cardImageContainer">
+                        <img src="bugf.png" alt="Bug Finder" class="cardImage" />
+                    </div>
+                    <div class="cardBody">
+                        <h2 class="title">Bug Finder</h2>
+                        <p class="description">Automatically detect and resolve issues before they reach production. Access advanced diagnostics packed with new upgrades.</p>
+                        <ul class="featureList">
+                            <li class="featureItem"><span><strong>1,000+</strong> Testing patterns</span></li>
+                            <li class="featureItem"><span>Built with advanced AI analysis</span></li>
+                        </ul>
+                        <button class="actionBtn">View Bug Finder</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="cardWrapper" id="card2">
+                <div class="card">
+                    <div class="cardImageContainer">
+                        <img src="blogen.png" alt="Blog Engine" class="cardImage" />
+                    </div>
+                    <div class="cardBody">
+                        <h2 class="title">Blog Engine</h2>
+                        <p class="description">Effortlessly manage, create, and publish content with our powerful and intuitive blog engine. Save hours of dev time.</p>
+                        <ul class="featureList">
+                            <li class="featureItem"><span><strong>1,000+</strong> Blog components</span></li>
+                            <li class="featureItem"><span>Mobile Variants of each component</span></li>
+                        </ul>
+                        <button class="actionBtn" onclick="window.top.location.href='blog-engine.html'">View Blog Engine</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Hero Word Cycling Animation
+            const typoRef = document.getElementById("typoRef");
+            let rafId;
+            let timeoutId;
+            let start = null;
+            let typoShown = false;
+            let vIdx = 0;
+            let lastSwap = 0;
+            const verbs = ['v0', 'v1', 'v2'];
+
+            function cycleWord(t) {
+                if (t - lastSwap < 1500) return;
+                lastSwap = t;
+                if (!typoRef) return;
+
+                const currentVerb = typoRef.querySelector(`#${verbs[vIdx]}`);
+                if (currentVerb) currentVerb.classList.remove('active');
+
+                vIdx = (vIdx + 1) % verbs.length;
+
+                timeoutId = setTimeout(() => {
+                    const nextVerb = typoRef.querySelector(`#${verbs[vIdx]}`);
+                    if (nextVerb) nextVerb.classList.add('active');
+                }, 200);
+            }
+
+            function loop(ts) {
+                if (!start) start = ts;
+                const elapsed = ts - start;
+
+                if (elapsed > 600 && !typoShown) {
+                    typoShown = true;
+                    if (typoRef) typoRef.classList.add('visible');
+                    lastSwap = ts + 800;
+                }
+
+                if (typoShown) cycleWord(ts);
+                rafId = requestAnimationFrame(loop);
+            }
+
+            rafId = requestAnimationFrame(loop);
+
+            // 2. Products Section Intersection Observer (Scroll Animation)
+            const productsGrid = document.getElementById("productsGrid");
+            const card1 = document.getElementById("card1");
+            const card2 = document.getElementById("card2");
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (card1) card1.classList.add("animateShuffle1");
+                        if (card2) card2.classList.add("animateShuffle2");
+                        observer.disconnect();
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+
+            if (productsGrid) {
+                observer.observe(productsGrid);
+            }
+        });
+    </script>
+
+    <!-- Mobile menu toggle -->
+    <script>
+        (function() {
+            var hb = document.getElementById('heroHamburger');
+            var nav = document.querySelector('.nav');
+            if (hb && nav) {
+                hb.addEventListener('click', function() {
+                    nav.classList.toggle('open');
+                });
+                nav.querySelectorAll('.navLinks a').forEach(function(a) {
+                    a.addEventListener('click', function() {
+                        nav.classList.remove('open');
+                    });
+                });
+            }
+
+            // Mega-menu hover behaviour
+            var megaItems = document.querySelectorAll('.nav-item[data-mega]');
+
+            function closeMega() {
+                document.querySelectorAll('.mega.open').forEach(function(m) {
+                    m.classList.remove('open');
+                });
+                megaItems.forEach(function(it) {
+                    it.classList.remove('active-mega');
+                });
+            }
+            megaItems.forEach(function(it) {
+                it.addEventListener('mouseenter', function() {
+                    closeMega();
+                    var p = document.getElementById('mega-' + it.getAttribute('data-mega'));
+                    if (p) {
+                        p.classList.add('open');
+                        it.classList.add('active-mega');
+                    }
+                });
+            });
+            document.querySelectorAll('.navLinks li:not(.nav-item)').forEach(function(li) {
+                li.addEventListener('mouseenter', closeMega);
+            });
+            if (nav) nav.addEventListener('mouseleave', closeMega);
+        })();
+    </script>
+
+    <!-- ===== EMBED MODE (sirf index1.html ke andar; standalone par koi asar nahi) ===== -->
+    <script>
+        (function() {
+            if (window.self === window.top) return;
+            var s = document.createElement('style');
+            s.textContent = '.productsSection{min-height:0!important;padding-top:90px!important;padding-bottom:90px!important}.heroSection{min-height:600px}';
+            document.head.appendChild(s);
+
+            function report() {
+                var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                if (h > 0) parent.postMessage({
+                    ctSection: true,
+                    height: h
+                }, '*');
+            }
+            window.__ctReport = report;
+            window.addEventListener('message', function(e) {
+                if (e.data && e.data.ctParentVH) {
+                    var hs = document.querySelector('.heroSection');
+                    if (hs) hs.style.minHeight = e.data.ctParentVH + 'px';
+                    report();
+                }
+            });
+            window.addEventListener('load', function() {
+                report();
+                [200, 600, 1200, 2500].forEach(function(d) {
+                    setTimeout(report, d);
+                });
+            });
+            window.addEventListener('resize', report);
+            if (window.ResizeObserver) {
+                try {
+                    new ResizeObserver(report).observe(document.body);
+                } catch (e) {}
+            }
+        })();
+    </script>
+    <script src="darkmode.js"></script>
+</body>
+
+</html>

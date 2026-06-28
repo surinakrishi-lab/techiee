@@ -1,0 +1,1047 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROSSTECCH Complete Enterprise Architecture Pipeline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --cyan: #06b6d4;
+            --blue: #6366f1;
+            --pink: #ec4899;
+            --violet: #a855f7;
+            --emerald: #10b981;
+            --text: #334155;
+            --muted: #64748b;
+            --border-dormant: #cbd5e1;
+            --font-heading: 'Syne', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+            overflow-x: auto;
+            overflow-y: hidden;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Custom premium horizontal scrollbar */
+        body::-webkit-scrollbar {
+            height: 14px;
+        }
+        body::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 7px;
+        }
+        body::-webkit-scrollbar-thumb {
+            background: rgba(6, 182, 212, 0.3);
+            border-radius: 7px;
+            border: 3px solid var(--bg);
+        }
+        body::-webkit-scrollbar-thumb:hover {
+            background: rgba(6, 182, 212, 0.6);
+        }
+        
+        #pipeline-root {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 7200px;
+            height: 1080px;
+            transform-origin: top left;
+        }
+
+        /* Subtle Cyber Tech Grid matching branding theme */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Fluid background morphing blobs matching homepage fluid art */
+        .bg-blob-1, .bg-blob-2 {
+            position: fixed;
+            z-index: -1;
+            filter: blur(95px);
+            pointer-events: none;
+            opacity: 0.65;
+            transition: opacity 0.4s ease;
+        }
+
+        .bg-blob-1 {
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, rgba(236, 72, 153, 0.08) 50%, transparent 100%);
+            top: -200px;
+            right: 400px;
+            animation: morph-blob-1 20s infinite alternate ease-in-out;
+        }
+
+        .bg-blob-2 {
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(168, 85, 247, 0.05) 60%, transparent 100%);
+            bottom: -300px;
+            left: 400px;
+            animation: morph-blob-2 24s infinite alternate ease-in-out;
+        }
+
+        @keyframes morph-blob-1 {
+            0% { border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%; transform: translate(0, 0) rotate(0deg); }
+            100% { border-radius: 60% 40% 40% 60% / 60% 60% 40% 40%; transform: translate(-40px, 60px) rotate(180deg); }
+        }
+
+        @keyframes morph-blob-2 {
+            0% { border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%; transform: translate(0, 0) rotate(0deg); }
+            100% { border-radius: 30% 70% 70% 30% / 60% 30% 70% 40%; transform: translate(50px, -50px) rotate(-180deg); }
+        }
+
+        /* Ultra Smooth Pipeline Curve Fluid Mechanics */
+        .pipeline-draw {
+            opacity: 0;
+            transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+        }
+
+        /* Fluid ease-out reveal for micro tech metrics */
+        .fade-scale-in {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none; /* Disable interaction when hidden */
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.15), 
+                        opacity 0.5s ease, 
+                        border-color 0.4s ease, 
+                        box-shadow 0.4s ease;
+        }
+
+        /* Ambient Glow States matching light theme */
+        .glow-active {
+            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.35));
+        }
+        
+        .glow-prod {
+            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.4));
+        }
+
+        /* Transparent Hover Zone Columns to trigger mouseleave easily */
+        .hover-zone {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            z-index: 25;
+            background: transparent;
+        }
+
+        /* ── RESPONSIVE SPLIT ── */
+        .desktop-view {
+            display: block;
+        }
+        
+        .mobile-view {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+                height: auto;
+                min-height: 100vh;
+                width: 100%;
+            }
+            .desktop-view {
+                display: none !important;
+            }
+            .mobile-view {
+                display: block;
+            }
+        }
+
+        /* ── MOBILE PIPELINE STYLES (LIGHT THEME) ── */
+        .m-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 28px 20px 8px;
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #0f172a;
+        }
+        
+        .m-header span {
+            background: linear-gradient(90deg, var(--pink), var(--violet), var(--cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .m-pipeline {
+            padding: 16px 16px 48px;
+            position: relative;
+        }
+        
+        /* Mobile timeline track track */
+        .m-pipeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--border-dormant) 0%, rgba(226, 232, 240, 0.3) 100%);
+        }
+        
+        .m-stage {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 28px;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: mSlideIn 0.6s ease forwards;
+        }
+        
+        .m-stage:nth-child(1) { animation-delay: 0.1s; }
+        .m-stage:nth-child(2) { animation-delay: 0.35s; }
+        .m-stage:nth-child(3) { animation-delay: 0.6s; }
+        .m-stage:nth-child(4) { animation-delay: 0.85s; }
+        .m-stage:nth-child(5) { animation-delay: 1.1s; }
+        
+        @keyframes mSlideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .m-dot {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid var(--border-dormant);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.4s, box-shadow 0.4s;
+        }
+        
+        .m-dot.active {
+            border-color: var(--cyan);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.25);
+        }
+        
+        .m-dot.emerald {
+            border-color: var(--emerald);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+        }
+        
+        .m-dot-inner {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-dormant);
+            transition: background-color 0.4s;
+        }
+        
+        .m-dot.active .m-dot-inner {
+            background: var(--cyan);
+        }
+        
+        .m-dot.emerald .m-dot-inner {
+            background: var(--emerald);
+        }
+        
+        .m-card {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid var(--border-dormant);
+            border-radius: 18px;
+            padding: 18px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            transition: border-color 0.4s, box-shadow 0.4s;
+        }
+        
+        .m-card.active {
+            border-color: rgba(6, 182, 212, 0.2);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.06);
+        }
+        
+        .m-card.emerald-active {
+            border-color: rgba(16, 185, 129, 0.2);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.06);
+        }
+        
+        .m-stage-title {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        
+        .m-card.active .m-stage-title {
+            color: var(--cyan);
+        }
+        
+        .m-card.emerald-active .m-stage-title {
+            color: var(--emerald);
+        }
+        
+        .m-main-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        
+        .m-main-detail {
+            font-size: 11.5px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+        
+        .m-subs {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .m-sub {
+            background: #f8fafc;
+            border: 1px solid rgba(0,0,0,0.02);
+            border-radius: 12px;
+            padding: 10px 12px;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .m-sub-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 3px;
+        }
+        
+        .m-sub-detail {
+            font-size: 10px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+        
+        .m-product-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            color: var(--emerald);
+            margin-bottom: 8px;
+        }
+    
+</style>
+</head>
+
+<body>
+
+    <!-- Background Blobs -->
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+
+    <!-- ======================================================= -->
+    <!-- HORIZONTAL CINEMATIC CANVAS CONTAINER (DESKTOP VIEW)   -->
+    <!-- ======================================================= -->
+    <div id="pipeline-root" class="desktop-view relative flex items-center pl-16 pr-24">
+
+        <!-- ======================================================= -->
+        <!-- SVG LAYER: FLUID CONNECTOR PIPES                       -->
+        <!-- ======================================================= -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+            
+            <!-- Base Dormant Infrastructure Pipe Conduit -->
+            <line x1="80" y1="540" x2="6300" y2="540" stroke="var(--border-dormant)" stroke-width="7" stroke-linecap="round" />
+            
+            <!-- Active High-Speed Cyber Fluid Wave Line -->
+            <line id="main-flow-line" x1="80" y1="540" x2="6300" y2="540" stroke="#0ea5e9" stroke-width="6" stroke-dasharray="6200" stroke-dashoffset="0" stroke-linecap="round" class="pipeline-draw glow-active" style="opacity: 1;" />
+
+            <!-- ====================================================== -->
+            <!-- SMOOTH CONNECTIONS: DIRECT TO CARD EDGES (NO OVERLAP)   -->
+            <!-- ====================================================== -->
+
+            <!-- 01 // MANUAL TESTING (Vertical Loop Up) -->
+            <path id="pipe-m-vert" d="M 1500 540 L 1500 435" fill="none" stroke="var(--border-dormant)" stroke-width="4.5" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-active" />
+            <path id="pipe-m-left" d="M 1500 185 L 990 185 Q 950 185 950 155" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+            <path id="pipe-m-right" d="M 1500 185 L 2010 185 Q 2050 185 2050 155" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+
+            <!-- 02 // CLOUD SERVICES (Vertical Loop Down) -->
+            <path id="pipe-c-vert" d="M 2700 540 L 2700 645" fill="none" stroke="var(--border-dormant)" stroke-width="4.5" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-active" />
+            <path id="pipe-c-left" d="M 2700 895 L 2190 895 Q 2150 895 2150 925" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+            <path id="pipe-c-right" d="M 2700 895 L 3210 895 Q 3250 895 3250 925" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+
+            <!-- 03 // DEVOPS ENGINE (Vertical Loop Up) -->
+            <path id="pipe-d-vert" d="M 3900 540 L 3900 435" fill="none" stroke="var(--border-dormant)" stroke-width="4.5" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-active" />
+            <path id="pipe-d-left" d="M 3900 185 L 3390 185 Q 3350 185 3350 155" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+            <path id="pipe-d-right" d="M 3900 185 L 4410 185 Q 4450 185 4450 155" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+
+            <!-- 04 // AI AUTOMATION QA (Vertical Loop Down) -->
+            <path id="pipe-a-vert" d="M 5100 540 L 5100 645" fill="none" stroke="var(--border-dormant)" stroke-width="4.5" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-active" />
+            <path id="pipe-a-left" d="M 5100 895 L 4590 895 Q 4550 895 4550 925" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+            <path id="pipe-a-right" d="M 5100 895 L 5610 895 Q 5650 895 5650 925" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+
+            <!-- 05 // PRODUCTS SHOWCASE (Deep Emerald Symmetrical Compact Paths) -->
+            <path id="pipe-p-up" d="M 6300 540 L 6300 435" fill="none" stroke="var(--border-dormant)" stroke-width="4" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-prod" />
+            <path id="pipe-p-down" d="M 6300 540 L 6300 645" fill="none" stroke="var(--border-dormant)" stroke-width="4" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-prod" />
+        </svg>
+
+        <!-- ======================================================= -->
+        <!-- TRANSPARENT HOVER TRIGGER COLUMNS                       -->
+        <!-- ======================================================= -->
+        <div id="zone-1" class="hover-zone" style="left: 80px; width: 2020px;"></div>
+        <div id="zone-2" class="hover-zone" style="left: 2100px; width: 1200px;"></div>
+        <div id="zone-3" class="hover-zone" style="left: 3300px; width: 1200px;"></div>
+        <div id="zone-4" class="hover-zone" style="left: 4500px; width: 1200px;"></div>
+        <div id="zone-5" class="hover-zone" style="left: 5700px; width: 1400px;"></div>
+
+        <!-- BRANDING LOGO BADGE WITH VECTOR SVG LOGO -->
+        <div id="node-0" class="absolute" style="left: 80px; top: 495px;">
+            <div class="w-[380px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 text-slate-800 font-extrabold tracking-widest text-xl rounded-3xl gap-6 shadow-md transition-all duration-300">
+                <svg class="logo-cross" viewBox="0 0 200 200" width="40" height="40">
+                    <defs>
+                        <linearGradient id="logo-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff007f"/>
+                            <stop offset="50%" stop-color="#aa00ff"/>
+                            <stop offset="100%" stop-color="#00c8ff"/>
+                        </linearGradient>
+                    </defs>
+                    <g transform="translate(100, 100)">
+                        <path d="M-20,-90 C-20,-90 0,-100 20,-90 C40,-50 40,-20 90,-20 C90,-20 100,0 90,20 C50,40 20,40 20,90 C20,90 0,100 -20,90 C-40,50 -40,20 -90,20 C-90,20 -100,0 -90,-20 C-50,-40 -20,-40 -20,-90 Z" fill="url(#logo-grad-1)" />
+                        <path d="M0,-40 Q10,-10 40,0 Q10,10 0,40 Q-10,10 -40,0 Q-10,-10 0,-40 Z" fill="#ffffff" />
+                    </g>
+                </svg>
+                <span>CROSSTECCH</span>
+            </div>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- 01 // MANUAL TESTING STATION + SUB-NODES                -->
+        <!-- ======================================================= -->
+        <div id="node-1" class="absolute" style="left: 1290px; top: 495px; z-index: 40;">
+            <div class="w-[420px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 rounded-3xl text-center font-bold text-xl tracking-[6px] text-slate-500 transition-all duration-300 shadow-md">
+                MANUAL TESTING
+            </div>
+        </div>
+        <!-- Center Core Pillar (Width 500px, Text-2xl/lg) -->
+        <div id="item-m-main" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in font-medium shadow-sm" style="left: 1250px; top: 215px;">
+            <!-- Connector node split up -->
+            <div class="absolute -top-[60px] left-1/2 -translate-x-1/2 w-0.5 h-[60px] bg-cyan-500"></div>
+            <div class="text-sky-500 font-extrabold mb-4 border-b border-slate-100 pb-4 text-2xl">Functional Testing</div>
+            <div class="text-slate-600 text-lg space-y-2 leading-relaxed">
+                • Sanity & Smoke Checks<br>• System Integration (SIT)<br>• End-to-End User Journeys
+            </div>
+        </div>
+        <!-- Left Sub-Branch (Width 500px, Text-xl/base) -->
+        <div id="item-m-left" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 700px; top: 15px;">
+            <div class="text-slate-700 font-bold mb-3 text-xl">Performance Core</div>
+            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
+                • High Load & Stress Limits<br>• Spike & Scalability Audits
+            </div>
+        </div>
+        <!-- Right Sub-Branch (Width 500px) -->
+        <div id="item-m-right" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 1800px; top: 15px;">
+            <div class="text-slate-700 font-bold mb-3 text-xl">Non-Functional QA</div>
+            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
+                • Exploratory Bug Hunting<br>• Cross-Browser Compatibility
+            </div>
+        </div>
+
+
+        <!-- ======================================================= -->
+        <!-- 02 // CLOUD SERVICES STATION + SUB-NODES                -->
+        <!-- ======================================================= -->
+        <div id="node-2" class="absolute" style="left: 2490px; top: 495px; z-index: 40;">
+            <div class="w-[420px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 rounded-3xl text-center font-bold text-xl tracking-[6px] text-slate-500 transition-all duration-300 shadow-md">
+                CLOUD SERVICES
+            </div>
+        </div>
+        <!-- Center Core Pillar -->
+        <div id="item-c-main" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in font-medium shadow-sm" style="left: 2450px; top: 645px;">
+            <!-- Connector node split down -->
+            <div class="absolute -bottom-[60px] left-1/2 -translate-x-1/2 w-0.5 h-[60px] bg-cyan-500"></div>
+            <div class="text-sky-500 font-extrabold mb-4 border-b border-slate-100 pb-4 text-2xl">Multi-Cloud Provisioning</div>
+            <div class="text-slate-600 text-lg space-y-2 leading-relaxed">
+                • AWS, Azure & GCP Nodes<br>• Serverless Architectures<br>• Hybrid Environment Setup
+            </div>
+        </div>
+        <!-- Left Sub-Branch -->
+        <div id="item-c-left" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 1900px; top: 925px;">
+            <div class="text-slate-700 font-bold mb-3 text-xl">Migration Engine</div>
+            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
+                • Zero-Downtime Database Shift<br>• Legacy-to-Cloud Lift & Shift
+            </div>
+        </div>
+        <!-- Right Sub-Branch -->
+        <div id="item-c-right" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 3000px; top: 925px;">
+            <div class="text-slate-700 font-bold mb-3 text-xl">Governance & IAM</div>
+            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
+                • Role-Based Access Gateways<br>• Real-time Cloud Cost Audits
+            </div>
+        </div>
+
+
+        <!-- ======================================================= -->
+        <!-- 03 // DEVOPS ENGINE STATION + SUB-NODES                 -->
+        <!-- ======================================================= -->
+        <div id="node-3" class="absolute" style="left: 3690px; top: 495px; z-index: 40;">
+            <div class="w-[420px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 rounded-3xl text-center font-bold text-xl tracking-[6px] text-slate-500 transition-all duration-300 shadow-md">
+                DEVOPS ENGINE
+            </div>
+        </div>
+        <!-- Center Core Pillar -->
+        <div id="item-d-main" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in font-medium shadow-sm" style="left: 3650px; top: 215px;">
+            <div class="absolute -top-[60px] left-1/2 -translate-x-1/2 w-0.5 h-[60px] bg-cyan-500"></div>
+            <div class="text-sky-500 font-extrabold mb-4 border-b border-slate-100 pb-4 text-2xl">Container Infrastructure</div>
+            <div class="text-slate-600 text-lg space-y-2 leading-relaxed">
+                • Kubernetes Cluster Matrix<br>• Dockerized Microservices<br>• Service Mesh Routing
+            </div>
+        </div>
+        <!-- Left Sub-Branch -->
+        <div id="item-d-left" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 3100px; top: 15px;">
+            <div class="text-slate-700 font-bold mb-3 text-xl">GitOps CI/CD</div>
+            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
+                • Automated Blue-Green Deploy<br>• Declarative IaC (Terraform)
+            </div>
+        </div>
+        <!-- Right Sub-Branch -->
+        <div id="item-d-right" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 4200px; top: 15px;">
+            <div class="text-slate-700 font-bold mb-3 text-xl">Telemetry Systems</div>
+            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
+                • Prometheus Live Alerting<br>• Distributed Tracing (Jaeger)
+            </div>
+        </div>
+
+
+        <!-- ======================================================= -->
+        <!-- 04 // AI AUTOMATION QA STATION + SUB-NODES              -->
+        <!-- ======================================================= -->
+        <div id="node-4" class="absolute" style="left: 4890px; top: 495px; z-index: 40;">
+            <div class="w-[420px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 rounded-3xl text-center font-bold text-xl tracking-[6px] text-slate-500 transition-all duration-300 shadow-md">
+                AI AUTOMATION QA
+            </div>
+        </div>
+        <!-- Center Core Pillar -->
+        <div id="item-a-main" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in font-medium shadow-sm" style="left: 4850px; top: 645px;">
+            <div class="absolute -bottom-[60px] left-1/2 -translate-x-1/2 w-0.5 h-[60px] bg-cyan-500"></div>
+            <div class="text-sky-500 font-extrabold mb-4 border-b border-slate-100 pb-4 text-2xl">🤖 Autonomous Execution</div>
+            <div class="text-slate-600 text-lg space-y-2 leading-relaxed">
+                • Self-Healing Web Locators<br>• Playwright & Selenium Grid<br>• Parallel Multi-threading
+            </div>
+        </div>
+        <!-- Left Sub-Branch -->
+        <div id="item-a-left" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 4300px; top: 925px;">
+            <div class="text-slate-700 font-bold mb-3 text-xl">Security & APIs</div>
+            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
+                • RestAssured Automation<br>• Vulnerability & OWASP Scans
+            </div>
+        </div>
+        <!-- Right Sub-Branch -->
+        <div id="item-a-right" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 5400px; top: 925px;">
+            <div class="text-slate-700 font-bold mb-3 text-xl">Advanced Reporting</div>
+            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
+                • AI Defect Categorization<br>• CI Dashboard Integrations
+            </div>
+        </div>
+
+
+        <!-- ======================================================= -->
+        <!-- 05 // PROPRIETARY PRODUCTS CONTROL GATE                 -->
+        <!-- ======================================================= -->
+        <div id="node-5" class="absolute" style="left: 6090px; top: 495px; z-index: 40;">
+            <div id="product-hub-badge" class="w-[420px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 rounded-3xl text-center text-xl font-bold tracking-[6px] text-slate-500 transition-all duration-300 shadow-md">
+                SYSTEM AGGREGATION...
+            </div>
+        </div>
+
+        <!-- HIGH-TECH PRODUCT CARD 1 (TOP - top: 195px) -->
+        <div id="item-p-left" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in transition-all duration-1000 shadow-sm" style="left: 6050px; top: 195px;">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4.5">
+                <span class="text-xl font-bold text-slate-800 tracking-wide">PROMPT BUG FINDER</span>
+                <span class="text-[10px] bg-emerald-50 border border-emerald-200 text-emerald-600 px-2.5 py-1 rounded font-mono font-bold">PROPRIETARY</span>
+            </div>
+            <p class="text-base text-slate-500 leading-relaxed font-normal">
+                Scans code repositories using natural language prompts to detect and auto-patch live logical exceptions and structural memory leaks.
+            </p>
+            <div class="mt-5 pt-3 border-t border-slate-100 flex justify-between items-center text-[10px] text-emerald-500 font-mono">
+                <span>SYSTEM // ACTIVE</span>
+                <span>VER 2.6</span>
+            </div>
+        </div>
+
+        <!-- HIGH-TECH PRODUCT CARD 2 (BOTTOM - top: 645px) -->
+        <div id="item-p-right" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in transition-all duration-1000 shadow-sm" style="left: 6050px; top: 645px;">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4.5">
+                <span class="text-xl font-bold text-slate-800 tracking-wide">BLOG CRAFT AI</span>
+                <span class="text-[10px] bg-emerald-50 border border-emerald-200 text-emerald-600 px-2.5 py-1 rounded font-mono font-bold">AUTOMATION</span>
+            </div>
+            <p class="text-base text-slate-500 leading-relaxed font-normal">
+                Evaluates your system logs, test automation metrics, and structural architecture codebases to generate tech updates and release documentation.
+            </p>
+            <div class="mt-5 pt-3 border-t border-slate-100 flex justify-between items-center text-[10px] text-emerald-500 font-mono">
+                <span>SYSTEM // ACTIVE</span>
+                <span>VER 1.2</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- MOBILE VERTICAL PIPELINE VIEW                           -->
+    <!-- ======================================================= -->
+    <div class="mobile-view tech-grid min-h-screen relative z-10">
+
+        <!-- Mobile Header with Company Logo -->
+        <div class="m-header">
+            <svg class="logo-cross" viewBox="0 0 200 200" width="26" height="26">
+                <g transform="translate(100, 100)">
+                    <path d="M-20,-90 C-20,-90 0,-100 20,-90 C40,-50 40,-20 90,-20 C90,-20 100,0 90,20 C50,40 20,40 20,90 C20,90 0,100 -20,90 C-40,50 -40,20 -90,20 C-90,20 -100,0 -90,-20 C-50,-40 -20,-40 -20,-90 Z" fill="url(#logo-grad-1)" />
+                    <path d="M0,-40 Q10,-10 40,0 Q10,10 0,40 Q-10,10 -40,0 Q-10,-10 0,-40 Z" fill="#ffffff" />
+                </g>
+            </svg>
+            <span>CROSSTECCH</span>
+        </div>
+        <p style="text-align:center;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;padding-bottom:24px;font-weight:700;">Enterprise Architecture Pipeline</p>
+
+        <div class="m-pipeline">
+
+            <!-- 01 MANUAL TESTING -->
+            <div class="m-stage">
+                <div class="m-dot active">
+                    <div class="m-dot-inner"></div>
+                </div>
+                <div class="m-card active">
+                    <div class="m-stage-title">01 · Manual Testing</div>
+                    <div class="m-main-label">Functional Testing</div>
+                    <div class="m-main-detail">Sanity &amp; Smoke Checks · System Integration (SIT) · End-to-End User Journeys</div>
+                    <div class="m-subs">
+                        <div class="m-sub">
+                            <div class="m-sub-title">Performance Core</div>
+                            <div class="m-sub-detail">High Load &amp; Stress · Spike &amp; Scalability Audits</div>
+                        </div>
+                        <div class="m-sub">
+                            <div class="m-sub-title">Non-Functional QA</div>
+                            <div class="m-sub-detail">Exploratory Bug Hunting · Cross-Browser Compatibility</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 02 CLOUD SERVICES -->
+            <div class="m-stage">
+                <div class="m-dot active">
+                    <div class="m-dot-inner"></div>
+                </div>
+                <div class="m-card active">
+                    <div class="m-stage-title">02 · Cloud Services</div>
+                    <div class="m-main-label">Multi-Cloud Provisioning</div>
+                    <div class="m-main-detail">AWS, Azure &amp; GCP Nodes · Serverless Architectures · Hybrid Environment Setup</div>
+                    <div class="m-subs">
+                        <div class="m-sub">
+                            <div class="m-sub-title">Migration Engine</div>
+                            <div class="m-sub-detail">Zero-Downtime DB Shift · Legacy-to-Cloud Lift &amp; Shift</div>
+                        </div>
+                        <div class="m-sub">
+                            <div class="m-sub-title">Governance &amp; IAM</div>
+                            <div class="m-sub-detail">Role-Based Access Gateways · Cloud Cost Audits</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 03 DEVOPS ENGINE -->
+            <div class="m-stage">
+                <div class="m-dot active">
+                    <div class="m-dot-inner"></div>
+                </div>
+                <div class="m-card active">
+                    <div class="m-stage-title">03 · DevOps Engine</div>
+                    <div class="m-main-label">Container Infrastructure</div>
+                    <div class="m-main-detail">Kubernetes Cluster Matrix · Dockerized Microservices · Service Mesh Routing</div>
+                    <div class="m-subs">
+                        <div class="m-sub">
+                            <div class="m-sub-title">GitOps CI/CD</div>
+                            <div class="m-sub-detail">Blue-Green Deploy · Declarative IaC (Terraform)</div>
+                        </div>
+                        <div class="m-sub">
+                            <div class="m-sub-title">Telemetry Systems</div>
+                            <div class="m-sub-detail">Prometheus Alerting · Distributed Tracing (Jaeger)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 04 AI AUTOMATION QA -->
+            <div class="m-stage">
+                <div class="m-dot active">
+                    <div class="m-dot-inner"></div>
+                </div>
+                <div class="m-card active">
+                    <div class="m-stage-title">04 · AI Automation QA</div>
+                    <div class="m-main-label">🤖 Autonomous Execution</div>
+                    <div class="m-main-detail">Self-Healing Web Locators · Playwright &amp; Selenium Grid · Parallel Multi-threading</div>
+                    <div class="m-subs">
+                        <div class="m-sub">
+                            <div class="m-sub-title">Security &amp; APIs</div>
+                            <div class="m-sub-detail">RestAssured Automation · OWASP Vulnerability Scans</div>
+                        </div>
+                        <div class="m-sub">
+                            <div class="m-sub-title">Advanced Reporting</div>
+                            <div class="m-sub-detail">AI Defect Categorization · CI Dashboard Integrations</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 05 PRODUCTS -->
+            <div class="m-stage">
+                <div class="m-dot emerald">
+                    <div class="m-dot-inner"></div>
+                </div>
+                <div class="m-card emerald-active">
+                    <div class="m-stage-title">✨ CrossTecch Products</div>
+                    <div class="m-subs" style="margin-top:0;flex-direction:column;">
+                        <div class="m-sub" style="min-width:unset; margin-bottom: 10px;">
+                            <div class="m-product-badge">PROPRIETARY</div>
+                            <div class="m-main-label" style="margin-bottom:4px;">PROMPT BUG FINDER</div>
+                            <div class="m-sub-detail">Scans code repositories using natural language prompts to detect and auto-patch live logical exceptions and structural memory leaks.</div>
+                            <div style="font-size:9px;color:var(--emerald);font-family:monospace;margin-top:8px;font-weight:700;">SYSTEM // ACTIVE · VER 2.6</div>
+                        </div>
+                        <div class="m-sub" style="min-width:unset;">
+                            <div class="m-product-badge">AUTOMATION</div>
+                            <div class="m-main-label" style="margin-bottom:4px;">BLOG CRAFT AI</div>
+                            <div class="m-sub-detail">Evaluates system logs, test automation metrics, and structural architecture codebases to generate tech updates and release documentation.</div>
+                            <div style="font-size:9px;color:var(--emerald);font-family:monospace;margin-top:8px;font-weight:700;">SYSTEM // ACTIVE · VER 1.2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- INTERACTIVE HOVER-DRIVEN PIPELINE ENGINE                -->
+    <!-- ======================================================= -->
+    <script>
+        // True when this page is shown inside an iframe (e.g. on index.html)
+        const IS_EMBED = (window.self !== window.top);
+
+        // DOM Elements mapping for interactive hover states
+        const zones = {
+            1: {
+                trigger: document.getElementById('zone-1'),
+                node: document.getElementById('node-1').firstElementChild,
+                pipes: [
+                    { el: document.getElementById('pipe-m-vert'), maxOffset: 105 },
+                    { el: document.getElementById('pipe-m-left'), maxOffset: 580 },
+                    { el: document.getElementById('pipe-m-right'), maxOffset: 580 }
+                ],
+                cards: [
+                    document.getElementById('item-m-main'),
+                    document.getElementById('item-m-left'),
+                    document.getElementById('item-m-right')
+                ],
+                color: '#0ea5e9',
+                glow: '0 16px 40px rgba(14, 165, 233, 0.25)'
+            },
+            2: {
+                trigger: document.getElementById('zone-2'),
+                node: document.getElementById('node-2').firstElementChild,
+                pipes: [
+                    { el: document.getElementById('pipe-c-vert'), maxOffset: 105 },
+                    { el: document.getElementById('pipe-c-left'), maxOffset: 580 },
+                    { el: document.getElementById('pipe-c-right'), maxOffset: 580 }
+                ],
+                cards: [
+                    document.getElementById('item-c-main'),
+                    document.getElementById('item-c-left'),
+                    document.getElementById('item-c-right')
+                ],
+                color: '#0ea5e9',
+                glow: '0 16px 40px rgba(14, 165, 233, 0.25)'
+            },
+            3: {
+                trigger: document.getElementById('zone-3'),
+                node: document.getElementById('node-3').firstElementChild,
+                pipes: [
+                    { el: document.getElementById('pipe-d-vert'), maxOffset: 105 },
+                    { el: document.getElementById('pipe-d-left'), maxOffset: 580 },
+                    { el: document.getElementById('pipe-d-right'), maxOffset: 580 }
+                ],
+                cards: [
+                    document.getElementById('item-d-main'),
+                    document.getElementById('item-d-left'),
+                    document.getElementById('item-d-right')
+                ],
+                color: '#0ea5e9',
+                glow: '0 16px 40px rgba(14, 165, 233, 0.25)'
+            },
+            4: {
+                trigger: document.getElementById('zone-4'),
+                node: document.getElementById('node-4').firstElementChild,
+                pipes: [
+                    { el: document.getElementById('pipe-a-vert'), maxOffset: 105 },
+                    { el: document.getElementById('pipe-a-left'), maxOffset: 580 },
+                    { el: document.getElementById('pipe-a-right'), maxOffset: 580 }
+                ],
+                cards: [
+                    document.getElementById('item-a-main'),
+                    document.getElementById('item-a-left'),
+                    document.getElementById('item-a-right')
+                ],
+                color: '#0ea5e9',
+                glow: '0 16px 40px rgba(14, 165, 233, 0.25)'
+            },
+            5: {
+                trigger: document.getElementById('zone-5'),
+                node: document.getElementById('product-hub-badge'),
+                pipes: [
+                    { el: document.getElementById('pipe-p-up'), maxOffset: 105 },
+                    { el: document.getElementById('pipe-p-down'), maxOffset: 105 }
+                ],
+                cards: [
+                    document.getElementById('item-p-left'),
+                    document.getElementById('item-p-right')
+                ],
+                color: 'var(--emerald)',
+                glow: '0 16px 45px rgba(16, 185, 129, 0.4)',
+                emerald: true
+            }
+        };
+
+        // Reset all sections to completely hidden dormant state (opacity: 0, pointer-events: none)
+        function resetSection(zone) {
+            // Dormant Node
+            zone.node.style.borderColor = 'var(--border-dormant)';
+            zone.node.style.borderWidth = '3px';
+            zone.node.style.color = 'var(--muted)';
+            zone.node.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.02)';
+            if (zone.emerald) {
+                zone.node.style.backgroundColor = '#ffffff';
+                zone.node.innerHTML = "SYSTEM AGGREGATION...";
+            }
+
+            // Dormant Pipes
+            zone.pipes.forEach(p => {
+                p.el.style.strokeDashoffset = p.maxOffset;
+                p.el.style.opacity = '0';
+                p.el.setAttribute('stroke', 'var(--border-dormant)');
+                p.el.setAttribute('stroke-width', p.el.id.includes('vert') ? '4.5' : '3.5');
+            });
+
+            // Dormant Cards - Completely Hidden (No blur, no opacity 0.35)
+            zone.cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                card.style.borderColor = 'var(--border-dormant)';
+                card.style.boxShadow = 'none';
+                card.style.pointerEvents = 'none';
+            });
+        }
+
+        // Activate specified section on hover (Full opacity, active borders, pipeline glow)
+        function activateSection(zone) {
+            // Active Node
+            zone.node.style.borderColor = zone.color;
+            zone.node.style.color = zone.emerald ? '#ffffff' : '#0f172a';
+            zone.node.style.boxShadow = zone.glow;
+            if (zone.emerald) {
+                zone.node.style.backgroundColor = '#059669'; // Forest Emerald
+                zone.node.innerHTML = "✨ CROSSTECCH PRODUCTS";
+            }
+
+            // Active Pipes (Change pipeline color to active blue/emerald & flow energy)
+            zone.pipes.forEach(p => {
+                p.el.style.strokeDashoffset = '0';
+                p.el.style.opacity = '1';
+                p.el.setAttribute('stroke', zone.color);
+                p.el.setAttribute('stroke-width', p.el.id.includes('vert') ? '6.5' : '5.5');
+            });
+
+            // Active Cards (Pop open, scale to 1.02, full opacity)
+            zone.cards.forEach((card, i) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1.02)';
+                    card.style.borderColor = zone.color;
+                    card.style.boxShadow = zone.emerald 
+                        ? '0 30px 60px rgba(16, 185, 129, 0.12)' 
+                        : '0 25px 50px rgba(14, 165, 233, 0.16)';
+                    card.style.pointerEvents = 'auto'; // Enable interactions when shown
+                }, i * 100);
+            });
+        }
+
+        // Reset all zones initially
+        Object.keys(zones).forEach(key => {
+            resetSection(zones[key]);
+        });
+
+        // Keep Main horizontal Line fully charged
+        document.getElementById('main-flow-line').style.strokeDashoffset = '0';
+
+        // FIT TO SCREEN (desktop scale calculation - horizontal scroll allowed, fits browser height)
+        function fitToScreen() {
+            if (IS_EMBED) return; // embed sizing handled by embed-mode script below
+            if (window.innerWidth <= 768) return;
+            var root = document.getElementById('pipeline-root');
+            var scaleY = window.innerHeight / 1080; // Fits 1080px canvas height perfectly
+            var scale = Math.min(1.2, scaleY);
+            var offsetX = Math.max(0, (window.innerWidth - 7200 * scale) / 2);
+            var offsetY = Math.max(0, (window.innerHeight - 1080 * scale) / 2);
+            root.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px) scale(' + scale + ')';
+            
+            document.body.style.overflowX = 'auto';
+            document.body.style.overflowY = 'hidden';
+        }
+        fitToScreen();
+
+        // SCROLL-DRIVEN DYNAMIC ACTIVATION (Stations open as they slide into view)
+        function handleScrollActivation() {
+            if (window.innerWidth <= 768) return;
+            // When embedded, activation is driven by scroll progress sent from the parent
+            if (IS_EMBED) return;
+
+            var scrollX = window.scrollX || window.pageXOffset;
+            var viewportWidth = window.innerWidth;
+            var scaleY = window.innerHeight / 1080;
+            var scale = Math.min(1.2, scaleY);
+            
+            // Map viewport center back to virtual canvas coordinates
+            var virtualCenter = (scrollX + viewportWidth / 2) / scale;
+            
+            Object.keys(zones).forEach(key => {
+                var zone = zones[key];
+                var center = 1500 + (key - 1) * 1200; // 1500, 2700, 3900, 5100, 6300
+                
+                // Calculate distance from screen focus center
+                var distance = Math.abs(virtualCenter - center);
+                var isFirstStationOnStart = (key == 1 && scrollX < 150);
+                
+                // Activate only when the station is near the screen focus (center)
+                if (distance < 550 || isFirstStationOnStart) {
+                    activateSection(zone);
+                } else {
+                    resetSection(zone);
+                }
+            });
+        }
+
+        // Bind events
+        window.addEventListener('scroll', handleScrollActivation);
+        window.addEventListener('load', handleScrollActivation);
+        window.addEventListener('resize', () => {
+            fitToScreen();
+            handleScrollActivation();
+        });
+
+        // TRANSLATE VERTICAL SCROLL (WHEEL) TO HORIZONTAL SCROLL
+        window.addEventListener('wheel', function(e) {
+            if (IS_EMBED) return; // inside index.html: don't hijack scroll (was trapping the page)
+            if (window.innerWidth <= 768) return; // Keep vertical scrolling on mobile
+            if (e.deltaY !== 0) {
+                // Scroll horizontally instead of vertically
+                window.scrollBy(e.deltaY * 1.2, 0);
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+
+    <!-- ===== EMBED MODE: scroll-driven horizontal pipeline (index.html) ===== -->
+    <script>
+        (function () {
+            if (window.self === window.top) return;
+            var root = document.getElementById('pipeline-root');
+            var CANVAS_W = 7200, CANVAS_H = 1080;
+            var progress = 0, scale = 1, travel = 0;
+
+            function reportHeight() {
+                var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                if (h > 0) parent.postMessage({ ctSection: true, height: h }, '*');
+            }
+
+            function applyProgress() {
+                if (!root || window.innerWidth <= 768) return;
+                root.style.transformOrigin = 'top left';
+                root.style.transform = 'translate(' + (-progress * travel) + 'px, 0px) scale(' + scale + ')';
+                // jis station par focus hai use active karo, baki dormant
+                if (typeof zones !== 'undefined') {
+                    var virtualCenter = (progress * travel + window.innerWidth / 2) / scale;
+                    Object.keys(zones).forEach(function (key) {
+                        var center = 1500 + (key - 1) * 1200;
+                        if (Math.abs(virtualCenter - center) < 750) activateSection(zones[key]);
+                        else resetSection(zones[key]);
+                    });
+                }
+            }
+
+            function layout() {
+                if (window.innerWidth <= 768) {
+                    document.body.style.height = 'auto';
+                    document.body.style.overflow = 'visible';
+                    if (root) root.style.transform = 'none';
+                    reportHeight();
+                    return;
+                }
+                var vw = window.innerWidth, vh = window.innerHeight;
+                scale = vh / CANVAS_H;                       // poori height fit (no extra space)
+                travel = Math.max(0, CANVAS_W * scale - vw); // kitna horizontally scroll karna hai
+                document.body.style.height = vh + 'px';
+                document.body.style.overflow = 'hidden';
+                applyProgress();
+            }
+
+            window.addEventListener('message', function (e) {
+                if (e.data && typeof e.data.ctFlowProgress === 'number') {
+                    progress = Math.max(0, Math.min(1, e.data.ctFlowProgress));
+                    applyProgress();
+                }
+            });
+
+            window.addEventListener('load', function () {
+                layout();
+                [200, 600, 1200].forEach(function (d) { setTimeout(layout, d); });
+            });
+            window.addEventListener('resize', layout);
+        })();
+    </script>
+
+    <script src="darkmode.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Frugal</title>
+
+  <!-- React + Babel (CDN, no build step) -->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green-900: #14301f;
+      --green-800: #1c3a2a;
+      --green-700: #285a3c;
+      --green-600: #2f6b45;
+      --soft: #e4efe0;
+      --soft-2: #d9e8d3;
+      --ink: #1b2a20;
+      --muted: #5d6b61;
+      --line: rgba(20, 48, 31, 0.14);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    /* Animated silver background */
+    body {
+      color: var(--ink);
+      min-height: 100vh;
+      background: linear-gradient(120deg, #f3f5f8 0%, #c9cfd7 30%, #aab1bc 50%, #c9cfd7 70%, #f3f5f8 100%);
+      background-size: 300% 300%;
+      background-attachment: fixed;
+      animation: silverShift 22s ease-in-out infinite;
+    }
+    @keyframes silverShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal--in { opacity: 1; transform: translateY(0); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.9rem; font-weight: 600; border-radius: 999px;
+      border: 1px solid transparent; padding: 0.7rem 1.4rem;
+      cursor: pointer; text-decoration: none; white-space: nowrap;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn--solid { background: var(--green-800); color: #fff; box-shadow: 0 8px 20px -8px rgba(20, 48, 31, 0.7); }
+    .btn--solid:hover { transform: translateY(-2px); background: var(--green-700); }
+    .btn--ghost { background: transparent; color: var(--green-800); border-color: var(--line); }
+    .btn--ghost:hover { background: rgba(255, 255, 255, 0.6); }
+    .btn--light { background: #fff; color: var(--green-800); }
+    .btn--light:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.25); }
+    .btn.big { font-size: 1rem; padding: 0.85rem 2rem; }
+
+    /* Nav */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: saturate(180%) blur(16px);
+      -webkit-backdrop-filter: saturate(180%) blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    }
+    .nav__inner {
+      max-width: 1180px; margin: 0 auto; height: 110px; padding: 0 1.5rem;
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .nav__brand { display: inline-flex; align-items: center; text-decoration: none; }
+    .nav__brand .logo-img { height: 100px; width: auto; object-fit: contain; display: block; }
+    .nav__links { list-style: none; display: flex; gap: 1.6rem; margin-left: auto; }
+    .nav__links a { font-size: 0.9rem; font-weight: 500; color: var(--ink); text-decoration: none; opacity: 0.8; transition: opacity 0.2s ease, color 0.2s ease; }
+    .nav__links a:hover { opacity: 1; color: var(--green-700); }
+    .nav__actions { margin-left: auto; display: flex; gap: 0.6rem; }
+    @media (max-width: 720px) { .nav__links { display: none; } }
+
+    /* Sheet */
+    .sheet {
+      max-width: 1180px; margin: 2.2rem auto;
+      padding: clamp(1.6rem, 4vw, 3.4rem); border-radius: 32px;
+      background: rgba(247, 250, 246, 0.82); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 30px 70px -30px rgba(20, 48, 31, 0.4);
+    }
+    /* Full-bleed: fills the whole viewport */
+    .sheet--full {
+      max-width: none; width: 100%; margin: 0; border-radius: 0;
+      min-height: 100vh; border: none; box-shadow: none;
+      padding: clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 6vw, 5rem);
+    }
+
+    .foot { text-align: center; padding: 1.5rem; }
+    .foot p { font-size: 0.82rem; color: #5b6470; }
+
+    /* Modal base */
+    .modal {
+      position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
+      padding: 1.5rem; background: rgba(20, 48, 31, 0.45); backdrop-filter: blur(6px);
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .modal__card {
+      position: relative; width: min(560px, 100%); max-height: 88vh; overflow-y: auto;
+      background: #fff; border-radius: 26px; padding: 2.4rem;
+      box-shadow: 0 40px 80px -24px rgba(20, 48, 31, 0.6);
+      animation: popUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes popUp { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .modal__close {
+      position: absolute; top: 1.1rem; right: 1.1rem; width: 36px; height: 36px;
+      border-radius: 50%; border: none; background: var(--soft); color: var(--green-800);
+      font-size: 0.9rem; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease;
+      display: grid; place-items: center;
+    }
+    .modal__close:hover { background: var(--soft-2); transform: rotate(90deg); }
+
+    /* ===== Blog ===== */
+    /* Featured */
+    .feat { display: grid; grid-template-columns: 1.25fr 1fr; gap: 2.4rem; align-items: center; margin: 0.5rem 0 3rem; }
+    .feat__media {
+      position: relative; border: 0; padding: 0; cursor: pointer; border-radius: 22px; overflow: hidden;
+      background: var(--soft); box-shadow: 0 24px 50px -22px rgba(20, 48, 31, 0.55);
+    }
+    .feat__media img { width: 100%; height: 420px; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+    .feat__media:hover img { transform: scale(1.05); }
+    .feat__badge {
+      position: absolute; top: 1rem; left: 1rem; background: rgba(255, 255, 255, 0.92);
+      color: var(--green-700); font-size: 0.78rem; font-weight: 700; padding: 0.35rem 0.85rem; border-radius: 999px;
+    }
+    .feat__arrow {
+      position: absolute; right: 1rem; bottom: 1rem; width: 48px; height: 48px; display: grid; place-items: center;
+      border-radius: 50%; background: rgba(255, 255, 255, 0.92); color: var(--green-800); transition: transform 0.2s ease;
+    }
+    .feat__media:hover .feat__arrow { transform: translateX(4px); }
+    .feat__arrow svg { width: 22px; height: 22px; }
+    .feat__title { font-size: clamp(1.7rem, 3.5vw, 2.5rem); font-weight: 800; letter-spacing: -1px; line-height: 1.15; color: var(--green-900); margin-bottom: 1rem; }
+    .feat__copy { font-size: 1rem; line-height: 1.65; color: var(--muted); }
+
+    /* Toolbar */
+    .blog-tools { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin: 0.5rem 0 1.4rem; }
+    .blog-tools__title { font-size: 1.5rem; font-weight: 800; color: var(--green-900); }
+    .blog-tools__controls { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+    .search { position: relative; display: inline-flex; align-items: center; }
+    .search__icon { position: absolute; left: 0.8rem; width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
+    .search input {
+      font: inherit; padding: 0.65rem 0.9rem 0.65rem 2.4rem; border: 1px solid var(--line);
+      border-radius: 999px; background: rgba(255, 255, 255, 0.7); width: 240px; outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .search input:focus { border-color: var(--green-600); box-shadow: 0 0 0 4px rgba(47, 107, 69, 0.14); }
+    .select { font: inherit; padding: 0.65rem 1rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 255, 0.7); cursor: pointer; outline: none; }
+    .select:focus { border-color: var(--green-600); box-shadow: 0 0 0 4px rgba(47, 107, 69, 0.14); }
+
+    /* Chips */
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .chip {
+      font: inherit; font-size: 0.85rem; font-weight: 600; padding: 0.45rem 0.95rem; border-radius: 999px;
+      border: 1px solid var(--line); background: rgba(255, 255, 255, 0.6); color: var(--muted); cursor: pointer; transition: 0.18s;
+    }
+    .chip:hover { color: var(--green-700); border-color: var(--green-600); }
+    .chip--on { background: var(--green-800); border-color: var(--green-800); color: #fff; }
+
+    /* Cards */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.2rem 1.8rem; }
+    .bcard { cursor: pointer; display: flex; flex-direction: column; opacity: 0; transform: translateY(14px); animation: cardRise 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes cardRise { to { opacity: 1; transform: none; } }
+    .bcard__media { border-radius: 16px; overflow: hidden; aspect-ratio: 16 / 10; background: var(--soft); }
+    .bcard__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+    .bcard:hover .bcard__media img { transform: scale(1.06); }
+    .bcard__tag { display: inline-block; align-self: flex-start; color: var(--green-700); font-weight: 700; font-size: 0.8rem; margin: 1rem 0 0.4rem; }
+    .bcard__title {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 0.6rem;
+      font-size: 1.15rem; font-weight: 800; letter-spacing: -0.3px; color: var(--green-900); line-height: 1.3; margin-bottom: 0.5rem;
+    }
+    .bcard__arrow { flex: none; width: 20px; height: 20px; color: var(--green-900); transition: transform 0.2s; }
+    .bcard:hover .bcard__arrow { transform: translate(3px, -3px); }
+    .bcard__excerpt { color: var(--muted); font-size: 0.95rem; line-height: 1.55; margin-bottom: 1rem; }
+    .bcard__meta { display: flex; align-items: center; gap: 0.55rem; margin-top: auto; }
+    .bcard__avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
+    .bcard__who { font-weight: 700; font-size: 0.85rem; color: var(--ink); }
+    .bcard__when { color: var(--muted); font-size: 0.85rem; }
+    .bcard__liked { width: 16px; height: 16px; color: #d1485f; margin-left: auto; }
+    .bcard__liked svg { fill: #d1485f; }
+
+    .blog-empty { text-align: center; color: var(--muted); padding: 3rem 0; font-size: 1rem; }
+    .load-wrap { display: flex; justify-content: center; margin: 3rem 0 1rem; }
+
+    /* Newsletter */
+    .subscribe { margin-top: 3.5rem; text-align: center; background: var(--green-900); border-radius: 26px; padding: clamp(2rem, 5vw, 3.4rem); color: #fff; }
+    .subscribe__title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; letter-spacing: -0.8px; }
+    .subscribe__sub { color: var(--soft-2); margin: 0.6rem 0 1.6rem; }
+    .subscribe__form { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+    .subscribe__form input {
+      font: inherit; padding: 0.75rem 1rem; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.08); color: #fff; width: 320px; max-width: 100%; outline: none;
+    }
+    .subscribe__form input::placeholder { color: rgba(255, 255, 255, 0.6); }
+    .subscribe__form input:focus { border-color: var(--soft); }
+    .subscribe__note { color: #9fe6b6; margin-top: 1rem; font-weight: 600; }
+
+    /* Reading modal */
+    .bmodal { padding: 0; overflow: hidden; }
+    .bmodal__img { width: 100%; height: 250px; object-fit: cover; display: block; }
+    .bmodal__body { padding: 1.8rem 2.2rem 2.2rem; }
+    .bmodal__title { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 800; letter-spacing: -0.6px; color: var(--green-900); margin: 0.7rem 0 0.6rem; line-height: 1.25; }
+    .bmodal__meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; color: var(--muted); font-size: 0.88rem; margin-bottom: 1.2rem; }
+    .bmodal__read { display: inline-flex; align-items: center; gap: 0.3rem; margin-left: auto; }
+    .bmodal__text { color: var(--ink); line-height: 1.75; font-size: 1rem; }
+    .bmodal__actions { display: flex; gap: 0.6rem; margin-top: 1.6rem; }
+    .btn--liked { color: #d1485f; background: #fdecef; }
+    .btn--liked svg { fill: #d1485f; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(1.2rem);
+      background: var(--green-900); color: #fff; padding: 0.75rem 1.3rem; border-radius: 999px;
+      box-shadow: 0 16px 36px -12px rgba(20, 48, 31, 0.7); font-weight: 600; font-size: 0.9rem;
+      opacity: 0; pointer-events: none; transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 300;
+    }
+    .toast--show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .feat { grid-template-columns: 1fr; }
+      .feat__media img { height: 300px; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .cards { grid-template-columns: 1fr; }
+      .blog-tools { flex-direction: column; align-items: stretch; }
+      .blog-tools__controls { flex-direction: column; }
+      .search, .search input, .select { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="react">
+    const { useState, useEffect, useMemo, useRef } = React;
+
+    /* Inline line-icon set (stroke = currentColor) */
+    function Icon({ name }) {
+      const paths = {
+        search: <><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></>,
+        arrow: <polyline points="9 6 15 12 9 18" />,
+        arrowUpRight: <><line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" /></>,
+        heart: <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />,
+        share: <><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.6" y1="13.5" x2="15.4" y2="17.5" /><line x1="15.4" y1="6.5" x2="8.6" y2="10.5" /></>,
+        close: <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>,
+        clock: <><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15 14" /></>,
+      };
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"
+             strokeLinecap="round" strokeLinejoin="round" width="100%" height="100%">
+          {paths[name]}
+        </svg>
+      );
+    }
+
+    function Reveal({ children, className = '', id }) {
+      const ref = useRef(null);
+      const [shown, setShown] = useState(false);
+      useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) { setShown(true); observer.unobserve(el); }
+        }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+        observer.observe(el);
+        return () => observer.disconnect();
+      }, []);
+      return <div ref={ref} id={id} className={`reveal ${shown ? 'reveal--in' : ''} ${className}`}>{children}</div>;
+    }
+
+    const ARTICLE_BODY = `In a production app this body would come from a CMS or markdown file. For now, every control on this page is live: search the posts, filter by category, sort them, load more, like an article (it persists across refreshes), and share it.`;
+
+    const FEATURED = {
+      title: 'Breaking Into Product Design: Advice from Untitled Founder, Frankie',
+      excerpt: "Let's get one thing out of the way: you don't need a fancy Bachelor's Degree to get into Product Design. We sat down with Frankie Sullivan to talk about gatekeeping in product design and how anyone can get into this growing industry.",
+      img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80',
+    };
+
+    const POSTS = [
+      { id: 1, title: 'Migrating to Linear 101', category: 'Design', date: '2022-01-19', author: 'Jonathan Wills', avatar: 'https://i.pravatar.cc/64?img=12', excerpt: "Linear helps streamline software projects, sprints, tasks, and bug tracking. Here's how to get started.", img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80' },
+      { id: 2, title: 'Building your API Stack', category: 'Product', date: '2022-01-18', author: 'Lana Steiner', avatar: 'https://i.pravatar.cc/64?img=45', excerpt: 'The rise of RESTful APIs has been met by a rise in tools for creating, testing, and managing them.', img: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80' },
+      { id: 3, title: 'Bill Walsh leadership lessons', category: 'Management', date: '2022-01-18', author: 'Eve Wilkins', avatar: 'https://i.pravatar.cc/64?img=32', excerpt: 'Like to know the secrets of transforming a 2-14 team into a 3x Super Bowl winning Dynasty?', img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80' },
+      { id: 4, title: 'PM mental models', category: 'Product', date: '2022-01-18', author: 'Eve Wilkins', avatar: 'https://i.pravatar.cc/64?img=32', excerpt: 'Mental models are simple expressions of complex processes or relationships.', img: 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?auto=format&fit=crop&w=800&q=80' },
+      { id: 5, title: 'What is Wireframing?', category: 'Design', date: '2022-01-18', author: 'Lana Steiner', avatar: 'https://i.pravatar.cc/64?img=45', excerpt: 'Introduction to Wireframing and its Principles. Learn from the best in the industry.', img: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=800&q=80' },
+      { id: 6, title: 'How collaboration makes us better designers', category: 'Design', date: '2022-01-19', author: 'Jonathan Wills', avatar: 'https://i.pravatar.cc/64?img=12', excerpt: 'Collaboration can make our teams stronger, and our individual designs better.', img: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80' },
+      { id: 7, title: 'Our top 10 JavaScript frameworks to use', category: 'Engineering', date: '2022-01-18', author: 'Lana Steiner', avatar: 'https://i.pravatar.cc/64?img=45', excerpt: 'JavaScript frameworks make development easy with extensive features and functionalities.', img: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&w=800&q=80' },
+      { id: 8, title: 'Podcast: Creating a better CX Community', category: 'Management', date: '2022-01-19', author: 'Jonathan Wills', avatar: 'https://i.pravatar.cc/64?img=12', excerpt: "Starting a community doesn't need to be complicated, but how do you get started?", img: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=800&q=80' },
+      { id: 9, title: 'Scaling a design system without chaos', category: 'Design', date: '2022-02-02', author: 'Eve Wilkins', avatar: 'https://i.pravatar.cc/64?img=32', excerpt: 'Tokens, components, and governance — the pillars that keep a growing design system sane.', img: 'https://images.unsplash.com/photo-1545235617-9465d2a55698?auto=format&fit=crop&w=800&q=80' },
+      { id: 10, title: 'Shipping faster with feature flags', category: 'Engineering', date: '2022-02-08', author: 'Lana Steiner', avatar: 'https://i.pravatar.cc/64?img=45', excerpt: 'Decouple deploy from release. Feature flags let you ship continuously and safely.', img: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80' },
+      { id: 11, title: 'Hiring your first product manager', category: 'Management', date: '2022-02-14', author: 'Jonathan Wills', avatar: 'https://i.pravatar.cc/64?img=12', excerpt: 'When and how to bring on a PM — and the traps founders fall into when they wait too long.', img: 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=800&q=80' },
+      { id: 12, title: 'Writing docs developers actually read', category: 'Engineering', date: '2022-02-20', author: 'Eve Wilkins', avatar: 'https://i.pravatar.cc/64?img=32', excerpt: 'Great documentation is a product. Treat it like one and adoption follows.', img: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80' },
+    ];
+
+    const PAGE_SIZE = 6;
+    const CATEGORIES = ['All', ...Array.from(new Set(POSTS.map((p) => p.category)))];
+    const fmtDate = (iso) => new Date(iso).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+    const readTime = (p) => Math.max(2, Math.round((p.excerpt.length + ARTICLE_BODY.length) / 200)) + ' min read';
+
+    function Blog() {
+      const [category, setCategory] = useState('All');
+      const [query, setQuery] = useState('');
+      const [sort, setSort] = useState('newest');
+      const [visible, setVisible] = useState(PAGE_SIZE);
+      const [open, setOpen] = useState(null);
+      const [likes, setLikes] = useState({});
+      const [subscribed, setSubscribed] = useState(false);
+      const [toast, setToast] = useState('');
+
+      useEffect(() => {
+        try { setLikes(JSON.parse(localStorage.getItem('blogLikes') || '{}')); } catch { setLikes({}); }
+      }, []);
+      useEffect(() => { localStorage.setItem('blogLikes', JSON.stringify(likes)); }, [likes]);
+      useEffect(() => {
+        if (!toast) return;
+        const t = setTimeout(() => setToast(''), 2200);
+        return () => clearTimeout(t);
+      }, [toast]);
+      useEffect(() => {
+        if (!open) return;
+        const onKey = (e) => e.key === 'Escape' && setOpen(null);
+        window.addEventListener('keydown', onKey);
+        document.body.style.overflow = 'hidden';
+        return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+      }, [open]);
+
+      const filtered = useMemo(() => {
+        const q = query.trim().toLowerCase();
+        const list = POSTS.filter((p) => {
+          const matchCat = category === 'All' || p.category === category;
+          const matchQ = !q || p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q) || p.author.toLowerCase().includes(q);
+          return matchCat && matchQ;
+        });
+        list.sort((a, b) => {
+          if (sort === 'title') return a.title.localeCompare(b.title);
+          const d = new Date(a.date) - new Date(b.date);
+          return sort === 'oldest' ? d : -d;
+        });
+        return list;
+      }, [category, query, sort]);
+
+      useEffect(() => setVisible(PAGE_SIZE), [category, query, sort]);
+      const shown = filtered.slice(0, visible);
+
+      const toggleLike = (id) => setLikes((prev) => {
+        const next = { ...prev, [id]: !prev[id] };
+        setToast(next[id] ? 'Added to favourites' : 'Removed from favourites');
+        return next;
+      });
+
+      const share = async (p) => {
+        const url = location.href.split('#')[0] + '#post-' + p.id;
+        if (navigator.share) {
+          try { await navigator.share({ title: p.title, text: p.excerpt, url }); } catch {}
+        } else {
+          try { await navigator.clipboard.writeText(url); setToast('Link copied to clipboard'); }
+          catch { setToast(url); }
+        }
+      };
+
+      const submitNewsletter = (e) => {
+        e.preventDefault();
+        setSubscribed(true);
+        setToast("You're subscribed! 🎉");
+        e.target.reset();
+      };
+
+      const iconBox = (name, size) => (
+        <span style={{ width: size, height: size, display: 'inline-block' }}><Icon name={name} /></span>
+      );
+
+      return (
+        <>
+          <nav className="nav">
+            <div className="nav__inner">
+              <a className="nav__brand" href="index.html"><img src="bg.png" alt="Crosstecch Logo" className="logo-img" /></a>
+              <ul className="nav__links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="resource.html">Resources</a></li>
+                <li><a href="blog.html">Blogs</a></li>
+                <li><a href="Product.html">Product</a></li>
+                <li><a href="ContactUs.html">Contact</a></li>
+              </ul>
+            </div>
+          </nav>
+
+          <main className="sheet sheet--full" id="top">
+            <Reveal className="feat">
+              <button className="feat__media" onClick={() => setToast('Opening featured story…')} aria-label="Read featured post">
+                <img src={FEATURED.img} alt={FEATURED.title} />
+                <span className="feat__badge">Featured</span>
+                <span className="feat__arrow"><Icon name="arrow" /></span>
+              </button>
+              <div className="feat__body">
+                <h1 className="feat__title">{FEATURED.title}</h1>
+                <p className="feat__copy">{FEATURED.excerpt}</p>
+              </div>
+            </Reveal>
+
+            <Reveal className="blog-tools" id="posts">
+              <h2 className="blog-tools__title">Recent blog posts</h2>
+              <div className="blog-tools__controls">
+                <label className="search">
+                  <span className="search__icon"><Icon name="search" /></span>
+                  <input type="search" placeholder="Search posts…" value={query} onChange={(e) => setQuery(e.target.value)} />
+                </label>
+                <select className="select" value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort posts">
+                  <option value="newest">Newest first</option>
+                  <option value="oldest">Oldest first</option>
+                  <option value="title">Title A–Z</option>
+                </select>
+              </div>
+            </Reveal>
+
+            <div className="chips">
+              {CATEGORIES.map((c) => (
+                <button key={c} className={`chip ${c === category ? 'chip--on' : ''}`} onClick={() => setCategory(c)}>{c}</button>
+              ))}
+            </div>
+
+            {shown.length === 0 ? (
+              <p className="blog-empty">No posts match your search. Try another keyword.</p>
+            ) : (
+              <div className="cards">
+                {shown.map((p, i) => (
+                  <article className="bcard" key={p.id} style={{ animationDelay: `${i * 45}ms` }} onClick={() => setOpen(p)}>
+                    <div className="bcard__media"><img src={p.img} alt={p.title} loading="lazy" /></div>
+                    <span className="bcard__tag">{p.category}</span>
+                    <h3 className="bcard__title">{p.title}<span className="bcard__arrow"><Icon name="arrowUpRight" /></span></h3>
+                    <p className="bcard__excerpt">{p.excerpt}</p>
+                    <div className="bcard__meta">
+                      <img className="bcard__avatar" src={p.avatar} alt={p.author} />
+                      <span className="bcard__who">{p.author}</span>
+                      <span className="bcard__when">• {fmtDate(p.date)}</span>
+                      {likes[p.id] && <span className="bcard__liked"><Icon name="heart" /></span>}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+
+            {visible < filtered.length && (
+              <div className="load-wrap">
+                <button className="btn btn--solid big" onClick={() => setVisible((v) => v + PAGE_SIZE)}>Load more…</button>
+              </div>
+            )}
+
+            <Reveal className="subscribe">
+              <div id="subscribe">
+                <h2 className="subscribe__title">Let's get started on something great</h2>
+                <p className="subscribe__sub">Join over 4,000+ startups already growing with Frugal.</p>
+                <form className="subscribe__form" onSubmit={submitNewsletter}>
+                  <input type="email" placeholder="Enter your email" required />
+                  <button type="submit" className="btn btn--light">Subscribe</button>
+                </form>
+                {subscribed && <p className="subscribe__note">🎉 Thanks! Check your inbox to confirm.</p>}
+              </div>
+            </Reveal>
+          </main>
+
+          <iframe id="ctFooterFrame" src="Footer.html" title="Footer" scrolling="no" style={{ width: '100%', border: 0, display: 'block', overflow: 'hidden' }}></iframe>
+
+          {open && (
+            <div className="modal" onClick={() => setOpen(null)} role="dialog" aria-modal="true" aria-label={open.title}>
+              <div className="modal__card bmodal" onClick={(e) => e.stopPropagation()}>
+                <button className="modal__close" onClick={() => setOpen(null)} aria-label="Close">{iconBox('close', 16)}</button>
+                <img className="bmodal__img" src={open.img} alt={open.title} />
+                <div className="bmodal__body">
+                  <span className="bcard__tag">{open.category}</span>
+                  <h2 className="bmodal__title">{open.title}</h2>
+                  <div className="bmodal__meta">
+                    <img className="bcard__avatar" src={open.avatar} alt={open.author} />
+                    {open.author} • {fmtDate(open.date)}
+                    <span className="bmodal__read">{iconBox('clock', 14)}{readTime(open)}</span>
+                  </div>
+                  <p className="bmodal__text">{open.excerpt} {ARTICLE_BODY}</p>
+                  <div className="bmodal__actions">
+                    <button className={`btn btn--ghost ${likes[open.id] ? 'btn--liked' : ''}`} onClick={() => toggleLike(open.id)}>
+                      {iconBox('heart', 16)}{41 + (likes[open.id] ? 1 : 0)}
+                    </button>
+                    <button className="btn btn--solid" onClick={() => share(open)}>{iconBox('share', 16)}Share</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className={`toast ${toast ? 'toast--show' : ''}`}>{toast}</div>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Blog />);
+  </script>
+  <!-- ===== Shared footer auto-resize ===== -->
+  <script>
+    window.addEventListener('message', function (e) {
+      if (e.data && e.data.ctSection && e.data.height) {
+        var f = document.getElementById('ctFooterFrame');
+        if (f) f.style.height = e.data.height + 'px';
+      }
+    });
+  </script>
+  <script src="darkmode.js"></script>
+</body>
+</html>

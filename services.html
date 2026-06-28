@@ -1,0 +1,2296 @@
+ ```html
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | Cross Tecch Engineering & QA</title>
+    <meta name="description" content="Explore Cross Tecch premium services: Automation Testing, Performance Testing, DevOps, Cloud Architectures, Web Design, and Technical Blog Writing.">
+
+    <!-- Google Fonts: Outfit and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+       Cross Tecch - Lunera SaaS Services Grid Redesign
+       ========================================================================== */
+        /* Design Tokens matching Lunera minimalist aesthetic */
+        
+         :root {
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            /* Theme Light - Lunera White/Cream Clean Slate */
+            --bg-primary: #f9fafb;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f3f4f6;
+            --bg-mesh: radial-gradient(circle at top right, rgba(99, 102, 241, 0.03) 0%, transparent 60%);
+            --primary-color: #0f172a;
+            /* Monochrome primary */
+            --primary-light: #f1f5f9;
+            --primary-glow: rgba(15, 23, 42, 0.05);
+            --primary-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            --text-title: #0f172a;
+            --text-body: #4b5563;
+            --text-muted: #9ca3af;
+            --border-color: #e5e7eb;
+            --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+            --card-hover-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.02);
+            /* Service Colors */
+            --color-automation: #4f46e5;
+            --color-performance: #0ea5e9;
+            --color-functional: #10b981;
+            --color-regression: #f59e0b;
+            --color-compatibility: #d946ef;
+            --color-security: #ec4899;
+            --color-cloud: #3b82f6;
+            --color-devops: #6366f1;
+            --color-webdesign: #f43f5e;
+            --color-blog: #8b5cf6;
+        }
+        
+        [data-theme="dark"] {
+            /* Theme Dark - Deep Slate / Jet Black */
+            --bg-primary: #030712;
+            --bg-secondary: #0f172a;
+            --bg-tertiary: #1e293b;
+            --bg-mesh: radial-gradient(circle at top right, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+            --primary-color: #cbd5e1;
+            --primary-light: #1e293b;
+            --primary-glow: rgba(255, 255, 255, 0.03);
+            --primary-gradient: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+            --text-title: #f8fafc;
+            --text-body: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: #1e293b;
+            --card-shadow: 0 4px 30px -10px rgba(0, 0, 0, 0.3);
+            --card-hover-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            background-image: var(--bg-mesh);
+            color: var(--text-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+        
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-heading);
+            color: var(--text-title);
+            font-weight: 700;
+            line-height: 1.25;
+            transition: color 0.4s ease;
+        }
+        
+        p {
+            transition: color 0.4s ease;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-smooth);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-title);
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            margin-bottom: 24px;
+            transition: var(--transition-smooth);
+        }
+        
+        .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        /* ==========================================================================
+       Header & Navigation styling
+       ========================================================================== */
+        
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(249, 250, 251, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: padding 0.3s ease, background-color 0.4s ease, border-color 0.4s ease;
+        }
+        
+        [data-theme="dark"] .site-header {
+            background-color: rgba(3, 7, 18, 0.75);
+            border-color: var(--border-color);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.03em;
+            color: var(--text-title);
+        }
+        
+        .logo-icon {
+            color: var(--text-title);
+        }
+        
+        .logo-highlight {
+            opacity: 0.7;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-body);
+            position: relative;
+            padding: 6px 0;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-title);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--text-title);
+            transition: var(--transition-smooth);
+        }
+        
+        .nav-link.active {
+            color: var(--text-title);
+            font-weight: 600;
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-body);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .theme-toggle:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-title);
+        }
+        
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hamburger-line {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background-color: var(--text-title);
+            transition: var(--transition-smooth);
+        }
+        /* Mobile Drawer Menu styles */
+        
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background-color: var(--bg-secondary);
+            border-left: 1px solid var(--border-color);
+            z-index: 200;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .mobile-drawer.active {
+            right: 0;
+        }
+        
+        .mobile-drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .drawer-close {
+            background: none;
+            border: none;
+            outline: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        
+        .mobile-nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            list-style: none;
+        }
+        
+        .mobile-nav-link {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--text-body);
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+        }
+        
+        .mobile-nav-link:hover {
+            color: var(--text-title);
+        }
+        
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(3, 7, 18, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 199;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        
+        .drawer-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        /* ==========================================================================
+       Services Hero Section (Lunera Split Header style)
+       ========================================================================== */
+        
+        .services-hero-section {
+            padding: 180px 0 80px 0;
+            position: relative;
+        }
+        
+        .hero-split-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 48px;
+            align-items: end;
+        }
+        
+        .services-hero-section h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 0;
+        }
+        
+        .hero-right-side {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            align-items: flex-start;
+        }
+        
+        .services-hero-section p {
+            font-size: 1.125rem;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+        
+        .hero-cta-btn {
+            background-color: var(--primary-color);
+            color: var(--bg-secondary);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 12px 24px;
+            border-radius: 100px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-bounce);
+        }
+        
+        .hero-cta-btn:hover {
+            transform: scale(1.03) translateY(-1px);
+            opacity: 0.9;
+        }
+        /* ==========================================================================
+       Services Showcase Grid (3-2-3-2 format)
+       ========================================================================== */
+        
+        .services-grid-section {
+            padding-bottom: 120px;
+        }
+        
+        .services-grid-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        /* Rows setups */
+        
+        .grid-row-three {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        
+        .grid-row-two {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+        /* Base Service Card styling */
+        
+        .service-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 40px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .card-top {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            z-index: 10;
+        }
+        /* Header title index info */
+        
+        .card-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-category {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+        
+        .card-index {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            opacity: 0.4;
+        }
+        
+        .service-card h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        
+        .service-card p {
+            font-size: 0.9375rem;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+        /* Key benefits checklists */
+        
+        .card-benefits-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            list-style: none;
+        }
+        
+        .card-benefits-list li {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+        }
+        
+        .benefit-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        /* Bottom Visual Area for SaaS charts/gauges */
+        
+        .card-visual-wrapper {
+            position: relative;
+            width: 100%;
+            height: 190px;
+            border-radius: 20px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 5;
+            transition: var(--transition-smooth);
+        }
+        /* ==========================================================================
+       Specific SVG visual components in cards
+       ========================================================================== */
+        /* Generic widget visual decorations */
+        
+        .widget-container {
+            width: 100%;
+            height: 100%;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        /* 1. Automation browser frame widget */
+        
+        .browser-widget {
+            width: 85%;
+            height: 85%;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+        
+        .browser-header {
+            height: 28px;
+            background-color: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 6px;
+        }
+        
+        .browser-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .browser-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-family: monospace;
+            font-size: 0.6875rem;
+        }
+        
+        .code-line {
+            height: 6px;
+            border-radius: 4px;
+            background-color: var(--bg-tertiary);
+            width: 0;
+            /* Animated width */
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        /* Reveal code lines step-by-step on hover */
+        
+        .service-card:hover .code-line:nth-child(1) {
+            width: 80% !important;
+            transition-delay: 0.1s;
+        }
+        
+        .service-card:hover .code-line:nth-child(2) {
+            width: 55% !important;
+            transition-delay: 0.2s;
+        }
+        
+        .service-card:hover .code-line:nth-child(3) {
+            width: 70% !important;
+            transition-delay: 0.3s;
+        }
+        
+        .pass-tag {
+            align-self: flex-start;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            color: white;
+            background-color: var(--color-functional);
+            font-size: 0.625rem;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: var(--transition-bounce);
+        }
+        
+        .service-card:hover .pass-tag {
+            transform: scale(1);
+            opacity: 1;
+            transition-delay: 0.4s;
+            animation: pulseAlert 1.5s infinite alternate;
+        }
+        
+        @keyframes pulseAlert {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+            100% {
+                box-shadow: 0 0 8px 4px rgba(16, 185, 129, 0.2);
+            }
+        }
+        /* 2. Line Chart Widget */
+        
+        .chart-svg {
+            width: 90%;
+            height: 85%;
+            overflow: visible;
+        }
+        
+        .chart-path {
+            fill: none;
+            stroke: var(--color-performance);
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: drawChart 3s ease-out forwards;
+        }
+        
+        .service-card:hover .chart-path {
+            animation: drawChart 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .chart-gradient {
+            fill: url(#chart-gradient-fill);
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        
+        .service-card:hover .chart-gradient {
+            opacity: 0.15;
+        }
+        
+        @keyframes drawChart {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        /* Performance Scanner line on hover */
+        
+        .scanner-line {
+            transition: opacity 0.3s ease;
+        }
+        
+        .service-card:hover .scanner-line {
+            opacity: 1 !important;
+            animation: scanX 2s infinite linear;
+        }
+        
+        .scanner-dot {
+            transition: opacity 0.3s ease;
+        }
+        
+        .service-card:hover .scanner-dot {
+            opacity: 0.8 !important;
+            animation: pulseScannerDot 0.8s infinite alternate;
+        }
+        
+        @keyframes scanX {
+            0% {
+                x1: 10;
+                x2: 10;
+            }
+            50% {
+                x1: 110;
+                x2: 110;
+            }
+            100% {
+                x1: 10;
+                x2: 10;
+            }
+        }
+        
+        @keyframes pulseScannerDot {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 1;
+            }
+        }
+        /* 3. Checklists Widget */
+        
+        .checklist-widget {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .check-item-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.01);
+            transform: translateY(10px);
+            opacity: 0.6;
+            transition: var(--transition-bounce);
+        }
+        
+        .service-card:hover .check-item-row:nth-child(1) {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .service-card:hover .check-item-row:nth-child(2) {
+            transform: translateY(-4px);
+            opacity: 1;
+            transition-delay: 0.1s;
+        }
+        
+        .check-box-circle {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: transparent;
+            font-size: 9px;
+            font-weight: 900;
+            transition: var(--transition-smooth);
+        }
+        
+        .service-card:hover .check-box-circle {
+            border-color: var(--color-functional);
+            background-color: var(--color-functional);
+            color: white;
+            transform: rotate(360deg);
+        }
+        /* 4. Git Branch flow widget */
+        
+        .branch-widget-svg {
+            width: 85%;
+            height: 80%;
+        }
+        
+        .node-pulse-circle {
+            animation: gitPulse 2s infinite alternate;
+        }
+        
+        @keyframes gitPulse {
+            0% {
+                r: 5;
+                opacity: 1;
+            }
+            100% {
+                r: 9;
+                opacity: 0.4;
+            }
+        }
+        
+        .data-packet {
+            transition: opacity 0.3s ease;
+        }
+        
+        .service-card:hover .data-packet {
+            opacity: 1 !important;
+            animation: flowData 2.5s infinite linear;
+        }
+        
+        @keyframes flowData {
+            0% {
+                cx: 20;
+                cy: 40;
+            }
+            30% {
+                cx: 50;
+                cy: 40;
+            }
+            55% {
+                cx: 80;
+                cy: 21;
+            }
+            75% {
+                cx: 110;
+                cy: 40;
+            }
+            100% {
+                cx: 160;
+                cy: 40;
+            }
+        }
+        /* 5. Responsive Frames Widget */
+        
+        .responsive-widget {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 400px;
+        }
+        
+        .desktop-frame {
+            width: 160px;
+            height: 100px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.02);
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: var(--transition-bounce);
+            transform: rotateX(0deg) rotateY(0deg);
+        }
+        
+        .mobile-frame {
+            width: 50px;
+            height: 85px;
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            position: absolute;
+            bottom: 20px;
+            right: 90px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: var(--transition-bounce);
+        }
+        
+        .service-card:hover .desktop-frame {
+            transform: rotateX(10deg) rotateY(-10deg) translateZ(10px);
+            box-shadow: -10px 15px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .service-card:hover .mobile-frame {
+            transform: translateZ(30px) translateY(-5px) translateX(-5px);
+            box-shadow: 10px 20px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .frame-bar {
+            height: 4px;
+            background-color: var(--bg-tertiary);
+            border-radius: 2px;
+            transition: var(--transition-smooth);
+        }
+        
+        .service-card:hover .frame-bar {
+            background-color: var(--color-compatibility);
+        }
+        /* 6. Vault Shield gauge widget */
+        
+        .security-svg-widget {
+            width: 100px;
+            height: 100px;
+        }
+        
+        .gauge-circle-track {
+            fill: none;
+            stroke: var(--border-color);
+            stroke-width: 6;
+        }
+        
+        .gauge-circle-fill {
+            fill: none;
+            stroke: var(--color-security);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 251.2;
+            transform: rotate(-90deg);
+            transform-origin: 50px 50px;
+            transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.4s ease, filter 0.4s ease;
+        }
+        
+        .security-svg-widget text {
+            transition: fill 0.3s ease, transform 0.3s ease;
+            transform-origin: 50px 55px;
+        }
+        
+        .service-card:hover .gauge-circle-fill {
+            stroke-dashoffset: 50;
+            stroke: #10b981;
+            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6));
+        }
+        
+        .service-card:hover .security-svg-widget text {
+            fill: #10b981;
+            transform: scale(1.05);
+        }
+        /* 7. Connected Cloud nodes widget */
+        
+        .cloud-nodes-svg {
+            width: 80%;
+            height: 80%;
+        }
+        
+        .cloud-node {
+            transition: var(--transition-bounce);
+        }
+        
+        .service-card:hover .cloud-node:nth-child(4) {
+            transform: translateY(-12px) scale(1.15);
+            fill: #3b82f6;
+            filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.4));
+        }
+        
+        .service-card:hover .cloud-node:nth-child(5) {
+            transform: translateY(-8px) scale(1.1) translate(-4px);
+            fill: #60a5fa;
+        }
+        
+        .service-card:hover .cloud-node:nth-child(6) {
+            transform: translateY(-8px) scale(1.1) translate(4px);
+            fill: #60a5fa;
+        }
+        
+        .cloud-connection {
+            stroke-dasharray: none;
+            transition: stroke 0.3s, stroke-dasharray 0.3s;
+        }
+        
+        .service-card:hover .cloud-connection {
+            stroke: var(--color-cloud);
+            stroke-dasharray: 4;
+            animation: cloudFlow 1.5s infinite linear;
+        }
+        
+        @keyframes cloudFlow {
+            to {
+                stroke-dashoffset: -20;
+            }
+        }
+        /* 8. Pipeline trigger grid widget */
+        
+        .pipeline-widget {
+            width: 85%;
+            height: 80%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            align-items: center;
+        }
+        
+        .pipeline-step {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01);
+            position: relative;
+            transition: var(--transition-bounce);
+        }
+        
+        .service-card:hover .pipeline-step:nth-child(1) {
+            transform: translateY(-6px);
+            border-color: var(--color-functional);
+        }
+        
+        .service-card:hover .pipeline-step:nth-child(2) {
+            transform: translateY(-6px);
+            border-color: var(--color-functional);
+            transition-delay: 0.1s;
+        }
+        
+        .service-card:hover .pipeline-step:nth-child(3) {
+            transform: translateY(-6px);
+            border-color: var(--color-devops);
+            transition-delay: 0.2s;
+        }
+        
+        .pipeline-status-light {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin: 0 auto;
+            transition: background-color 0.3s, filter 0.3s;
+        }
+        
+        .service-card:hover .pipeline-step:nth-child(1) .pipeline-status-light {
+            filter: drop-shadow(0 0 4px var(--color-functional));
+        }
+        
+        .service-card:hover .pipeline-step:nth-child(2) .pipeline-status-light {
+            filter: drop-shadow(0 0 4px var(--color-functional));
+        }
+        
+        .service-card:hover .pipeline-step:nth-child(3) .pipeline-status-light {
+            filter: drop-shadow(0 0 6px var(--color-devops));
+        }
+        
+        .pipeline-label {
+            font-size: 0.625rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+        /* 9. Grid panel layout widget */
+        
+        .design-grid-widget {
+            width: 85%;
+            height: 80%;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 16px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+            transition: var(--transition-smooth);
+        }
+        
+        .service-card:hover .design-grid-widget {
+            border-color: var(--color-webdesign);
+            box-shadow: 0 10px 25px rgba(244, 63, 94, 0.05);
+        }
+        
+        .code-editor-panel {
+            border-right: 1px solid var(--border-color);
+            padding-right: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .preview-canvas-panel {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .canvas-card {
+            background-color: var(--bg-tertiary);
+            border-radius: 6px;
+            border: 1px dashed var(--border-color);
+            transition: var(--transition-bounce);
+        }
+        
+        .service-card:hover .canvas-card:nth-child(1) {
+            transform: scale(1.05) translateY(-2px);
+            background-color: rgba(244, 63, 94, 0.05);
+            border-color: var(--color-webdesign);
+        }
+        
+        .service-card:hover .canvas-card:nth-child(2) {
+            transform: scale(1.05) translateY(2px);
+            background-color: var(--bg-tertiary);
+            border-color: var(--border-color);
+            transition-delay: 0.1s;
+        }
+        /* 10. Document Copywriting editor widget */
+        
+        .editor-widget {
+            width: 80%;
+            height: 85%;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.01);
+            transition: var(--transition-smooth);
+        }
+        
+        .service-card:hover .editor-widget {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04);
+        }
+        
+        .editor-line {
+            height: 6px;
+            background-color: var(--bg-tertiary);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .editor-line.short {
+            width: 60%;
+        }
+        
+        .writing-line {
+            width: 0%;
+            position: relative;
+        }
+        
+        .service-card:hover .writing-line {
+            width: 85%;
+            background-color: var(--color-blog);
+        }
+        
+        .writing-line::after {
+            content: '';
+            position: absolute;
+            right: -4px;
+            top: -2px;
+            width: 2px;
+            height: 10px;
+            background-color: var(--color-blog);
+            opacity: 0;
+        }
+        
+        .service-card:hover .writing-line::after {
+            animation: blinkCaret 0.8s infinite step-end;
+        }
+        
+        @keyframes blinkCaret {
+            from,
+            to {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        /* ==========================================================================
+       Industries section (Grayscale minimal brand showcase)
+       ========================================================================== */
+        
+        .industries-section {
+            padding: 100px 0;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+        
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        
+        .industry-card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 32px 24px;
+            transition: var(--transition-smooth);
+        }
+        
+        .industry-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary-color);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .industry-card h3 {
+            font-size: 1.125rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .industry-icon {
+            color: var(--text-title);
+        }
+        
+        .industry-card p {
+            font-size: 0.8125rem;
+            color: var(--text-body);
+            line-height: 1.5;
+        }
+        /* ==========================================================================
+       CTA Section
+       ========================================================================== */
+        
+        .cta-section {
+            padding: 100px 0;
+        }
+        
+        .cta-card {
+            background: var(--primary-gradient);
+            border-radius: 32px;
+            padding: 64px 80px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cta-mesh-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 20px 20px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            mask-image: radial-gradient(circle, black 40%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle, black 40%, transparent 80%);
+        }
+        
+        .cta-flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+        
+        .cta-content p {
+            font-size: 1.0625rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .cta-btn-wrapper {
+            flex-shrink: 0;
+        }
+        
+        .cta-btn {
+            background-color: white;
+            color: #0f172a;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.9375rem;
+            padding: 14px 28px;
+            border-radius: 100px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: var(--transition-bounce);
+        }
+        
+        .cta-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .cta-btn svg {
+            transition: var(--transition-smooth);
+        }
+        
+        .cta-btn:hover svg {
+            transform: translateX(4px);
+        }
+        /* ==========================================================================
+       Premium Form Modal
+       ========================================================================== */
+        
+        .contact-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(3, 7, 18, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        
+        .contact-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .contact-modal-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            width: 100%;
+            max-width: 580px;
+            padding: 48px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .contact-modal-overlay.active .contact-modal-card {
+            transform: scale(1) translateY(0);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            outline: none;
+            font-size: 1.75rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--bg-tertiary);
+        }
+        
+        .modal-close:hover {
+            color: var(--text-title);
+            background-color: var(--border-color);
+        }
+        
+        .modal-header {
+            margin-bottom: 32px;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        
+        .modal-header p {
+            font-size: 0.875rem;
+            color: var(--text-body);
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .form-group {
+            position: relative;
+            width: 100%;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            color: var(--text-title);
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+        }
+        
+        .form-group label {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            pointer-events: none;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), font-size 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s;
+        }
+        
+        .form-group input:focus~label,
+        .form-group input:not(:placeholder-shown)~label,
+        .form-group textarea:focus~label,
+        .form-group textarea:not(:placeholder-shown)~label {
+            transform: translateY(-26px) scale(0.85);
+            font-size: 0.75rem;
+            padding: 0 6px;
+            background-color: var(--bg-secondary);
+            color: var(--primary-color);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+        }
+        
+        .form-submit-btn {
+            background-color: var(--primary-color);
+            color: var(--bg-secondary);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.9375rem;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-bounce);
+        }
+        
+        .form-submit-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        /* ==========================================================================
+       Footer
+       ========================================================================== */
+        
+        .site-footer {
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            padding: 48px 0;
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        
+        .footer-links .nav-link {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+        
+        .footer-links .nav-link:hover {
+            color: var(--text-title);
+        }
+        /* ==========================================================================
+       Scroll Reveals classes
+       ========================================================================== */
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* ==========================================================================
+       Media Queries (Responsiveness)
+       ========================================================================== */
+        
+        @media (max-width: 1024px) {
+            .grid-row-three {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid-row-two {
+                grid-template-columns: 1fr;
+            }
+            .hero-split-container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .services-hero-section h1 {
+                font-size: 3.25rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .grid-row-three {
+                grid-template-columns: 1fr;
+            }
+            .nav-menu {
+                display: none;
+            }
+            .hamburger-menu {
+                display: flex;
+            }
+            .cta-flex-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .industries-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 580px) {
+            .industries-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .logo-img {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header class="site-header" id="site-header">
+        <div class="container header-container">
+            <!-- Logo -->
+            <a href="index1.html" class="logo" id="header-logo" aria-label="Cross Tecch Home">
+                <img src="bg.png" alt="Crosstecch Logo" class="logo-img" />
+            </a>
+
+            <!-- Navigation Menu -->
+            <nav class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="services.html" class="nav-link active">Services</a></li>
+                    <li><a href="resource.html" class="nav-link">Resources</a></li>
+                    <li><a href="blog.html" class="nav-link">Blogs</a></li>
+                    <li><a href="Product.html" class="nav-link">Product</a></li>
+                    <li><a href="ContactUs.html" class="nav-link">Contact Us</a></li>
+                </ul>
+            </nav>
+
+            <!-- Actions -->
+            <div class="header-actions">
+                <!-- Theme Toggle Switcher -->
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+          <!-- Sun Icon -->
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Moon Icon -->
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+                <!-- Mobile Menu Toggle Button -->
+                <button class="hamburger-menu" id="hamburger-menu" aria-label="Toggle navigation menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer Menu Overlay -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <div class="mobile-drawer-header">
+            <div class="logo">
+                <img src="bg.png" alt="Crosstecch Logo" class="logo-img" />
+            </div>
+            <button class="drawer-close" id="drawer-close" aria-label="Close menu">&times;</button>
+        </div>
+        <ul class="mobile-nav-list">
+            <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+            <li><a href="about.html" class="mobile-nav-link">About</a></li>
+            <li><a href="services.html" class="mobile-nav-link">Services</a></li>
+            <li><a href="resource.html" class="mobile-nav-link">Resources</a></li>
+            <li><a href="blog.html" class="mobile-nav-link">Blogs</a></li>
+            <li><a href="Product.html" class="mobile-nav-link">Product</a></li>
+            <li><a href="ContactUs.html" class="mobile-nav-link">Contact Us</a></li>
+        </ul>
+    </div>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <main>
+        <!-- Services Hero Section -->
+        <section class="services-hero-section scroll-reveal">
+            <div class="container hero-split-container">
+                <div>
+                    <div class="badge">OUR SERVICES</div>
+                    <h1>Quality Engineering.<br>Delivering <span class="gradient-text">Impact.</span></h1>
+                </div>
+                <div class="hero-right-side">
+                    <p>
+                        We help engineering organizations validate code logic, optimize performance, deploy container pipelines, and craft premium technical documentation.
+                    </p>
+                    <button class="hero-cta-btn contact-btn-trigger">
+            <span>Discuss a Project</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Grid Layout -->
+        <section class="services-grid-section">
+            <div class="container services-grid-layout">
+
+                <!-- Row 1: 3 Columns -->
+                <div class="grid-row-three">
+
+                    <!-- Card 1: Automation Testing -->
+                    <div class="service-card scroll-reveal" id="service-0">
+                        <div class="card-top">
+                            <div class="card-header-info">
+                                <span class="card-category" style="color: var(--color-automation)">QA & Automation</span>
+                                <span class="card-index">01</span>
+                            </div>
+                            <h2>Automation Testing</h2>
+                            <p>Accelerate release cycles while securing zero-regression deployments using end-to-end testing scripts.</p>
+                            <ul class="card-benefits-list">
+                                <li><span class="benefit-dot" style="background-color: var(--color-automation)"></span>Playwright</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-automation)"></span>Selenium</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-automation)"></span>CI triggers</li>
+                            </ul>
+                        </div>
+
+                        <div class="card-visual-wrapper">
+                            <div class="browser-widget">
+                                <div class="browser-header">
+                                    <span class="browser-dot" style="background-color: #ef4444"></span>
+                                    <span class="browser-dot" style="background-color: #f59e0b"></span>
+                                    <span class="browser-dot" style="background-color: #10b981"></span>
+                                </div>
+                                <div class="browser-body">
+                                    <div class="code-line" style="width: 80%"></div>
+                                    <div class="code-line" style="width: 55%"></div>
+                                    <div class="code-line" style="width: 70%"></div>
+                                    <div class="pass-tag">Playwright: PASS</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Performance Testing -->
+                    <div class="service-card scroll-reveal" id="service-1">
+                        <div class="card-top">
+                            <div class="card-header-info">
+                                <span class="card-category" style="color: var(--color-performance)">Load Simulation</span>
+                                <span class="card-index">02</span>
+                            </div>
+                            <h2>Performance Testing</h2>
+                            <p>Stress-test web layouts, map database queries, and identify bottlenecks under high load queries.</p>
+                            <ul class="card-benefits-list">
+                                <li><span class="benefit-dot" style="background-color: var(--color-performance)"></span>k6 / JMeter</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-performance)"></span>10k+ users</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-performance)"></span>Memory leak audit</li>
+                            </ul>
+                        </div>
+
+                        <div class="card-visual-wrapper">
+                            <svg class="chart-svg" viewBox="0 0 120 70">
+                <defs>
+                  <linearGradient id="chart-gradient-fill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--color-performance)" />
+                    <stop offset="100%" stop-color="var(--color-performance)" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <path class="chart-gradient" d="M10,60 L10,35 Q30,10 50,45 T90,20 Q100,10 110,15 L110,60 Z" />
+                <path class="chart-path" d="M10,35 Q30,10 50,45 T90,20 Q100,10 110,15" />
+                <line class="scanner-line" x1="10" y1="10" x2="10" y2="60" stroke="var(--color-performance)" stroke-width="1.5" opacity="0" />
+                <circle class="scanner-dot" cx="90" cy="20" r="4" fill="var(--color-performance)" opacity="0" />
+                <line x1="10" y1="60" x2="110" y2="60" stroke="var(--border-color)" stroke-width="1.5" />
+              </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Functional Testing -->
+                    <div class="service-card scroll-reveal" id="service-2">
+                        <div class="card-top">
+                            <div class="card-header-info">
+                                <span class="card-category" style="color: var(--color-functional)">QA Validation</span>
+                                <span class="card-index">03</span>
+                            </div>
+                            <h2>Functional Testing</h2>
+                            <p>Sanity audit user interfaces, database logic transitions, and API response payloads.</p>
+                            <ul class="card-benefits-list">
+                                <li><span class="benefit-dot" style="background-color: var(--color-functional)"></span>User flows</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-functional)"></span>Edge cases</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-functional)"></span>API sanity</li>
+                            </ul>
+                        </div>
+
+                        <div class="card-visual-wrapper">
+                            <div class="checklist-widget">
+                                <div class="check-item-row">
+                                    <span class="check-box-circle">&#x2713;</span>
+                                    <span>UI form validations</span>
+                                </div>
+                                <div class="check-item-row">
+                                    <span class="check-box-circle">&#x2713;</span>
+                                    <span>API boundary cases</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Row 2: 2 Columns (Wide Cards) -->
+                <div class="grid-row-two">
+
+                    <!-- Card 4: Regression Testing -->
+                    <div class="service-card scroll-reveal" id="service-3">
+                        <div class="card-top">
+                            <div class="card-header-info">
+                                <span class="card-category" style="color: var(--color-regression)">Delta Verification</span>
+                                <span class="card-index">04</span>
+                            </div>
+                            <h2>Regression Testing</h2>
+                            <p>Validate new releases or system patches against existing software paths to protect legacy features.</p>
+                            <ul class="card-benefits-list">
+                                <li><span class="benefit-dot" style="background-color: var(--color-regression)"></span>Delta checks</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-regression)"></span>Branch gatekeeper</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-regression)"></span>CI loop integration</li>
+                            </ul>
+                        </div>
+
+                        <div class="card-visual-wrapper">
+                            <svg class="branch-widget-svg" viewBox="0 0 180 80">
+                <!-- Branches -->
+                <path d="M20,40 L160,40" stroke="var(--border-color)" stroke-width="4" fill="none" />
+                <path d="M50,40 Q80,10 110,40" stroke="var(--color-regression)" stroke-width="3" fill="none" stroke-dasharray="6 3" />
+                <!-- Data Pulse -->
+                <circle class="data-packet" cx="20" cy="40" r="3.5" fill="var(--color-regression)" opacity="0" />
+                <!-- Nodes -->
+                <circle cx="50" cy="40" r="6" fill="var(--color-regression)" />
+                <circle cx="80" cy="21" r="5" fill="var(--color-regression)" />
+                <circle class="node-pulse-circle" cx="110" cy="40" r="5" fill="var(--color-regression)" opacity="0.3" />
+                <circle cx="110" cy="40" r="6" fill="var(--color-regression)" />
+              </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Compatibility Testing -->
+                    <div class="service-card scroll-reveal" id="service-4">
+                        <div class="card-top">
+                            <div class="card-header-info">
+                                <span class="card-category" style="color: var(--color-compatibility)">Cross-Device UI</span>
+                                <span class="card-index">05</span>
+                            </div>
+                            <h2>Compatibility Testing</h2>
+                            <p>Audit visual layouts, script behaviors, and rendering across Gecko, Blink, and WebKit rendering engines.</p>
+                            <ul class="card-benefits-list">
+                                <li><span class="benefit-dot" style="background-color: var(--color-compatibility)"></span>Cross-browser</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-compatibility)"></span>Device breakpoints</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-compatibility)"></span>WebKit validation</li>
+                            </ul>
+                        </div>
+
+                        <div class="card-visual-wrapper">
+                            <div class="responsive-widget">
+                                <div class="desktop-frame">
+                                    <div class="frame-bar" style="width: 30%"></div>
+                                    <div class="frame-bar" style="width: 80%"></div>
+                                    <div class="frame-bar" style="width: 50%"></div>
+                                </div>
+                                <div class="mobile-frame">
+                                    <div class="frame-bar" style="width: 40%"></div>
+                                    <div class="frame-bar" style="width: 70%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Row 3: 3 Columns -->
+                <div class="grid-row-three">
+
+                    <!-- Card 6: Security Testing -->
+                    <div class="service-card scroll-reveal" id="service-5">
+                        <div class="card-top">
+                            <div class="card-header-info">
+                                <span class="card-category" style="color: var(--color-security)">Security audits</span>
+                                <span class="card-index">06</span>
+                            </div>
+                            <h2>Security Testing</h2>
+                            <p>Scan code libraries, verify authorization flows, and validate compliance guidelines.</p>
+                            <ul class="card-benefits-list">
+                                <li><span class="benefit-dot" style="background-color: var(--color-security)"></span>OWASP Top 10</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-security)"></span>Auth scans</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-security)"></span>Penetration testing</li>
+                            </ul>
+                        </div>
+
+                        <div class="card-visual-wrapper">
+                            <svg class="security-svg-widget" viewBox="0 0 100 100">
+                <circle class="gauge-circle-track" cx="50" cy="50" r="40" />
+                <circle class="gauge-circle-fill" cx="50" cy="50" r="40" />
+                <text x="50" y="55" font-family="sans-serif" font-weight="bold" font-size="14" fill="var(--text-title)" text-anchor="middle">SECURE</text>
+              </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 7: Cloud Services -->
+                    <div class="service-card scroll-reveal" id="service-6">
+                        <div class="card-top">
+                            <div class="card-header-info">
+                                <span class="card-category" style="color: var(--color-cloud)">Cloud Infra</span>
+                                <span class="card-index">07</span>
+                            </div>
+                            <h2>Cloud Services</h2>
+                            <p>Provision autoscaling node groups, container registers, and load balancers.</p>
+                            <ul class="card-benefits-list">
+                                <li><span class="benefit-dot" style="background-color: var(--color-cloud)"></span>Kubernetes</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-cloud)"></span>Serverless API</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-cloud)"></span>Cost management</li>
+                            </ul>
+                        </div>
+
+                        <div class="card-visual-wrapper">
+                            <svg class="cloud-nodes-svg" viewBox="0 0 100 80">
+                <line class="cloud-connection" x1="20" y1="50" x2="50" y2="25" stroke="var(--border-color)" stroke-width="2" />
+                <line class="cloud-connection" x1="80" y1="50" x2="50" y2="25" stroke="var(--border-color)" stroke-width="2" />
+                <line class="cloud-connection" x1="20" y1="50" x2="80" y2="50" stroke="var(--border-color)" stroke-width="2" />
+                <!-- Nodes -->
+                <circle class="cloud-node" cx="50" cy="25" r="8" fill="var(--color-cloud)" />
+                <circle class="cloud-node" cx="20" cy="50" r="8" fill="var(--color-cloud)" />
+                <circle class="cloud-node" cx="80" cy="50" r="8" fill="var(--color-cloud)" />
+              </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 8: DevOps Services -->
+                    <div class="service-card scroll-reveal" id="service-7">
+                        <div class="card-top">
+                            <div class="card-header-info">
+                                <span class="card-category" style="color: var(--color-devops)">GitOps Pipelines</span>
+                                <span class="card-index">08</span>
+                            </div>
+                            <h2>DevOps Services</h2>
+                            <p>Deploy zero-downtime deployment pipelines using standard code integration protocols.</p>
+                            <ul class="card-benefits-list">
+                                <li><span class="benefit-dot" style="background-color: var(--color-devops)"></span>Docker build</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-devops)"></span>GitOps setups</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-devops)"></span>Cluster scaling</li>
+                            </ul>
+                        </div>
+
+                        <div class="card-visual-wrapper">
+                            <div class="pipeline-widget">
+                                <div class="pipeline-step">
+                                    <span class="pipeline-status-light" style="background-color: var(--color-functional)"></span>
+                                    <span class="pipeline-label">Build</span>
+                                </div>
+                                <div class="pipeline-step">
+                                    <span class="pipeline-status-light" style="background-color: var(--color-functional)"></span>
+                                    <span class="pipeline-label">Test</span>
+                                </div>
+                                <div class="pipeline-step">
+                                    <span class="pipeline-status-light" style="background-color: var(--color-devops); animation: pulseAlert 1.5s infinite;"></span>
+                                    <span class="pipeline-label">Deploy</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Row 4: 2 Columns (Wide Cards) -->
+                <div class="grid-row-two">
+
+                    <!-- Card 9: Website Design & Dev -->
+                    <div class="service-card scroll-reveal" id="service-8">
+                        <div class="card-top">
+                            <div class="card-header-info">
+                                <span class="card-category" style="color: var(--color-webdesign)">Frontend Layouts</span>
+                                <span class="card-index">09</span>
+                            </div>
+                            <h2>Website Design & Dev</h2>
+                            <p>Build responsive layout components with clean styles, custom interactive sections, and lightweight bundles.</p>
+                            <ul class="card-benefits-list">
+                                <li><span class="benefit-dot" style="background-color: var(--color-webdesign)"></span>Semantic markup</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-webdesign)"></span>CSS animations</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-webdesign)"></span>Figma token match</li>
+                            </ul>
+                        </div>
+
+                        <div class="card-visual-wrapper">
+                            <div class="design-grid-widget">
+                                <div class="code-editor-panel">
+                                    <div class="code-line" style="width: 90%; background-color: var(--color-webdesign)"></div>
+                                    <div class="code-line" style="width: 40%"></div>
+                                    <div class="code-line" style="width: 70%"></div>
+                                </div>
+                                <div class="preview-canvas-panel">
+                                    <div class="canvas-card"></div>
+                                    <div class="canvas-card"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 10: Blog Writing -->
+                    <div class="service-card scroll-reveal" id="service-9">
+                        <div class="card-top">
+                            <div class="card-header-info">
+                                <span class="card-category" style="color: var(--color-blog)">Tech Copywriting</span>
+                                <span class="card-index">10</span>
+                            </div>
+                            <h2>Blog Writing</h2>
+                            <p>Establish engineering thought authority by publishing technical documentation, release notes, and blogs.</p>
+                            <ul class="card-benefits-list">
+                                <li><span class="benefit-dot" style="background-color: var(--color-blog)"></span>SEO optimizations</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-blog)"></span>Documentation logs</li>
+                                <li><span class="benefit-dot" style="background-color: var(--color-blog)"></span>Developer copy</li>
+                            </ul>
+                        </div>
+
+                        <div class="card-visual-wrapper">
+                            <div class="editor-widget">
+                                <div class="editor-line" style="width: 40%; background-color: var(--color-blog)"></div>
+                                <div class="editor-line writing-line"></div>
+                                <div class="editor-line"></div>
+                                <div class="editor-line short"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Industries Section -->
+        <section class="industries-section scroll-reveal" id="industries">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">INDUSTRIES</div>
+                    <h2 class="section-title">Applied Expertise Across Industries</h2>
+                </div>
+
+                <div class="industries-grid">
+                    <!-- Industry 1 -->
+                    <div class="industry-card">
+                        <h3>
+                            <svg class="industry-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg> Fintech & Banking
+                        </h3>
+                        <p>Secure authentication flows, low-latency financial ledger queries, and compliance testing for digital banks.</p>
+                    </div>
+                    <!-- Industry 2 -->
+                    <div class="industry-card">
+                        <h3>
+                            <svg class="industry-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg> Healthcare
+                        </h3>
+                        <p>HIPAA-compliant profile management, secure integration patterns, and load balancing for high-traffic patient systems.</p>
+                    </div>
+                    <!-- Industry 3 -->
+                    <div class="industry-card">
+                        <h3>
+                            <svg class="industry-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="1" y="3" width="15" height="13"></rect>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+              </svg> Logistics
+                        </h3>
+                        <p>High-concurrency mapping grids, routing query stress audits, and API availability checks for global supply chains.</p>
+                    </div>
+                    <!-- Industry 4 -->
+                    <div class="industry-card">
+                        <h3>
+                            <svg class="industry-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3zM6 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3z"></path>
+              </svg> SaaS & Startups
+                        </h3>
+                        <p>Rapid deployment setups, microservice regression checks, and front-end performance auditing for scalable cloud software.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section scroll-reveal">
+            <div class="container">
+                <div class="cta-card">
+                    <div class="cta-mesh-grid"></div>
+                    <div class="cta-flex-container">
+                        <div class="cta-content">
+                            <h2>Ready to Elevate Your Product Quality?</h2>
+                            <p>Discuss your project specifications with our system architects.</p>
+                        </div>
+                        <div class="cta-btn-wrapper">
+                            <button class="cta-btn contact-btn-trigger">
+                <span>Get in Touch</span>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Contact Modal -->
+    <div class="contact-modal-overlay" id="contact-modal">
+        <div class="contact-modal-card">
+            <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <h3>Start Your Project</h3>
+                <p>Fill out the form below and our advisors will respond within 24 hours.</p>
+            </div>
+            <form class="contact-form" id="contact-form" onsubmit="event.preventDefault(); alert('Thank you! We will get back to you shortly.');">
+                <div class="form-group">
+                    <input type="text" id="form-name" required placeholder=" " autocomplete="name">
+                    <label for="form-name">Your Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="form-email" required placeholder=" " autocomplete="email">
+                    <label for="form-email">Your Email</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="form-subject" required placeholder=" ">
+                    <label for="form-subject">Project Outline / Subject</label>
+                </div>
+                <div class="form-group">
+                    <textarea id="form-message" required rows="4" placeholder=" "></textarea>
+                    <label for="form-message">Detailed Requirements</label>
+                </div>
+                <button type="submit" class="form-submit-btn">Send Project Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== Site Footer (shared, from Footer.html) ===== -->
+    <iframe id="ctFooterFrame" src="Footer.html" title="Footer" scrolling="no"
+            style="width:100%;border:0;display:block;overflow:hidden;"></iframe>
+    <script>
+        (function () {
+            var f = document.getElementById('ctFooterFrame');
+            if (!f) return;
+            window.addEventListener('message', function (e) {
+                if (e.data && e.data.ctSection && e.data.height) { f.style.height = e.data.height + 'px'; }
+            });
+        })();
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ==========================================
+            // 1. Light/Dark Theme Switcher (Synchronized)
+            // ==========================================
+            // Theme is handled by the shared darkmode.js (synced across ALL pages).
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = themeToggleBtn ? themeToggleBtn.querySelector('.sun-icon') : null;
+            const moonIcon = themeToggleBtn ? themeToggleBtn.querySelector('.moon-icon') : null;
+
+            function reflectIcons(dark) {
+                if (sunIcon) sunIcon.style.display = dark ? 'none' : 'block';
+                if (moonIcon) moonIcon.style.display = dark ? 'block' : 'none';
+            }
+            function isCtDark() { try { return localStorage.getItem('ct-theme') === 'dark'; } catch (e) { return false; } }
+
+            reflectIcons(isCtDark());
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => { if (window.ctToggleTheme) window.ctToggleTheme(); });
+            }
+            window.addEventListener('storage', (e) => { if (e.key === 'ct-theme') reflectIcons(isCtDark()); });
+            window.addEventListener('message', (e) => { if (e.data && e.data.ctTheme) reflectIcons(e.data.ctTheme === 'dark'); });
+
+            // ==========================================
+            // 2. Scroll Reveal Animations
+            // ==========================================
+            const revealElements = document.querySelectorAll('.scroll-reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // ==========================================
+            // 3. Deep-Linking URL query parameter highlighting
+            // ==========================================
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceParam = urlParams.get('service');
+            if (serviceParam !== null) {
+                const parsedIdx = parseInt(serviceParam);
+                let targetCard = null;
+                if (!isNaN(parsedIdx)) {
+                    targetCard = document.getElementById(`service-${parsedIdx}`);
+                } else {
+                    // Find by query string matching title
+                    const queryStr = serviceParam.toLowerCase();
+                    const cards = document.querySelectorAll('.service-card');
+                    for (let card of cards) {
+                        const h2Text = card.querySelector('h2').textContent.toLowerCase();
+                        if (h2Text.includes(queryStr)) {
+                            targetCard = card;
+                            break;
+                        }
+                    }
+                }
+
+                if (targetCard) {
+                    setTimeout(() => {
+                        targetCard.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        targetCard.style.outline = '3px solid var(--primary-color)';
+                        targetCard.style.transition = 'outline 0.2s ease, transform 0.3s ease';
+                        targetCard.style.transform = 'scale(1.02)';
+                        setTimeout(() => {
+                            targetCard.style.outline = 'none';
+                            targetCard.style.transform = 'none';
+                        }, 1800);
+                    }, 500);
+                }
+            }
+
+            // ==========================================
+            // 4. Contact Us Modal Control
+            // ==========================================
+            const contactModal = document.getElementById('contact-modal');
+            const closeModalBtn = document.getElementById('modal-close');
+            const modalTriggers = document.querySelectorAll('.contact-btn-trigger');
+
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', openContactModal);
+            });
+
+            closeModalBtn.addEventListener('click', closeContactModal);
+
+            contactModal.addEventListener('click', (e) => {
+                if (e.target === contactModal) {
+                    closeContactModal();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && contactModal.classList.contains('active')) {
+                    closeContactModal();
+                }
+            });
+
+            function openContactModal() {
+                contactModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    const nameInput = document.getElementById('form-name');
+                    if (nameInput) nameInput.focus();
+                }, 100);
+            }
+
+            function closeContactModal() {
+                contactModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            // ==========================================
+            // 5. Mobile Hamburger Drawer Controls
+            // ==========================================
+            const hamburgerBtn = document.getElementById('hamburger-menu');
+            const drawerCloseBtn = document.getElementById('drawer-close');
+            const mobileDrawer = document.getElementById('mobile-drawer');
+            const drawerOverlay = document.getElementById('drawer-overlay');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+            hamburgerBtn.addEventListener('click', toggleDrawer);
+            drawerCloseBtn.addEventListener('click', toggleDrawer);
+            drawerOverlay.addEventListener('click', toggleDrawer);
+
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (mobileDrawer.classList.contains('active')) toggleDrawer();
+                });
+            });
+
+            function toggleDrawer() {
+                hamburgerBtn.classList.toggle('active');
+                mobileDrawer.classList.toggle('active');
+                drawerOverlay.classList.toggle('active');
+
+                if (mobileDrawer.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            }
+
+        });
+    </script>
+    <script src="darkmode.js"></script>
+</body>
+
+</html>
+```
