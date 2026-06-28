@@ -89,7 +89,7 @@
         .navCta { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #1a1a2e; border: 1.5px solid rgba(26,26,46,0.5); padding: 10px 24px; cursor: pointer; background: rgba(255,255,255,0.3); backdrop-filter: blur(8px); }
         .futureBtn { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #fff; background: linear-gradient(90deg,#fb3d64,#d440ad,#8b45dc,#4f61fb,#fb3d64); background-size: 200% 100%; animation: bgPan 4s linear infinite; padding: 12px 24px; border-radius: 4px; box-shadow: 0 4px 15px rgba(212,64,173,0.4); text-decoration: none; }
         @keyframes bgPan { 0% { background-position: 0% 0%; } 100% { background-position: -200% 0%; } }
-        .nav-item { position: relative; }
+        .nav-item { position: static; }
         .navLinks .caret { font-size: 9px; margin-left: 4px; opacity: 0.7; display: inline-block; transition: transform 0.25s ease; }
         .nav-item.active-mega .caret { transform: rotate(180deg); }
         .mega { position: absolute; top: 100%; left: 0; right: 0; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(247,245,255,0.9)), linear-gradient(115deg, rgba(251,61,100,0.06), rgba(139,69,220,0.06) 45%, rgba(79,97,251,0.06)); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: 0 30px 60px rgba(20,20,50,0.14); border-top: 1px solid rgba(255,255,255,0.6); border-bottom: 1px solid rgba(20,20,50,0.06); border-radius: 0 0 20px 20px; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s; z-index: 49; }
@@ -115,8 +115,16 @@
         .nav.open .hamburger span:nth-child(2) { opacity: 0; }
         .nav.open .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
         @media (max-width: 860px) {
-            .mega { display: none !important; }
-            .navLinks .caret { display: none; }
+            .nav-item { width: 100%; }
+            .nav-item > a { display: flex; align-items: center; justify-content: space-between; }
+            .navLinks .caret { display: inline-block; }
+            .mega { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: 0; border-radius: 12px; background: rgba(255,255,255,0.55); max-height: 0; overflow: hidden; transition: max-height 0.35s ease; margin-top: 8px; }
+            .mega::before { display: none; }
+            .nav-item.active-mega .mega { max-height: 1600px; }
+            .mega-inner { flex-direction: column; padding: 14px 16px; gap: 16px; }
+            .mega-cols { flex-direction: column; gap: 18px; }
+            .mega-col { min-width: 0; }
+            .mega-feature { display: none; }
             .nav { flex-wrap: wrap; height: auto; padding: 12px 18px; }
             .logoImage { height: 60px; }
             .hamburger { display: flex; }
@@ -357,33 +365,63 @@
         });
     </script>
 
-    <!-- ===== Header (nav + mega menu) behaviour ===== -->
+    <!-- ===== Header: desktop hover / mobile accordion ===== -->
     <script>
         (function () {
             var hb = document.getElementById('heroHamburger');
             var nav = document.querySelector('.nav');
+            var megaItems = Array.prototype.slice.call(document.querySelectorAll('.nav-item[data-mega]'));
+            function isMobile() { return window.matchMedia('(max-width: 860px)').matches; }
+
+            megaItems.forEach(function (it) {
+                var p = document.getElementById('mega-' + it.getAttribute('data-mega'));
+                if (p) it.appendChild(p);
+            });
+
             if (hb && nav) {
                 hb.addEventListener('click', function () { nav.classList.toggle('open'); });
-                nav.querySelectorAll('.navLinks a').forEach(function (a) {
-                    a.addEventListener('click', function () { nav.classList.remove('open'); });
+            }
+
+            function closeMega() {
+                megaItems.forEach(function (it) {
+                    it.classList.remove('active-mega');
+                    var p = it.querySelector('.mega');
+                    if (p) p.classList.remove('open');
                 });
             }
-            var megaItems = document.querySelectorAll('.nav-item[data-mega]');
-            function closeMega() {
-                document.querySelectorAll('.mega.open').forEach(function (m) { m.classList.remove('open'); });
-                megaItems.forEach(function (it) { it.classList.remove('active-mega'); });
-            }
+
             megaItems.forEach(function (it) {
                 it.addEventListener('mouseenter', function () {
+                    if (isMobile()) return;
                     closeMega();
-                    var p = document.getElementById('mega-' + it.getAttribute('data-mega'));
+                    var p = it.querySelector('.mega');
                     if (p) { p.classList.add('open'); it.classList.add('active-mega'); }
                 });
             });
             document.querySelectorAll('.navLinks li:not(.nav-item)').forEach(function (li) {
-                li.addEventListener('mouseenter', closeMega);
+                li.addEventListener('mouseenter', function () { if (!isMobile()) closeMega(); });
             });
-            if (nav) nav.addEventListener('mouseleave', closeMega);
+            if (nav) nav.addEventListener('mouseleave', function () { if (!isMobile()) closeMega(); });
+
+            megaItems.forEach(function (it) {
+                var link = it.querySelector('a');
+                if (!link) return;
+                link.addEventListener('click', function (e) {
+                    if (!isMobile()) return;
+                    e.preventDefault();
+                    var open = it.classList.contains('active-mega');
+                    closeMega();
+                    if (!open) {
+                        var p = it.querySelector('.mega');
+                        if (p) p.classList.add('open');
+                        it.classList.add('active-mega');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.navLinks li:not(.nav-item) > a, .mega a').forEach(function (a) {
+                a.addEventListener('click', function () { if (nav) nav.classList.remove('open'); closeMega(); });
+            });
         })();
     </script>
     <!-- footer auto-resize -->
