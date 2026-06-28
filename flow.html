@@ -988,27 +988,49 @@
             if (window.self === window.top) return;
             var root = document.getElementById('pipeline-root');
             var CANVAS_W = 7200, CANVAS_H = 1080;
-            var progress = 0, scale = 1, travel = 0;
+            var progress = 0, target = 0, scale = 1, travel = 0;
+            var rafId = null, lastActive = -1;
+
+            if (root) { root.style.transformOrigin = 'top left'; root.style.willChange = 'transform'; }
 
             function reportHeight() {
                 var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
                 if (h > 0) parent.postMessage({ ctSection: true, height: h }, '*');
             }
 
-            function applyProgress() {
+            function draw() {
                 if (!root || window.innerWidth <= 860) return;
-                root.style.transformOrigin = 'top left';
-                root.style.transform = 'translate(' + (-progress * travel) + 'px, 0px) scale(' + scale + ')';
-                // jis station par focus hai use active karo, baki dormant
+                // translate3d -> GPU compositing (smooth)
+                root.style.transform = 'translate3d(' + (-progress * travel) + 'px,0,0) scale(' + scale + ')';
+                // sirf jab focused station badle tabhi DOM update karo (smooth, no per-frame thrash)
                 if (typeof zones !== 'undefined') {
                     var virtualCenter = (progress * travel + window.innerWidth / 2) / scale;
-                    Object.keys(zones).forEach(function (key) {
-                        var center = 1500 + (key - 1) * 1200;
-                        if (Math.abs(virtualCenter - center) < 750) activateSection(zones[key]);
-                        else resetSection(zones[key]);
-                    });
+                    var idx = Math.round((virtualCenter - 1500) / 1200) + 1;
+                    idx = Math.max(1, Math.min(5, idx));
+                    if (idx !== lastActive) {
+                        lastActive = idx;
+                        Object.keys(zones).forEach(function (key) {
+                            if (parseInt(key, 10) === idx) activateSection(zones[key]);
+                            else resetSection(zones[key]);
+                        });
+                    }
                 }
             }
+
+            // ease current progress toward the scroll target -> butter-smooth
+            function animate() {
+                var diff = target - progress;
+                if (Math.abs(diff) < 0.0006) {
+                    progress = target;
+                    draw();
+                    rafId = null;
+                    return;
+                }
+                progress += diff * 0.16;
+                draw();
+                rafId = requestAnimationFrame(animate);
+            }
+            function kick() { if (rafId === null) rafId = requestAnimationFrame(animate); }
 
             function layout() {
                 if (window.innerWidth <= 860) {
@@ -1023,13 +1045,14 @@
                 travel = Math.max(0, CANVAS_W * scale - vw); // kitna horizontally scroll karna hai
                 document.body.style.height = vh + 'px';
                 document.body.style.overflow = 'hidden';
-                applyProgress();
+                progress = target;   // resize par turant settle
+                draw();
             }
 
             window.addEventListener('message', function (e) {
                 if (e.data && typeof e.data.ctFlowProgress === 'number') {
-                    progress = Math.max(0, Math.min(1, e.data.ctFlowProgress));
-                    applyProgress();
+                    target = Math.max(0, Math.min(1, e.data.ctFlowProgress));
+                    kick();
                 }
             });
 

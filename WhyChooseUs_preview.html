@@ -1113,6 +1113,25 @@
         }
     </style>
 
+    <!-- ===== EMBED MODE (index.html ke andar; standalone par koi asar nahi) ===== -->
+    <script>
+        (function () {
+            if (window.self === window.top) return;
+            // body ka min-height:100vh embed me blank space deta tha -> hata do
+            var s = document.createElement('style');
+            s.textContent = 'body{min-height:0!important;}.section{padding-top:48px!important;padding-bottom:48px!important;}';
+            document.head.appendChild(s);
+
+            function report() {
+                var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                if (h > 0) parent.postMessage({ ctSection: true, height: h }, '*');
+            }
+            window.__ctReport = report;
+            window.addEventListener('load', function () { report();[200, 600, 1200, 2500].forEach(function (d) { setTimeout(report, d); }); });
+            window.addEventListener('resize', report);
+            if (window.ResizeObserver) { try { new ResizeObserver(report).observe(document.body); } catch (e) {} }
+        })();
+    </script>
     <script src="darkmode.js"></script>
 </body>
 

@@ -66,13 +66,20 @@
       }
     }
 
-    // Scroll position -> flow progress (0..1) -> iframe ko bhejo
+    // Scroll position -> flow progress (0..1) -> iframe ko bhejo (rAF-throttled = smooth)
+    var flowTick = false;
     function flowScroll() {
       if (!flowPinned || !flowFrame.contentWindow) return;
-      var total = flowPin.offsetHeight - window.innerHeight;
-      var scrolled = Math.min(Math.max(-flowPin.getBoundingClientRect().top, 0), total);
-      var p = total > 0 ? scrolled / total : 0;
-      try { flowFrame.contentWindow.postMessage({ ctFlowProgress: p }, '*'); } catch (e) {}
+      if (flowTick) return;
+      flowTick = true;
+      requestAnimationFrame(function () {
+        flowTick = false;
+        if (!flowPinned || !flowFrame.contentWindow) return;
+        var total = flowPin.offsetHeight - window.innerHeight;
+        var scrolled = Math.min(Math.max(-flowPin.getBoundingClientRect().top, 0), total);
+        var p = total > 0 ? scrolled / total : 0;
+        try { flowFrame.contentWindow.postMessage({ ctFlowProgress: p }, '*'); } catch (e) {}
+      });
     }
 
     // 1) Child se height aati hai -> us iframe ki height set (flow pinned ho to skip)
