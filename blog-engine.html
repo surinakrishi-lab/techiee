@@ -118,9 +118,9 @@
             .nav-item { width: 100%; }
             .nav-item > a { display: flex; align-items: center; justify-content: space-between; }
             .navLinks .caret { display: inline-block; }
-            .mega { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: 0; border-radius: 12px; background: rgba(255,255,255,0.55); max-height: 0; overflow: hidden; transition: max-height 0.35s ease; margin-top: 8px; }
+            .mega { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: 0; border-radius: 12px; background: rgba(255,255,255,0.55); display: none; margin-top: 8px; }
             .mega::before { display: none; }
-            .nav-item.active-mega .mega { max-height: 1600px; }
+            .nav-item.active-mega .mega { display: block; }
             .mega-inner { flex-direction: column; padding: 14px 16px; gap: 16px; }
             .mega-cols { flex-direction: column; gap: 18px; }
             .mega-col { min-width: 0; }

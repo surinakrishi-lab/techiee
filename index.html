@@ -31,7 +31,7 @@
       display: block;
       border: 0;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 860px) {
       .flow-pin { height: auto !important; }
       .flow-pin .flow-frame { position: static; height: auto; }
     }
@@ -55,7 +55,7 @@
 
     // Flow ko pin/scrub setup -> baki sections normal auto-height
     function setupFlow() {
-      var mobile = window.innerWidth <= 768;
+      var mobile = window.innerWidth <= 860;
       flowPinned = !mobile;
       if (mobile) {
         flowPin.style.height = 'auto';

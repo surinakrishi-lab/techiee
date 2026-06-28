@@ -153,7 +153,7 @@
             display: none;
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 860px) {
             body {
                 overflow-y: auto;
                 overflow-x: hidden;
@@ -918,7 +918,7 @@
         // FIT TO SCREEN (desktop scale calculation - horizontal scroll allowed, fits browser height)
         function fitToScreen() {
             if (IS_EMBED) return; // embed sizing handled by embed-mode script below
-            if (window.innerWidth <= 768) return;
+            if (window.innerWidth <= 860) return;
             var root = document.getElementById('pipeline-root');
             var scaleY = window.innerHeight / 1080; // Fits 1080px canvas height perfectly
             var scale = Math.min(1.2, scaleY);
@@ -933,7 +933,7 @@
 
         // SCROLL-DRIVEN DYNAMIC ACTIVATION (Stations open as they slide into view)
         function handleScrollActivation() {
-            if (window.innerWidth <= 768) return;
+            if (window.innerWidth <= 860) return;
             // When embedded, activation is driven by scroll progress sent from the parent
             if (IS_EMBED) return;
 
@@ -973,7 +973,7 @@
         // TRANSLATE VERTICAL SCROLL (WHEEL) TO HORIZONTAL SCROLL
         window.addEventListener('wheel', function(e) {
             if (IS_EMBED) return; // inside index.html: don't hijack scroll (was trapping the page)
-            if (window.innerWidth <= 768) return; // Keep vertical scrolling on mobile
+            if (window.innerWidth <= 860) return; // Keep vertical scrolling on mobile
             if (e.deltaY !== 0) {
                 // Scroll horizontally instead of vertically
                 window.scrollBy(e.deltaY * 1.2, 0);
@@ -996,7 +996,7 @@
             }
 
             function applyProgress() {
-                if (!root || window.innerWidth <= 768) return;
+                if (!root || window.innerWidth <= 860) return;
                 root.style.transformOrigin = 'top left';
                 root.style.transform = 'translate(' + (-progress * travel) + 'px, 0px) scale(' + scale + ')';
                 // jis station par focus hai use active karo, baki dormant
@@ -1011,7 +1011,7 @@
             }
 
             function layout() {
-                if (window.innerWidth <= 768) {
+                if (window.innerWidth <= 860) {
                     document.body.style.height = 'auto';
                     document.body.style.overflow = 'visible';
                     if (root) root.style.transform = 'none';
