@@ -874,6 +874,16 @@
                 height: 130px;
             }
         }
+
+        /* ===== Mobile: smooth scroll (heavy blurred animated blobs band karo) ===== */
+        @media (max-width: 860px) {
+            .bg-blob-1, .bg-blob-2 {
+                animation: none !important;
+                position: absolute !important;
+                filter: blur(55px);
+                opacity: 0.35;
+            }
+        }
     </style>
 </head>
 
@@ -1056,6 +1066,8 @@
 
         // ── FLOATING MICRO-PARTICLES ──
         (function spawnParticles() {
+            // Phone par particles off -> smooth scroll
+            if (window.matchMedia('(max-width: 860px)').matches) return;
             const colors = ['#ec4899', '#a855f7', '#06b6d4'];
             for (let i = 0; i < 22; i++) {
                 const p = document.createElement('div');

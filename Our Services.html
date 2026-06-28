@@ -628,6 +628,16 @@
                 min-width: unset;
             }
         }
+
+        /* ===== Mobile: smooth scroll (heavy blurred animated blobs band karo) ===== */
+        @media (max-width: 860px) {
+            .bg-blob-1, .bg-blob-2 {
+                animation: none !important;
+                position: absolute !important;
+                filter: blur(55px);
+                opacity: 0.35;
+            }
+        }
     </style>
 </head>
 
