@@ -82,8 +82,21 @@
         }
     });
 
+    /* ---------- smooth scrolling + mobile jank fix (all pages) ---------- */
+    function injectSmooth() {
+        if (document.getElementById('ctSmoothCss')) return;
+        var s = document.createElement('style');
+        s.id = 'ctSmoothCss';
+        s.textContent =
+            'html { scroll-behavior: smooth; }' +
+            /* fixed backgrounds = laggy scroll on phones -> make them scroll normally */
+            '@media (max-width: 860px) { * { background-attachment: scroll !important; } }';
+        (document.head || document.documentElement).appendChild(s);
+    }
+
     /* ---------- init ---------- */
     function init() {
+        injectSmooth();
         injectCss();
         if (!inIframe) {
             btn = document.createElement('button');

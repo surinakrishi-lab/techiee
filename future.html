@@ -283,13 +283,22 @@
             });
         }
 
-        // 4) Subtle parallax on scroll for background bubbles
+        // 4) Subtle parallax on scroll for background bubbles (desktop only, rAF-throttled)
         var bubbles = document.querySelectorAll('.bubble');
-        window.addEventListener('scroll', function () {
+        var bTicking = false;
+        function bParallax() {
+            bTicking = false;
+            if (window.innerWidth <= 860) {           // phone: parallax off = smooth scroll
+                bubbles.forEach(function (b) { b.style.marginTop = ''; });
+                return;
+            }
             var y = window.scrollY;
             bubbles.forEach(function (b, i) {
                 b.style.marginTop = (y * (0.04 + i * 0.02)) + 'px';
             });
+        }
+        window.addEventListener('scroll', function () {
+            if (!bTicking) { bTicking = true; window.requestAnimationFrame(bParallax); }
         }, { passive: true });
     </script>
 

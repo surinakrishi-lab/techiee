@@ -1783,12 +1783,15 @@
             }
 
             function scrollTab(key) {
+                // Sirf andar ki tab-strip ko horizontally scroll karo.
+                // (scrollIntoView parent page ko apni taraf kheench leta tha — wo hata diya)
                 const t = tabs.find(x => x.dataset.tab === key);
-                if (t) t.scrollIntoView({
-                    behavior: "smooth",
-                    inline: "center",
-                    block: "nearest"
-                });
+                if (!t) return;
+                const c = t.closest('.ide-tabs-scroll') || t.parentElement;
+                if (!c || c.scrollWidth <= c.clientWidth + 2) return;
+                const cr = c.getBoundingClientRect(), tr = t.getBoundingClientRect();
+                const delta = (tr.left - cr.left) - (c.clientWidth - tr.width) / 2;
+                c.scrollBy({ left: delta, behavior: 'smooth' });
             }
 
             // click handlers
