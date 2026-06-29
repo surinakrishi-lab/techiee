@@ -1620,20 +1620,11 @@
             s.textContent =
                 '.productsSection{min-height:0!important}' +
                 '@media(min-width:861px){.heroSection{min-height:600px}.productsSection{padding-top:90px!important;padding-bottom:90px!important}}' +
-                '@media(max-width:860px){.heroSection{min-height:86svh!important;height:auto!important;overflow:hidden!important}.productsSection{padding-top:28px!important;padding-bottom:48px!important}}';
+                '@media(max-width:860px){.productsSection{padding-top:28px!important;padding-bottom:48px!important}}';
             document.head.appendChild(s);
 
             function report() {
-                var h = (function () {
-                    var b = document.body, max = 0, cs;
-                    for (var i = 0; i < b.children.length; i++) {
-                        cs = getComputedStyle(b.children[i]);
-                        if (cs.position === 'fixed' || cs.position === 'absolute' || cs.display === 'none') continue;
-                        var bot = b.children[i].offsetTop + b.children[i].offsetHeight + (parseFloat(cs.marginBottom) || 0);
-                        if (bot > max) max = bot;
-                    }
-                    return (max + (parseFloat(getComputedStyle(b).paddingBottom) || 0)) || b.scrollHeight;
-                })();
+                var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
                 if (h > 0) parent.postMessage({
                     ctSection: true,
                     height: h
@@ -1643,8 +1634,7 @@
             window.addEventListener('message', function(e) {
                 if (e.data && e.data.ctParentVH) {
                     var hs = document.querySelector('.heroSection');
-                    // Desktop par hi full parent-height; mobile par CSS (86svh) handle karega
-                    if (hs) hs.style.minHeight = (window.innerWidth > 860) ? (e.data.ctParentVH + 'px') : '';
+                    if (hs) hs.style.minHeight = e.data.ctParentVH + 'px';
                     report();
                 }
             });

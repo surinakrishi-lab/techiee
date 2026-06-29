@@ -976,7 +976,7 @@
             if (isMobileMode()) return;
             var root = document.getElementById('pipeline-root');
             var scaleY = window.innerHeight / 1080; // Fits 1080px canvas height perfectly
-            var scale = Math.min(1.2, scaleY);
+            var scale = Math.min(1.2, scaleY) * 0.82; // thoda chhota -> width+height dono kam
             var offsetX = Math.max(0, (window.innerWidth - 7200 * scale) / 2);
             var offsetY = Math.max(0, (window.innerHeight - 1080 * scale) / 2);
             root.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px) scale(' + scale + ')';
@@ -1049,7 +1049,9 @@
             var progress = 0,
                 target = 0,
                 scale = 1,
-                travel = 0;
+                travel = 0,
+                offsetY = 0;
+            var SCALE_FIT = 0.82; // pipeline ko full-screen se thoda chhota -> width+height dono kam
             var rafId = null,
                 lastActive = -1;
 
@@ -1078,7 +1080,7 @@
             function draw() {
                 if (!root || isMobileMode()) return;
                 // translate3d -> GPU compositing (smooth)
-                root.style.transform = 'translate3d(' + (-progress * travel) + 'px,0,0) scale(' + scale + ')';
+                root.style.transform = 'translate3d(' + (-progress * travel) + 'px,' + offsetY + 'px,0) scale(' + scale + ')';
                 // sirf jab focused station badle tabhi DOM update karo (smooth, no per-frame thrash)
                 if (typeof zones !== 'undefined') {
                     var virtualCenter = (progress * travel + window.innerWidth / 2) / scale;
@@ -1103,7 +1105,7 @@
                     rafId = null;
                     return;
                 }
-                progress += diff * 0.32; // tez follow = responsive, kam laggy
+                progress += diff * 0.18; // halka follow = butter-smooth scrub
                 draw();
                 rafId = requestAnimationFrame(animate);
             }
@@ -1123,7 +1125,8 @@
                 }
                 var vw = window.innerWidth,
                     vh = window.innerHeight;
-                scale = vh / CANVAS_H; // poori height fit (no extra space)
+                scale = (vh / CANVAS_H) * SCALE_FIT; // chhota -> width+height dono kam
+                offsetY = Math.max(0, (vh - CANVAS_H * scale) / 2); // vertically centre
                 travel = Math.max(0, CANVAS_W * scale - vw); // kitna horizontally scroll karna hai
                 document.body.style.height = vh + 'px';
                 document.body.style.overflow = 'hidden';
@@ -1133,9 +1136,9 @@
 
             window.addEventListener('message', function(e) {
                 if (e.data && typeof e.data.ctFlowProgress === 'number') {
-                    // direct map (parent already rAF-throttled) -> tight + no extra loop
-                    target = progress = Math.max(0, Math.min(1, e.data.ctFlowProgress));
-                    draw();
+                    // sirf target set karo; animate() progress ko ease karega -> smooth scrub
+                    target = Math.max(0, Math.min(1, e.data.ctFlowProgress));
+                    kick();
                 }
             });
 

@@ -1,160 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CrossTecch</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; overflow-x: clip; background: #e8eaf2; }
-
-    /* iframe ke baseline/inline gap se bachne ke liye */
-    iframe { display: block; vertical-align: top; border: 0; }
-
-    /* Mobile: smooth scroll + momentum, theme bg taaki kahin white na jhanke */
-    @media (max-width: 860px) {
-      html { scroll-behavior: smooth; }
-      body { -webkit-overflow-scrolling: touch; background: #e8eaf2; }
-      .section-frame { background: #e8eaf2; }
-    }
-
-    /* Har section ek seamless iframe hai.
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrossTecch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html,
+        body {
+            width: 100%;
+            overflow-x: clip;
+            background: #e8eaf2;
+        }
+        /* iframe ke baseline/inline gap se bachne ke liye */
+        
+        iframe {
+            display: block;
+            vertical-align: top;
+            border: 0;
+        }
+        /* Mobile: smooth scroll + momentum, theme bg taaki kahin white na jhanke */
+        
+        @media (max-width: 860px) {
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                -webkit-overflow-scrolling: touch;
+                background: #e8eaf2;
+            }
+            .section-frame {
+                background: #e8eaf2;
+            }
+        }
+        /* Har section ek seamless iframe hai.
        Edit karna ho to seedha us section ki .html file kholo. */
-    .section-frame {
-      display: block;
-      width: 100%;
-      border: 0;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 600px; /* default; JS sahi height set karega */
-    }
-
-    /* Flow section = scroll-driven pinned track.
+        
+        .section-frame {
+            display: block;
+            width: 100%;
+            border: 0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 600px;
+            /* default; JS sahi height set karega */
+        }
+        /* Flow section = scroll-driven pinned track.
        Jaise page neeche scroll ho, andar ki pipeline horizontally aage badhti hai. */
-    .flow-pin { position: relative; width: 100%; }
-    .flow-pin .flow-frame {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      width: 100%;
-      display: block;
-      border: 0;
-    }
-    @media (max-width: 860px) {
-      .flow-pin { height: auto !important; }
-      .flow-pin .flow-frame { position: static; height: auto; }
-    }
-  </style>
+        
+        .flow-pin {
+            position: relative;
+            width: 100%;
+        }
+        
+        .flow-pin .flow-frame {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            display: block;
+            border: 0;
+        }
+        
+        @media (max-width: 860px) {
+            .flow-pin {
+                height: auto !important;
+            }
+            .flow-pin .flow-frame {
+                position: static;
+                height: auto;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-  <!-- ===== SECTION SEQUENCE (order yahan se control hota hai) ===== -->
-  <!-- 1 --> <iframe class="section-frame" src="hero.html"                 title="Hero"           scrolling="no"></iframe>
-  <!-- 2 --> <div class="flow-pin" id="flowPin"><iframe class="section-frame flow-frame" id="flowFrame" src="flow.html" title="Flow" scrolling="no"></iframe></div>
-  <!-- 3 --> <iframe class="section-frame" src="Our Services.html"         title="Our Services"   scrolling="no"></iframe>
-  <!-- 4 --> <iframe class="section-frame" src="code.html"                 title="Code"           scrolling="no"></iframe>
-  <!-- 5 --> <iframe class="section-frame" src="WhyChooseUs_preview.html"  title="Why Choose Us"  scrolling="no"></iframe>
-  <!-- 6 --> <iframe class="section-frame" src="Footer.html"               title="Footer"         scrolling="no"></iframe>
+    <!-- ===== SECTION SEQUENCE (order yahan se control hota hai) ===== -->
+    <!-- 1 --><iframe class="section-frame" src="hero.html" title="Hero" scrolling="no"></iframe>
+    <!-- 2 -->
+    <div class="flow-pin" id="flowPin"><iframe class="section-frame flow-frame" id="flowFrame" src="flow.html" title="Flow" scrolling="no"></iframe></div>
+    <!-- 3 --><iframe class="section-frame" src="Our Services.html" title="Our Services" scrolling="no"></iframe>
+    <!-- 4 --><iframe class="section-frame" src="code.html" title="Code" scrolling="no"></iframe>
+    <!-- 5 --><iframe class="section-frame" src="WhyChooseUs_preview.html" title="Why Choose Us" scrolling="no"></iframe>
+    <!-- 6 --><iframe class="section-frame" src="Footer.html" title="Footer" scrolling="no"></iframe>
 
-  <script>
-    var frames = Array.prototype.slice.call(document.querySelectorAll('.section-frame'));
-    var flowPin = document.getElementById('flowPin');
-    var flowFrame = document.getElementById('flowFrame');
-    var flowPinned = false; // desktop par true (sticky scrub), mobile par false
+    <script>
+        var frames = Array.prototype.slice.call(document.querySelectorAll('.section-frame'));
+        var flowPin = document.getElementById('flowPin');
+        var flowFrame = document.getElementById('flowFrame');
+        var flowPinned = false; // desktop par true (sticky scrub), mobile par false
 
-    // Flow ko pin/scrub setup -> baki sections normal auto-height
-    function setupFlow() {
-      var mobile = window.innerWidth <= 860;
-      flowPinned = !mobile;
-      if (mobile) {
-        flowPin.style.height = 'auto';
-        flowFrame.style.height = ''; // height message/measure se aayegi
-      } else {
-        flowPin.style.height = Math.round(window.innerHeight * 2.1) + 'px'; // scroll-track (chhota = kam atkega, fast scrub)
-        flowFrame.style.height = window.innerHeight + 'px';
-      }
-    }
-
-    // Scroll position -> flow progress (0..1) -> iframe ko bhejo (rAF-throttled = smooth)
-    var flowTick = false;
-    function flowScroll() {
-      if (!flowPinned || !flowFrame.contentWindow) return;
-      if (flowTick) return;
-      flowTick = true;
-      requestAnimationFrame(function () {
-        flowTick = false;
-        if (!flowPinned || !flowFrame.contentWindow) return;
-        var total = flowPin.offsetHeight - window.innerHeight;
-        var scrolled = Math.min(Math.max(-flowPin.getBoundingClientRect().top, 0), total);
-        var p = total > 0 ? scrolled / total : 0;
-        try { flowFrame.contentWindow.postMessage({ ctFlowProgress: p }, '*'); } catch (e) {}
-      });
-    }
-
-    // 1) Child se height aati hai -> us iframe ki height set (flow pinned ho to skip)
-    window.addEventListener('message', function (e) {
-      if (!e.data || !e.data.ctSection || !e.data.height) return;
-      frames.forEach(function (f) {
-        if (f.contentWindow !== e.source) return;
-        if (f === flowFrame && flowPinned) return; // pinned flow ki height CSS handle karta hai
-        f.style.height = e.data.height + 'px';
-      });
-    });
-
-    // 2) Har child ko parent ki viewport-height bhejo
-    function pushParentVH() {
-      frames.forEach(function (f) {
-        try { f.contentWindow.postMessage({ ctParentVH: window.innerHeight }, '*'); } catch (e) {}
-      });
-    }
-
-    // 3) Fallback: same-origin par direct measure (flow pinned ho to skip)
-    function measure(f) {
-      if (f === flowFrame && flowPinned) return;
-      try {
-        var d = f.contentDocument || f.contentWindow.document;
-        if (d && d.body) {
-          var b = d.body, max = 0, cs;
-          for (var i = 0; i < b.children.length; i++) {
-            cs = d.defaultView.getComputedStyle(b.children[i]);
-            if (cs.position === 'fixed' || cs.position === 'absolute' || cs.display === 'none') continue;
-            var bot = b.children[i].offsetTop + b.children[i].offsetHeight + (parseFloat(cs.marginBottom) || 0);
-            if (bot > max) max = bot;
-          }
-          var h = (max + (parseFloat(d.defaultView.getComputedStyle(b).paddingBottom) || 0)) || b.scrollHeight;
-          if (h > 0) f.style.height = h + 'px';
+        // Flow ko pin/scrub setup -> baki sections normal auto-height
+        function setupFlow() {
+            var mobile = window.innerWidth <= 860;
+            flowPinned = !mobile;
+            if (mobile) {
+                flowPin.style.height = 'auto';
+                flowFrame.style.height = ''; // height message/measure se aayegi
+            } else {
+                flowPin.style.height = Math.round(window.innerHeight * 1.5) + 'px'; // scroll-track chhota -> kam vertical scroll, fast scrub
+                flowFrame.style.height = window.innerHeight + 'px';
+            }
         }
-      } catch (e) { /* cross-origin: postMessage path use hoga */ }
-    }
 
-    setupFlow();
+        // Scroll position -> flow progress (0..1) -> iframe ko bhejo (rAF-throttled = smooth)
+        var flowTick = false;
 
-    frames.forEach(function (f) {
-      f.addEventListener('load', function () {
-        try { f.contentWindow.postMessage({ ctParentVH: window.innerHeight }, '*'); } catch (e) {}
-        measure(f);
-        setTimeout(function () { measure(f); }, 400);
-        setTimeout(function () { measure(f); flowScroll(); }, 1200);
-      });
-    });
+        function flowScroll() {
+            if (!flowPinned || !flowFrame.contentWindow) return;
+            if (flowTick) return;
+            flowTick = true;
+            requestAnimationFrame(function() {
+                flowTick = false;
+                if (!flowPinned || !flowFrame.contentWindow) return;
+                var total = flowPin.offsetHeight - window.innerHeight;
+                var scrolled = Math.min(Math.max(-flowPin.getBoundingClientRect().top, 0), total);
+                var p = total > 0 ? scrolled / total : 0;
+                try {
+                    flowFrame.contentWindow.postMessage({
+                        ctFlowProgress: p
+                    }, '*');
+                } catch (e) {}
+            });
+        }
 
-    window.addEventListener('scroll', flowScroll, { passive: true });
+        // 1) Child se height aati hai -> us iframe ki height set (flow pinned ho to skip)
+        window.addEventListener('message', function(e) {
+            if (!e.data || !e.data.ctSection || !e.data.height) return;
+            frames.forEach(function(f) {
+                if (f.contentWindow !== e.source) return;
+                if (f === flowFrame && flowPinned) return; // pinned flow ki height CSS handle karta hai
+                f.style.height = e.data.height + 'px';
+            });
+        });
 
-    // Late layout (fonts/images) ke baad heights settle karo -> mobile ke whitespace gaps khatam
-    window.addEventListener('load', function () {
-      [300, 800, 1500, 2500].forEach(function (d) {
-        setTimeout(function () { pushParentVH(); frames.forEach(measure); flowScroll(); }, d);
-      });
-    });
+        // 2) Har child ko parent ki viewport-height bhejo
+        function pushParentVH() {
+            frames.forEach(function(f) {
+                try {
+                    f.contentWindow.postMessage({
+                        ctParentVH: window.innerHeight
+                    }, '*');
+                } catch (e) {}
+            });
+        }
 
-    var t;
-    window.addEventListener('resize', function () {
-      clearTimeout(t);
-      t = setTimeout(function () { setupFlow(); pushParentVH(); frames.forEach(measure); flowScroll(); }, 150);
-    });
-  </script>
+        // 3) Fallback: same-origin par direct measure (flow pinned ho to skip)
+        function measure(f) {
+            if (f === flowFrame && flowPinned) return;
+            try {
+                var d = f.contentDocument || f.contentWindow.document;
+                if (d && d.body) {
+                    var b = d.body,
+                        max = 0,
+                        cs;
+                    for (var i = 0; i < b.children.length; i++) {
+                        cs = d.defaultView.getComputedStyle(b.children[i]);
+                        if (cs.position === 'fixed' || cs.position === 'absolute' || cs.display === 'none') continue;
+                        var bot = b.children[i].offsetTop + b.children[i].offsetHeight + (parseFloat(cs.marginBottom) || 0);
+                        if (bot > max) max = bot;
+                    }
+                    var h = (max + (parseFloat(d.defaultView.getComputedStyle(b).paddingBottom) || 0)) || b.scrollHeight;
+                    if (h > 0) f.style.height = h + 'px';
+                }
+            } catch (e) { /* cross-origin: postMessage path use hoga */ }
+        }
 
-  <script src="darkmode.js"></script>
+        setupFlow();
+
+        frames.forEach(function(f) {
+            f.addEventListener('load', function() {
+                try {
+                    f.contentWindow.postMessage({
+                        ctParentVH: window.innerHeight
+                    }, '*');
+                } catch (e) {}
+                measure(f);
+                setTimeout(function() {
+                    measure(f);
+                }, 400);
+                setTimeout(function() {
+                    measure(f);
+                    flowScroll();
+                }, 1200);
+            });
+        });
+
+        window.addEventListener('scroll', flowScroll, {
+            passive: true
+        });
+
+        // Late layout (fonts/images) ke baad heights settle karo -> mobile ke whitespace gaps khatam
+        window.addEventListener('load', function() {
+            [300, 800, 1500, 2500].forEach(function(d) {
+                setTimeout(function() {
+                    pushParentVH();
+                    frames.forEach(measure);
+                    flowScroll();
+                }, d);
+            });
+        });
+
+        var t;
+        window.addEventListener('resize', function() {
+            clearTimeout(t);
+            t = setTimeout(function() {
+                setupFlow();
+                pushParentVH();
+                frames.forEach(measure);
+                flowScroll();
+            }, 150);
+        });
+    </script>
+
+    <script src="darkmode.js"></script>
 </body>
+
 </html>
