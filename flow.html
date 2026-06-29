@@ -166,8 +166,7 @@
             display: none;
         }
         
-        @media (max-width: 860px),
-        (pointer: coarse) {
+        @media (max-width: 860px) {
             body {
                 overflow-y: auto;
                 overflow-x: hidden;
@@ -788,11 +787,10 @@
         // True when this page is shown inside an iframe (e.g. on index.html)
         const IS_EMBED = (window.self !== window.top);
 
-        // Matches the CSS breakpoint: narrow screens OR any touch/coarse-pointer
-        // device (tablets, phones in landscape) fall back to the simple mobile view,
-        // since the desktop pipeline only reveals content on mouse hover.
+        // Matches the CSS breakpoint: phones and narrow screens get the
+        // simple vertical mobile view instead of the hover-driven desktop pipeline.
         function isMobileMode() {
-            return window.innerWidth <= 860 || window.matchMedia('(pointer: coarse)').matches;
+            return window.innerWidth <= 860;
         }
 
         // DOM Elements mapping for interactive hover states
@@ -1267,16 +1265,14 @@
             display: none;
         }
         
-        @media (max-width: 860px),
-        (pointer: coarse) {
+        @media (max-width: 860px) {
             #flowIndicator {
                 display: none;
             }
         }
         /* ===== MOBILE: light theme (dark/night nahi) ===== */
         
-        @media (max-width: 860px),
-        (pointer: coarse) {
+        @media (max-width: 860px) {
             html,
             body {
                 background: #f8fafc !important;
@@ -1338,6 +1334,7 @@
         <span class="ring r2"></span>
         <span class="dot"></span>
     </div>
+
 
 </body>
 
