@@ -754,7 +754,7 @@
                 height: 240px !important;
             }
             .card-open {
-                height: 240px !important;
+                height: 360px !important;
             }
             .card-collapsed {
                 flex-direction: column;
@@ -763,8 +763,31 @@
                 writing-mode: vertical-rl;
                 transform: rotate(180deg);
             }
+            /* expanded panel mobile: poora content (Explore Service tak) dikhe, cut na ho */
             .card-expanded {
-                justify-content: center !important;
+                justify-content: flex-start !important;
+                padding: 20px 18px !important;
+                gap: 10px !important;
+            }
+            .card-expanded-icon {
+                width: 56px !important;
+                height: 56px !important;
+                border-radius: 14px !important;
+            }
+            .card-expanded-icon img {
+                width: 40px !important;
+                height: 40px !important;
+            }
+            .card-expanded-icon svg {
+                width: 28px !important;
+                height: 28px !important;
+            }
+            .card-expanded-title {
+                font-size: 21px !important;
+            }
+            .card-expanded-desc {
+                font-size: 12.5px !important;
+                line-height: 1.5 !important;
             }
         }
     </style>
@@ -939,7 +962,7 @@
 
         <!-- Centered "View All Services" Button -->
         <div class="services-footer">
-            <a href="#" class="btn-view-all">
+            <a href="services.html" target="_top" class="btn-view-all">
       View All Services
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
         <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -966,6 +989,29 @@
             deck.classList.remove('deck-active');
             cards.forEach(c => c.classList.remove('card-open'));
         });
+
+        // "Explore Service" -> services.html (poora page, iframe nahi)
+        function goServices(e) {
+            if (e) e.stopPropagation();
+            try { window.top.location.href = 'services.html'; }
+            catch (err) { window.location.href = 'services.html'; }
+        }
+        document.querySelectorAll('.card-expanded-cta').forEach(function (cta) {
+            cta.style.cursor = 'pointer';
+            cta.addEventListener('click', goServices);
+        });
+
+        // Mobile/touch: hover nahi hota -> tap par card khule (Explore Service dikhe)
+        if (window.matchMedia('(hover: none)').matches || 'ontouchstart' in window) {
+            cards.forEach(function (card) {
+                card.addEventListener('click', function () {
+                    var wasOpen = card.classList.contains('card-open');
+                    deck.classList.add('deck-active');
+                    cards.forEach(function (c) { c.classList.remove('card-open'); });
+                    if (!wasOpen) card.classList.add('card-open');
+                });
+            });
+        }
     </script>
     <!-- ===== EMBED MODE (sirf index1.html ke andar; standalone par koi asar nahi) ===== -->
     <script>
