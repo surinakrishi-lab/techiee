@@ -115,7 +115,14 @@
       try {
         var d = f.contentDocument || f.contentWindow.document;
         if (d && d.body) {
-          var h = Math.max(d.body.scrollHeight, d.body.offsetHeight);
+          var b = d.body, max = 0, cs;
+          for (var i = 0; i < b.children.length; i++) {
+            cs = d.defaultView.getComputedStyle(b.children[i]);
+            if (cs.position === 'fixed' || cs.position === 'absolute' || cs.display === 'none') continue;
+            var bot = b.children[i].offsetTop + b.children[i].offsetHeight + (parseFloat(cs.marginBottom) || 0);
+            if (bot > max) max = bot;
+          }
+          var h = (max + (parseFloat(d.defaultView.getComputedStyle(b).paddingBottom) || 0)) || b.scrollHeight;
           if (h > 0) f.style.height = h + 'px';
         }
       } catch (e) { /* cross-origin: postMessage path use hoga */ }

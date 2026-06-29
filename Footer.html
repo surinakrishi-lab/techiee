@@ -1115,7 +1115,16 @@
             document.head.appendChild(s);
 
             function report() {
-                var h = Math.max(document.body.scrollHeight, document.body.offsetHeight);
+                var h = (function () {
+                    var b = document.body, max = 0, cs;
+                    for (var i = 0; i < b.children.length; i++) {
+                        cs = getComputedStyle(b.children[i]);
+                        if (cs.position === 'fixed' || cs.position === 'absolute' || cs.display === 'none') continue;
+                        var bot = b.children[i].offsetTop + b.children[i].offsetHeight + (parseFloat(cs.marginBottom) || 0);
+                        if (bot > max) max = bot;
+                    }
+                    return (max + (parseFloat(getComputedStyle(b).paddingBottom) || 0)) || b.scrollHeight;
+                })();
                 if (h > 0) parent.postMessage({
                     ctSection: true,
                     height: h
