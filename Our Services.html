@@ -679,12 +679,10 @@
         /* ===== Mobile: smooth scroll (heavy blurred animated blobs band karo) ===== */
         
         @media (max-width: 860px) {
+            /* absolute blob neeche tak extend ho ke trailing gap deta tha -> mobile par hide */
             .bg-blob-1,
             .bg-blob-2 {
-                animation: none !important;
-                position: absolute !important;
-                filter: blur(55px);
-                opacity: 0.35;
+                display: none !important;
             }
         }
         /* ===== NO squeeze: equal cards + hover par intro neeche se slide-up ===== */
