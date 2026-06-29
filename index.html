@@ -8,6 +8,16 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100%; overflow-x: clip; background: #e8eaf2; }
 
+    /* iframe ke baseline/inline gap se bachne ke liye */
+    iframe { display: block; vertical-align: top; border: 0; }
+
+    /* Mobile: smooth scroll + momentum, theme bg taaki kahin white na jhanke */
+    @media (max-width: 860px) {
+      html { scroll-behavior: smooth; }
+      body { -webkit-overflow-scrolling: touch; background: #e8eaf2; }
+      .section-frame { background: #e8eaf2; }
+    }
+
     /* Har section ek seamless iframe hai.
        Edit karna ho to seedha us section ki .html file kholo. */
     .section-frame {
@@ -123,6 +133,13 @@
     });
 
     window.addEventListener('scroll', flowScroll, { passive: true });
+
+    // Late layout (fonts/images) ke baad heights settle karo -> mobile ke whitespace gaps khatam
+    window.addEventListener('load', function () {
+      [300, 800, 1500, 2500].forEach(function (d) {
+        setTimeout(function () { pushParentVH(); frames.forEach(measure); flowScroll(); }, d);
+      });
+    });
 
     var t;
     window.addEventListener('resize', function () {

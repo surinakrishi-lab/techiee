@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
          :root {
-            --bg: #f3a6d685;
+            --bg: #e8eaf2;
             --surface: #ffffff;
             --cyan: #06b6d4;
             --blue: #6366f1;
@@ -813,8 +813,8 @@
                     document.getElementById('item-m-left'),
                     document.getElementById('item-m-right')
                 ],
-                color: '#ffffff',
-                glow: '0 16px 40px rgba(255, 255, 255, 0.22)'
+                color: '#0ea5e9',
+                glow: '0 16px 40px rgba(14, 165, 233, 0.20)'
             },
             2: {
                 trigger: document.getElementById('zone-2'),
@@ -834,8 +834,8 @@
                     document.getElementById('item-c-left'),
                     document.getElementById('item-c-right')
                 ],
-                color: '#ffffff',
-                glow: '0 16px 40px rgba(255, 255, 255, 0.22)'
+                color: '#0ea5e9',
+                glow: '0 16px 40px rgba(14, 165, 233, 0.20)'
             },
             3: {
                 trigger: document.getElementById('zone-3'),
@@ -855,8 +855,8 @@
                     document.getElementById('item-d-left'),
                     document.getElementById('item-d-right')
                 ],
-                color: '#ffffff',
-                glow: '0 16px 40px rgba(255, 255, 255, 0.22)'
+                color: '#0ea5e9',
+                glow: '0 16px 40px rgba(14, 165, 233, 0.20)'
             },
             4: {
                 trigger: document.getElementById('zone-4'),
@@ -876,8 +876,8 @@
                     document.getElementById('item-a-left'),
                     document.getElementById('item-a-right')
                 ],
-                color: '#ffffff',
-                glow: '0 16px 40px rgba(255, 255, 255, 0.22)'
+                color: '#0ea5e9',
+                glow: '0 16px 40px rgba(14, 165, 233, 0.20)'
             },
             5: {
                 trigger: document.getElementById('zone-5'),
@@ -956,7 +956,7 @@
                     card.style.borderColor = zone.color;
                     card.style.boxShadow = zone.emerald ?
                         '0 30px 60px rgba(16, 185, 129, 0.12)' :
-                        '0 25px 50px rgba(255, 255, 255, 0.16)';
+                        '0 25px 50px rgba(14, 165, 233, 0.12)';
                     card.style.pointerEvents = 'auto'; // Enable interactions when shown
                 }, i * 100);
             });
@@ -1106,6 +1106,7 @@
             function layout() {
                 if (isMobileMode()) {
                     document.body.style.height = 'auto';
+                    document.body.style.minHeight = '0'; // embed me 100vh blank-space na de
                     document.body.style.overflow = 'visible';
                     if (root) root.style.transform = 'none';
                     reportHeight();
@@ -1141,46 +1142,35 @@
 
     <!-- ===== Dark theme cards + white active + flowing motion ===== -->
     <style>
-        /* dim cards on the dark screen; white sirf active item par */
-        
+        /* LIGHT theme — baaki site (hero/services/footer) se match */
+        /* cards white rahein (dark override hata diya) */
+
         .bg-white {
-            background: #11141d !important;
+            background: #ffffff !important;
         }
-        
-        [class*="text-slate-8"],
-        [class*="text-slate-7"],
-        [class*="text-slate-6"],
-        [class*="text-slate-5"],
-        [class*="text-slate-4"] {
-            color: #aeb6c6 !important;
-        }
-        
+        /* slate text ki natural hierarchy waapas (flattener hata diya) */
+
         .text-sky-500 {
-            color: #ffffff !important;
-        }
-        
-        [class*="border-slate-"] {
-            border-color: rgba(255, 255, 255, 0.12) !important;
+            color: #0ea5e9 !important;
         }
         /* filter drop-shadow har frame repaint karta tha (slow) -> hata diya, smooth scrub ke liye */
-        
+
         .glow-active,
         .glow-prod {
             filter: none !important;
         }
-        /* jab indicator box tak pahunche -> wo box black se WHITE ho jaye */
-        
+        /* jab indicator box tak pahunche -> wo box brand-gradient me light up ho jaye */
+
         .flow-on {
-            background: #ffffff !important;
-            color: #0f172a !important;
-            border-color: #ffffff !important;
-            box-shadow: 0 16px 42px rgba(255, 255, 255, 0.32) !important;
+            background: linear-gradient(135deg, #fb3d64, #8b45dc 55%, #4f61fb) !important;
+            color: #ffffff !important;
+            border-color: transparent !important;
+            box-shadow: 0 16px 42px rgba(139, 69, 220, 0.32) !important;
         }
-        /* flowing energy on the main pipe -> "kuch ja raha hai" */
-        /* static white line (flowing-dash animation hata di -> smooth scroll, no per-frame SVG repaint) */
-        
+        /* main pipe brand sky line */
+
         #main-flow-line {
-            stroke: #ffffff !important;
+            stroke: #0ea5e9 !important;
         }
         /* mobile timeline -> dark + white active */
         
@@ -1231,10 +1221,10 @@
         .m-dot.emerald .m-dot-inner {
             background: #ffffff !important;
         }
-        /* subtle light dot-grid on the dark screen */
-        
+        /* subtle dark dot-grid on the light screen */
+
         body::before {
-            background-image: radial-gradient(rgba(246, 240, 240, 0.05) 1px, transparent 1px) !important;
+            background-image: radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px) !important;
         }
         /* ===== Travelling focus indicator (sits on the pipe, boxes light up as they reach it) ===== */
         
@@ -1256,8 +1246,8 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: #ffffff;
-            box-shadow: 0 0 14px 4px rgba(255, 255, 255, 0.9), 0 0 34px 12px rgba(130, 180, 255, 0.5);
+            background: #8b45dc;
+            box-shadow: 0 0 14px 4px rgba(139, 69, 220, 0.5), 0 0 34px 12px rgba(79, 97, 251, 0.32);
         }
         /* rings/pulse animations hata diye -> kam compositor load = smoother scroll */
         
@@ -1275,7 +1265,7 @@
         @media (max-width: 860px) {
             html,
             body {
-                background: #328ce6 !important;
+                background: #e8eaf2 !important;
             }
             .m-card {
                 background: #ffffff !important;
