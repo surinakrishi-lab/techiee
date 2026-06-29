@@ -91,7 +91,8 @@
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1340px;
+            margin: 0 auto;
             text-align: center;
         }
         /* ── Header ── */
@@ -136,39 +137,43 @@
         
         .cards {
             display: flex;
-            gap: 10px;
+            gap: 14px;
             justify-content: center;
             align-items: stretch;
-            height: 440px;
+            height: 460px;
+            width: 100%;
         }
         /* Base card */
         
         .card {
             position: relative;
-            width: 185px;
-            border-radius: 24px;
+            flex: 1 1 0;
+            min-width: 0;
+            max-width: 420px;
+            border-radius: 04px;
             overflow: hidden;
             cursor: pointer;
-            flex-shrink: 0;
-            transition: width 0.7s cubic-bezier(0.4, 0, 0.15, 1), box-shadow 0.5s ease;
+            transition: flex-basis 0.7s cubic-bezier(0.4, 0, 0.15, 1), flex-grow 0.7s cubic-bezier(0.4, 0, 0.15, 1), box-shadow 0.5s ease;
             display: flex;
             flex-direction: column;
         }
         /* ── When deck is active: shrink all, grow hovered ── */
         
         .cards.deck-active .card {
-            width: 72px;
+            flex: 0 0 84px;
+            max-width: 84px;
         }
         
         .cards.deck-active .card.card-open {
-            width: 420px;
+            flex: 0 0 480px;
+            max-width: 480px;
         }
         /* ══ Card background layers ══ */
         
         .card-bg {
             position: absolute;
             inset: 0;
-            border-radius: 24px;
+            border-radius: 04px;
             transition: opacity 0.5s ease;
         }
         /* Default: light tinted glass bg */
@@ -234,11 +239,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
             gap: 20px;
-            padding: 20px 0;
+            padding: 0 0 26px;
             z-index: 4;
             transition: opacity 0.3s ease;
+        }
+        /* image ab card ke bg me hai -> chhota icon tile hide */
+        
+        .card-collapsed-icon {
+            display: none !important;
         }
         
         .card-open .card-collapsed {
@@ -247,37 +257,39 @@
         }
         
         .card-collapsed-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(15, 23, 42, 0.04);
-            border: 1px solid rgba(15, 23, 42, 0.05);
+            background: rgba(15, 23, 42, 0.05);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
             flex-shrink: 0;
-            transition: transform 0.3s ease, background 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
         }
         
         .card:not(.card-open):hover .card-collapsed-icon {
-            transform: scale(1.1);
-            background: rgba(15, 23, 42, 0.08);
+            transform: scale(1.15) translateY(-4px);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
         }
         
         .card-collapsed-icon svg {
-            width: 22px;
-            height: 22px;
+            width: 36px;
+            height: 36px;
         }
         
         .card-collapsed-label {
             writing-mode: vertical-rl;
             text-orientation: mixed;
             transform: rotate(180deg);
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            color: #475569;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
             white-space: nowrap;
         }
         /* ══ EXPANDED STATE — full layout ══ */
@@ -318,30 +330,34 @@
         }
         
         .card-expanded-icon {
-            width: 62px;
-            height: 62px;
-            border-radius: 18px;
+            width: 92px;
+            height: 92px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(10px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
         }
         
         .card-expanded-icon svg {
-            width: 30px;
-            height: 30px;
+            width: 48px;
+            height: 48px;
         }
         /* PNG service icons */
+        
         .card-collapsed-icon img {
-            width: 26px;
-            height: 26px;
+            width: 48px;
+            height: 48px;
             object-fit: contain;
+            border-radius: 12px;
         }
+        
         .card-expanded-icon img {
-            width: 34px;
-            height: 34px;
+            width: 70px;
+            height: 70px;
             object-fit: contain;
+            border-radius: 16px;
         }
         
         .card-expanded-title {
@@ -427,7 +443,7 @@
         }
         
         .card-1 .card-bg-default {
-            background: rgba(255, 255, 255, 0.8);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.12) 0%, rgba(15, 23, 42, 0.62) 100%), url('images/manual qa.png') center/cover no-repeat;
             border: 1px solid rgba(219, 234, 254, 0.5);
         }
         
@@ -454,7 +470,7 @@
         }
         
         .card-2 .card-bg-default {
-            background: rgba(255, 255, 255, 0.8);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.12) 0%, rgba(15, 23, 42, 0.62) 100%), url('images/automated qa.png') center/cover no-repeat;
             border: 1px solid rgba(243, 232, 255, 0.5);
         }
         
@@ -481,7 +497,7 @@
         }
         
         .card-3 .card-bg-default {
-            background: rgba(255, 255, 255, 0.8);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.12) 0%, rgba(15, 23, 42, 0.62) 100%), url('images/devops.png') center/cover no-repeat;
             border: 1px solid rgba(254, 243, 199, 0.5);
         }
         
@@ -508,7 +524,7 @@
         }
         
         .card-4 .card-bg-default {
-            background: rgba(255, 255, 255, 0.8);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.12) 0%, rgba(15, 23, 42, 0.62) 100%), url('images/content engine.png') center/cover no-repeat;
             border: 1px solid rgba(209, 250, 229, 0.5);
         }
         
@@ -535,7 +551,7 @@
         }
         
         .card-5 .card-bg-default {
-            background: rgba(255, 255, 255, 0.8);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.12) 0%, rgba(15, 23, 42, 0.62) 100%), url('images/cloud services.png') center/cover no-repeat;
             border: 1px solid rgba(207, 250, 254, 0.5);
         }
         
@@ -576,6 +592,32 @@
         .card-5 .card-collapsed-icon svg {
             stroke: #0891b2;
         }
+        /* Collapsed icon colored tints (attractive per-service color) */
+        
+        .card-1 .card-collapsed-icon {
+            background: rgba(37, 99, 235, 0.09);
+            border-color: rgba(37, 99, 235, 0.18);
+        }
+        
+        .card-2 .card-collapsed-icon {
+            background: rgba(139, 92, 246, 0.09);
+            border-color: rgba(139, 92, 246, 0.18);
+        }
+        
+        .card-3 .card-collapsed-icon {
+            background: rgba(217, 119, 6, 0.09);
+            border-color: rgba(217, 119, 6, 0.18);
+        }
+        
+        .card-4 .card-collapsed-icon {
+            background: rgba(5, 150, 105, 0.09);
+            border-color: rgba(5, 150, 105, 0.18);
+        }
+        
+        .card-5 .card-collapsed-icon {
+            background: rgba(8, 145, 178, 0.09);
+            border-color: rgba(8, 145, 178, 0.18);
+        }
         /* Expanded icon tints */
         
         .card-1 .card-expanded-icon svg {
@@ -603,19 +645,25 @@
             .cards {
                 flex-direction: column;
                 height: auto;
-                align-items: center;
+                align-items: stretch;
+                gap: 14px;
             }
             .card {
+                flex: 0 0 auto !important;
                 width: 100% !important;
-                max-width: 400px;
-                height: 72px;
+                max-width: none !important;
+                height: 80px;
             }
             .card-open {
-                height: 420px !important;
+                height: 440px !important;
             }
             .cards.deck-active .card {
+                flex: 0 0 auto !important;
                 width: 100% !important;
-                max-width: 400px;
+                max-width: none !important;
+            }
+            .cards.deck-active .card.card-open {
+                flex: 0 0 auto !important;
             }
             .card-collapsed {
                 flex-direction: row;
@@ -628,14 +676,97 @@
                 min-width: unset;
             }
         }
-
         /* ===== Mobile: smooth scroll (heavy blurred animated blobs band karo) ===== */
+        
         @media (max-width: 860px) {
-            .bg-blob-1, .bg-blob-2 {
+            .bg-blob-1,
+            .bg-blob-2 {
                 animation: none !important;
                 position: absolute !important;
                 filter: blur(55px);
                 opacity: 0.35;
+            }
+        }
+        /* ===== NO squeeze: equal cards + hover par intro neeche se slide-up ===== */
+        
+        .card,
+        .cards.deck-active .card,
+        .cards.deck-active .card.card-open {
+            flex: 1 1 0 !important;
+            max-width: 320px !important;
+        }
+        
+        .card {
+            transition: box-shadow 0.4s ease, transform 0.4s ease !important;
+        }
+        
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 50px rgba(15, 23, 42, 0.18);
+        }
+        /* image hamesha dikhe (squeeze/fade nahi) */
+        
+        .card-bg-default,
+        .card-open .card-bg-default {
+            opacity: 1 !important;
+        }
+        
+        .card-bg-active {
+            opacity: 0 !important;
+        }
+        
+        .card-open .card-collapsed {
+            opacity: 1 !important;
+        }
+        /* intro panel: niche chhupa hua -> hover (card-open) par slide-up, photo ki jagah */
+        
+        .card-expanded {
+            position: absolute !important;
+            inset: 0 !important;
+            min-width: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: flex-start !important;
+            gap: 13px !important;
+            padding: 28px 22px !important;
+            background: rgba(255, 255, 255, 0.97) !important;
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            opacity: 1 !important;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.15, 1) !important;
+            pointer-events: none;
+            z-index: 6 !important;
+        }
+        
+        .card-open .card-expanded {
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        @media (max-width: 900px) {
+            /* mobile: full-width cards, fixed height; tap/hover par panel slide-up */
+            .card,
+            .cards.deck-active .card,
+            .cards.deck-active .card.card-open {
+                flex: 0 0 auto !important;
+                width: 100% !important;
+                max-width: none !important;
+                height: 240px !important;
+            }
+            .card-open {
+                height: 240px !important;
+            }
+            .card-collapsed {
+                flex-direction: column;
+            }
+            .card-collapsed-label {
+                writing-mode: vertical-rl;
+                transform: rotate(180deg);
+            }
+            .card-expanded {
+                justify-content: center !important;
             }
         }
     </style>
@@ -662,7 +793,7 @@
                 <!-- Collapsed -->
                 <div class="card-collapsed">
                     <div class="card-collapsed-icon">
-                        <img src="images/manual-qa.png" alt="Manual QA" />
+                        <img src="images/manual qa.png" alt="Manual QA" />
                     </div>
                     <span class="card-collapsed-label">Manual QA</span>
                 </div>
@@ -674,7 +805,7 @@
           Testing
         </span>
                     <div class="card-expanded-icon">
-                        <img src="images/manual-qa.png" alt="Manual QA" />
+                        <img src="images/manual qa.png" alt="Manual QA" />
                     </div>
                     <h3 class="card-expanded-title">Manual QA<br>Testing</h3>
                     <p class="card-expanded-desc">Human-driven test cycles that catch edge cases no automation can predict. We validate every single user flow, interaction, and edge case before release.</p>
@@ -693,7 +824,7 @@
 
                 <div class="card-collapsed">
                     <div class="card-collapsed-icon">
-                        <img src="images/automation.png" alt="Automation Testing" />
+                        <img src="images/automated qa.png" alt="Automation Testing" />
                     </div>
                     <span class="card-collapsed-label">Automation</span>
                 </div>
@@ -704,7 +835,7 @@
           Automation
         </span>
                     <div class="card-expanded-icon">
-                        <img src="images/automation.png" alt="Automation Testing" />
+                        <img src="images/automated qa.png" alt="Automation Testing" />
                     </div>
                     <h3 class="card-expanded-title">Automation<br>Testing</h3>
                     <p class="card-expanded-desc">Scalable test suites powered by Selenium, Playwright & Cypress. Ship at speed with zero regressions and full CI/CD integration built in from day one.</p>
@@ -753,7 +884,7 @@
 
                 <div class="card-collapsed">
                     <div class="card-collapsed-icon">
-                        <img src="images/content.png" alt="Content Engine" />
+                        <img src="images/content engine.png" alt="Content Engine" />
                     </div>
                     <span class="card-collapsed-label">Content</span>
                 </div>
@@ -764,7 +895,7 @@
           Content
         </span>
                     <div class="card-expanded-icon">
-                        <img src="images/content.png" alt="Content Engine" />
+                        <img src="images/content engine.png" alt="Content Engine" />
                     </div>
                     <h3 class="card-expanded-title">Content<br>Engine</h3>
                     <p class="card-expanded-desc">AI-powered content pipelines producing SEO-ready, brand-consistent copy at scale. From blogs to campaigns — every channel, every audience, every time.</p>
@@ -783,7 +914,7 @@
 
                 <div class="card-collapsed">
                     <div class="card-collapsed-icon">
-                        <img src="images/cloud.png" alt="Cloud Services" />
+                        <img src="images/cloud services.png" alt="Cloud Services" />
                     </div>
                     <span class="card-collapsed-label">Cloud</span>
                 </div>
@@ -794,7 +925,7 @@
           Cloud
         </span>
                     <div class="card-expanded-icon">
-                        <img src="images/cloud.png" alt="Cloud Services" />
+                        <img src="images/cloud services.png" alt="Cloud Services" />
                     </div>
                     <h3 class="card-expanded-title">Cloud<br>Services</h3>
                     <p class="card-expanded-desc">AWS, GCP & Azure architecture, seamless migration, and ongoing cost optimisation. Built for reliability, scalability, and security at every level of scale.</p>
@@ -840,19 +971,32 @@
     </script>
     <!-- ===== EMBED MODE (sirf index1.html ke andar; standalone par koi asar nahi) ===== -->
     <script>
-        (function () {
+        (function() {
             if (window.self === window.top) return;
             var s = document.createElement('style');
             s.textContent = 'body{min-height:0!important;display:block!important}';
             document.head.appendChild(s);
+
             function report() {
                 var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-                if (h > 0) parent.postMessage({ ctSection: true, height: h }, '*');
+                if (h > 0) parent.postMessage({
+                    ctSection: true,
+                    height: h
+                }, '*');
             }
             window.__ctReport = report;
-            window.addEventListener('load', function () { report();[200, 600, 1200, 2500].forEach(function (d) { setTimeout(report, d); }); });
+            window.addEventListener('load', function() {
+                report();
+                [200, 600, 1200, 2500].forEach(function(d) {
+                    setTimeout(report, d);
+                });
+            });
             window.addEventListener('resize', report);
-            if (window.ResizeObserver) { try { new ResizeObserver(report).observe(document.body); } catch (e) {} }
+            if (window.ResizeObserver) {
+                try {
+                    new ResizeObserver(report).observe(document.body);
+                } catch (e) {}
+            }
         })();
     </script>
     <script src="darkmode.js"></script>

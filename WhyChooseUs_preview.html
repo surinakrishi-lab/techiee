@@ -61,7 +61,7 @@
             z-index: -1;
             filter: blur(90px);
             pointer-events: none;
-            opacity: 0.7;
+            opacity: 0.15;
             transition: opacity 0.4s ease;
         }
         
@@ -109,15 +109,15 @@
         .section {
             position: relative;
             z-index: 1;
-            padding: 80px 24px 100px;
+            padding: 44px 24px 48px;
             max-width: 1280px;
             margin: 0 auto;
         }
         /* ── HEADING BLOCK ── */
-        
+
         .heading-block {
             text-align: center;
-            margin-bottom: 70px;
+            margin-bottom: 32px;
         }
         
         .eyebrow {
@@ -210,7 +210,7 @@
             grid-template-rows: 1fr auto 1fr;
             align-items: center;
             gap: 0 40px;
-            min-height: 560px;
+            min-height: 440px;
             position: relative;
             perspective: 1200px;
         }
@@ -874,15 +874,38 @@
                 height: 130px;
             }
         }
-
         /* ===== Mobile: smooth scroll (heavy blurred animated blobs band karo) ===== */
+        
         @media (max-width: 860px) {
-            .bg-blob-1, .bg-blob-2 {
+            .bg-blob-1,
+            .bg-blob-2 {
                 animation: none !important;
                 position: absolute !important;
                 filter: blur(55px);
                 opacity: 0.35;
             }
+        }
+        /* ai-network image -> WhyChooseUs ke peeche halka watermark */
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1000px;
+            height: 100%;
+            background: url('images/ai-network.png') center 68% / contain no-repeat;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .heading-block,
+        .stage {
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
@@ -903,6 +926,9 @@
             </h2>
             <p class="subtitle">Three capabilities that set us apart — built into everything we deliver.</p>
         </div>
+
+        <!-- AI ecosystem graphic (poora dikhe, cut na ho) -->
+
 
         <!-- Stage: orb + cards -->
         <div class="stage" id="stage">
@@ -974,6 +1000,7 @@
                                     <stop offset="50%" stop-color="#aa00ff"/>
                                     <stop offset="100%" stop-color="#00c8ff"/>
                                 </linearGradient>
+                                
                             </defs>
                             <g transform="translate(100, 100)">
                                 <!-- Curved 3D outer arms of the cross -->
@@ -1115,21 +1142,36 @@
 
     <!-- ===== EMBED MODE (index.html ke andar; standalone par koi asar nahi) ===== -->
     <script>
-        (function () {
+        (function() {
             if (window.self === window.top) return;
             // body ka min-height:100vh embed me blank space deta tha -> hata do
             var s = document.createElement('style');
-            s.textContent = 'body{min-height:0!important;}.section{padding-top:48px!important;padding-bottom:48px!important;}';
+            s.textContent =
+                'body{min-height:0!important;}' +
+                '@media(min-width:901px){.section{padding-top:48px!important;padding-bottom:48px!important}}' +
+                '@media(max-width:900px){.section{padding:34px 18px 30px!important}.heading-block{margin-bottom:34px!important}.stage{gap:26px!important}.orb-wrap{margin-bottom:6px!important}}';
             document.head.appendChild(s);
 
             function report() {
                 var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-                if (h > 0) parent.postMessage({ ctSection: true, height: h }, '*');
+                if (h > 0) parent.postMessage({
+                    ctSection: true,
+                    height: h
+                }, '*');
             }
             window.__ctReport = report;
-            window.addEventListener('load', function () { report();[200, 600, 1200, 2500].forEach(function (d) { setTimeout(report, d); }); });
+            window.addEventListener('load', function() {
+                report();
+                [200, 600, 1200, 2500].forEach(function(d) {
+                    setTimeout(report, d);
+                });
+            });
             window.addEventListener('resize', report);
-            if (window.ResizeObserver) { try { new ResizeObserver(report).observe(document.body); } catch (e) {} }
+            if (window.ResizeObserver) {
+                try {
+                    new ResizeObserver(report).observe(document.body);
+                } catch (e) {}
+            }
         })();
     </script>
     <script src="darkmode.js"></script>

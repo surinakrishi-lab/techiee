@@ -94,19 +94,16 @@
         (document.head || document.documentElement).appendChild(s);
     }
 
+    // dark-mode toggle disabled (user removed it) -> no-op
+    window.ctToggleTheme = function () {};
+    window.ctSetTheme = function () {};
+
     /* ---------- init ---------- */
     function init() {
-        injectSmooth();
-        injectCss();
-        if (!inIframe) {
-            btn = document.createElement('button');
-            btn.id = 'ctThemeBtn';
-            btn.type = 'button';
-            btn.setAttribute('aria-label', 'Toggle dark mode');
-            btn.onclick = function () { setTheme(!read()); };
-            document.body.appendChild(btn);
-        }
-        apply(read());
+        injectSmooth();   // keep smooth scrolling + mobile fix
+        // force light + clear any saved dark state (no floating toggle anymore)
+        try { localStorage.removeItem('ct-theme'); } catch (e) {}
+        document.documentElement.classList.remove('ct-dark');
     }
 
     if (document.readyState === 'loading') {

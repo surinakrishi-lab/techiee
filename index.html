@@ -61,7 +61,7 @@
         flowPin.style.height = 'auto';
         flowFrame.style.height = ''; // height message/measure se aayegi
       } else {
-        flowPin.style.height = (window.innerHeight * 3) + 'px'; // scroll-track (2 screen ka scrub)
+        flowPin.style.height = Math.round(window.innerHeight * 2.1) + 'px'; // scroll-track (chhota = kam atkega, fast scrub)
         flowFrame.style.height = window.innerHeight + 'px';
       }
     }

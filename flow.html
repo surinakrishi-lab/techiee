@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,8 +7,8 @@
     <title>CROSSTECCH Complete Enterprise Architecture Pipeline</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --bg: #f8fafc;
+         :root {
+            --bg: #030405;
             --surface: #ffffff;
             --cyan: #06b6d4;
             --blue: #6366f1;
@@ -22,7 +21,7 @@
             --font-heading: 'Syne', sans-serif;
             --font-body: 'Space Grotesk', sans-serif;
         }
-
+        
         body {
             background-color: var(--bg);
             color: var(--text);
@@ -33,20 +32,23 @@
             height: 100vh;
             position: relative;
         }
-
         /* Custom premium horizontal scrollbar */
+        
         body::-webkit-scrollbar {
             height: 14px;
         }
+        
         body::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.02);
             border-radius: 7px;
         }
+        
         body::-webkit-scrollbar-thumb {
             background: rgba(6, 182, 212, 0.3);
             border-radius: 7px;
             border: 3px solid var(--bg);
         }
+        
         body::-webkit-scrollbar-thumb:hover {
             background: rgba(6, 182, 212, 0.6);
         }
@@ -59,8 +61,8 @@
             height: 1080px;
             transform-origin: top left;
         }
-
         /* Subtle Cyber Tech Grid matching branding theme */
+        
         body::before {
             content: '';
             position: fixed;
@@ -70,9 +72,10 @@
             pointer-events: none;
             z-index: 0;
         }
-
         /* Fluid background morphing blobs matching homepage fluid art */
-        .bg-blob-1, .bg-blob-2 {
+        
+        .bg-blob-1,
+        .bg-blob-2 {
             position: fixed;
             z-index: -1;
             filter: blur(95px);
@@ -80,7 +83,7 @@
             opacity: 0.65;
             transition: opacity 0.4s ease;
         }
-
+        
         .bg-blob-1 {
             width: 900px;
             height: 900px;
@@ -89,7 +92,7 @@
             right: 400px;
             animation: morph-blob-1 20s infinite alternate ease-in-out;
         }
-
+        
         .bg-blob-2 {
             width: 1000px;
             height: 1000px;
@@ -98,35 +101,45 @@
             left: 400px;
             animation: morph-blob-2 24s infinite alternate ease-in-out;
         }
-
+        
         @keyframes morph-blob-1 {
-            0% { border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%; transform: translate(0, 0) rotate(0deg); }
-            100% { border-radius: 60% 40% 40% 60% / 60% 60% 40% 40%; transform: translate(-40px, 60px) rotate(180deg); }
+            0% {
+                border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
+                transform: translate(0, 0) rotate(0deg);
+            }
+            100% {
+                border-radius: 60% 40% 40% 60% / 60% 60% 40% 40%;
+                transform: translate(-40px, 60px) rotate(180deg);
+            }
         }
-
+        
         @keyframes morph-blob-2 {
-            0% { border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%; transform: translate(0, 0) rotate(0deg); }
-            100% { border-radius: 30% 70% 70% 30% / 60% 30% 70% 40%; transform: translate(50px, -50px) rotate(-180deg); }
+            0% {
+                border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%;
+                transform: translate(0, 0) rotate(0deg);
+            }
+            100% {
+                border-radius: 30% 70% 70% 30% / 60% 30% 70% 40%;
+                transform: translate(50px, -50px) rotate(-180deg);
+            }
         }
-
         /* Ultra Smooth Pipeline Curve Fluid Mechanics */
+        
         .pipeline-draw {
             opacity: 0;
             transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
         }
-
         /* Fluid ease-out reveal for micro tech metrics */
+        
         .fade-scale-in {
             opacity: 0;
             transform: scale(0.95);
-            pointer-events: none; /* Disable interaction when hidden */
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.15), 
-                        opacity 0.5s ease, 
-                        border-color 0.4s ease, 
-                        box-shadow 0.4s ease;
+            pointer-events: none;
+            /* Disable interaction when hidden */
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.15), opacity 0.5s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
-
         /* Ambient Glow States matching light theme */
+        
         .glow-active {
             filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.35));
         }
@@ -134,8 +147,8 @@
         .glow-prod {
             filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.4));
         }
-
         /* Transparent Hover Zone Columns to trigger mouseleave easily */
+        
         .hover-zone {
             position: absolute;
             top: 0;
@@ -143,8 +156,8 @@
             z-index: 25;
             background: transparent;
         }
-
         /* ── RESPONSIVE SPLIT ── */
+        
         .desktop-view {
             display: block;
         }
@@ -168,8 +181,8 @@
                 display: block;
             }
         }
-
         /* ── MOBILE PIPELINE STYLES (LIGHT THEME) ── */
+        
         .m-header {
             display: flex;
             align-items: center;
@@ -194,8 +207,8 @@
             padding: 16px 16px 48px;
             position: relative;
         }
-        
         /* Mobile timeline track track */
+        
         .m-pipeline::before {
             content: '';
             position: absolute;
@@ -215,11 +228,25 @@
             animation: mSlideIn 0.6s ease forwards;
         }
         
-        .m-stage:nth-child(1) { animation-delay: 0.1s; }
-        .m-stage:nth-child(2) { animation-delay: 0.35s; }
-        .m-stage:nth-child(3) { animation-delay: 0.6s; }
-        .m-stage:nth-child(4) { animation-delay: 0.85s; }
-        .m-stage:nth-child(5) { animation-delay: 1.1s; }
+        .m-stage:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .m-stage:nth-child(2) {
+            animation-delay: 0.35s;
+        }
+        
+        .m-stage:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        .m-stage:nth-child(4) {
+            animation-delay: 0.85s;
+        }
+        
+        .m-stage:nth-child(5) {
+            animation-delay: 1.1s;
+        }
         
         @keyframes mSlideIn {
             to {
@@ -330,7 +357,7 @@
         
         .m-sub {
             background: #f8fafc;
-            border: 1px solid rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
             border-radius: 12px;
             padding: 10px 12px;
             flex: 1;
@@ -365,8 +392,7 @@
             color: var(--emerald);
             margin-bottom: 8px;
         }
-    
-</style>
+    </style>
 </head>
 
 <body>
@@ -558,7 +584,7 @@
         <!-- Center Core Pillar -->
         <div id="item-a-main" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in font-medium shadow-sm" style="left: 4850px; top: 645px;">
             <div class="absolute -bottom-[60px] left-1/2 -translate-x-1/2 w-0.5 h-[60px] bg-cyan-500"></div>
-            <div class="text-sky-500 font-extrabold mb-4 border-b border-slate-100 pb-4 text-2xl">🤖 Autonomous Execution</div>
+            <div class="text-sky-500 font-extrabold mb-4 border-b border-slate-100 pb-4 text-2xl">Autonomous Execution</div>
             <div class="text-slate-600 text-lg space-y-2 leading-relaxed">
                 • Self-Healing Web Locators<br>• Playwright & Selenium Grid<br>• Parallel Multi-threading
             </div>
@@ -712,7 +738,7 @@
                 </div>
                 <div class="m-card active">
                     <div class="m-stage-title">04 · AI Automation QA</div>
-                    <div class="m-main-label">🤖 Autonomous Execution</div>
+                    <div class="m-main-label">Autonomous Execution</div>
                     <div class="m-main-detail">Self-Healing Web Locators · Playwright &amp; Selenium Grid · Parallel Multi-threading</div>
                     <div class="m-subs">
                         <div class="m-sub">
@@ -733,7 +759,7 @@
                     <div class="m-dot-inner"></div>
                 </div>
                 <div class="m-card emerald-active">
-                    <div class="m-stage-title">✨ CrossTecch Products</div>
+                    <div class="m-stage-title">CrossTecch Products</div>
                     <div class="m-subs" style="margin-top:0;flex-direction:column;">
                         <div class="m-sub" style="min-width:unset; margin-bottom: 10px;">
                             <div class="m-product-badge">PROPRIETARY</div>
@@ -766,74 +792,97 @@
             1: {
                 trigger: document.getElementById('zone-1'),
                 node: document.getElementById('node-1').firstElementChild,
-                pipes: [
-                    { el: document.getElementById('pipe-m-vert'), maxOffset: 105 },
-                    { el: document.getElementById('pipe-m-left'), maxOffset: 580 },
-                    { el: document.getElementById('pipe-m-right'), maxOffset: 580 }
-                ],
+                pipes: [{
+                    el: document.getElementById('pipe-m-vert'),
+                    maxOffset: 105
+                }, {
+                    el: document.getElementById('pipe-m-left'),
+                    maxOffset: 580
+                }, {
+                    el: document.getElementById('pipe-m-right'),
+                    maxOffset: 580
+                }],
                 cards: [
                     document.getElementById('item-m-main'),
                     document.getElementById('item-m-left'),
                     document.getElementById('item-m-right')
                 ],
-                color: '#0ea5e9',
-                glow: '0 16px 40px rgba(14, 165, 233, 0.25)'
+                color: '#ffffff',
+                glow: '0 16px 40px rgba(255, 255, 255, 0.22)'
             },
             2: {
                 trigger: document.getElementById('zone-2'),
                 node: document.getElementById('node-2').firstElementChild,
-                pipes: [
-                    { el: document.getElementById('pipe-c-vert'), maxOffset: 105 },
-                    { el: document.getElementById('pipe-c-left'), maxOffset: 580 },
-                    { el: document.getElementById('pipe-c-right'), maxOffset: 580 }
-                ],
+                pipes: [{
+                    el: document.getElementById('pipe-c-vert'),
+                    maxOffset: 105
+                }, {
+                    el: document.getElementById('pipe-c-left'),
+                    maxOffset: 580
+                }, {
+                    el: document.getElementById('pipe-c-right'),
+                    maxOffset: 580
+                }],
                 cards: [
                     document.getElementById('item-c-main'),
                     document.getElementById('item-c-left'),
                     document.getElementById('item-c-right')
                 ],
-                color: '#0ea5e9',
-                glow: '0 16px 40px rgba(14, 165, 233, 0.25)'
+                color: '#ffffff',
+                glow: '0 16px 40px rgba(255, 255, 255, 0.22)'
             },
             3: {
                 trigger: document.getElementById('zone-3'),
                 node: document.getElementById('node-3').firstElementChild,
-                pipes: [
-                    { el: document.getElementById('pipe-d-vert'), maxOffset: 105 },
-                    { el: document.getElementById('pipe-d-left'), maxOffset: 580 },
-                    { el: document.getElementById('pipe-d-right'), maxOffset: 580 }
-                ],
+                pipes: [{
+                    el: document.getElementById('pipe-d-vert'),
+                    maxOffset: 105
+                }, {
+                    el: document.getElementById('pipe-d-left'),
+                    maxOffset: 580
+                }, {
+                    el: document.getElementById('pipe-d-right'),
+                    maxOffset: 580
+                }],
                 cards: [
                     document.getElementById('item-d-main'),
                     document.getElementById('item-d-left'),
                     document.getElementById('item-d-right')
                 ],
-                color: '#0ea5e9',
-                glow: '0 16px 40px rgba(14, 165, 233, 0.25)'
+                color: '#ffffff',
+                glow: '0 16px 40px rgba(255, 255, 255, 0.22)'
             },
             4: {
                 trigger: document.getElementById('zone-4'),
                 node: document.getElementById('node-4').firstElementChild,
-                pipes: [
-                    { el: document.getElementById('pipe-a-vert'), maxOffset: 105 },
-                    { el: document.getElementById('pipe-a-left'), maxOffset: 580 },
-                    { el: document.getElementById('pipe-a-right'), maxOffset: 580 }
-                ],
+                pipes: [{
+                    el: document.getElementById('pipe-a-vert'),
+                    maxOffset: 105
+                }, {
+                    el: document.getElementById('pipe-a-left'),
+                    maxOffset: 580
+                }, {
+                    el: document.getElementById('pipe-a-right'),
+                    maxOffset: 580
+                }],
                 cards: [
                     document.getElementById('item-a-main'),
                     document.getElementById('item-a-left'),
                     document.getElementById('item-a-right')
                 ],
-                color: '#0ea5e9',
-                glow: '0 16px 40px rgba(14, 165, 233, 0.25)'
+                color: '#ffffff',
+                glow: '0 16px 40px rgba(255, 255, 255, 0.22)'
             },
             5: {
                 trigger: document.getElementById('zone-5'),
                 node: document.getElementById('product-hub-badge'),
-                pipes: [
-                    { el: document.getElementById('pipe-p-up'), maxOffset: 105 },
-                    { el: document.getElementById('pipe-p-down'), maxOffset: 105 }
-                ],
+                pipes: [{
+                    el: document.getElementById('pipe-p-up'),
+                    maxOffset: 105
+                }, {
+                    el: document.getElementById('pipe-p-down'),
+                    maxOffset: 105
+                }],
                 cards: [
                     document.getElementById('item-p-left'),
                     document.getElementById('item-p-right')
@@ -851,8 +900,9 @@
             zone.node.style.borderWidth = '3px';
             zone.node.style.color = 'var(--muted)';
             zone.node.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.02)';
+            zone.node.classList.remove('flow-on');   // dark wapas
             if (zone.emerald) {
-                zone.node.style.backgroundColor = '#ffffff';
+                zone.node.style.backgroundColor = '';
                 zone.node.innerHTML = "SYSTEM AGGREGATION...";
             }
 
@@ -878,11 +928,10 @@
         function activateSection(zone) {
             // Active Node
             zone.node.style.borderColor = zone.color;
-            zone.node.style.color = zone.emerald ? '#ffffff' : '#0f172a';
             zone.node.style.boxShadow = zone.glow;
+            zone.node.classList.add('flow-on');   // box black -> WHITE
             if (zone.emerald) {
-                zone.node.style.backgroundColor = '#059669'; // Forest Emerald
-                zone.node.innerHTML = "✨ CROSSTECCH PRODUCTS";
+                zone.node.innerHTML = "CROSSTECCH PRODUCTS";
             }
 
             // Active Pipes (Change pipeline color to active blue/emerald & flow energy)
@@ -899,9 +948,9 @@
                     card.style.opacity = '1';
                     card.style.transform = 'scale(1.02)';
                     card.style.borderColor = zone.color;
-                    card.style.boxShadow = zone.emerald 
-                        ? '0 30px 60px rgba(16, 185, 129, 0.12)' 
-                        : '0 25px 50px rgba(14, 165, 233, 0.16)';
+                    card.style.boxShadow = zone.emerald ?
+                        '0 30px 60px rgba(16, 185, 129, 0.12)' :
+                        '0 25px 50px rgba(255, 255, 255, 0.16)';
                     card.style.pointerEvents = 'auto'; // Enable interactions when shown
                 }, i * 100);
             });
@@ -925,7 +974,7 @@
             var offsetX = Math.max(0, (window.innerWidth - 7200 * scale) / 2);
             var offsetY = Math.max(0, (window.innerHeight - 1080 * scale) / 2);
             root.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px) scale(' + scale + ')';
-            
+
             document.body.style.overflowX = 'auto';
             document.body.style.overflowY = 'hidden';
         }
@@ -941,18 +990,18 @@
             var viewportWidth = window.innerWidth;
             var scaleY = window.innerHeight / 1080;
             var scale = Math.min(1.2, scaleY);
-            
+
             // Map viewport center back to virtual canvas coordinates
             var virtualCenter = (scrollX + viewportWidth / 2) / scale;
-            
+
             Object.keys(zones).forEach(key => {
                 var zone = zones[key];
                 var center = 1500 + (key - 1) * 1200; // 1500, 2700, 3900, 5100, 6300
-                
+
                 // Calculate distance from screen focus center
                 var distance = Math.abs(virtualCenter - center);
                 var isFirstStationOnStart = (key == 1 && scrollX < 150);
-                
+
                 // Activate only when the station is near the screen focus (center)
                 if (distance < 550 || isFirstStationOnStart) {
                     activateSection(zone);
@@ -979,23 +1028,36 @@
                 window.scrollBy(e.deltaY * 1.2, 0);
                 e.preventDefault();
             }
-        }, { passive: false });
+        }, {
+            passive: false
+        });
     </script>
 
     <!-- ===== EMBED MODE: scroll-driven horizontal pipeline (index.html) ===== -->
     <script>
-        (function () {
+        (function() {
             if (window.self === window.top) return;
             var root = document.getElementById('pipeline-root');
-            var CANVAS_W = 7200, CANVAS_H = 1080;
-            var progress = 0, target = 0, scale = 1, travel = 0;
-            var rafId = null, lastActive = -1;
+            var CANVAS_W = 7200,
+                CANVAS_H = 1080;
+            var progress = 0,
+                target = 0,
+                scale = 1,
+                travel = 0;
+            var rafId = null,
+                lastActive = -1;
 
-            if (root) { root.style.transformOrigin = 'top left'; root.style.willChange = 'transform'; }
+            if (root) {
+                root.style.transformOrigin = 'top left';
+                root.style.willChange = 'transform';
+            }
 
             function reportHeight() {
                 var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-                if (h > 0) parent.postMessage({ ctSection: true, height: h }, '*');
+                if (h > 0) parent.postMessage({
+                    ctSection: true,
+                    height: h
+                }, '*');
             }
 
             function draw() {
@@ -1009,7 +1071,7 @@
                     idx = Math.max(1, Math.min(5, idx));
                     if (idx !== lastActive) {
                         lastActive = idx;
-                        Object.keys(zones).forEach(function (key) {
+                        Object.keys(zones).forEach(function(key) {
                             if (parseInt(key, 10) === idx) activateSection(zones[key]);
                             else resetSection(zones[key]);
                         });
@@ -1020,17 +1082,20 @@
             // ease current progress toward the scroll target -> butter-smooth
             function animate() {
                 var diff = target - progress;
-                if (Math.abs(diff) < 0.0006) {
+                if (Math.abs(diff) < 0.0015) {
                     progress = target;
                     draw();
                     rafId = null;
                     return;
                 }
-                progress += diff * 0.16;
+                progress += diff * 0.32;   // tez follow = responsive, kam laggy
                 draw();
                 rafId = requestAnimationFrame(animate);
             }
-            function kick() { if (rafId === null) rafId = requestAnimationFrame(animate); }
+
+            function kick() {
+                if (rafId === null) rafId = requestAnimationFrame(animate);
+            }
 
             function layout() {
                 if (window.innerWidth <= 860) {
@@ -1040,29 +1105,105 @@
                     reportHeight();
                     return;
                 }
-                var vw = window.innerWidth, vh = window.innerHeight;
-                scale = vh / CANVAS_H;                       // poori height fit (no extra space)
+                var vw = window.innerWidth,
+                    vh = window.innerHeight;
+                scale = vh / CANVAS_H; // poori height fit (no extra space)
                 travel = Math.max(0, CANVAS_W * scale - vw); // kitna horizontally scroll karna hai
                 document.body.style.height = vh + 'px';
                 document.body.style.overflow = 'hidden';
-                progress = target;   // resize par turant settle
+                progress = target; // resize par turant settle
                 draw();
             }
 
-            window.addEventListener('message', function (e) {
+            window.addEventListener('message', function(e) {
                 if (e.data && typeof e.data.ctFlowProgress === 'number') {
                     target = Math.max(0, Math.min(1, e.data.ctFlowProgress));
                     kick();
                 }
             });
 
-            window.addEventListener('load', function () {
+            window.addEventListener('load', function() {
                 layout();
-                [200, 600, 1200].forEach(function (d) { setTimeout(layout, d); });
+                [200, 600, 1200].forEach(function(d) {
+                    setTimeout(layout, d);
+                });
             });
             window.addEventListener('resize', layout);
         })();
     </script>
+
+    <!-- ===== Dark theme cards + white active + flowing motion ===== -->
+    <style>
+        /* dim cards on the dark screen; white sirf active item par */
+        .bg-white { background: #11141d !important; }
+        [class*="text-slate-8"], [class*="text-slate-7"], [class*="text-slate-6"], [class*="text-slate-5"], [class*="text-slate-4"] { color: #aeb6c6 !important; }
+        .text-sky-500 { color: #ffffff !important; }
+        [class*="border-slate-"] { border-color: rgba(255, 255, 255, 0.12) !important; }
+        /* filter drop-shadow har frame repaint karta tha (slow) -> hata diya, smooth scrub ke liye */
+        .glow-active, .glow-prod { filter: none !important; }
+
+        /* jab indicator box tak pahunche -> wo box black se WHITE ho jaye */
+        .flow-on { background: #ffffff !important; color: #0f172a !important; border-color: #ffffff !important; box-shadow: 0 16px 42px rgba(255, 255, 255, 0.32) !important; }
+
+        /* flowing energy on the main pipe -> "kuch ja raha hai" */
+        #main-flow-line { stroke: #ffffff !important; stroke-dasharray: 18 16 !important; animation: ctFlowDash 0.9s linear infinite; }
+        @keyframes ctFlowDash { to { stroke-dashoffset: -136; } }
+
+        /* mobile timeline -> dark + white active */
+        .m-card { background: #11141d !important; border-color: rgba(255, 255, 255, 0.12) !important; }
+        .m-sub { background: #181c28 !important; border-color: rgba(255, 255, 255, 0.06) !important; }
+        .m-dot { background: #11141d !important; }
+        .m-header, .m-main-label, .m-sub-title { color: #eef2f8 !important; }
+        .m-stage-title, .m-main-detail, .m-sub-detail { color: #aeb6c6 !important; }
+        .m-card.active, .m-card.emerald-active { border-color: #ffffff !important; box-shadow: 0 8px 26px rgba(255, 255, 255, 0.1) !important; }
+        .m-card.active .m-stage-title, .m-card.emerald-active .m-stage-title { color: #ffffff !important; }
+        .m-dot.active, .m-dot.emerald { border-color: #ffffff !important; box-shadow: 0 0 10px rgba(255, 255, 255, 0.25) !important; }
+        .m-dot.active .m-dot-inner, .m-dot.emerald .m-dot-inner { background: #ffffff !important; }
+
+        /* subtle light dot-grid on the dark screen */
+        body::before { background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px) !important; }
+
+        /* ===== Travelling focus indicator (sits on the pipe, boxes light up as they reach it) ===== */
+        #flowIndicator {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            z-index: 35;
+            pointer-events: none;
+        }
+        #flowIndicator .dot {
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 0 14px 4px rgba(255, 255, 255, 0.9), 0 0 34px 12px rgba(130, 180, 255, 0.5);
+            animation: ctDotPulse 1.4s ease-in-out infinite;
+        }
+        #flowIndicator .ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            animation: ctRing 1.8s ease-out infinite;
+        }
+        #flowIndicator .ring.r2 { animation-delay: 0.9s; }
+        @keyframes ctRing { 0% { transform: scale(0.45); opacity: 0.85; } 100% { transform: scale(2.8); opacity: 0; } }
+        @keyframes ctDotPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+        @media (max-width: 860px) { #flowIndicator { display: none; } }
+    </style>
+
+    <!-- Travelling indicator on the pipe -->
+    <div id="flowIndicator">
+        <span class="ring"></span>
+        <span class="ring r2"></span>
+        <span class="dot"></span>
+    </div>
 
     <script src="darkmode.js"></script>
 </body>
