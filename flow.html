@@ -1117,8 +1117,9 @@
 
             window.addEventListener('message', function(e) {
                 if (e.data && typeof e.data.ctFlowProgress === 'number') {
-                    target = Math.max(0, Math.min(1, e.data.ctFlowProgress));
-                    kick();
+                    // direct map (parent already rAF-throttled) -> tight + no extra loop
+                    target = progress = Math.max(0, Math.min(1, e.data.ctFlowProgress));
+                    draw();
                 }
             });
 
@@ -1146,8 +1147,8 @@
         .flow-on { background: #ffffff !important; color: #0f172a !important; border-color: #ffffff !important; box-shadow: 0 16px 42px rgba(255, 255, 255, 0.32) !important; }
 
         /* flowing energy on the main pipe -> "kuch ja raha hai" */
-        #main-flow-line { stroke: #ffffff !important; stroke-dasharray: 18 16 !important; animation: ctFlowDash 0.9s linear infinite; }
-        @keyframes ctFlowDash { to { stroke-dashoffset: -136; } }
+        /* static white line (flowing-dash animation hata di -> smooth scroll, no per-frame SVG repaint) */
+        #main-flow-line { stroke: #ffffff !important; }
 
         /* mobile timeline -> dark + white active */
         .m-card { background: #11141d !important; border-color: rgba(255, 255, 255, 0.12) !important; }
@@ -1183,19 +1184,28 @@
             border-radius: 50%;
             background: #ffffff;
             box-shadow: 0 0 14px 4px rgba(255, 255, 255, 0.9), 0 0 34px 12px rgba(130, 180, 255, 0.5);
-            animation: ctDotPulse 1.4s ease-in-out infinite;
         }
-        #flowIndicator .ring {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            animation: ctRing 1.8s ease-out infinite;
-        }
-        #flowIndicator .ring.r2 { animation-delay: 0.9s; }
-        @keyframes ctRing { 0% { transform: scale(0.45); opacity: 0.85; } 100% { transform: scale(2.8); opacity: 0; } }
-        @keyframes ctDotPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+        /* rings/pulse animations hata diye -> kam compositor load = smoother scroll */
+        #flowIndicator .ring { display: none; }
         @media (max-width: 860px) { #flowIndicator { display: none; } }
+
+        /* ===== MOBILE: light theme (dark/night nahi) ===== */
+        @media (max-width: 860px) {
+            html, body { background: #f8fafc !important; }
+            .m-card { background: #ffffff !important; border-color: rgba(15, 23, 42, 0.08) !important; }
+            .m-sub { background: #f8fafc !important; border-color: rgba(0, 0, 0, 0.04) !important; }
+            .m-dot { background: #ffffff !important; }
+            .m-header, .m-main-label, .m-sub-title { color: #0f172a !important; }
+            .m-stage-title, .m-main-detail, .m-sub-detail { color: #64748b !important; }
+            .m-card.active, .m-card.emerald-active { border-color: rgba(6, 182, 212, 0.3) !important; box-shadow: 0 8px 25px rgba(6, 182, 212, 0.08) !important; }
+            .m-card.active .m-stage-title { color: #06b6d4 !important; }
+            .m-card.emerald-active .m-stage-title { color: #10b981 !important; }
+            .m-dot.active { border-color: #06b6d4 !important; box-shadow: 0 0 10px rgba(6, 182, 212, 0.25) !important; }
+            .m-dot.active .m-dot-inner { background: #06b6d4 !important; }
+            .m-dot.emerald { border-color: #10b981 !important; }
+            .m-dot.emerald .m-dot-inner { background: #10b981 !important; }
+            body::before { background-image: radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px) !important; }
+        }
     </style>
 
     <!-- Travelling indicator on the pipe -->
