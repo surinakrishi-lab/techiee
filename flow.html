@@ -166,7 +166,8 @@
             display: none;
         }
         
-        @media (max-width: 860px) {
+        @media (max-width: 860px),
+        (pointer: coarse) {
             body {
                 overflow-y: auto;
                 overflow-x: hidden;
@@ -787,6 +788,13 @@
         // True when this page is shown inside an iframe (e.g. on index.html)
         const IS_EMBED = (window.self !== window.top);
 
+        // Matches the CSS breakpoint: narrow screens OR any touch/coarse-pointer
+        // device (tablets, phones in landscape) fall back to the simple mobile view,
+        // since the desktop pipeline only reveals content on mouse hover.
+        function isMobileMode() {
+            return window.innerWidth <= 860 || window.matchMedia('(pointer: coarse)').matches;
+        }
+
         // DOM Elements mapping for interactive hover states
         const zones = {
             1: {
@@ -900,7 +908,7 @@
             zone.node.style.borderWidth = '3px';
             zone.node.style.color = 'var(--muted)';
             zone.node.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.02)';
-            zone.node.classList.remove('flow-on');   // dark wapas
+            zone.node.classList.remove('flow-on'); // dark wapas
             if (zone.emerald) {
                 zone.node.style.backgroundColor = '';
                 zone.node.innerHTML = "SYSTEM AGGREGATION...";
@@ -929,7 +937,7 @@
             // Active Node
             zone.node.style.borderColor = zone.color;
             zone.node.style.boxShadow = zone.glow;
-            zone.node.classList.add('flow-on');   // box black -> WHITE
+            zone.node.classList.add('flow-on'); // box black -> WHITE
             if (zone.emerald) {
                 zone.node.innerHTML = "CROSSTECCH PRODUCTS";
             }
@@ -967,7 +975,7 @@
         // FIT TO SCREEN (desktop scale calculation - horizontal scroll allowed, fits browser height)
         function fitToScreen() {
             if (IS_EMBED) return; // embed sizing handled by embed-mode script below
-            if (window.innerWidth <= 860) return;
+            if (isMobileMode()) return;
             var root = document.getElementById('pipeline-root');
             var scaleY = window.innerHeight / 1080; // Fits 1080px canvas height perfectly
             var scale = Math.min(1.2, scaleY);
@@ -982,7 +990,7 @@
 
         // SCROLL-DRIVEN DYNAMIC ACTIVATION (Stations open as they slide into view)
         function handleScrollActivation() {
-            if (window.innerWidth <= 860) return;
+            if (isMobileMode()) return;
             // When embedded, activation is driven by scroll progress sent from the parent
             if (IS_EMBED) return;
 
@@ -1022,7 +1030,7 @@
         // TRANSLATE VERTICAL SCROLL (WHEEL) TO HORIZONTAL SCROLL
         window.addEventListener('wheel', function(e) {
             if (IS_EMBED) return; // inside index.html: don't hijack scroll (was trapping the page)
-            if (window.innerWidth <= 860) return; // Keep vertical scrolling on mobile
+            if (isMobileMode()) return; // Keep vertical scrolling on mobile
             if (e.deltaY !== 0) {
                 // Scroll horizontally instead of vertically
                 window.scrollBy(e.deltaY * 1.2, 0);
@@ -1061,7 +1069,7 @@
             }
 
             function draw() {
-                if (!root || window.innerWidth <= 860) return;
+                if (!root || isMobileMode()) return;
                 // translate3d -> GPU compositing (smooth)
                 root.style.transform = 'translate3d(' + (-progress * travel) + 'px,0,0) scale(' + scale + ')';
                 // sirf jab focused station badle tabhi DOM update karo (smooth, no per-frame thrash)
@@ -1088,7 +1096,7 @@
                     rafId = null;
                     return;
                 }
-                progress += diff * 0.32;   // tez follow = responsive, kam laggy
+                progress += diff * 0.32; // tez follow = responsive, kam laggy
                 draw();
                 rafId = requestAnimationFrame(animate);
             }
@@ -1098,7 +1106,7 @@
             }
 
             function layout() {
-                if (window.innerWidth <= 860) {
+                if (isMobileMode()) {
                     document.body.style.height = 'auto';
                     document.body.style.overflow = 'visible';
                     if (root) root.style.transform = 'none';
@@ -1136,35 +1144,102 @@
     <!-- ===== Dark theme cards + white active + flowing motion ===== -->
     <style>
         /* dim cards on the dark screen; white sirf active item par */
-        .bg-white { background: #11141d !important; }
-        [class*="text-slate-8"], [class*="text-slate-7"], [class*="text-slate-6"], [class*="text-slate-5"], [class*="text-slate-4"] { color: #aeb6c6 !important; }
-        .text-sky-500 { color: #ffffff !important; }
-        [class*="border-slate-"] { border-color: rgba(255, 255, 255, 0.12) !important; }
+        
+        .bg-white {
+            background: #11141d !important;
+        }
+        
+        [class*="text-slate-8"],
+        [class*="text-slate-7"],
+        [class*="text-slate-6"],
+        [class*="text-slate-5"],
+        [class*="text-slate-4"] {
+            color: #aeb6c6 !important;
+        }
+        
+        .text-sky-500 {
+            color: #ffffff !important;
+        }
+        
+        [class*="border-slate-"] {
+            border-color: rgba(255, 255, 255, 0.12) !important;
+        }
         /* filter drop-shadow har frame repaint karta tha (slow) -> hata diya, smooth scrub ke liye */
-        .glow-active, .glow-prod { filter: none !important; }
-
+        
+        .glow-active,
+        .glow-prod {
+            filter: none !important;
+        }
         /* jab indicator box tak pahunche -> wo box black se WHITE ho jaye */
-        .flow-on { background: #ffffff !important; color: #0f172a !important; border-color: #ffffff !important; box-shadow: 0 16px 42px rgba(255, 255, 255, 0.32) !important; }
-
+        
+        .flow-on {
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 16px 42px rgba(255, 255, 255, 0.32) !important;
+        }
         /* flowing energy on the main pipe -> "kuch ja raha hai" */
         /* static white line (flowing-dash animation hata di -> smooth scroll, no per-frame SVG repaint) */
-        #main-flow-line { stroke: #ffffff !important; }
-
+        
+        #main-flow-line {
+            stroke: #ffffff !important;
+        }
         /* mobile timeline -> dark + white active */
-        .m-card { background: #11141d !important; border-color: rgba(255, 255, 255, 0.12) !important; }
-        .m-sub { background: #181c28 !important; border-color: rgba(255, 255, 255, 0.06) !important; }
-        .m-dot { background: #11141d !important; }
-        .m-header, .m-main-label, .m-sub-title { color: #eef2f8 !important; }
-        .m-stage-title, .m-main-detail, .m-sub-detail { color: #aeb6c6 !important; }
-        .m-card.active, .m-card.emerald-active { border-color: #ffffff !important; box-shadow: 0 8px 26px rgba(255, 255, 255, 0.1) !important; }
-        .m-card.active .m-stage-title, .m-card.emerald-active .m-stage-title { color: #ffffff !important; }
-        .m-dot.active, .m-dot.emerald { border-color: #ffffff !important; box-shadow: 0 0 10px rgba(255, 255, 255, 0.25) !important; }
-        .m-dot.active .m-dot-inner, .m-dot.emerald .m-dot-inner { background: #ffffff !important; }
-
+        
+        .m-card {
+            background: #11141d !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+        
+        .m-sub {
+            background: #181c28 !important;
+            border-color: rgba(255, 255, 255, 0.06) !important;
+        }
+        
+        .m-dot {
+            background: #11141d !important;
+        }
+        
+        .m-header,
+        .m-main-label,
+        .m-sub-title {
+            color: #eef2f8 !important;
+        }
+        
+        .m-stage-title,
+        .m-main-detail,
+        .m-sub-detail {
+            color: #aeb6c6 !important;
+        }
+        
+        .m-card.active,
+        .m-card.emerald-active {
+            border-color: #ffffff !important;
+            box-shadow: 0 8px 26px rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        .m-card.active .m-stage-title,
+        .m-card.emerald-active .m-stage-title {
+            color: #ffffff !important;
+        }
+        
+        .m-dot.active,
+        .m-dot.emerald {
+            border-color: #ffffff !important;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.25) !important;
+        }
+        
+        .m-dot.active .m-dot-inner,
+        .m-dot.emerald .m-dot-inner {
+            background: #ffffff !important;
+        }
         /* subtle light dot-grid on the dark screen */
-        body::before { background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px) !important; }
-
+        
+        body::before {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px) !important;
+        }
         /* ===== Travelling focus indicator (sits on the pipe, boxes light up as they reach it) ===== */
+        
         #flowIndicator {
             position: fixed;
             left: 50%;
@@ -1175,6 +1250,7 @@
             z-index: 35;
             pointer-events: none;
         }
+        
         #flowIndicator .dot {
             position: absolute;
             inset: 0;
@@ -1186,25 +1262,73 @@
             box-shadow: 0 0 14px 4px rgba(255, 255, 255, 0.9), 0 0 34px 12px rgba(130, 180, 255, 0.5);
         }
         /* rings/pulse animations hata diye -> kam compositor load = smoother scroll */
-        #flowIndicator .ring { display: none; }
-        @media (max-width: 860px) { #flowIndicator { display: none; } }
-
+        
+        #flowIndicator .ring {
+            display: none;
+        }
+        
+        @media (max-width: 860px),
+        (pointer: coarse) {
+            #flowIndicator {
+                display: none;
+            }
+        }
         /* ===== MOBILE: light theme (dark/night nahi) ===== */
-        @media (max-width: 860px) {
-            html, body { background: #f8fafc !important; }
-            .m-card { background: #ffffff !important; border-color: rgba(15, 23, 42, 0.08) !important; }
-            .m-sub { background: #f8fafc !important; border-color: rgba(0, 0, 0, 0.04) !important; }
-            .m-dot { background: #ffffff !important; }
-            .m-header, .m-main-label, .m-sub-title { color: #0f172a !important; }
-            .m-stage-title, .m-main-detail, .m-sub-detail { color: #64748b !important; }
-            .m-card.active, .m-card.emerald-active { border-color: rgba(6, 182, 212, 0.3) !important; box-shadow: 0 8px 25px rgba(6, 182, 212, 0.08) !important; }
-            .m-card.active .m-stage-title { color: #06b6d4 !important; }
-            .m-card.emerald-active .m-stage-title { color: #10b981 !important; }
-            .m-dot.active { border-color: #06b6d4 !important; box-shadow: 0 0 10px rgba(6, 182, 212, 0.25) !important; }
-            .m-dot.active .m-dot-inner { background: #06b6d4 !important; }
-            .m-dot.emerald { border-color: #10b981 !important; }
-            .m-dot.emerald .m-dot-inner { background: #10b981 !important; }
-            body::before { background-image: radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px) !important; }
+        
+        @media (max-width: 860px),
+        (pointer: coarse) {
+            html,
+            body {
+                background: #f8fafc !important;
+            }
+            .m-card {
+                background: #ffffff !important;
+                border-color: rgba(15, 23, 42, 0.08) !important;
+            }
+            .m-sub {
+                background: #f8fafc !important;
+                border-color: rgba(0, 0, 0, 0.04) !important;
+            }
+            .m-dot {
+                background: #ffffff !important;
+            }
+            .m-header,
+            .m-main-label,
+            .m-sub-title {
+                color: #0f172a !important;
+            }
+            .m-stage-title,
+            .m-main-detail,
+            .m-sub-detail {
+                color: #64748b !important;
+            }
+            .m-card.active,
+            .m-card.emerald-active {
+                border-color: rgba(6, 182, 212, 0.3) !important;
+                box-shadow: 0 8px 25px rgba(6, 182, 212, 0.08) !important;
+            }
+            .m-card.active .m-stage-title {
+                color: #06b6d4 !important;
+            }
+            .m-card.emerald-active .m-stage-title {
+                color: #10b981 !important;
+            }
+            .m-dot.active {
+                border-color: #06b6d4 !important;
+                box-shadow: 0 0 10px rgba(6, 182, 212, 0.25) !important;
+            }
+            .m-dot.active .m-dot-inner {
+                background: #06b6d4 !important;
+            }
+            .m-dot.emerald {
+                border-color: #10b981 !important;
+            }
+            .m-dot.emerald .m-dot-inner {
+                background: #10b981 !important;
+            }
+            body::before {
+                background-image: radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px) !important;
+            }
         }
     </style>
 
