@@ -745,7 +745,9 @@
                 flex-direction: column;
                 text-align: center;
                 justify-content: flex-start;
-                padding-top: 120px;
+                min-height: auto;
+                padding-top: 96px;
+                padding-bottom: 8px;
             }
             .typo {
                 position: relative;
@@ -1193,7 +1195,10 @@
         (function() {
             if (window.self === window.top) return;
             var s = document.createElement('style');
-            s.textContent = '.productsSection{min-height:0!important;padding-top:90px!important;padding-bottom:90px!important}.heroSection{min-height:600px}';
+            s.textContent =
+                '.productsSection{min-height:0!important}' +
+                '@media(min-width:861px){.heroSection{min-height:600px}.productsSection{padding-top:90px!important;padding-bottom:90px!important}}' +
+                '@media(max-width:860px){.heroSection{min-height:auto!important}.productsSection{padding-top:28px!important;padding-bottom:48px!important}}';
             document.head.appendChild(s);
 
             function report() {
@@ -1207,7 +1212,8 @@
             window.addEventListener('message', function(e) {
                 if (e.data && e.data.ctParentVH) {
                     var hs = document.querySelector('.heroSection');
-                    if (hs) hs.style.minHeight = e.data.ctParentVH + 'px';
+                    // mobile par hero ko content-height do (warna photo ke neeche blank aata hai)
+                    if (hs) hs.style.minHeight = (window.innerWidth <= 860) ? '' : (e.data.ctParentVH + 'px');
                     report();
                 }
             });
