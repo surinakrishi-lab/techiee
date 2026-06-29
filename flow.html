@@ -1059,7 +1059,7 @@
             }
 
             function reportHeight() {
-                var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                var h = Math.max(document.body.scrollHeight, document.body.offsetHeight);
                 if (h > 0) parent.postMessage({
                     ctSection: true,
                     height: h

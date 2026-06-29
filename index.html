@@ -115,7 +115,7 @@
       try {
         var d = f.contentDocument || f.contentWindow.document;
         if (d && d.body) {
-          var h = Math.max(d.body.scrollHeight, d.documentElement.scrollHeight);
+          var h = Math.max(d.body.scrollHeight, d.body.offsetHeight);
           if (h > 0) f.style.height = h + 'px';
         }
       } catch (e) { /* cross-origin: postMessage path use hoga */ }
