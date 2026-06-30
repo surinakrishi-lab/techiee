@@ -911,8 +911,38 @@
     </style>
     <style>
         /* Site-wide font: Plus Jakarta Sans (hero1.html chhod ke sab pages) */
-        :root { --font-body: 'Plus Jakarta Sans', sans-serif; --font-heading: 'Plus Jakarta Sans', sans-serif; --font: 'Plus Jakarta Sans', sans-serif; }
-        body, h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, button, input, textarea, select, label, strong, em, blockquote, small, th, td, figcaption {
+        
+         :root {
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
+            --font: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        a,
+        span,
+        li,
+        ul,
+        ol,
+        button,
+        input,
+        textarea,
+        select,
+        label,
+        strong,
+        em,
+        blockquote,
+        small,
+        th,
+        td,
+        figcaption {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
     </style>
@@ -922,10 +952,10 @@
 
     <nav class="nav">
         <div class="nav-inner">
-            <a href="index1.html" class="nav-logo"><img src="images/bg.png" alt="Crosstecch Logo" class="logo-img" /></a>
+            <a href="/index_files/index.html" class="nav-logo"><img src="images/bg.png" alt="Crosstecch Logo" class="logo-img" /></a>
             <div class="nav-links" id="navLinks">
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
+                <a href="/index_files/index.html">Home</a>
+                <a href="/index_files/about.html">About Us</a>
                 <a href="services.html">Services</a>
                 <a href="resource.html">Resources</a>
                 <a href="blog.html">Blogs</a>
@@ -1239,20 +1269,25 @@
     </script>
 
     <!-- ===== Site Footer (shared, from Footer.html) ===== -->
-    <iframe id="ctFooterFrame" src="Footer.html" title="Footer" scrolling="no"
-            style="width:100%;border:0;display:block;overflow:hidden;"></iframe>
+    <iframe id="ctFooterFrame" src="Footer.html" title="Footer" scrolling="no" style="width:100%;border:0;display:block;overflow:hidden;"></iframe>
     <script>
-        (function () {
+        (function() {
             var f = document.getElementById('ctFooterFrame');
             if (!f) return;
-            window.addEventListener('message', function (e) {
-                if (e.data && e.data.ctSection && e.data.height) { f.style.height = e.data.height + 'px'; }
+            window.addEventListener('message', function(e) {
+                if (e.data && e.data.ctSection && e.data.height) {
+                    f.style.height = e.data.height + 'px';
+                }
             });
         })();
     </script>
 
     <script src="darkmode.js"></script>
-    <style>body > nav.nav{display:none!important;}</style>
+    <style>
+        body>nav.nav {
+            display: none!important;
+        }
+    </style>
     <script src="header.js"></script>
 </body>
 
