@@ -133,10 +133,17 @@ app.use((req, res) => {
   res.status(404).send('404 - Not Found');
 });
 
-// Connect to MongoDB first (or log a clear warning if not configured
-// yet), then start accepting requests.
-connectDB().finally(() => {
+// Connect to MongoDB (or log a clear warning if not configured yet).
+connectDB();
+
+// On Vercel this file runs as a serverless function - Vercel calls the
+// exported `app` directly per-request and must NOT have app.listen()
+// binding a port. Locally (npm start / npm run dev) we need the real
+// listener.
+if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`CrossTecch server running at http://localhost:${PORT}`);
   });
-});
+}
+
+module.exports = app;

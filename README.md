@@ -63,6 +63,28 @@ Prefer Postgres/MySQL/SQLite instead? Say the word and I'll swap
 `config/db.js` + `models/Submission.js` + `data/store.js` for that
 instead — `routes/contact.js` and the admin view won't need to change.
 
+## Deploying to Vercel
+
+1. Push this repo to GitHub (already done: `surinakrishi-lab/techiee`).
+2. Go to https://vercel.com → **Add New... → Project** → import that
+   GitHub repo. Vercel will detect `vercel.json` (already added) and
+   build it as a Node.js serverless function — no other config needed.
+3. Before deploying, add your environment variable: Project **Settings
+   → Environment Variables** → add `MONGODB_URI` with your real Atlas
+   connection string (the same value that's in your local `.env` —
+   `.env` itself never gets pushed to GitHub since it's gitignored, so
+   this step is required or the deployed site's contact form will 503).
+4. In MongoDB Atlas, go to **Network Access** and make sure `0.0.0.0/0`
+   is allowed. Vercel's serverless functions don't have a fixed IP, so
+   allowing your one IP only (as we did for local testing) will block
+   the deployed site from connecting.
+5. Click **Deploy**. Once it finishes, your site is live at something
+   like `techiee.vercel.app` — test `/ContactUs.html` and
+   `/admin/submissions` there the same way you did locally.
+
+Every time you `git push` to the connected branch, Vercel redeploys
+automatically.
+
 ## Why the page markup itself wasn't rewritten
 
 None of the pages contained `<% %>` / `<%= %>` EJS syntax, so routing
