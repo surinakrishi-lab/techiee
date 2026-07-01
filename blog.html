@@ -398,7 +398,7 @@
         <>
           <nav className="nav">
             <div className="nav__inner">
-              <a className="nav__brand" href="index.html"><img src="images/bg.png" alt="Crosstecch Logo" className="logo-img" /></a>
+              <a className="nav__brand" href="index.html"><img loading="lazy" src="images/bg.png" alt="Crosstecch Logo" className="logo-img" /></a>
               <ul className="nav__links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
@@ -414,7 +414,7 @@
           <main className="sheet sheet--full" id="top">
             <Reveal className="feat">
               <button className="feat__media" onClick={() => setToast('Opening featured story…')} aria-label="Read featured post">
-                <img src={FEATURED.img} alt={FEATURED.title} />
+                <img loading="lazy" src={FEATURED.img} alt={FEATURED.title} />
                 <span className="feat__badge">Featured</span>
                 <span className="feat__arrow"><Icon name="arrow" /></span>
               </button>
@@ -456,7 +456,7 @@
                     <h3 className="bcard__title">{p.title}<span className="bcard__arrow"><Icon name="arrowUpRight" /></span></h3>
                     <p className="bcard__excerpt">{p.excerpt}</p>
                     <div className="bcard__meta">
-                      <img className="bcard__avatar" src={p.avatar} alt={p.author} />
+                      <img loading="lazy" className="bcard__avatar" src={p.avatar} alt={p.author} />
                       <span className="bcard__who">{p.author}</span>
                       <span className="bcard__when">• {fmtDate(p.date)}</span>
                       {likes[p.id] && <span className="bcard__liked"><Icon name="heart" /></span>}
@@ -491,12 +491,12 @@
             <div className="modal" onClick={() => setOpen(null)} role="dialog" aria-modal="true" aria-label={open.title}>
               <div className="modal__card bmodal" onClick={(e) => e.stopPropagation()}>
                 <button className="modal__close" onClick={() => setOpen(null)} aria-label="Close">{iconBox('close', 16)}</button>
-                <img className="bmodal__img" src={open.img} alt={open.title} />
+                <img loading="lazy" className="bmodal__img" src={open.img} alt={open.title} />
                 <div className="bmodal__body">
                   <span className="bcard__tag">{open.category}</span>
                   <h2 className="bmodal__title">{open.title}</h2>
                   <div className="bmodal__meta">
-                    <img className="bcard__avatar" src={open.avatar} alt={open.author} />
+                    <img loading="lazy" className="bcard__avatar" src={open.avatar} alt={open.author} />
                     {open.author} • {fmtDate(open.date)}
                     <span className="bmodal__read">{iconBox('clock', 14)}{readTime(open)}</span>
                   </div>

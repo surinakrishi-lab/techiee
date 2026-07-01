@@ -85,8 +85,8 @@
 
     /* hamburger */
     .ct-nav .hamburger {
-        display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 9px 10px; z-index: 60;
-        background: rgba(255,255,255,.9); border: 1px solid rgba(13,18,36,.14); border-radius: 12px;
+        display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; z-index: 60;
+        background: none; border: none;
         transition: transform .2s ease;
     }
     .ct-nav .hamburger:active { transform: scale(0.95); }

@@ -9,13 +9,17 @@
     <link rel="icon" type="image/png" href="images/media__1782501664527.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: Inter, Segoe UI, sans-serif
         }
-        
+
         body {
             background: #f8fafc;
             min-height: 100vh;
@@ -689,7 +693,7 @@
                 <p class="sub">We help startups and enterprises build, test and deploy high-quality digital products with speed and reliability.</p>
             </div>
             <div class="btns">
-                <button class="btn primary" id="btnSchedule">Schedule a Call</button>
+                <button class="btn primary" id="btnSchedule" onclick="window.top.location.href='ContactUs.html'">Schedule a Call</button>
                 <button class="btn secondary" id="btnContact" onclick="window.top.location.href='ContactUs.html'">Contact Us</button>
             </div>
         </div>
@@ -709,7 +713,7 @@
             <!-- Brand Area -->
             <div class="brand-area">
                 <div class="brand-logo" id="footerLogo">
-                    <img src="images/bg.png" alt="CROSSTECCH Logo" style="height: 158px; width: auto; object-fit: contain; display: block;">
+                    <img loading="lazy" src="images/bg.png" alt="CROSSTECCH Logo" style="height: 158px; width: auto; object-fit: contain; display: block;">
                 </div>
             </div>
 
@@ -824,7 +828,7 @@
         [...logos, ...logos].forEach(s => {
             const d = document.createElement("div");
             d.className = "tech-item";
-            d.innerHTML = `<img src="${s}" alt="technology logo">`;
+            d.innerHTML = `<img loading="lazy" src="${s}" alt="technology logo">`;
             t.appendChild(d);
         });
 
@@ -915,7 +919,7 @@
                 modalBody.innerHTML = `
       <div class="modal-info">
         <div class="modal-icon-wrapper" style="background: #f8fafc; border: 1.5px solid #e2e8f0; width: 72px; height: 72px;">
-          <img src="${src}" alt="${techName} Logo">
+          <img loading="lazy" src="${src}" alt="${techName} Logo">
         </div>
         <div class="modal-title">${techName}</div>
         <div class="modal-desc">CROSS TECCH integrates ${techName} natively to deliver state-of-the-art software systems with optimal performance, durability, and standard-setting design patterns.</div>
@@ -984,7 +988,7 @@
             modalBody.innerHTML = `
     <div class="modal-info">
       <div style="margin-bottom: 24px; display: flex; justify-content: center;">
-        <img src="images/media__1782501664527.png" alt="CROSSTECCH Logo" style="height: 44px; width: auto; object-fit: contain;">
+        <img loading="lazy" src="images/media__1782501664527.png" alt="CROSSTECCH Logo" style="height: 44px; width: auto; object-fit: contain;">
       </div>
       <div class="modal-title">CROSSTECCH Platform</div>
       <div class="modal-desc">Delivering world-class frontend engineering, cloud infrastructure scale, and beautiful automated digital workflows. Built to execute, born to lead.</div>
