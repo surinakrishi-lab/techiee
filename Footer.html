@@ -1032,16 +1032,9 @@
 
         // CTA Buttons
         document.getElementById("btnSchedule").onclick = () => {
-            modalBody.innerHTML = `
-    <div class="modal-info">
-      <div class="modal-icon-wrapper" style="background: linear-gradient(135deg, #10b981, #34d399)">
-        <i class="fas fa-phone-alt" style="color: white;"></i>
-      </div>
-      <div class="modal-title">Schedule a Consultation</div>
-      <div class="modal-desc">Let's build together. Pick a slot with our tech architects to map out your digital product pipeline. We will send an invite to your inbox immediately.</div>
-    </div>
-  `;
-            openModal();
+            // Take the user to the real Contact Us page (works standalone
+            // and inside an iframe), same as btnContact below.
+            (window.top || window).location.href = "ContactUs.html";
         };
 
         document.getElementById("btnContact").onclick = () => {

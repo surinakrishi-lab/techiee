@@ -36,22 +36,35 @@
         
         body {
             font-family: var(--font-body);
-            background: var(--bg);
+            background: #ffffff;
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
-        /* Subtle moving dot grid matching branding */
+        /* Moving Background Image Wrapper */
         
-        body::before {
-            content: '';
+        .bg-wrapper {
             position: fixed;
-            inset: 0;
-            background-image: radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px);
-            background-size: 32px 32px;
+            inset: -4%;
+            z-index: -2;
+            background: url('../images/theme.png') no-repeat center center;
+            background-size: cover;
+            animation: slowPan 32s ease-in-out infinite alternate;
             pointer-events: none;
-            z-index: 0;
+            filter: saturate(1.05) contrast(1.02);
+        }
+        
+        @keyframes slowPan {
+            0% {
+                transform: scale(1) translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.04) translate(-1.5%, 1%) rotate(0.4deg);
+            }
+            100% {
+                transform: scale(1.02) translate(1.5%, -1%) rotate(-0.4deg);
+            }
         }
         /* Fluid background morphing blobs matching homepage fluid art */
         
@@ -114,7 +127,7 @@
             margin: 0 auto;
         }
         /* ── HEADING BLOCK ── */
-
+        
         .heading-block {
             text-align: center;
             margin-bottom: 32px;
@@ -575,20 +588,23 @@
         }
         
         .card {
-            background: var(--surface);
-            border: 1px solid rgba(168, 85, 247, 0.1);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(168, 85, 247, 0.08);
             border-radius: 24px;
-            padding: 30px;
+            padding: 24px;
             position: relative;
             overflow: hidden;
             cursor: default;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.01);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.03), 0 1px 3px rgba(15, 23, 42, 0.01);
             transform-style: preserve-3d;
             /* Start collapsed inside Center Orb */
             opacity: 0;
             transform: translate(var(--tx), var(--ty)) scale(0.08) rotateY(180deg);
             /* Smooth CSS transitions for absolute stability */
-            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+            color: #334155;
         }
         
         .stage.revealed .card {
@@ -625,10 +641,23 @@
         }
         
         .stage.revealed .card:hover {
-            border-color: rgba(168, 85, 247, 0.25);
             transform: translateY(-8px) scale(1.01) rotateY(0deg) !important;
-            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.01);
             transition-delay: 0s !important;
+        }
+        
+        .stage.revealed .card-1:hover {
+            border-color: rgba(236, 72, 153, 0.35) !important;
+            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.08) !important;
+        }
+        
+        .stage.revealed .card-2:hover {
+            border-color: rgba(168, 85, 247, 0.35) !important;
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.08) !important;
+        }
+        
+        .stage.revealed .card-3:hover {
+            border-color: rgba(6, 182, 212, 0.35) !important;
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.08) !important;
         }
         /* Top accent line */
         
@@ -668,7 +697,7 @@
         .card-icon-row {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-end;
             margin-bottom: 18px;
         }
         
@@ -716,7 +745,7 @@
         
         .card-desc {
             font-size: 13.5px;
-            color: var(--muted);
+            color: #475569;
             line-height: 1.7;
             font-weight: 400;
         }
@@ -735,7 +764,41 @@
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: var(--muted);
+            color: #64748b;
+        }
+        /* Card Image Banners */
+        
+        .card-img-wrap {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 18px;
+            position: relative;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            background: #090d16;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 70%, rgba(255, 255, 255, 0.85) 100%);
+            pointer-events: none;
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .card:hover .card-img {
+            transform: scale(1.04);
         }
         
         .card-arrow {
@@ -883,22 +946,6 @@
                 display: none !important;
             }
         }
-        /* ai-network image -> WhyChooseUs ke peeche halka watermark */
-        
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 1000px;
-            height: 100%;
-            background: url('../images/ai-network.png') center 68% / contain no-repeat;
-            opacity: 0.3;
-            pointer-events: none;
-            z-index: 0;
-        }
         
         .heading-block,
         .stage {
@@ -909,8 +956,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Raleway:wght@800&display=swap" rel="stylesheet">
     <style>
         /* Site-wide font: Plus Jakarta Sans (hero1.html chhod ke sab pages) */
-        :root { --font-body: 'Plus Jakarta Sans', sans-serif; --font-heading: 'Plus Jakarta Sans', sans-serif; --font: 'Plus Jakarta Sans', sans-serif; }
-        body, h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, button, input, textarea, select, label, strong, em, blockquote, small, th, td, figcaption {
+        
+         :root {
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
+            --font: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        a,
+        span,
+        li,
+        ul,
+        ol,
+        button,
+        input,
+        textarea,
+        select,
+        label,
+        strong,
+        em,
+        blockquote,
+        small,
+        th,
+        td,
+        figcaption {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
     </style>
@@ -918,7 +995,8 @@
 
 <body>
 
-    <!-- Background Blobs -->
+    <!-- Background Wrapper & Blobs -->
+    <div class="bg-wrapper"></div>
     <div class="bg-blob-1"></div>
     <div class="bg-blob-2"></div>
 
@@ -944,14 +1022,10 @@
 
                 <!-- Card 1 -->
                 <div class="card card-1" data-tx="380" data-ty="80">
+                    <div class="card-img-wrap">
+                        <img src="../images/Building Tech.png" alt="Building Across Tech Stacks" class="card-img" />
+                    </div>
                     <div class="card-icon-row">
-                        <div class="card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--pink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
-                                <line x1="12" y1="22" x2="12" y2="15.5"/>
-                                <polyline points="22 8.5 12 15.5 2 8.5"/>
-                            </svg>
-                        </div>
                         <span class="card-num">01</span>
                     </div>
                     <h3 class="card-title">Building Across Different<br>Tech Stacks &amp; Domains</h3>
@@ -966,13 +1040,10 @@
 
                 <!-- Card 2 -->
                 <div class="card card-2" data-tx="380" data-ty="-80">
+                    <div class="card-img-wrap">
+                        <img src="../images/Multiple Solutions .png" alt="Multiple Solutions" class="card-img" />
+                    </div>
                     <div class="card-icon-row">
-                        <div class="card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                <path d="M9 12l2 2 4-4"/>
-                            </svg>
-                        </div>
                         <span class="card-num">02</span>
                     </div>
                     <h3 class="card-title">Multiple Solutions to<br>Single Vulnerability</h3>
@@ -998,25 +1069,9 @@
                 <div class="orb-particle op-3"></div>
                 <div class="orb-core" id="orbCore">
                     <div class="orb-logo-container">
-                        <!-- Custom SVG Company Logo matching 3rd image -->
-                        <svg class="logo-cross" viewBox="0 0 200 200" width="70" height="70" style="filter: drop-shadow(0 4px 10px rgba(168, 85, 247, 0.25));">
-                            <defs>
-                                <linearGradient id="logo-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#ff007f"/>
-                                    <stop offset="50%" stop-color="#aa00ff"/>
-                                    <stop offset="100%" stop-color="#00c8ff"/>
-                                </linearGradient>
-                                
-                            </defs>
-                            <g transform="translate(100, 100)">
-                                <!-- Curved 3D outer arms of the cross -->
-                                <path d="M-20,-90 C-20,-90 0,-100 20,-90 C40,-50 40,-20 90,-20 C90,-20 100,0 90,20 C50,40 20,40 20,90 C20,90 0,100 -20,90 C-40,50 -40,20 -90,20 C-90,20 -100,0 -90,-20 C-50,-40 -20,-40 -20,-90 Z" fill="url(#logo-grad-1)" />
-                                <!-- Inner white star negative space forming the custom cross star logo -->
-                                <path d="M0,-40 Q10,-10 40,0 Q10,10 0,40 Q-10,10 -40,0 Q-10,-10 0,-40 Z" fill="#ffffff" />
-                            </g>
-                        </svg>
+                        <!-- Custom Company Logo using CROSSTECH.png -->
+                        <img class="logo-img" src="../images/CROSSTECH.png" alt="CrossTecch Logo" style="width: 120px; max-width: 90%; height: auto; display: block; filter: drop-shadow(0 4px 10px rgba(168, 85, 247, 0.2));" />
                     </div>
-                    <div class="orb-label">CrossTecch</div>
                     <div class="orb-pulse"></div>
                 </div>
                 <div class="orb-hint" id="orbHint">Click to toggle</div>
@@ -1027,14 +1082,10 @@
 
                 <!-- Card 3 -->
                 <div class="card card-3" data-tx="-380" data-ty="0">
+                    <div class="card-img-wrap">
+                        <img src="../images/Cross-Domain.png" alt="Cross-Domain Designer" class="card-img" />
+                    </div>
                     <div class="card-icon-row">
-                        <div class="card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <line x1="2" y1="12" x2="22" y2="12"/>
-                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                            </svg>
-                        </div>
                         <span class="card-num">03</span>
                     </div>
                     <h3 class="card-title">Cross-Domain<br>Designer</h3>
@@ -1125,6 +1176,206 @@
                 document.body.appendChild(p);
             }
         })();
+
+        // ── 3D TILT EFFECT ON CARDS ──
+        if (!window.matchMedia('(max-width: 860px)').matches) {
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = ((centerY - y) / centerY) * 8;
+                    const rotateY = ((x - centerX) / centerX) * 8;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.01)`;
+                });
+
+                card.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease';
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            });
+        }
+
+        // ── MAGNETIC PULL ON CENTER ORB ──
+        if (!window.matchMedia('(max-width: 860px)').matches) {
+            orbCore.addEventListener('mousemove', e => {
+                const rect = orbCore.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                const pullX = (x / (rect.width / 2)) * 12;
+                const pullY = (y / (rect.height / 2)) * 12;
+
+                orbCore.style.transform = `translate(${pullX}px, ${pullY}px) scale(1.02)`;
+            });
+
+            orbCore.addEventListener('mouseleave', () => {
+                orbCore.style.transform = '';
+            });
+        }
+
+        // ── DYNAMIC INTERACTIVE BACKGROUND CANVAS ──
+        (function setupInteractiveBg() {
+            const canvas = document.createElement('canvas');
+            canvas.id = 'bgCanvas';
+            Object.assign(canvas.style, {
+                position: 'fixed',
+                inset: 0,
+                zIndex: '-1',
+                pointerEvents: 'none'
+            });
+            document.body.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const mouse = {
+                x: -1000,
+                y: -1000
+            };
+            document.addEventListener('mousemove', e => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            document.addEventListener('mouseleave', () => {
+                mouse.x = -1000;
+                mouse.y = -1000;
+            });
+
+            const colors = ['rgba(236, 72, 153, ', 'rgba(168, 85, 247, ', 'rgba(6, 182, 212, '];
+            const shapes = ['hexagon', 'circle', 'star'];
+            const particles = [];
+
+            class BgParticle {
+                constructor() {
+                    this.reset(true);
+                }
+
+                reset(init = false) {
+                    this.x = Math.random() * width;
+                    this.y = init ? Math.random() * height : height + 50;
+                    this.size = 10 + Math.random() * 30;
+                    this.speedX = (Math.random() - 0.5) * 0.4;
+                    this.speedY = -0.2 - Math.random() * 0.5; // Float upwards slowly
+                    this.shape = shapes[Math.floor(Math.random() * shapes.length)];
+                    this.baseColor = colors[Math.floor(Math.random() * colors.length)];
+                    this.baseOpacity = 0.08 + Math.random() * 0.12;
+                    this.opacity = this.baseOpacity;
+                    this.rotation = Math.random() * Math.PI * 2;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.005;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.rotation += this.rotationSpeed;
+
+                    // Boundary checks
+                    if (this.x < -50) this.x = width + 50;
+                    if (this.x > width + 50) this.x = -50;
+                    if (this.y < -50) this.reset();
+
+                    // Mouse proximity glow calculation
+                    const dx = this.x - mouse.x;
+                    const dy = this.y - mouse.y;
+                    const distance = Math.hypot(dx, dy);
+
+                    if (distance < 200) {
+                        const factor = 1 - (distance / 200); // 0 at limit, 1 at cursor center
+                        this.opacity = this.baseOpacity + factor * (0.85 - this.baseOpacity);
+                        this.glow = factor * 20;
+                    } else {
+                        this.opacity += (this.baseOpacity - this.opacity) * 0.05;
+                        this.glow = 0;
+                    }
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    ctx.strokeStyle = this.baseColor + this.opacity + ')';
+                    ctx.fillStyle = this.baseColor + (this.opacity * 0.35) + ')';
+                    ctx.lineWidth = 1.5;
+
+                    if (this.glow > 0) {
+                        ctx.shadowBlur = this.glow;
+                        ctx.shadowColor = this.baseColor + '1)';
+                    }
+
+                    if (this.shape === 'hexagon') {
+                        ctx.beginPath();
+                        for (let i = 0; i < 6; i++) {
+                            const angle = (Math.PI / 3) * i;
+                            ctx.lineTo(this.size * Math.cos(angle), this.size * Math.sin(angle));
+                        }
+                        ctx.closePath();
+                        ctx.stroke();
+                        if (this.glow > 0) ctx.fill();
+                    } else if (this.shape === 'circle') {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size * 0.8, 0, Math.PI * 2);
+                        ctx.stroke();
+                        if (this.glow > 0) ctx.fill();
+                    } else if (this.shape === 'star') {
+                        ctx.beginPath();
+                        ctx.moveTo(-this.size * 0.6, 0);
+                        ctx.lineTo(this.size * 0.6, 0);
+                        ctx.moveTo(0, -this.size * 0.6);
+                        ctx.lineTo(0, this.size * 0.6);
+                        ctx.stroke();
+                    }
+                    ctx.restore();
+                }
+            }
+
+            // Spawn background particles
+            for (let i = 0; i < 35; i++) {
+                particles.push(new BgParticle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+
+                // Draw connecting glow paths
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p1 = particles[i];
+                        const p2 = particles[j];
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const dist = Math.hypot(dx, dy);
+
+                        if (dist < 120 && p1.glow > 5 && p2.glow > 5) {
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(168, 85, 247, ${Math.min(p1.opacity, p2.opacity) * 0.35})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
     </script>
 
     <style>
@@ -1159,8 +1410,10 @@
             document.head.appendChild(s);
 
             function report() {
-                var h = (function () {
-                    var b = document.body, max = 0, cs;
+                var h = (function() {
+                    var b = document.body,
+                        max = 0,
+                        cs;
                     for (var i = 0; i < b.children.length; i++) {
                         cs = getComputedStyle(b.children[i]);
                         if (cs.position === 'fixed' || cs.position === 'absolute' || cs.display === 'none') continue;
@@ -1190,6 +1443,34 @@
         })();
     </script>
     <script src="darkmode.js"></script>
+
+    <script>
+        (function() {
+            // This page is also embedded as an iframe section inside
+            // index.html - only add the site nav/footer when it's opened
+            // as its own standalone page (e.g. from the header's
+            // "Why CrossTecch" menu link), not when nested in another page.
+            if (window.self !== window.top) return;
+
+            var footerFrame = document.createElement('iframe');
+            footerFrame.id = 'ctFooterFrame';
+            footerFrame.src = '../Footer.html';
+            footerFrame.title = 'Footer';
+            footerFrame.scrolling = 'no';
+            footerFrame.style.cssText = 'width:100%;border:0;display:block;overflow:hidden;';
+            document.body.appendChild(footerFrame);
+
+            window.addEventListener('message', function(e) {
+                if (e.data && e.data.ctSection && e.data.height) {
+                    footerFrame.style.height = e.data.height + 'px';
+                }
+            });
+
+            var headerScript = document.createElement('script');
+            headerScript.src = '../header.js';
+            document.body.appendChild(headerScript);
+        })();
+    </script>
 </body>
 
 </html>

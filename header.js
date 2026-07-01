@@ -136,7 +136,7 @@
             <a href="${B}solution.html" target="_top" class="mega-link"><strong>Integrations</strong><span>Plug into your CI/CD &amp; tools</span></a></div>
         <div class="mega-col"><span class="mega-head">WHY CROSSTECCH</span>
             <a href="${B}services.html" target="_top" class="mega-link"><strong>How We Work</strong><span>Our process &amp; approach</span></a>
-            <a href="${B}about.html" target="_top" class="mega-link"><strong>Why CrossTecch</strong><span>What sets us apart</span></a></div>
+            <a href="${B}index_files/WhyChooseUs_preview.html" target="_top" class="mega-link"><strong>Why CrossTecch</strong><span>What sets us apart</span></a></div>
         </div><div class="mega-feature"><img src="${B}images/robo2.png" alt="" class="mega-feature-img" />
         <h4>One platform,<br>full coverage</h4><p class="mega-feature-sub">Test, build &amp; ship with confidence.</p>
         <a href="${B}solution.html" target="_top" class="mega-feature-btn">Explore the Platform</a></div></div></div>
