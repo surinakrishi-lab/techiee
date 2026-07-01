@@ -2,329 +2,1914 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CROSSTECCH+ — Meet the Future</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Raleway:wght@800;900&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROSSTECCH+ | Future</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --bg: #06070f;
-            --silver: #c8cfde;
-            --muted: #8a93a8;
-            --grad: linear-gradient(90deg, #fb3d64, #d440ad, #8b45dc, #4f61fb);
+        /* ============================================================
+   RESET
+   ============================================================ */
+        
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
         }
-
-        html { scroll-behavior: smooth; }
-
+        
+        html,
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg);
-            color: var(--silver);
+            margin: 0;
+            padding: 0;
+            background-color: #010103;
+            color: #fff;
+            font-family: 'Raleway', sans-serif;
             overflow-x: hidden;
+        }
+        
+        img {
+            max-width: 100%;
+        }
+        /* ============================================================
+   FutureBackground.module.css  ->  .fb-*
+   ============================================================ */
+        
+        .fb-futureContainer {
             position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #010103;
+            overflow-x: hidden;
+            color: white;
+            display: flex;
+            flex-direction: column;
         }
-
-        /* ===== Animated background ===== */
-        .bg-layer { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-        .bubble { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.55; }
-        .bubble-orange { width: 480px; height: 480px; background: radial-gradient(circle, #ff7a3d, transparent 70%); top: -120px; left: -80px; animation: float1 16s ease-in-out infinite; }
-        .bubble-blue   { width: 560px; height: 560px; background: radial-gradient(circle, #4f61fb, transparent 70%); bottom: -160px; right: -120px; animation: float2 20s ease-in-out infinite; }
-        .bubble-pink   { width: 360px; height: 360px; background: radial-gradient(circle, #d440ad, transparent 70%); top: 40%; left: 55%; animation: float1 24s ease-in-out infinite; }
-
-        @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(60px,80px) scale(1.1); } }
-        @keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-70px,-60px) scale(1.08); } }
-
-        .noise { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.04;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-
-        /* ===== Nav ===== */
-        .nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 48px; height: 78px;
-            background: rgba(6, 7, 15, 0.55); backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        
+        .fb-backgroundLayer {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, #030308 0%, #000000 100%);
         }
-        .nav-logo img { height: 64px; width: auto; object-fit: contain; }
-        .nav-links { display: flex; gap: 36px; list-style: none; }
-        .nav-links a { color: rgba(200, 207, 222, 0.65); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 1.4px; text-transform: uppercase; transition: color 0.25s; }
-        .nav-links a:hover { color: #fff; }
-
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 9px 10px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 12px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: transform 0.2s ease; }
-        .hamburger:active { transform: scale(0.95); }
-        .hamburger span { width: 24px; height: 2.5px; background: #fff; border-radius: 3px; transition: 0.3s; }
-        .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-        .sidebar {
-            position: fixed; top: 78px; right: 0; width: 260px; max-width: 80vw;
-            height: calc(100vh - 78px); background: rgba(10, 12, 22, 0.97); backdrop-filter: blur(18px);
-            z-index: 49; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-            border-left: 1px solid rgba(255,255,255,0.07); padding: 32px;
+        
+        .fb-bubble {
+            position: absolute;
+            border-radius: 50%;
+            animation: fb-float 15s infinite alternate ease-in-out, fb-morph 18s infinite alternate ease-in-out;
+            background: rgba(0, 0, 0, 0.4);
+            will-change: transform, border-radius;
+            transform: translateZ(0);
         }
-        .sidebar.open { transform: translateX(0); }
-        .sidebar ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-        .sidebar a { display: block; padding: 14px 10px; color: var(--silver); text-decoration: none; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .sidebar a:hover { color: #fff; padding-left: 18px; transition: 0.25s; }
-
-        /* ===== Content ===== */
-        .content { position: relative; z-index: 2; }
-
-        .hero {
-            min-height: 100vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center;
-            padding: 120px 24px 60px; position: relative;
+        
+        .fb-bubbleOrange {
+            width: 70vw;
+            height: 70vw;
+            max-width: 900px;
+            max-height: 900px;
+            top: -20%;
+            left: 10%;
+            box-shadow: inset 40px 0 120px -20px rgba(255, 94, 58, 0.7), inset 0 60px 150px -30px rgba(255, 179, 71, 0.6), inset -50px -50px 150px -30px rgba(0, 0, 0, 0.9), 0 0 80px rgba(255, 94, 58, 0.15);
+            border: 1px solid rgba(255, 150, 100, 0.15);
         }
-        .hero-title { font-family: 'Raleway', sans-serif; font-weight: 900; line-height: 0.95; letter-spacing: -2px; }
-        .silverish { display: block; font-size: clamp(34px, 6vw, 72px); color: #aeb6c8;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.4)); }
-        .gradientText { display: block; font-size: clamp(48px, 9vw, 128px); color: transparent;
-            background: var(--grad); background-size: 200% auto; -webkit-background-clip: text; background-clip: text;
-            animation: shine 5s linear infinite; }
-        @keyframes shine { to { background-position: 200% center; } }
-        .hero-sub { margin-top: 24px; max-width: 540px; font-size: 16px; color: var(--muted); line-height: 1.7; }
-
-        .scroll-cue { margin-top: 48px; display: inline-flex; flex-direction: column; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
-        .scroll-cue .mouse { width: 24px; height: 38px; border: 2px solid rgba(200,207,222,0.4); border-radius: 14px; position: relative; }
-        .scroll-cue .mouse::after { content: ''; position: absolute; left: 50%; top: 7px; transform: translateX(-50%); width: 4px; height: 7px; border-radius: 3px; background: #fff; animation: wheel 1.6s ease-in-out infinite; }
-        @keyframes wheel { 0% { opacity: 0; top: 7px; } 40% { opacity: 1; } 100% { opacity: 0; top: 18px; } }
-
-        /* ===== Robot showcase ===== */
-        .robo-section { position: relative; padding: 40px 24px 120px; display: flex; flex-direction: column; align-items: center; }
-        .robo-wrap { position: relative; width: min(640px, 90vw); display: flex; justify-content: center; }
-        .robo-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; height: 70%;
-            background: radial-gradient(circle, rgba(139,69,220,0.55), rgba(79,97,251,0.2) 50%, transparent 70%); filter: blur(50px); z-index: 0; animation: pulse 5s ease-in-out infinite; }
-        @keyframes pulse { 0%,100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); } 50% { opacity: 1; transform: translate(-50%,-50%) scale(1.12); } }
-        .robo-img { position: relative; z-index: 1; width: 100%; height: auto; object-fit: contain; animation: floatY 6s ease-in-out infinite; will-change: transform;
-            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6)); }
-        @keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-22px); } }
-
-        /* ===== Feature cards ===== */
-        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto; padding: 0 24px 120px; }
-        .feature {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px; padding: 34px 28px; position: relative; overflow: hidden;
-            opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1), border-color 0.3s;
+        
+        .fb-bubbleBlue {
+            width: 80vw;
+            height: 80vw;
+            max-width: 1000px;
+            max-height: 1000px;
+            bottom: -25%;
+            right: 5%;
+            box-shadow: inset -50px 0 150px -30px rgba(37, 117, 252, 0.6), inset 0 -60px 150px -30px rgba(106, 17, 203, 0.7), inset 50px 50px 150px -30px rgba(0, 0, 0, 0.9), 0 0 100px rgba(106, 17, 203, 0.15);
+            border: 1px solid rgba(100, 150, 255, 0.15);
+            animation-delay: -7s;
+            animation-duration: 20s, 22s;
         }
-        .feature.reveal { opacity: 1; transform: translateY(0); }
-        .feature:hover { border-color: rgba(139,69,220,0.5); transform: translateY(-6px); }
-        .feature::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--grad); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
-        .feature:hover::before { transform: scaleX(1); }
-        .feature-num { font-family: 'Raleway', sans-serif; font-size: 14px; font-weight: 800; color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text; letter-spacing: 2px; }
-        .feature h3 { margin: 14px 0 12px; font-size: 22px; font-weight: 800; color: #fff; }
-        .feature p { font-size: 14px; line-height: 1.7; color: var(--muted); }
-
-        /* ===== CTA / second robot ===== */
-        .cta-section { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 40px;
-            max-width: 1100px; margin: 0 auto; padding: 60px 24px 140px; flex-wrap: wrap; }
-        .cta-text { flex: 1; min-width: 280px; }
-        .cta-text h2 { font-family: 'Raleway', sans-serif; font-size: clamp(28px, 4vw, 46px); font-weight: 900; color: #fff; line-height: 1.1; letter-spacing: -1px; }
-        .cta-text h2 span { color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text; }
-        .cta-text p { margin: 18px 0 28px; color: var(--muted); font-size: 15px; line-height: 1.7; max-width: 440px; }
-        .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--grad); background-size: 200% auto; color: #fff;
-            font-weight: 700; font-size: 15px; padding: 15px 32px; border-radius: 40px; text-decoration: none; border: none; cursor: pointer;
-            box-shadow: 0 10px 30px rgba(139,69,220,0.35); transition: transform 0.25s, box-shadow 0.25s, background-position 0.5s; }
-        .cta-btn:hover { transform: translateY(-3px); background-position: 100% center; box-shadow: 0 16px 40px rgba(139,69,220,0.5); }
-        .cta-robo { flex: 1; min-width: 260px; display: flex; justify-content: center; }
-        .cta-robo img { width: min(360px, 80vw); height: auto; object-fit: contain; animation: floatY 7s ease-in-out infinite; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5)); }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 900px) {
-            .features { grid-template-columns: 1fr; }
+        
+        .fb-bubbleSmallBlue {
+            width: 35vw;
+            height: 35vw;
+            max-width: 400px;
+            max-height: 400px;
+            top: 15%;
+            right: -5%;
+            box-shadow: inset 30px 30px 100px -20px rgba(50, 100, 255, 0.5), inset -20px -20px 80px -20px rgba(0, 0, 0, 0.9), 0 0 60px rgba(50, 100, 255, 0.1);
+            border: 1px solid rgba(50, 100, 255, 0.15);
+            animation-delay: -3s;
+            animation-duration: 12s, 14s;
         }
+        
+        @keyframes fb-float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-3vh) translateX(3vw) rotate(15deg);
+            }
+            100% {
+                transform: translateY(2vh) translateX(-2vw) rotate(-10deg);
+            }
+        }
+        
+        @keyframes fb-morph {
+            0% {
+                border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            }
+            33% {
+                border-radius: 55% 45% 50% 50% / 50% 55% 45% 50%;
+            }
+            66% {
+                border-radius: 45% 55% 40% 60% / 60% 45% 55% 40%;
+            }
+            100% {
+                border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            }
+        }
+        
+        .fb-noiseOverlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+        }
+        
+        .fb-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .fb-heroSection {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+            padding: 2rem;
+            width: 100%;
+        }
+        
+        .fb-titleWrap {
+            position: relative;
+            margin-bottom: 1.5rem;
+            z-index: 2;
+        }
+        
+        .fb-title {
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin: 0;
+        }
+        
+        .fb-silverish {
+            background: linear-gradient(to right, #e0e5ec, #8b92a5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            padding-bottom: 0.1em;
+        }
+        
+        .fb-gradientText {
+            background: linear-gradient(to right, #ff7e5f, #feb47b, #8b45dc, #2575fc, #ff7e5f);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fb-shine 5s linear infinite;
+            display: inline-block;
+            padding-bottom: 0.1em;
+        }
+        
+        @keyframes fb-shine {
+            to {
+                background-position: -200% center;
+            }
+        }
+        /* Floating Code Blocks */
+        
+        .fb-codeBlockTopLeft {
+            position: absolute;
+            top: 15%;
+            left: 5%;
+            width: 300px;
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: rgba(0, 255, 128, 0.5);
+            pointer-events: none;
+            z-index: 1;
+            text-align: left;
+            transform: perspective(500px) rotateY(10deg);
+        }
+        
+        .fb-codeBlockBottomRight {
+            position: absolute;
+            bottom: 15%;
+            right: 5%;
+            width: 350px;
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: rgba(0, 191, 255, 0.5);
+            pointer-events: none;
+            z-index: 1;
+            text-align: left;
+            transform: perspective(500px) rotateY(-10deg);
+        }
+        
+        .fb-codeBlockTopLeft pre,
+        .fb-codeBlockBottomRight pre {
+            margin: 0;
+            padding: 0;
+            white-space: pre-wrap;
+            line-height: 1.4;
+            text-shadow: 0 0 10px rgba(0, 255, 128, 0.4);
+        }
+        
+        .fb-codeBlockBottomRight pre {
+            text-shadow: 0 0 10px rgba(0, 191, 255, 0.4);
+        }
+        
+        .fb-cursor {
+            display: inline-block;
+            font-weight: bold;
+            animation: fb-blink 1s step-end infinite;
+        }
+        
+        @keyframes fb-blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+        
+        .fb-extendedSection {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            position: relative;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
+        }
+        
+        .fb-middleRowWrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto 3rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .fb-sideCardsContainer {
+            position: absolute;
+            left: 5%;
+            top: 50%;
+            transform: translateY(-40%);
+            z-index: 15;
+        }
+        
+        .fb-roboContainer {
+            position: relative;
+            margin-top: -10vw;
+            display: inline-flex;
+            justify-content: flex-end;
+            align-items: center;
+            animation: fb-floatRobo 6s ease-in-out infinite;
+            width: 100%;
+            z-index: 5;
+            margin-right: 5%;
+        }
+        
+        @keyframes fb-floatRobo {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        .fb-roboImage {
+            position: relative;
+            z-index: 2;
+            object-fit: contain;
+            filter: drop-shadow(0 0 50px rgba(106, 17, 203, 0.5)) contrast(1.15);
+            max-width: 100%;
+            height: auto;
+            display: block;
+            width: 850px;
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0) 80%);
+            mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0) 80%);
+        }
+        
+        .fb-roboImage.fb-imgFallback {
+            aspect-ratio: 1/1;
+            background: radial-gradient(circle at 35% 30%, #8b45dc, #2575fc 55%, #010103 100%);
+            border-radius: 50%;
+        }
+        
+        .fb-roboGlow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60%;
+            height: 60%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(106, 17, 203, 0.4) 0%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .fb-carouselContainer {
+            width: 100%;
+            max-width: 1200px;
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+            margin-top: 4rem;
+            cursor: grab;
+        }
+        
+        .fb-carouselContainer:active {
+            cursor: grabbing;
+        }
+        
+        .fb-swipeCarousel {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem 50vw 1rem 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .fb-swipeCarousel::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .fb-swipeCard {
+            flex: 0 0 85vw;
+            height: 450px;
+            scroll-snap-align: center;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+            will-change: transform;
+        }
+        
+        @media (min-width: 768px) {
+            .fb-swipeCard {
+                flex: 0 0 60vw;
+                height: 500px;
+            }
+            .fb-swipeCarousel {
+                padding: 1rem 40vw 1rem 1rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .fb-swipeCard {
+                flex: 0 0 800px;
+                height: 450px;
+            }
+            .fb-swipeCarousel {
+                padding: 1rem calc(50% - 400px) 1rem 1rem;
+            }
+        }
+        
+        .fb-swipeCard:hover {
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(106, 17, 203, 0.3);
+        }
+        
+        .fb-cardBg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .fb-cardBg.fb-imgFallback {
+            background: linear-gradient(135deg, #6a11cb, #2575fc 50%, #ff7e5f);
+        }
+        
+        .fb-swipeCard:hover .fb-cardBg {
+            transform: scale(1.05);
+        }
+        
+        .fb-cardGradientOverlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 40%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .fb-cardContent {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .fb-cardTitle {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.02em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .fb-cardSubtitle {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .fb-cardBottom {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .fb-streamBtn {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .fb-streamBtn:hover {
+            background: #e0e0e0;
+            transform: scale(1.05);
+        }
+        
+        .fb-cardTags {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+        /* Final Section */
+        
+        .fb-finalSection {
+            min-height: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 10%;
+            position: relative;
+            z-index: 2;
+            gap: 4rem;
+        }
+        /* AJOYIB STYLE LAYOUT */
+        
+        .fb-ajoyibContainer {
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+            z-index: 1;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .fb-ajoyibTopRow {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 100%;
+            padding: 0 5%;
+        }
+        
+        .fb-ajoyibHeadingWhite {
+            font-size: clamp(40px, 8vw, 120px);
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0;
+            line-height: 0.8;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+        }
+        
+        .fb-dynamicHeadingGroup {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            animation: fb-floatRobo 5s ease-in-out infinite;
+        }
+        
+        .fb-crossedOutSkill {
+            font-size: clamp(30px, 5vw, 80px);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.3);
+            position: relative;
+            letter-spacing: -1px;
+            line-height: 0.8;
+            text-transform: uppercase;
+        }
+        
+        .fb-crossedOutSkill::after {
+            content: '';
+            position: absolute;
+            left: -5%;
+            top: 50%;
+            width: 110%;
+            height: clamp(3px, 1vw, 8px);
+            background: #fb3d64;
+            transform: translateY(-50%) rotate(-4deg);
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(251, 61, 100, 0.6);
+        }
+        
+        .fb-ajoyibParagraph {
+            font-size: clamp(14px, 2vw, 18px);
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+            text-align: left;
+            margin: 0 0 10px 0;
+            font-weight: 500;
+        }
+        
+        .fb-ajoyibHighlight {
+            color: #a855f7;
+            font-weight: 700;
+        }
+        
+        .fb-ajoyibGradientRow {
+            width: 100%;
+            text-align: center;
+            margin-top: -2vw;
+        }
+        
+        .fb-ajoyibHeadingGradient {
+            font-family: 'Helvetica Neue', 'Arial Black', Impact, sans-serif;
+            font-size: clamp(60px, 16vw, 250px);
+            font-weight: 900;
+            margin: 0;
+            line-height: 0.8;
+            letter-spacing: -0.07em;
+            text-transform: lowercase;
+            background: linear-gradient(to right, #6a11cb 0%, #fb3d64 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .fb-parallelLines {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+            margin-top: 1rem;
+        }
+        
+        .fb-glowLine {
+            height: 6px;
+            width: 65%;
+            background: linear-gradient(to right, #6a11cb 0%, #fb3d64 100%);
+            border-radius: 6px;
+            box-shadow: 0 0 25px rgba(251, 61, 100, 0.7), 0 0 10px rgba(106, 17, 203, 0.5);
+        }
+        
+        .fb-whiteLine {
+            height: 2px;
+            width: 55%;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+        }
+        
         @media (max-width: 768px) {
-            .nav { padding: 12px 20px; }
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            .cta-section { flex-direction: column-reverse; text-align: center; }
-            .cta-text p { margin-left: auto; margin-right: auto; }
+            .fb-ajoyibTopRow {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1rem;
+            }
+            .fb-ajoyibParagraph {
+                text-align: center;
+            }
         }
-    </style>
-    <style>
-        /* Site-wide font: Plus Jakarta Sans (hero1.html chhod ke sab pages) */
-        :root { --font-body: 'Plus Jakarta Sans', sans-serif; --font-heading: 'Plus Jakarta Sans', sans-serif; --font: 'Plus Jakarta Sans', sans-serif; }
-        body, h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, button, input, textarea, select, label, strong, em, blockquote, small, th, td, figcaption {
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        /* Glowing Motion Path SVG */
+        
+        .fb-motionPathContainer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 15;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .fb-motionSvg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .fb-glowingTrail {
+            stroke-dasharray: 600, 4000;
+            animation: fb-trailMotion 8s linear infinite;
+        }
+        
+        @keyframes fb-trailMotion {
+            0% {
+                stroke-dashoffset: 4000;
+            }
+            100% {
+                stroke-dashoffset: -600;
+            }
+        }
+        
+        .fb-nodeGroup {
+            pointer-events: none;
+        }
+        
+        .fb-nodeOuterCircle {
+            animation: fb-nodePulse 3s infinite alternate ease-in-out;
+        }
+        
+        .fb-nodeTitle {
+            font-family: 'Helvetica Neue', 'Arial Black', Impact, sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+            margin: 0 0 4px 0;
+        }
+        
+        .fb-nodeDescription {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.4;
+            margin: 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        @keyframes fb-nodePulse {
+            0% {
+                r: 12;
+                opacity: 0.6;
+            }
+            100% {
+                r: 16;
+                opacity: 1;
+            }
+        }
+        /* ============================================================
+   MorseCodeLines.module.css  ->  .morse-*
+   ============================================================ */
+        
+        .morse-canvasContainer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(circle at 50% 50vh, black 10%, black 60%, transparent 100%);
+            mask-image: radial-gradient(circle at 50% 50vh, black 10%, black 60%, transparent 100%);
+        }
+        
+        .morse-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        /* ============================================================
+   GlobalTwinklingStars.module.css  ->  .stars-*
+   ============================================================ */
+        
+        .stars-starsContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .stars-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        /* ============================================================
+   PipelineSideCards.module.css  ->  .side-*
+   ============================================================ */
+        
+        .side-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            z-index: 10;
+            padding: 2rem 0;
+        }
+        
+        .side-card {
+            position: relative;
+            background: rgba(15, 10, 10, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            z-index: 1;
+        }
+        
+        .side-card:hover {
+            transform: scale(1.1) translateY(-5px);
+            z-index: 10;
+            background: rgba(20, 15, 10, 0.95);
+            border: 1px solid rgba(255, 150, 50, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 120, 0, 0.2);
+        }
+        
+        .side-cardGlow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: radial-gradient(circle at top center, rgba(255, 100, 20, 0.4) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        
+        .side-card:hover .side-cardGlow {
+            opacity: 1;
+        }
+        
+        .side-cardContent {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .side-cardNumber {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: monospace;
+            margin-bottom: 0.2rem;
+        }
+        
+        .side-cardTitle {
+            font-family: 'Helvetica Neue', 'Arial Black', Impact, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -0.05em;
+            text-transform: lowercase;
+            background: linear-gradient(to right, #6a11cb 0%, #fb3d64 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .side-cardDesc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .side-tagsContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .side-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        .side-purple {
+            background: rgba(106, 17, 203, 0.2);
+            color: #d8a0ff;
+            border: 1px solid rgba(106, 17, 203, 0.4);
+        }
+        
+        .side-blue {
+            background: rgba(37, 117, 252, 0.2);
+            color: #90c0ff;
+            border: 1px solid rgba(37, 117, 252, 0.4);
+        }
+        
+        .side-teal {
+            background: rgba(0, 201, 255, 0.15);
+            color: #6ee7ff;
+            border: 1px solid rgba(0, 201, 255, 0.3);
+        }
+        
+        .side-green {
+            background: rgba(0, 200, 83, 0.15);
+            color: #69f0ae;
+            border: 1px solid rgba(0, 200, 83, 0.3);
+        }
+        
+        .side-olive {
+            background: rgba(192, 202, 51, 0.15);
+            color: #dce775;
+            border: 1px solid rgba(192, 202, 51, 0.3);
+        }
+        
+        .side-orange {
+            background: rgba(255, 111, 0, 0.15);
+            color: #ffd180;
+            border: 1px solid rgba(255, 111, 0, 0.3);
+        }
+        /* ============================================================
+   ProcessingLinesBackground.module.css  ->  .proc-*
+   ============================================================ */
+        
+        .proc-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        .proc-svgLine {
+            animation-name: proc-svgProcess;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+        
+        @keyframes proc-svgProcess {
+            from {
+                stroke-dashoffset: 2000;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        /* ============================================================
+   MatrixDustBackground.module.css  ->  .matrix-*
+   ============================================================ */
+        
+        .matrix-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .matrix-particle {
+            position: absolute;
+            color: rgba(30, 255, 120, 0.8);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            user-select: none;
+            text-shadow: 0 0 10px rgba(30, 255, 120, 0.6), 0 0 20px rgba(30, 255, 120, 0.2);
+            animation-name: matrix-floatAndVibrate;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+        }
+        
+        .matrix-dust {
+            color: rgba(100, 255, 150, 0.6);
+            text-shadow: 0 0 6px rgba(100, 255, 150, 0.4);
+            animation-name: matrix-dustDrift;
+            animation-timing-function: linear;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        @keyframes matrix-floatAndVibrate {
+            0% {
+                transform: translate(0px, 0px) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+            20% {
+                transform: translate(3px, -10px) rotate(2deg) scale(1.05);
+            }
+            40% {
+                transform: translate(-4px, -20px) rotate(-1deg) scale(0.95);
+                opacity: 0.3;
+            }
+            60% {
+                transform: translate(5px, -15px) rotate(3deg) scale(1.1);
+            }
+            80% {
+                transform: translate(-2px, 5px) rotate(-2deg) scale(0.9);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(0px, 0px) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes matrix-dustDrift {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(25px, -35px) scale(0.8);
+            }
+            66% {
+                transform: translate(-15px, -70px) scale(1.2);
+            }
+            100% {
+                transform: translate(0, -100px) scale(1);
+            }
+        }
+        /* ============================================================
+   CloudMigrationAI  ->  .cloud-*
+   (module CSS file was not provided in the source project;
+   this is a faithful re-creation matching the class names used
+   in CloudMigrationAI.tsx — glass "fan" cards + glow panel)
+   ============================================================ */
+        
+        .cloud-section {
+            position: relative;
+            width: 100%;
+            max-width: 1300px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+            z-index: 5;
+        }
+        
+        .cloud-glowCard {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            min-height: 480px;
+            background: linear-gradient(135deg, rgba(20, 10, 30, 0.9), rgba(5, 5, 15, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            padding: 3.5rem;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(106, 17, 203, 0.15) inset;
+        }
+        
+        .cloud-chainBackground {
+            position: absolute !important;
+            inset: 0;
+            object-fit: cover;
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .cloud-chainBackground.fb-imgFallback {
+            background: radial-gradient(circle at 80% 20%, rgba(37, 117, 252, 0.35), transparent 60%);
+        }
+        
+        .cloud-glowCardContent {
+            position: relative;
+            z-index: 2;
+            max-width: 480px;
+        }
+        
+        .cloud-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin: 0 0 1.25rem 0;
+            background: linear-gradient(to right, #e0e5ec, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .cloud-description {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.65);
+            margin: 0 0 2rem 0;
+        }
+        
+        .cloud-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .cloud-tag {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            color: #90c0ff;
+            background: rgba(37, 117, 252, 0.12);
+            border: 1px solid rgba(37, 117, 252, 0.35);
+        }
+        
+        .cloud-visualContainer {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            min-width: 320px;
+            height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cloud-perspectiveWrapper {
+            perspective: 1200px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cloud-fanCircle {
+            position: relative;
+            width: 220px;
+            height: 300px;
+            transform-style: preserve-3d;
+            animation: cloud-fanSpin 14s linear infinite;
+        }
+        
+        @keyframes cloud-fanSpin {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+        
+        .cloud-glassCard {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 220px;
+            margin: 40px 35px;
+            border-radius: 18px;
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cloud-card1 {
+            transform: rotateY(0deg) translateZ(160px);
+        }
+        
+        .cloud-card2 {
+            transform: rotateY(45deg) translateZ(160px);
+        }
+        
+        .cloud-card3 {
+            transform: rotateY(90deg) translateZ(160px);
+        }
+        
+        .cloud-card4 {
+            transform: rotateY(135deg) translateZ(160px);
+        }
+        
+        .cloud-card5 {
+            transform: rotateY(180deg) translateZ(160px);
+        }
+        
+        .cloud-card6 {
+            transform: rotateY(225deg) translateZ(160px);
+        }
+        
+        .cloud-card7 {
+            transform: rotateY(270deg) translateZ(160px);
+        }
+        
+        .cloud-card8 {
+            transform: rotateY(315deg) translateZ(160px);
+        }
+        
+        .cloud-cardInner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+        
+        .cloud-prismaticEdge {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255, 126, 95, 0.25), rgba(37, 117, 252, 0.25), rgba(106, 17, 203, 0.25));
+            mix-blend-mode: screen;
+        }
+        
+        @media (max-width: 900px) {
+            .cloud-glowCard {
+                flex-direction: column;
+                padding: 2.5rem 1.5rem;
+                text-align: center;
+            }
+            .cloud-glowCardContent {
+                max-width: 100%;
+            }
+            .cloud-tags {
+                justify-content: center;
+            }
+        }
+        /* ============================================================
+   GlowingPipes.module.css -> .pipes-* (kept for completeness,
+   not rendered on this page — GlowingPipes was imported but
+   unused in the original page.tsx)
+   ============================================================ */
+        
+        .pipes-pipesContainer {
+            position: absolute;
+            top: 0;
+            left: 20%;
+            width: 60%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        .pipes-glowingCore {
+            opacity: 0.7;
+        }
+        
+        .pipes-dataFlow {
+            animation: pipes-flowMotion 3s linear infinite;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+        }
+        
+        @keyframes pipes-flowMotion {
+            0% {
+                stroke-dashoffset: 170;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Animated background -->
-    <div class="bg-layer">
-        <div class="bubble bubble-orange"></div>
-        <div class="bubble bubble-blue"></div>
-        <div class="bubble bubble-pink"></div>
-    </div>
-    <div class="noise"></div>
+    <div class="fb-futureContainer">
 
-    <!-- Nav -->
-    <nav class="nav">
-        <a href="index1.html" class="nav-logo" aria-label="CROSSTECCH home">
-            <img src="images/bg.png" alt="Crosstecch Logo" />
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="solution.html">Solutions</a></li>
-            <li><a href="blog.html">Blogs</a></li>
-            <li><a href="Product.html">Product</a></li>
-            <li><a href="ContactUs.html">Contact Us</a></li>
-        </ul>
-        <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
-            <span></span><span></span><span></span>
+        <!-- Background bubbles -->
+        <div class="fb-backgroundLayer">
+            <div class="fb-bubble fb-bubbleOrange"></div>
+            <div class="fb-bubble fb-bubbleBlue"></div>
+            <div class="fb-bubble fb-bubbleSmallBlue"></div>
         </div>
-    </nav>
 
-    <!-- Mobile sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="solution.html">Solutions</a></li>
-            <li><a href="blog.html">Blogs</a></li>
-            <li><a href="Product.html">Product</a></li>
-            <li><a href="ContactUs.html">Contact Us</a></li>
-        </ul>
-    </aside>
+        <!-- Global twinkling stars -->
+        <div class="stars-starsContainer">
+            <canvas id="starsCanvas" class="stars-canvas"></canvas>
+        </div>
 
-    <main class="content">
+        <div class="fb-noiseOverlay"></div>
 
-        <!-- Hero -->
-        <section class="hero">
-            <h1 class="hero-title">
-                <span class="silverish">Meet the</span>
-                <span class="gradientText">CROSSTECCH+</span>
-            </h1>
-            <p class="hero-sub">A glimpse into what we are building next — intelligent systems that test, build and deploy at the speed of thought.</p>
-            <div class="scroll-cue">
-                <span class="mouse"></span>
-                Scroll
+        <div class="fb-content">
+            <div style="position: relative;">
+
+                <!-- Morse code radiating lines -->
+                <div class="morse-canvasContainer">
+                    <canvas id="morseCanvas" class="morse-canvas"></canvas>
+                </div>
+
+                <!-- Hero Section -->
+                <section class="fb-heroSection">
+                    <div class="fb-titleWrap">
+                        <h1 class="fb-title">
+                            <span class="fb-silverish">Meet the</span><br/>
+                            <span class="fb-gradientText">CROSSTECCH+</span>
+                        </h1>
+                    </div>
+
+                    <div class="fb-codeBlockTopLeft" id="codeTopLeft"><pre><code id="codeTopLeftText"></code><span class="fb-cursor">_</span></pre></div>
+                    <div class="fb-codeBlockBottomRight" id="codeBottomRight"><pre><code id="codeBottomRightText"></code><span class="fb-cursor">_</span></pre></div>
+                </section>
+
+                <!-- Extended Section -->
+                <section class="fb-extendedSection">
+                    <div class="fb-ajoyibContainer">
+                        <div class="fb-ajoyibTopRow">
+                            <div class="fb-dynamicHeadingGroup">
+                                <h2 class="fb-ajoyibHeadingWhite">INHERITING</h2>
+                                <span class="fb-crossedOutSkill">SKILLS</span>
+                            </div>
+                            <p class="fb-ajoyibParagraph">
+                                Artificial Intelligence<br/>
+                                <span class="fb-ajoyibHighlight">Crosstecch Labs</span><br/> is integrating into<br/> our daily workflows.
+                            </p>
+                        </div>
+
+                        <div class="fb-ajoyibGradientRow">
+                            <h2 class="fb-ajoyibHeadingGradient">EXPERIENCE</h2>
+                        </div>
+                    </div>
+
+                    <div class="fb-middleRowWrapper">
+                        <div class="fb-sideCardsContainer">
+                            <!-- PipelineSideCards -->
+                            <div class="side-container" id="pipelineSideCards"></div>
+                        </div>
+                        <div class="fb-roboContainer">
+                            <img src="i/cutie.png" alt="Futuristic Robot" class="fb-roboImage" id="roboImage" />
+                            <div class="fb-roboGlow"></div>
+                        </div>
+                    </div>
+
+                    <!-- Swipe carousel -->
+                    <div class="fb-carouselContainer">
+                        <div class="fb-swipeCarousel" id="swipeCarousel"></div>
+                    </div>
+                </section>
+
+                <!-- Cloud Migration AI -->
+                <section class="cloud-section">
+                    <div class="cloud-glowCard">
+                        <img src="/chain.png" alt="Chain Background" class="cloud-chainBackground" id="chainBg" />
+                        <div class="cloud-glowCardContent">
+                            <h2 class="cloud-title">
+                                Futuristic Cloud <br /> Migrations &amp; AI Chips
+                            </h2>
+                            <p class="cloud-description">
+                                Predictive motion models powered by next-generation neural architectures. Seamlessly migrate vast datasets across distributed cloud networks while our advanced AI chips process real-time analytics with unprecedented efficiency and scale.
+                            </p>
+                            <div class="cloud-tags">
+                                <span class="cloud-tag">Quantum Processors</span>
+                                <span class="cloud-tag">Cloud Sync</span>
+                                <span class="cloud-tag">Predictive Motion</span>
+                            </div>
+                        </div>
+
+                        <div class="cloud-visualContainer">
+                            <div class="cloud-perspectiveWrapper">
+                                <div class="cloud-fanCircle" id="fanCircle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Big Data heading -->
+                <div class="fb-ajoyibContainer" style="z-index: 20; margin: 6rem auto 0rem; padding: 0 2rem;">
+                    <div class="fb-ajoyibTopRow">
+                        <div class="fb-dynamicHeadingGroup">
+                            <h2 class="fb-ajoyibHeadingWhite">ORCHESTRATING</h2>
+                            <span class="fb-crossedOutSkill">SILOS</span>
+                        </div>
+                        <p class="fb-ajoyibParagraph">
+                            Unified Analytics<br/>
+                            <span class="fb-ajoyibHighlight">Data Pipelines</span><br/> scaling seamlessly across<br/> hybrid architectures.
+                        </p>
+                    </div>
+
+                    <div class="fb-ajoyibGradientRow">
+                        <h2 class="fb-ajoyibHeadingGradient" style="font-size: clamp(50px, 14vw, 220px);">BIG DATA</h2>
+                    </div>
+
+                    <div class="fb-parallelLines">
+                        <div class="fb-glowLine"></div>
+                        <div class="fb-whiteLine"></div>
+                    </div>
+                </div>
+
+                <!-- Final Section -->
+                <section class="fb-finalSection">
+                    <!-- ProcessingLinesBackground -->
+                    <div class="proc-container">
+                        <svg id="procSvg" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"></svg>
+                    </div>
+
+                    <!-- MatrixDustBackground -->
+                    <div class="matrix-container" id="matrixContainer"></div>
+
+                    <!-- GlowingMotionPath -->
+                    <div class="fb-motionPathContainer">
+                        <svg width="100%" height="100%" viewBox="0 0 1200 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="fb-motionSvg">
+            <defs>
+              <pattern id="verticalGrid" width="100" height="100" patternUnits="userSpaceOnUse">
+                <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(255,255,255,0.07)" stroke-dasharray="4 8" stroke-width="2" />
+              </pattern>
+              <filter id="redGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <rect width="100%" height="100%" fill="url(#verticalGrid)" />
+
+            <path id="motionTrack"
+              d="M -100,200 C 200,100 250,500 500,550 S 750,250 900,500 S 1000,900 1300,950"
+              fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="4" vector-effect="non-scaling-stroke" />
+
+            <path d="M -100,200 C 200,100 250,500 500,550 S 750,250 900,500 S 1000,900 1300,950"
+              fill="none" stroke="#ff0844" stroke-width="6" vector-effect="non-scaling-stroke"
+              class="fb-glowingTrail" filter="url(#redGlow)" />
+
+            <circle r="8" fill="#ffb199" filter="url(#redGlow)">
+              <animateMotion dur="8s" repeatCount="indefinite"
+                path="M -100,200 C 200,100 250,500 500,550 S 750,250 900,500 S 1000,900 1300,950" />
+            </circle>
+
+            <circle r="20" fill="rgba(255, 8, 68, 0.4)" filter="url(#redGlow)">
+              <animateMotion dur="8s" repeatCount="indefinite"
+                path="M -100,200 C 200,100 250,500 500,550 S 750,250 900,500 S 1000,900 1300,950" />
+            </circle>
+
+            <!-- Node 1 -->
+            <g class="fb-nodeGroup">
+              <circle cx="103" cy="215" r="12" fill="none" stroke="rgba(0, 242, 254, 0.8)" stroke-width="2" class="fb-nodeOuterCircle" />
+              <circle cx="103" cy="215" r="5" fill="#00f2fe" filter="url(#redGlow)" />
+              <foreignObject x="133" y="235" width="350" height="150">
+                <div xmlns="http://www.w3.org/1999/xhtml">
+                  <h4 class="fb-nodeTitle">1. Pre-Trained Foundation</h4>
+                  <p class="fb-nodeDescription">Leveraging massive base models like GPT or ResNet to harness general intelligence and established pattern recognition.</p>
+                </div>
+              </foreignObject>
+            </g>
+
+            <!-- Node 2 -->
+            <g class="fb-nodeGroup">
+              <circle cx="400" cy="507" r="12" fill="none" stroke="rgba(79, 172, 254, 0.8)" stroke-width="2" class="fb-nodeOuterCircle" />
+              <circle cx="400" cy="507" r="5" fill="#4facfe" filter="url(#redGlow)" />
+              <foreignObject x="30" y="525" width="340" height="150">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="text-align: right;">
+                  <h4 class="fb-nodeTitle">2. Feature Extraction</h4>
+                  <p class="fb-nodeDescription">Freezing core architectural layers to rapidly extract domain-specific features without catastrophic forgetting.</p>
+                </div>
+              </foreignObject>
+            </g>
+
+            <!-- Node 3 -->
+            <g class="fb-nodeGroup">
+              <circle cx="738" cy="450" r="12" fill="none" stroke="rgba(255, 8, 68, 0.8)" stroke-width="2" class="fb-nodeOuterCircle" />
+              <circle cx="738" cy="450" r="5" fill="#ff0844" filter="url(#redGlow)" />
+              <foreignObject x="768" y="430" width="350" height="150">
+                <div xmlns="http://www.w3.org/1999/xhtml">
+                  <h4 class="fb-nodeTitle">3. Adaptive Fine-Tuning</h4>
+                  <p class="fb-nodeDescription">Training the final dense layers exclusively on your proprietary dataset for extreme specialized accuracy.</p>
+                </div>
+              </foreignObject>
+            </g>
+
+            <!-- Node 4 -->
+            <g class="fb-nodeGroup">
+              <circle cx="1019" cy="752" r="12" fill="none" stroke="rgba(255, 177, 153, 0.8)" stroke-width="2" class="fb-nodeOuterCircle" />
+              <circle cx="1019" cy="752" r="5" fill="#ffb199" filter="url(#redGlow)" />
+              <foreignObject x="650" y="730" width="340" height="150">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="text-align: right;">
+                  <h4 class="fb-nodeTitle">4. Edge Deployment</h4>
+                  <p class="fb-nodeDescription">Quantizing and optimizing the specialized model for ultra-low latency inference across any hardware edge.</p>
+                </div>
+              </foreignObject>
+            </g>
+          </svg>
+                    </div>
+                </section>
+
             </div>
-        </section>
-
-        <!-- Robot showcase -->
-        <section class="robo-section">
-            <div class="robo-wrap" id="roboWrap">
-                <div class="robo-glow"></div>
-                <img src="images/robo2.png" alt="Futuristic Robot" class="robo-img" id="roboImg" />
-            </div>
-        </section>
-
-        <!-- Features -->
-        <section class="features" id="features">
-            <article class="feature">
-                <div class="feature-num">01</div>
-                <h3>Quantum Leap</h3>
-                <p>Experience processing speeds that transcend modern limitations, powered by our next-gen neural architecture.</p>
-            </article>
-            <article class="feature">
-                <div class="feature-num">02</div>
-                <h3>Adaptive AI</h3>
-                <p>A system that evolves with you, learning your preferences and anticipating your needs before they arise.</p>
-            </article>
-            <article class="feature">
-                <div class="feature-num">03</div>
-                <h3>Seamless Integration</h3>
-                <p>Connect effortlessly across all platforms with a unified ecosystem designed for absolute fluidity.</p>
-            </article>
-        </section>
-
-        <!-- CTA + second robot -->
-        <section class="cta-section">
-            <div class="cta-text">
-                <h2>The future is <span>already in motion.</span></h2>
-                <p>Join the teams shipping faster with CROSSTECCH+. Smarter automation, fewer regressions, and an AI that works alongside you.</p>
-                <a href="ContactUs.html" class="cta-btn">
-                    Get Early Access
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-            </div>
-            <div class="cta-robo">
-                <img src="images/robok.png" alt="Robot in motion" />
-            </div>
-        </section>
-
-    </main>
+        </div>
+    </div>
 
     <script>
-        // 1) Mobile menu toggle
-        var hamburger = document.getElementById('hamburger');
-        var sidebar = document.getElementById('sidebar');
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            sidebar.classList.toggle('open');
-        }
-        hamburger.addEventListener('click', toggleMenu);
-        hamburger.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMenu(); } });
-        sidebar.querySelectorAll('a').forEach(function (a) {
-            a.addEventListener('click', function () { hamburger.classList.remove('active'); sidebar.classList.remove('open'); });
-        });
-
-        // 2) Scroll-reveal feature cards (staggered)
-        var feats = document.querySelectorAll('.feature');
-        var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    var i = Array.prototype.indexOf.call(feats, entry.target);
-                    setTimeout(function () { entry.target.classList.add('reveal'); }, i * 140);
-                    io.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
-        feats.forEach(function (f) { io.observe(f); });
-
-        // 3) Robot mouse-parallax (desktop only)
-        var roboImg = document.getElementById('roboImg');
-        var roboWrap = document.getElementById('roboWrap');
-        if (window.matchMedia('(pointer:fine)').matches && roboWrap) {
-            window.addEventListener('mousemove', function (e) {
-                var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
-                var dx = (e.clientX - cx) / cx, dy = (e.clientY - cy) / cy;
-                roboImg.style.transform = 'translate(' + (dx * 18) + 'px,' + (dy * 14) + 'px)';
+        /* ============================================================
+           Image fallback helper — the original project referenced
+           local image assets (/cutie.png, /chain.png, /robo2.png,
+           /quantum.jpeg, /adaptive.jpeg) that were not part of the
+           uploaded files. If they 404, swap in a CSS gradient so the
+           layout still looks intentional. Drop real files with the
+           same names next to this HTML file to replace them.
+           ============================================================ */
+        function attachImageFallback(imgEl) {
+            imgEl.addEventListener('error', function() {
+                imgEl.classList.add('fb-imgFallback');
+                imgEl.style.display = 'block';
+                imgEl.removeAttribute('src');
+            }, {
+                once: true
             });
         }
 
-        // 4) Subtle parallax on scroll for background bubbles (desktop only, rAF-throttled)
-        var bubbles = document.querySelectorAll('.bubble');
-        var bTicking = false;
-        function bParallax() {
-            bTicking = false;
-            if (window.innerWidth <= 860) {           // phone: parallax off = smooth scroll
-                bubbles.forEach(function (b) { b.style.marginTop = ''; });
-                return;
+        /* ============================================================
+           GlobalTwinklingStars
+           ============================================================ */
+        (function initStars() {
+            const canvas = document.getElementById('starsCanvas');
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const numStars = 150;
+            const stars = [];
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 1.5 + 0.5,
+                    baseOpacity: 0.1 + Math.random() * 0.5,
+                    twinkleSpeed: 0.02 + Math.random() * 0.05,
+                    timeOffset: Math.random() * Math.PI * 2
+                });
             }
-            var y = window.scrollY;
-            bubbles.forEach(function (b, i) {
-                b.style.marginTop = (y * (0.04 + i * 0.02)) + 'px';
+
+            let time = 0;
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                time += 1;
+                stars.forEach(star => {
+                    const twinkle = Math.sin(time * star.twinkleSpeed + star.timeOffset) * 0.5 + 0.5;
+                    const opacity = star.baseOpacity * twinkle;
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        })();
+
+        /* ============================================================
+           MorseCodeLines
+           ============================================================ */
+        (function initMorse() {
+            const canvas = document.getElementById('morseCanvas');
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = canvas.offsetWidth;
+            let height = canvas.height = canvas.offsetHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = canvas.offsetWidth;
+                height = canvas.height = canvas.offsetHeight;
             });
-        }
-        window.addEventListener('scroll', function () {
-            if (!bTicking) { bTicking = true; window.requestAnimationFrame(bParallax); }
-        }, { passive: true });
+
+            const numLines = 80;
+            const lines = [];
+
+            for (let i = 0; i < numLines; i++) {
+                const corner = i % 4;
+                const speed = 0.5 + Math.random() * 2.0;
+                const segments = [];
+                let currentDist = 50 + Math.random() * 200;
+
+                while (currentDist < Math.max(width, height) * 1.5) {
+                    const isDot = Math.random() > 0.3;
+                    const length = isDot ? 2 : 10 + Math.random() * 15;
+                    const gap = isDot ? 10 + Math.random() * 10 : 20 + Math.random() * 30;
+                    segments.push({
+                        d: currentDist,
+                        l: length,
+                        opacityBase: 0.3 + Math.random() * 0.7,
+                        isDot
+                    });
+                    currentDist += length + gap;
+                }
+
+                lines.push({
+                    corner,
+                    speed,
+                    segments,
+                    angleOffset: (Math.random() - 0.5) * 0.4
+                });
+            }
+
+            let time = 0;
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+
+                const originX = width / 2;
+                const originY = window.innerHeight / 2;
+                time += 1;
+
+                lines.forEach(line => {
+                    let baseAngle = 0;
+                    if (line.corner === 0) baseAngle = Math.atan2(-originY, -originX);
+                    if (line.corner === 1) baseAngle = Math.atan2(-originY, width - originX);
+                    if (line.corner === 2) baseAngle = Math.atan2(height - originY, width - originX);
+                    if (line.corner === 3) baseAngle = Math.atan2(height - originY, -originX);
+
+                    const angle = baseAngle + line.angleOffset;
+                    const dx = Math.cos(angle);
+                    const dy = Math.sin(angle);
+
+                    ctx.lineWidth = 0.5;
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                    ctx.beginPath();
+                    ctx.moveTo(originX, originY);
+                    ctx.lineTo(originX + dx * Math.max(width, height) * 1.5, originY + dy * Math.max(width, height) * 1.5);
+                    ctx.stroke();
+
+                    line.segments.forEach(seg => {
+                        let dist = seg.d - (time * line.speed);
+                        const maxDist = Math.max(width, height) * 1.5;
+                        if (dist < 0) {
+                            seg.d += maxDist;
+                            dist = seg.d - (time * line.speed);
+                        }
+
+                        const startX = originX + dx * dist;
+                        const startY = originY + dy * dist;
+                        const endX = originX + dx * (dist + seg.l);
+                        const endY = originY + dy * (dist + seg.l);
+
+                        const twinkle = Math.sin(time * 0.05 + seg.opacityBase * 10) * 0.5 + 0.5;
+                        const opacity = seg.opacityBase * twinkle;
+
+                        ctx.beginPath();
+                        if (seg.isDot) {
+                            ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                            ctx.arc(startX, startY, 1.5, 0, Math.PI * 2);
+                            ctx.fill();
+                        } else {
+                            ctx.lineWidth = 1.5;
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+                            ctx.moveTo(startX, startY);
+                            ctx.lineTo(endX, endY);
+                            ctx.stroke();
+                        }
+                    });
+                });
+
+                requestAnimationFrame(draw);
+            }
+            draw();
+        })();
+
+        /* ============================================================
+           CodeTyping (hero floating code blocks)
+           ============================================================ */
+        (function initCodeTyping() {
+            function typeInto(elId, code, delay) {
+                const el = document.getElementById(elId);
+                let i = 0;
+
+                function startTyping() {
+                    const timer = setInterval(() => {
+                        el.textContent = code.substring(0, i);
+                        i++;
+                        if (i > code.length + 10) {
+                            clearInterval(timer);
+                            setTimeout(() => {
+                                i = 0;
+                                startTyping();
+                            }, 2000);
+                        }
+                    }, 50);
+                }
+                setTimeout(startTyping, delay);
+            }
+
+            const codeTopLeft = `import future
+from crosstecch import AI
+
+def initialize_agi():
+    model = AI.NeuralCore(
+        layers=1024,
+        synapses='quantum'
+    )
+    return model.awaken()
+
+# System initialized...`;
+
+            const codeBottomRight = `class FutureEvolution:
+    def __init__(self):
+        self.state = "learning"
+
+    def predict(self, data):
+        patterns = self.analyze(data)
+        return self.generate(patterns)
+
+# Continually evolving...`;
+
+            typeInto('codeTopLeftText', codeTopLeft, 0);
+            typeInto('codeBottomRightText', codeBottomRight, 1000);
+        })();
+
+        /* ============================================================
+           PipelineSideCards
+           ============================================================ */
+        (function initSideCards() {
+                const cardsData = [{
+                    title: "SOURCE DATA & MODEL",
+                    desc: "Collect large-scale data and train a base model on the source task.",
+                    tags: ["Large Dataset", "Base Model"],
+                    tagColor: "purple"
+                }, {
+                    title: "PRE-TRAINED MODEL",
+                    desc: "The model learns rich features and patterns from the source domain.",
+                    tags: ["Feature Extraction", "Knowledge Transfer"],
+                    tagColor: "blue"
+                }, {
+                    title: "TRANSFER KNOWLEDGE",
+                    desc: "Transfer the learned knowledge (weights, patterns) to the target task.",
+                    tags: ["Weights Transfer", "Feature Reuse"],
+                    tagColor: "teal"
+                }, {
+                    title: "TARGET DATA (SMALL)",
+                    desc: "Use a small amount of target domain data for fine-tuning the model.",
+                    tags: ["Small Dataset", "Fine-Tuning"],
+                    tagColor: "green"
+                }, {
+                    title: "FINE-TUNE & OPTIMIZE",
+                    desc: "Automatically fine-tune the model for higher accuracy and generalization.",
+                    tags: ["Auto Optimization", "Validation"],
+                    tagColor: "olive"
+                }];
+
+                const container = document.getElementById('pipelineSideCards');
+                cardsData.forEach((card, index) => {
+                            const cardEl = document.createElement('div');
+                            cardEl.className = 'side-card';
+                            cardEl.innerHTML = `
+      <div class="side-cardGlow"></div>
+      <div class="side-cardContent">
+        <div class="side-cardNumber">0${index + 1}</div>
+        <h3 class="side-cardTitle">${card.title}</h3>
+        <p class="side-cardDesc">${card.desc}</p>
+        <div class="side-tagsContainer">
+          ${card.tags.map(tag => `<span class="side-tag side-${card.tagColor}">${tag}</span>`).join('')}
+        </div>
+      </div>
+    `;
+    container.appendChild(cardEl);
+  });
+})();
+
+/* ============================================================
+   Swipe Carousel (Apple TV style, infinite-loop illusion)
+   ============================================================ */
+(function initCarousel() {
+  const cardsData = [
+    { title: "MONARCH", subtitle: "LEGACY OF MONSTERS", tagPrimary: "Adventure", tagSecondary: "A new threat will surface.", img: "/robo2.png" },
+    { title: "QUANTUM LEAP", subtitle: "NEXT-GEN NEURAL ARCHITECTURE", tagPrimary: "Technology", tagSecondary: "Transcend modern limitations.", img: "/quantum.jpeg" },
+    { title: "ADAPTIVE AI", subtitle: "EVOLVING WITH YOU", tagPrimary: "Intelligence", tagSecondary: "Anticipating your needs.", img: "/adaptive.jpeg" }
+  ];
+
+  const repeated = [];
+  for (let i = 0; i < 20; i++) repeated.push(...cardsData);
+
+  const carousel = document.getElementById('swipeCarousel');
+  repeated.forEach(card => {
+    const cardEl = document.createElement('div');
+    cardEl.className = 'fb-swipeCard';
+    cardEl.innerHTML = `
+      <img src="${card.img}" alt="${card.title}" class="fb-cardBg" />
+      <div class="fb-cardGradientOverlay"></div>
+      <div class="fb-cardContent">
+        <h3 class="fb-cardTitle">${card.title}</h3>
+        <h4 class="fb-cardSubtitle">${card.subtitle}</h4>
+        <div class="fb-cardBottom">
+          <button class="fb-streamBtn">Stream now</button>
+          <span class="fb-cardTags"><strong>${card.tagPrimary}</strong> • ${card.tagSecondary}</span>
+        </div>
+      </div>
+    `;
+    carousel.appendChild(cardEl);
+    attachImageFallback(cardEl.querySelector('.fb-cardBg'));
+  });
+
+  // Center scroll position, mirroring the original scrollLeft = itemWidth * 31
+  window.addEventListener('load', () => {
+    const firstCard = carousel.children[0];
+    if (firstCard) {
+      const cardWidth = firstCard.offsetWidth;
+      const itemWidth = cardWidth + 24; // 1.5rem gap
+      carousel.scrollLeft = itemWidth * 31;
+    }
+  });
+})();
+
+/* ============================================================
+   CloudMigrationAI fan cards
+   ============================================================ */
+(function initFanCircle() {
+  const fanCircle = document.getElementById('fanCircle');
+  for (let i = 0; i < 8; i++) {
+    const card = document.createElement('div');
+    card.className = `cloud-glassCard cloud-card${i + 1}`;
+    card.innerHTML = `
+      <div class="cloud-cardInner">
+        <div class="cloud-prismaticEdge"></div>
+      </div>
+    `;
+    fanCircle.appendChild(card);
+  }
+})();
+
+/* ============================================================
+   ProcessingLinesBackground
+   ============================================================ */
+(function initProcessingLines() {
+  const svg = document.getElementById('procSvg');
+  const colors = ['#00f2fe', '#4facfe', '#6a11cb', '#fb3d64', '#ff9d5c'];
+
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+
+  const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+  filter.setAttribute('id', 'neonGlowLine');
+  filter.setAttribute('x', '-20%');
+  filter.setAttribute('y', '-20%');
+  filter.setAttribute('width', '140%');
+  filter.setAttribute('height', '140%');
+  const blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+  blur.setAttribute('stdDeviation', '3');
+  blur.setAttribute('result', 'blur');
+  const comp = document.createElementNS('http://www.w3.org/2000/svg', 'feComposite');
+  comp.setAttribute('in', 'SourceGraphic');
+  comp.setAttribute('in2', 'blur');
+  comp.setAttribute('operator', 'over');
+  filter.appendChild(blur);
+  filter.appendChild(comp);
+  defs.appendChild(filter);
+
+  const lines = [];
+  for (let i = 0; i < 15; i++) {
+    lines.push({
+      id: i,
+      y: (100 / 15) * i + (Math.random() * 4 - 2),
+      thickness: Math.random() > 0.8 ? 3 : 1.5,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      duration: Math.random() * 3 + 2,
+      delay: Math.random() * -5,
+      direction: Math.random() > 0.5 ? 1 : -1
+    });
+  }
+
+  lines.forEach(l => {
+    const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+    grad.setAttribute('id', `glow-${l.id}`);
+    grad.setAttribute('x1', '0%'); grad.setAttribute('y1', '0%');
+    grad.setAttribute('x2', '100%'); grad.setAttribute('y2', '0%');
+
+    const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+    stop1.setAttribute('offset', '0%'); stop1.setAttribute('stop-color', l.color); stop1.setAttribute('stop-opacity', '0');
+    const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+    stop2.setAttribute('offset', '50%'); stop2.setAttribute('stop-color', l.color); stop2.setAttribute('stop-opacity', '1');
+    const stop3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+    stop3.setAttribute('offset', '100%'); stop3.setAttribute('stop-color', l.color); stop3.setAttribute('stop-opacity', '0');
+
+    grad.appendChild(stop1); grad.appendChild(stop2); grad.appendChild(stop3);
+    defs.appendChild(grad);
+  });
+
+  svg.appendChild(defs);
+
+  lines.forEach(l => {
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', '0');
+    line.setAttribute('y1', `${l.y}%`);
+    line.setAttribute('x2', '100%');
+    line.setAttribute('y2', `${l.y}%`);
+    line.setAttribute('stroke', `url(#glow-${l.id})`);
+    line.setAttribute('stroke-width', l.thickness);
+    line.setAttribute('stroke-dasharray', '200 1800');
+    line.setAttribute('stroke-dashoffset', '2000');
+    line.setAttribute('filter', 'url(#neonGlowLine)');
+    line.setAttribute('class', 'proc-svgLine');
+    line.style.animationDuration = `${l.duration}s`;
+    line.style.animationDelay = `${l.delay}s`;
+    line.style.animationDirection = l.direction === 1 ? 'normal' : 'reverse';
+    svg.appendChild(line);
+  });
+})();
+
+/* ============================================================
+   MatrixDustBackground
+   ============================================================ */
+(function initMatrixDust() {
+  const container = document.getElementById('matrixContainer');
+  const hexChars = '0123456789ABCDEF';
+
+  for (let i = 0; i < 60; i++) {
+    const isDust = Math.random() > 0.5;
+    const isHex = Math.random() > 0.5;
+
+    let content = '';
+    let type = 'dust';
+    if (!isDust) {
+      type = isHex ? 'hex' : 'binary';
+      if (isHex) {
+        content = '0x' + Array(4).fill(0).map(() => hexChars[Math.floor(Math.random() * 16)]).join('');
+      } else {
+        content = Array(8).fill(0).map(() => (Math.random() > 0.5 ? '1' : '0')).join('');
+      }
+    } else {
+      content = '.';
+    }
+
+    const left = Math.random() * 100;
+    const top = Math.random() * 100;
+    const fontSize = isDust ? (Math.random() * 15 + 10) : (Math.random() * 12 + 10);
+    const animationDuration = Math.random() * 15 + 10;
+    const animationDelay = Math.random() * -20;
+    const opacity = isDust ? (Math.random() * 0.5 + 0.1) : (Math.random() * 0.3 + 0.05);
+
+    const span = document.createElement('span');
+    span.className = `matrix-particle matrix-${type}`;
+    span.textContent = content;
+    span.style.left = `${left}%`;
+    span.style.top = `${top}%`;
+    span.style.fontSize = `${fontSize}px`;
+    span.style.opacity = opacity;
+    span.style.animationDuration = `${animationDuration}s`;
+    span.style.animationDelay = `${animationDelay}s`;
+
+    container.appendChild(span);
+  }
+})();
+
+/* ============================================================
+   Attach image fallbacks for the static <img> tags
+   ============================================================ */
+attachImageFallback(document.getElementById('roboImage'));
+attachImageFallback(document.getElementById('chainBg'));
     </script>
 
-    <!-- ===== Site Footer (shared, from Footer.html) ===== -->
-    <iframe id="ctFooterFrame" src="Footer.html" title="Footer" scrolling="no"
-            style="width:100%;border:0;display:block;overflow:hidden;"></iframe>
-    <script>
-        (function () {
-            var f = document.getElementById('ctFooterFrame');
-            if (!f) return;
-            window.addEventListener('message', function (e) {
-                if (e.data && e.data.ctSection && e.data.height) { f.style.height = e.data.height + 'px'; }
-            });
-        })();
-    </script>
-    <script src="darkmode.js"></script>
-    <style>body > nav.nav{display:none!important;}</style>
-    <script src="header.js"></script>
 </body>
 
 </html>

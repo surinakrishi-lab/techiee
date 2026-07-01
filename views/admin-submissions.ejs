@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Submissions – CrossTecch Admin</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      margin: 0;
+      padding: 40px;
+    }
+    h1 { font-size: 22px; margin-bottom: 4px; }
+    p.sub { color: #94a3b8; margin-top: 0; margin-bottom: 24px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #1e293b;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid #334155;
+      font-size: 14px;
+      vertical-align: top;
+    }
+    th { background: #111827; color: #93c5fd; font-weight: 600; }
+    tr:last-child td { border-bottom: none; }
+    .empty { color: #94a3b8; padding: 20px 0; }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Contact Form Submissions</h1>
+  <p class="sub"><%= submissions.length %> total &middot; newest first &middot; stored in MongoDB (crosstecch.submissions)</p>
+
+  <% if (submissions.length === 0) { %>
+    <p class="empty">No submissions yet. Try the form on the Contact Us page.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Received</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Need</th>
+          <th>Budget</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% submissions.forEach(function(s) { %>
+          <tr>
+            <td><%= new Date(s.receivedAt).toLocaleString() %></td>
+            <td><%= s.name %></td>
+            <td><%= s.email %></td>
+            <td><%= s.company %></td>
+            <td><span class="badge"><%= s.need %></span></td>
+            <td><%= s.budget %></td>
+            <td><%= s.message %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</body>
+</html>

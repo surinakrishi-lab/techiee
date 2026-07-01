@@ -1045,23 +1045,23 @@
 
             </div>
 
-            <div class="form-card " id="contact-form ">
+            <div class="form-card " id="contact-form">
 
-                <div id="formWrap ">
+                <div id="formWrap">
                     <h2 class="form-title ">Send a Message</h2>
                     <p class="form-sub ">Fields marked <span style="color:var(--cyan) ">*</span> are required.</p>
 
-                    <form id="contactForm " novalidate>
+                    <form id="contactForm" novalidate>
 
                         <div class="form-row ">
-                            <div class="form-group " id="grp-name ">
+                            <div class="form-group " id="grp-name">
                                 <label class="form-label ">Full Name <span>*</span></label>
-                                <input class="form-input " id="f-name " type="text " placeholder="Rahul Sharma " />
+                                <input class="form-input " id="f-name" type="text " placeholder="Rahul Sharma " />
                                 <span class="field-error ">Please enter your name.</span>
                             </div>
-                            <div class="form-group " id="grp-email ">
+                            <div class="form-group " id="grp-email">
                                 <label class="form-label ">Email Address <span>*</span></label>
-                                <input class="form-input " id="f-email " type="email " placeholder="rahul@company.com " />
+                                <input class="form-input " id="f-email" type="email " placeholder="rahul@company.com " />
                                 <span class="field-error ">Please enter a valid email.</span>
                             </div>
                         </div>
@@ -1069,14 +1069,14 @@
                         <div class="form-row ">
                             <div class="form-group full ">
                                 <label class="form-label ">Company (Optional)</label>
-                                <input class="form-input " id="f-company " type="text " placeholder="Your company name " />
+                                <input class="form-input " id="f-company" type="text " placeholder="Your company name " />
                             </div>
                         </div>
 
                         <!-- pill category selector -->
-                        <div class="form-group full " style="margin-bottom:14px " id="grp-need ">
+                        <div class="form-group full " style="margin-bottom:14px " id="grp-need">
                             <label class="form-label ">What Do You Need? <span>*</span></label>
-                            <div class="pill-group " id="pillGroup ">
+                            <div class="pill-group " id="pillGroup">
                                 <button type="button " class="pill " data-val="New Project ">New Project</button>
                                 <button type="button " class="pill " data-val="QA Testing ">QA Testing</button>
                                 <button type="button " class="pill " data-val="Automation ">Automation</button>
@@ -1086,14 +1086,14 @@
                                 <button type="button " class="pill " data-val="Partnership ">Partnership</button>
                                 <button type="button " class="pill active " data-val="Other ">Other</button>
                             </div>
-                            <input type="hidden " id="f-need " value="Other " />
-                            <span class="field-error " id="need-error ">Please select an option.</span>
+                            <input type="hidden " id="f-need" value="Other" />
+                            <span class="field-error " id="need-error">Please select an option.</span>
                         </div>
 
                         <div class="form-row ">
                             <div class="form-group full ">
                                 <label class="form-label ">Estimated Budget (Optional)</label>
-                                <select class="form-select " id="f-budget ">
+                                <select class="form-select " id="f-budget">
                 <option value=" ">Select a range…</option>
                 <option>Under ₹50K</option>
                 <option>₹50K – ₹2L</option>
@@ -1105,15 +1105,15 @@
                         </div>
 
                         <div class="form-row ">
-                            <div class="form-group full " id="grp-msg ">
+                            <div class="form-group full " id="grp-msg">
                                 <label class="form-label ">Message <span>*</span></label>
-                                <textarea class="form-textarea " id="f-msg " placeholder="Tell us about your project, timeline, or any specific requirements… " maxlength="1000 "></textarea>
-                                <span class="char-count "><span id="charNum ">0</span> / 1000</span>
+                                <textarea class="form-textarea " id="f-msg" placeholder="Tell us about your project, timeline, or any specific requirements… " maxlength="1000"></textarea>
+                                <span class="char-count "><span id="charNum">0</span> / 1000</span>
                                 <span class="field-error ">Please write your message.</span>
                             </div>
                         </div>
 
-                        <button class="btn-submit " type="submit " id="submitBtn ">
+                        <button class="btn-submit " type="submit " id="submitBtn">
             <span class="btn-text ">SEND MESSAGE</span>
             <svg class="btn-arrow " width="18 " height="18 " viewBox="0 0 24 24 " fill="none " stroke="currentColor " stroke-width="2.5 " stroke-linecap="round " stroke-linejoin="round ">
               <line x1="7 " y1="17 " x2="17 " y2="7 "/><polyline points="7 7 17 7 17 17 "/>
@@ -1128,14 +1128,14 @@
                     </form>
                 </div>
 
-                <div class="form-feedback " id="feedbackSuccess ">
+                <div class="form-feedback " id="feedbackSuccess">
                     <div class="feedback-icon success " style="font-size:36px; background:rgba(16,185,129,0.1); ">✅</div>
                     <h3 class="feedback-title ">Message Sent!</h3>
                     <p class="feedback-msg ">Thanks for reaching out. We'll get back to you within 24 hours.</p>
                     <button class="btn-again " onclick="resetForm() ">Send Another</button>
                 </div>
 
-                <div class="form-feedback " id="feedbackError ">
+                <div class="form-feedback " id="feedbackError">
                     <div class="feedback-icon err " style="font-size:36px; background:rgba(239,68,68,0.1); ">❌</div>
                     <h3 class="feedback-title ">Something went wrong</h3>
                     <p class="feedback-msg ">Couldn't send. Email us directly at <strong>info@bnxt.ai</strong></p>
@@ -1148,7 +1148,9 @@
     </section>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyns3sIRsZZJYlMe3VV455LhR2INiCnm0toJGTdk6-c_AmR8s6hYeRKHLeKkDFIgtI0Mg/exec';
+        // Now backed by our own Node.js/Express API instead of the old
+        // Google Apps Script endpoint. See routes/contact.js + server.js.
+        const CONTACT_API_URL = '/api/contact';
 
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('open');
@@ -1220,13 +1222,15 @@
                 message: document.getElementById('f-msg').value.trim()
             };
 
-            fetch(SCRIPT_URL, {
+            fetch(CONTACT_API_URL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 },
-                body: new URLSearchParams(payload).toString()
+                body: JSON.stringify(payload)
+            }).then(function(response) {
+                if (!response.ok) throw new Error('Request failed: ' + response.status);
+                return response.json();
             }).then(function() {
                 showSuccess();
             }).catch(function() {

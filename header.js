@@ -179,7 +179,7 @@
         <a href="${B}blog.html" target="_top" class="mega-feature-btn">Visit the Blog</a></div></div></div>
 
     <div class="navActions">
-        <a href="${B}ContactUs.html" target="_top" class="navCta">Get Started &rarr;</a>
+        <a href="${B}future.html" target="_top" class="navCta">Future &rarr;</a>
     </div>
     <div class="hamburger" aria-label="Menu" role="button" tabindex="0"><span></span><span></span><span></span></div>`;
 
