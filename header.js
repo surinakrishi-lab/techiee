@@ -98,7 +98,7 @@
     @media (max-width: 860px) {
         .ct-nav { flex-wrap: wrap; height: auto; padding: 12px 18px; }
         .ct-nav .logoImage { height: 50px; }
-        .ct-nav .hamburger { display: flex; }
+        .ct-nav .hamburger { display: flex; margin-left: auto; }
         .ct-nav .navLinks, .ct-nav .navActions { display: none; flex-basis: 100%; }
         .ct-nav.open .navLinks { display: flex; flex-direction: column; gap: 14px; width: 100%; padding: 10px 0 4px; align-items: stretch; }
         .ct-nav.open .navActions { display: flex; flex-direction: row; flex-wrap: wrap; gap: 12px; width: 100%; padding-bottom: 8px; }
