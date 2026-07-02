@@ -318,6 +318,7 @@
         function sizeFooter() { try { var d = ff.contentDocument || ff.contentWindow.document; if (d && d.body) ff.style.height = d.body.scrollHeight + 'px'; } catch (e) {} }
         if (ff) { ff.addEventListener('load', function () { sizeFooter(); [300, 900, 1800].forEach(function (t) { setTimeout(sizeFooter, t); }); }); window.addEventListener('resize', sizeFooter); }
     </script>
+    <script src="fx.js" defer></script>
     <script src="crosstech-chatbot.js" defer></script>
 </body>
 

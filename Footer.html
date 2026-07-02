@@ -721,55 +721,55 @@
             <div class="links-col">
                 <span class="col-title">Product</span>
                 <ul>
-                    <li><a href="#" class="footer-link">Authentication</a></li>
-                    <li><a href="#" class="footer-link">B2B Authentication <span class="badge badge-indigo">New</span></a></li>
-                    <li><a href="#" class="footer-link">Billing <span class="badge badge-violet">Beta</span></a></li>
-                    <li><a href="#" class="footer-link">User Management</a></li>
-                    <li><a href="#" class="footer-link">CLI</a></li>
+                    <li><a href="Product.html" target="_top" class="footer-link">Authentication</a></li>
+                    <li><a href="Product.html" target="_top" class="footer-link">B2B Authentication <span class="badge badge-indigo">New</span></a></li>
+                    <li><a href="Product.html" target="_top" class="footer-link">Billing <span class="badge badge-violet">Beta</span></a></li>
+                    <li><a href="Product.html" target="_top" class="footer-link">User Management</a></li>
+                    <li><a href="bug-finder.html" target="_top" class="footer-link">Bug Finder</a></li>
                 </ul>
             </div>
 
             <div class="links-col">
                 <span class="col-title">SDKs</span>
                 <ul>
-                    <li><a href="#" class="footer-link">React</a></li>
-                    <li><a href="#" class="footer-link">Next.js</a></li>
-                    <li><a href="#" class="footer-link">Expo</a></li>
-                    <li><a href="#" class="footer-link">Astro <span class="badge badge-indigo">New</span></a></li>
-                    <li><a href="#" class="footer-link">View all</a></li>
+                    <li><a href="services.html" target="_top" class="footer-link">React</a></li>
+                    <li><a href="services.html" target="_top" class="footer-link">Next.js</a></li>
+                    <li><a href="services.html" target="_top" class="footer-link">Expo</a></li>
+                    <li><a href="services.html" target="_top" class="footer-link">Astro <span class="badge badge-indigo">New</span></a></li>
+                    <li><a href="services.html" target="_top" class="footer-link">View all</a></li>
                 </ul>
             </div>
 
             <div class="links-col">
                 <span class="col-title">Resources</span>
                 <ul>
-                    <li><a href="#" class="footer-link">Documentation</a></li>
-                    <li><a href="#" class="footer-link">Changelog</a></li>
-                    <li><a href="#" class="footer-link">System Status <span class="badge badge-emerald">Stable</span></a></li>
-                    <li><a href="#" class="footer-link">Support</a></li>
-                    <li><a href="#" class="footer-link">LLM Leaderboard</a></li>
+                    <li><a href="blog.html" target="_top" class="footer-link">Documentation</a></li>
+                    <li><a href="blog-engine.html" target="_top" class="footer-link">Content Engine</a></li>
+                    <li><a href="solution.html" target="_top" class="footer-link">Solutions <span class="badge badge-emerald">Stable</span></a></li>
+                    <li><a href="ContactUs.html" target="_top" class="footer-link">Support</a></li>
+                    <li><a href="blog.html" target="_top" class="footer-link">Blog</a></li>
                 </ul>
             </div>
 
             <div class="links-col">
                 <span class="col-title">Company</span>
                 <ul>
-                    <li><a href="#" class="footer-link">About</a></li>
-                    <li><a href="#" class="footer-link">Careers <span class="badge badge-indigo">Hiring</span></a></li>
-                    <li><a href="#" class="footer-link">Blog</a></li>
-                    <li><a href="#" class="footer-link">Contact</a></li>
-                    <li><a href="#" class="footer-link">Brand assets</a></li>
+                    <li><a href="about.html" target="_top" class="footer-link">About</a></li>
+                    <li><a href="ContactUs.html" target="_top" class="footer-link">Careers <span class="badge badge-indigo">Hiring</span></a></li>
+                    <li><a href="blog.html" target="_top" class="footer-link">Blog</a></li>
+                    <li><a href="ContactUs.html" target="_top" class="footer-link">Contact</a></li>
+                    <li><a href="future.html" target="_top" class="footer-link">The Future</a></li>
                 </ul>
             </div>
 
             <div class="links-col">
                 <span class="col-title">Legal</span>
                 <ul>
-                    <li><a href="#" class="footer-link">Terms and conditions</a></li>
-                    <li><a href="#" class="footer-link">Privacy policy</a></li>
-                    <li><a href="#" class="footer-link">DPA <span class="badge badge-violet">Updated</span></a></li>
-                    <li><a href="#" class="footer-link">Legal Resources</a></li>
-                    <li><a href="#" class="footer-link">Cookie manager</a></li>
+                    <li><a href="ContactUs.html" target="_top" class="footer-link">Terms and conditions</a></li>
+                    <li><a href="ContactUs.html" target="_top" class="footer-link">Privacy policy</a></li>
+                    <li><a href="ContactUs.html" target="_top" class="footer-link">DPA <span class="badge badge-violet">Updated</span></a></li>
+                    <li><a href="ContactUs.html" target="_top" class="footer-link">Legal Resources</a></li>
+                    <li><a href="ContactUs.html" target="_top" class="footer-link">Cookie manager</a></li>
                 </ul>
             </div>
         </div>
@@ -958,30 +958,9 @@
             };
         });
 
-        // Bind Events to Footer Navigation Links
-        document.querySelectorAll(".footer-link").forEach(link => {
-            link.onclick = (e) => {
-                e.preventDefault();
-                // Exclude badges from link text for clean modal title
-                const linkText = Array.from(link.childNodes)
-                    .filter(node => node.nodeType === Node.TEXT_NODE)
-                    .map(node => node.textContent.trim())
-                    .join(" ") || link.textContent;
-
-                const colName = link.closest(".links-col").querySelector(".col-title").textContent;
-
-                modalBody.innerHTML = `
-      <div class="modal-info">
-        <div class="modal-icon-wrapper" style="background: #111827">
-          <i class="fas fa-layer-group" style="color: white;"></i>
-        </div>
-        <div class="modal-title">${linkText}</div>
-        <div class="modal-desc">You clicked the <strong>${linkText}</strong> resource in the <strong>${colName}</strong> column. This section is ready to link to your custom database entry.</div>
-      </div>
-    `;
-                openModal();
-            };
-        });
+        // Footer navigation links now navigate to real pages via their href
+        // (target="_top" so they work even when the footer is loaded in an
+        // iframe). No click interception needed anymore.
 
         // Brand Logo popup helper
         const showBrandLogoPopup = () => {
