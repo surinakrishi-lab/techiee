@@ -9,7 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 const Submission = require('../models/Submission');
-const { isDbConnected } = require('../config/db');
+const { ensureConnected } = require('../config/db');
 
 // File fallback used whenever MongoDB isn't connected (e.g. no MONGODB_URI
 // set yet), so leads are never lost — they persist to this JSON file and
@@ -25,7 +25,8 @@ function writeFile(list) {
 }
 
 async function readAll() {
-  if (!isDbConnected()) {
+  const connected = await ensureConnected();
+  if (!connected) {
     return readFile().slice().sort(function (a, b) {
       return new Date(b.receivedAt) - new Date(a.receivedAt);
     });
@@ -44,15 +45,28 @@ async function readAll() {
 }
 
 async function append(entry) {
-  if (!isDbConnected()) {
-    const list = readFile();
-    const saved = Object.assign(
-      { id: 'f_' + Date.now().toString(36), receivedAt: new Date().toISOString() },
-      entry
-    );
-    list.push(saved);
-    writeFile(list);
-    return saved;
+  const connected = await ensureConnected();
+  if (!connected) {
+    // Local dev: persist to the JSON file. On serverless hosts (Vercel,
+    // Netlify, etc.) the filesystem is read-only, so this write throws —
+    // there the only durable option is a real DB (set MONGODB_URI).
+    try {
+      const list = readFile();
+      const saved = Object.assign(
+        { id: 'f_' + Date.now().toString(36), receivedAt: new Date().toISOString() },
+        entry
+      );
+      list.push(saved);
+      writeFile(list);
+      return saved;
+    } catch (e) {
+      const err = new Error(
+        'No database configured and local file storage is unavailable ' +
+        '(read-only filesystem). Set MONGODB_URI to save submissions.'
+      );
+      err.code = 'DB_NOT_CONNECTED';
+      throw err;
+    }
   }
   const doc = await Submission.create(entry);
   return { ...entry, id: doc._id.toString(), receivedAt: doc.receivedAt };

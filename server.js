@@ -124,6 +124,27 @@ app.use('/index_files', express.static(path.join(ROOT, 'index_files')));
 // ---------------------------------------------------------------------
 app.use('/api/contact', contactRoutes);
 
+// Diagnostics: open /api/health in the browser to see exactly why the DB
+// isn't saving (missing URI, bad password, IP not whitelisted, etc.).
+app.get('/api/health', async (req, res) => {
+  const mongoose = require('mongoose');
+  const { ensureConnected, getLastError } = require('./config/db');
+  const out = {
+    hasMongoUri: !!process.env.MONGODB_URI,
+    uriScheme: (process.env.MONGODB_URI || '').split('://')[0] || null,
+    onVercel: !!process.env.VERCEL,
+  };
+  try {
+    out.connected = await ensureConnected();
+  } catch (e) {
+    out.connected = false;
+  }
+  out.readyState = mongoose.connection.readyState; // 1 = connected
+  out.dbName = mongoose.connection.name || null;
+  out.lastError = getLastError();
+  res.json(out);
+});
+
 // Server-rendered (EJS) admin view over the submissions the API stores.
 app.get('/admin/submissions', async (req, res) => {
   const submissions = await store.readAll();
