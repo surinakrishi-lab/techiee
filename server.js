@@ -47,6 +47,10 @@ app.get('/header.js', (req, res) => {
   res.sendFile(path.join(ROOT, 'header.js'));
 });
 
+app.get('/crosstech-chatbot.js', (req, res) => {
+  res.sendFile(path.join(ROOT, 'crosstech-chatbot.js'));
+});
+
 // ---------------------------------------------------------------------
 // Render any page (root-level or index_files/) through the EJS engine
 // instead of sending it as a static file.

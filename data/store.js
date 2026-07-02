@@ -6,19 +6,30 @@
  * just needed to `await` these now, since a real database is async.
  */
 
+const fs = require('fs');
+const path = require('path');
 const Submission = require('../models/Submission');
 const { isDbConnected } = require('../config/db');
 
-function dbNotConnectedError() {
-  const err = new Error(
-    'Database not connected. Copy .env.example to .env, set MONGODB_URI, and restart the server.'
-  );
-  err.code = 'DB_NOT_CONNECTED';
-  return err;
+// File fallback used whenever MongoDB isn't connected (e.g. no MONGODB_URI
+// set yet), so leads are never lost — they persist to this JSON file and
+// still show up in the admin view / GET /api/contact.
+const FILE = path.join(__dirname, 'contact-submissions.json');
+
+function readFile() {
+  try { return JSON.parse(fs.readFileSync(FILE, 'utf8')) || []; }
+  catch (_) { return []; }
+}
+function writeFile(list) {
+  fs.writeFileSync(FILE, JSON.stringify(list, null, 2));
 }
 
 async function readAll() {
-  if (!isDbConnected()) return [];
+  if (!isDbConnected()) {
+    return readFile().slice().sort(function (a, b) {
+      return new Date(b.receivedAt) - new Date(a.receivedAt);
+    });
+  }
   const docs = await Submission.find().sort({ receivedAt: -1 }).lean();
   return docs.map((d) => ({
     id: d._id.toString(),
@@ -33,7 +44,16 @@ async function readAll() {
 }
 
 async function append(entry) {
-  if (!isDbConnected()) throw dbNotConnectedError();
+  if (!isDbConnected()) {
+    const list = readFile();
+    const saved = Object.assign(
+      { id: 'f_' + Date.now().toString(36), receivedAt: new Date().toISOString() },
+      entry
+    );
+    list.push(saved);
+    writeFile(list);
+    return saved;
+  }
   const doc = await Submission.create(entry);
   return { ...entry, id: doc._id.toString(), receivedAt: doc.receivedAt };
 }
