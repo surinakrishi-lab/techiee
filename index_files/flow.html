@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,1349 +8,659 @@
     <title>CROSSTECCH Complete Enterprise Architecture Pipeline</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
-
-         :root {
-            --bg: #e8eaf2;
+        :root {
+            --bg: #f8fafc;
             --surface: #ffffff;
-            --cyan: #06b6d4;
-            --blue: #6366f1;
-            --pink: #ec4899;
-            --violet: #a855f7;
+            --cyan: #0ea5e9;
             --emerald: #10b981;
             --text: #334155;
             --muted: #64748b;
             --border-dormant: #cbd5e1;
-            --font-heading: 'Syne', sans-serif;
-            --font-body: 'Space Grotesk', sans-serif;
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
         }
-        
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-            overflow-x: auto;
-            overflow-y: hidden;
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-        }
-        /* Custom premium horizontal scrollbar */
-        
-        body::-webkit-scrollbar {
-            height: 14px;
-        }
-        
-        body::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: 7px;
-        }
-        
-        body::-webkit-scrollbar-thumb {
-            background: rgba(6, 182, 212, 0.3);
-            border-radius: 7px;
-            border: 3px solid var(--bg);
-        }
-        
-        body::-webkit-scrollbar-thumb:hover {
-            background: rgba(6, 182, 212, 0.6);
-        }
-        
-        #pipeline-root {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 7200px;
-            height: 1080px;
-            transform-origin: top left;
-        }
-        /* Subtle Cyber Tech Grid matching branding theme */
-        
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px);
-            background-size: 32px 32px;
-            pointer-events: none;
-            z-index: 0;
-        }
-        /* Fluid background morphing blobs matching homepage fluid art */
-        
-        .bg-blob-1,
-        .bg-blob-2 {
-            position: fixed;
-            z-index: -1;
-            filter: blur(95px);
-            pointer-events: none;
-            opacity: 0.65;
-            transition: opacity 0.4s ease;
-        }
-        
-        .bg-blob-1 {
-            width: 900px;
-            height: 900px;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, rgba(236, 72, 153, 0.08) 50%, transparent 100%);
-            top: -200px;
-            right: 400px;
-            animation: morph-blob-1 20s infinite alternate ease-in-out;
-        }
-        
-        .bg-blob-2 {
-            width: 1000px;
-            height: 1000px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(168, 85, 247, 0.05) 60%, transparent 100%);
-            bottom: -300px;
-            left: 400px;
-            animation: morph-blob-2 24s infinite alternate ease-in-out;
-        }
-        
-        @keyframes morph-blob-1 {
-            0% {
-                border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
-                transform: translate(0, 0) rotate(0deg);
+
+        /* Desktop Locked Scroll */
+        @media (min-width: 861px) {
+            html, body {
+                height: 100vh;
+                width: 100vw;
+                overflow: hidden;
+                margin: 0;
+                padding: 0;
             }
-            100% {
-                border-radius: 60% 40% 40% 60% / 60% 60% 40% 40%;
-                transform: translate(-40px, 60px) rotate(180deg);
+            .desktop-view {
+                display: flex !important;
+            }
+            .mobile-view {
+                display: none !important;
             }
         }
-        
-        @keyframes morph-blob-2 {
-            0% {
-                border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%;
-                transform: translate(0, 0) rotate(0deg);
-            }
-            100% {
-                border-radius: 30% 70% 70% 30% / 60% 30% 70% 40%;
-                transform: translate(50px, -50px) rotate(-180deg);
-            }
-        }
-        /* Ultra Smooth Pipeline Curve Fluid Mechanics */
-        
-        .pipeline-draw {
-            opacity: 0;
-            transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-        }
-        /* Fluid ease-out reveal for micro tech metrics */
-        
-        .fade-scale-in {
-            opacity: 0;
-            transform: scale(0.95);
-            pointer-events: none;
-            /* Disable interaction when hidden */
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.15), opacity 0.5s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-        }
-        /* Ambient Glow States matching light theme */
-        
-        .glow-active {
-            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.35));
-        }
-        
-        .glow-prod {
-            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.4));
-        }
-        /* Transparent Hover Zone Columns to trigger mouseleave easily */
-        
-        .hover-zone {
-            position: absolute;
-            top: 0;
-            height: 100%;
-            z-index: 25;
-            background: transparent;
-        }
-        /* ── RESPONSIVE SPLIT ── */
-        
-        .desktop-view {
-            display: block;
-        }
-        
-        .mobile-view {
-            display: none;
-        }
-        
+
+        /* Mobile Scrolling View */
         @media (max-width: 860px) {
             body {
                 overflow-y: auto;
                 overflow-x: hidden;
-                height: auto;
                 min-height: 100vh;
-                width: 100%;
             }
             .desktop-view {
                 display: none !important;
             }
             .mobile-view {
-                display: block;
+                display: block !important;
             }
         }
-        /* ── MOBILE PIPELINE STYLES (LIGHT THEME) ── */
         
-        .m-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 28px 20px 8px;
-            font-family: 'Syne', sans-serif;
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: #0f172a;
-        }
-        
-        .m-header span {
-            background: linear-gradient(90deg, var(--pink), var(--violet), var(--cyan));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .m-pipeline {
-            padding: 16px 16px 48px;
+        body {
+            background: linear-gradient(to bottom, #000000 0%, #1e293b 45%, #cbd5e1 85%, #f8fafc 100%);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             position: relative;
         }
-        /* Mobile timeline track track */
-        
-        .m-pipeline::before {
+
+        /* Subtle Cyber Tech Grid matching branding theme */
+        body::before {
             content: '';
-            position: absolute;
-            left: 30px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--border-dormant) 0%, rgba(226, 232, 240, 0.3) 100%);
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(rgba(148, 163, 184, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: 0;
         }
-        
-        .m-stage {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 28px;
-            opacity: 0;
-            transform: translateX(-20px);
-            animation: mSlideIn 0.6s ease forwards;
+
+        /* Connection lines styling */
+        .flow-path {
+            stroke: var(--border-dormant);
+            stroke-width: 2.5;
+            fill: none;
+            transition: stroke 0.3s ease, stroke-width 0.3s ease;
         }
-        
-        .m-stage:nth-child(1) {
-            animation-delay: 0.1s;
+
+        .flow-path.active {
+            stroke: var(--cyan);
+            stroke-width: 3.5;
         }
-        
-        .m-stage:nth-child(2) {
-            animation-delay: 0.35s;
+
+        .flow-path.active-success {
+            stroke: var(--emerald);
+            stroke-width: 3.5;
         }
-        
-        .m-stage:nth-child(3) {
-            animation-delay: 0.6s;
+
+        /* Animated Background Floating Orbs Keyframes */
+        @keyframes float-1 {
+            0% { transform: translate(10vw, 10vh) scale(1); }
+            50% { transform: translate(50vw, 40vh) scale(1.15); }
+            100% { transform: translate(10vw, 10vh) scale(1); }
         }
-        
-        .m-stage:nth-child(4) {
-            animation-delay: 0.85s;
+        @keyframes float-2 {
+            0% { transform: translate(75vw, 65vh) scale(1.2); }
+            50% { transform: translate(25vw, 15vh) scale(0.9); }
+            100% { transform: translate(75vw, 65vh) scale(1.2); }
         }
-        
-        .m-stage:nth-child(5) {
-            animation-delay: 1.1s;
+        @keyframes float-3 {
+            0% { transform: translate(35vw, 75vh) scale(0.95); }
+            50% { transform: translate(65vw, 25vh) scale(1.1); }
+            100% { transform: translate(35vw, 75vh) scale(0.95); }
         }
-        
-        @keyframes mSlideIn {
-            to {
-                opacity: 1;
-                transform: translateX(0);
+
+        .animate-float-slow-1 {
+            animation: float-1 25s infinite ease-in-out;
+        }
+        .animate-float-slow-2 {
+            animation: float-2 30s infinite ease-in-out;
+        }
+        .animate-float-slow-3 {
+            animation: float-3 22s infinite ease-in-out;
+        }
+
+        /* Mobile timeline track track */
+        @media (max-width: 860px) {
+            .m-pipeline {
+                padding: 16px 16px 48px;
+                position: relative;
             }
-        }
-        
-        .m-dot {
-            flex-shrink: 0;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: #ffffff;
-            border: 2px solid var(--border-dormant);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            margin-top: 10px;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: border-color 0.4s, box-shadow 0.4s;
-        }
-        
-        .m-dot.active {
-            border-color: var(--cyan);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.25);
-        }
-        
-        .m-dot.emerald {
-            border-color: var(--emerald);
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
-        }
-        
-        .m-dot-inner {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--border-dormant);
-            transition: background-color 0.4s;
-        }
-        
-        .m-dot.active .m-dot-inner {
-            background: var(--cyan);
-        }
-        
-        .m-dot.emerald .m-dot-inner {
-            background: var(--emerald);
-        }
-        
-        .m-card {
-            flex: 1;
-            background: #ffffff;
-            border: 1px solid var(--border-dormant);
-            border-radius: 18px;
-            padding: 18px 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-            transition: border-color 0.4s, box-shadow 0.4s;
-        }
-        
-        .m-card.active {
-            border-color: rgba(6, 182, 212, 0.2);
-            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.06);
-        }
-        
-        .m-card.emerald-active {
-            border-color: rgba(16, 185, 129, 0.2);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.06);
-        }
-        
-        .m-stage-title {
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
-        
-        .m-card.active .m-stage-title {
-            color: var(--cyan);
-        }
-        
-        .m-card.emerald-active .m-stage-title {
-            color: var(--emerald);
-        }
-        
-        .m-main-label {
-            font-size: 13px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 4px;
-        }
-        
-        .m-main-detail {
-            font-size: 11.5px;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-        
-        .m-subs {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-        
-        .m-sub {
-            background: #f8fafc;
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            border-radius: 12px;
-            padding: 10px 12px;
-            flex: 1;
-            min-width: 120px;
-        }
-        
-        .m-sub-title {
-            font-size: 10px;
-            font-weight: 700;
-            color: #475569;
-            margin-bottom: 3px;
-        }
-        
-        .m-sub-detail {
-            font-size: 10px;
-            color: var(--muted);
-            line-height: 1.55;
-        }
-        
-        .m-product-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.15);
-            color: var(--emerald);
-            margin-bottom: 8px;
+            .m-pipeline::before {
+                content: '';
+                position: absolute;
+                left: 30px;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background: linear-gradient(to bottom, var(--border-dormant) 0%, rgba(226, 232, 240, 0.3) 100%);
+            }
+            .m-stage {
+                display: flex;
+                gap: 16px;
+                margin-bottom: 28px;
+            }
+            .m-dot {
+                flex-shrink: 0;
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background: #ffffff;
+                border: 2px solid var(--border-dormant);
+                margin-top: 10px;
+                position: relative;
+                z-index: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .m-dot-inner {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--border-dormant);
+            }
+            .m-dot.active {
+                border-color: var(--cyan);
+            }
+            .m-dot.active .m-dot-inner {
+                background: var(--cyan);
+            }
+            .m-dot.emerald {
+                border-color: var(--emerald);
+            }
+            .m-dot.emerald .m-dot-inner {
+                background: var(--emerald);
+            }
+            .m-card {
+                flex: 1;
+                background: #ffffff;
+                border: 1px solid var(--border-dormant);
+                border-radius: 18px;
+                padding: 18px 20px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Raleway:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Site-wide font: Plus Jakarta Sans (hero1.html chhod ke sab pages) */
-        :root { --font-body: 'Plus Jakarta Sans', sans-serif; --font-heading: 'Plus Jakarta Sans', sans-serif; --font: 'Plus Jakarta Sans', sans-serif; }
         body, h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, button, input, textarea, select, label, strong, em, blockquote, small, th, td, figcaption {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
     </style>
 </head>
 
-<body>
+<body class="flex flex-col">
 
-    <!-- Background Blobs -->
-    <div class="bg-blob-1"></div>
-    <div class="bg-blob-2"></div>
+    <!-- Animated Background Floating Nebula Orbs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute w-[350px] h-[350px] rounded-full bg-sky-500/10 blur-[120px] animate-float-slow-1"></div>
+        <div class="absolute w-[400px] h-[400px] rounded-full bg-emerald-500/5 blur-[130px] animate-float-slow-2"></div>
+        <div class="absolute w-[300px] h-[300px] rounded-full bg-indigo-500/5 blur-[110px] animate-float-slow-3"></div>
+    </div>
+
+    <!-- Global Shared SVG Definitions for Gradients and Arrows -->
+    <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="logo-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff007f"/>
+                <stop offset="50%" stop-color="#aa00ff"/>
+                <stop offset="100%" stop-color="#00c8ff"/>
+            </linearGradient>
+            
+            <!-- SVG Arrow Markers -->
+            <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1" />
+            </marker>
+            <marker id="arrow-active" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#0ea5e9" />
+            </marker>
+            <marker id="arrow-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+            </marker>
+        </defs>
+    </svg>
 
     <!-- ======================================================= -->
-    <!-- HORIZONTAL CINEMATIC CANVAS CONTAINER (DESKTOP VIEW)   -->
+    <!-- DESKTOP SCREEN-FIT FLOW CHART VIEW                      -->
     <!-- ======================================================= -->
-    <div id="pipeline-root" class="desktop-view relative flex items-center pl-16 pr-24">
-
-        <!-- ======================================================= -->
-        <!-- SVG LAYER: FLUID CONNECTOR PIPES                       -->
-        <!-- ======================================================= -->
-        <svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+    <div class="desktop-view flex-col h-full relative z-10 w-full">
+        
+        <!-- Grid Workspace (5 Columns Layout - Stretched to Full Screen) -->
+        <div id="pipeline-container" class="flex-1 grid grid-cols-5 gap-x-6 w-full max-w-full px-12 mx-auto relative items-center py-6 justify-items-center">
             
-            <!-- Base Dormant Infrastructure Pipe Conduit -->
-            <line x1="80" y1="540" x2="6300" y2="540" stroke="var(--border-dormant)" stroke-width="7" stroke-linecap="round" />
-            
-            <!-- Active High-Speed Cyber Fluid Wave Line -->
-            <line id="main-flow-line" x1="80" y1="540" x2="6300" y2="540" stroke="#0ea5e9" stroke-width="6" stroke-dasharray="6200" stroke-dashoffset="0" stroke-linecap="round" class="pipeline-draw glow-active" style="opacity: 1;" />
+            <!-- SVG Arrow Canvas -->
+            <svg id="svg-connections" class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
+                <path id="path-1-2" class="flow-path" marker-end="url(#arrow)" />
+                <path id="path-2-3" class="flow-path" marker-end="url(#arrow)" />
+                <path id="path-3-4" class="flow-path" marker-end="url(#arrow)" />
+                <path id="path-4-5" class="flow-path" marker-end="url(#arrow)" />
+                
+                <!-- Stage 1 Branching Connectors (Top-Right, Bottom-Right, Bottom) -->
+                <path id="path-1-top-right" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-1-bottom-right" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-1-bottom" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
 
-            <!-- ====================================================== -->
-            <!-- SMOOTH CONNECTIONS: DIRECT TO CARD EDGES (NO OVERLAP)   -->
-            <!-- ====================================================== -->
+                <!-- Stage 2 Branching Connectors (Symmetric Tripod) -->
+                <path id="path-2-top-left" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-2-top-right" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-2-bottom" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
 
-            <!-- 01 // MANUAL TESTING (Vertical Loop Up) -->
-            <path id="pipe-m-vert" d="M 1500 540 L 1500 435" fill="none" stroke="var(--border-dormant)" stroke-width="4.5" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-active" />
-            <path id="pipe-m-left" d="M 1500 185 L 990 185 Q 950 185 950 155" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
-            <path id="pipe-m-right" d="M 1500 185 L 2010 185 Q 2050 185 2050 155" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+                <!-- Stage 3 Branching Connectors (Symmetric Tripod) -->
+                <path id="path-3-top-left" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-3-top-right" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-3-bottom" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
 
-            <!-- 02 // CLOUD SERVICES (Vertical Loop Down) -->
-            <path id="pipe-c-vert" d="M 2700 540 L 2700 645" fill="none" stroke="var(--border-dormant)" stroke-width="4.5" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-active" />
-            <path id="pipe-c-left" d="M 2700 895 L 2190 895 Q 2150 895 2150 925" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
-            <path id="pipe-c-right" d="M 2700 895 L 3210 895 Q 3250 895 3250 925" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+                <!-- Stage 4 Branching Connectors (Top-Left, Top-Right, Bottom-Left) -->
+                <path id="path-4-top-left" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-4-top-right" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-4-bottom-left" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
 
-            <!-- 03 // DEVOPS ENGINE (Vertical Loop Up) -->
-            <path id="pipe-d-vert" d="M 3900 540 L 3900 435" fill="none" stroke="var(--border-dormant)" stroke-width="4.5" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-active" />
-            <path id="pipe-d-left" d="M 3900 185 L 3390 185 Q 3350 185 3350 155" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
-            <path id="pipe-d-right" d="M 3900 185 L 4410 185 Q 4450 185 4450 155" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+                <!-- Stage 5 Branching Connectors -->
+                <path id="path-5-top" class="flow-path opacity-0 transition-opacity duration-300 active-success" marker-end="url(#arrow-emerald)" />
+                <path id="path-5-bottom" class="flow-path opacity-0 transition-opacity duration-300 active-success" marker-end="url(#arrow-emerald)" />
+            </svg>
 
-            <!-- 04 // AI AUTOMATION QA (Vertical Loop Down) -->
-            <path id="pipe-a-vert" d="M 5100 540 L 5100 645" fill="none" stroke="var(--border-dormant)" stroke-width="4.5" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-active" />
-            <path id="pipe-a-left" d="M 5100 895 L 4590 895 Q 4550 895 4550 925" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
-            <path id="pipe-a-right" d="M 5100 895 L 5610 895 Q 5650 895 5650 925" fill="none" stroke="var(--border-dormant)" stroke-width="3.5" stroke-dasharray="580" stroke-dashoffset="580" stroke-linecap="round" class="pipeline-draw" />
+            <!-- Column 1: Manual Testing -->
+            <div id="node-stage1" data-paths="path-1-2" class="flow-node group relative justify-self-center z-10 cursor-pointer transition-all duration-300 hover:scale-[1.03] select-none text-center">
+                <!-- Image Node -->
+                <img src="../images/Manual Testing.png" class="w-[260px] h-[173px] object-contain bg-black rounded-2xl border-3 border-sky-400 shadow-sm transition-all duration-300 group-hover:border-sky-500 group-hover:shadow-[0_0_15px_rgba(14,165,233,0.35)]" alt="Manual Testing">
+                
+                <!-- Cloud Card 1 (BOTTOM) -->
+                <div id="stage1-bottom" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute top-[130%] left-1/2 -translate-x-1/2 w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 -translate-y-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Functional</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Sanity, Smoke Checks &amp; End-to-End User Journeys.</p>
+                </div>
+                <!-- Cloud Card 2 (TOP-RIGHT) -->
+                <div id="stage1-top-right" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] left-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 -translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Performance</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">High Load, Stress Limits &amp; Spike Audits.</p>
+                </div>
+                <!-- Cloud Card 3 (BOTTOM-RIGHT) -->
+                <div id="stage1-bottom-right" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute top-[130%] left-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 -translate-y-3 -translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Non-Functional</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Exploratory Bug Hunting &amp; Compatibility.</p>
+                </div>
+            </div>
 
-            <!-- 05 // PRODUCTS SHOWCASE (Deep Emerald Symmetrical Compact Paths) -->
-            <path id="pipe-p-up" d="M 6300 540 L 6300 435" fill="none" stroke="var(--border-dormant)" stroke-width="4" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-prod" />
-            <path id="pipe-p-down" d="M 6300 540 L 6300 645" fill="none" stroke="var(--border-dormant)" stroke-width="4" stroke-dasharray="105" stroke-dashoffset="105" stroke-linecap="round" class="pipeline-draw glow-prod" />
-        </svg>
+            <!-- Column 2: Cloud Services -->
+            <div id="node-stage2" data-paths="path-1-2,path-2-3" class="flow-node group relative justify-self-center z-10 cursor-pointer transition-all duration-300 hover:scale-[1.03] select-none text-center">
+                <!-- Image Node -->
+                <img src="../images/Cloud Services.png" class="w-[260px] h-[173px] object-contain bg-black rounded-2xl border-3 border-sky-400 shadow-sm transition-all duration-300 group-hover:border-sky-500 group-hover:shadow-[0_0_15px_rgba(14,165,233,0.35)]" alt="Cloud Services">
+                
+                <!-- Cloud Card 1 (TOP-LEFT) -->
+                <div id="stage2-top-left" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] right-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Multi-Cloud</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">AWS, Azure &amp; GCP node configurations.</p>
+                </div>
+                <!-- Cloud Card 2 (TOP-RIGHT) -->
+                <div id="stage2-top-right" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] left-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 -translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Migration</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Zero-downtime database &amp; server migrations.</p>
+                </div>
+                <!-- Cloud Card 3 (BOTTOM) -->
+                <div id="stage2-bottom" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute top-[130%] left-1/2 -translate-x-1/2 w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 -translate-y-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Governance</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">IAM role access gates &amp; cost audits.</p>
+                </div>
+            </div>
 
-        <!-- ======================================================= -->
-        <!-- TRANSPARENT HOVER TRIGGER COLUMNS                       -->
-        <!-- ======================================================= -->
-        <div id="zone-1" class="hover-zone" style="left: 80px; width: 2020px;"></div>
-        <div id="zone-2" class="hover-zone" style="left: 2100px; width: 1200px;"></div>
-        <div id="zone-3" class="hover-zone" style="left: 3300px; width: 1200px;"></div>
-        <div id="zone-4" class="hover-zone" style="left: 4500px; width: 1200px;"></div>
-        <div id="zone-5" class="hover-zone" style="left: 5700px; width: 1400px;"></div>
+            <!-- Column 3: DevOps Engine -->
+            <div id="node-stage3" data-paths="path-2-3,path-3-4" class="flow-node group relative justify-self-center z-10 cursor-pointer transition-all duration-300 hover:scale-[1.03] select-none text-center">
+                <!-- Image Node -->
+                <img src="../images/Dev Ops.png" class="w-[260px] h-[173px] object-contain bg-black rounded-2xl border-3 border-sky-400 shadow-sm transition-all duration-300 group-hover:border-sky-500 group-hover:shadow-[0_0_15px_rgba(14,165,233,0.35)]" alt="DevOps">
+                
+                <!-- Cloud Card 1 (TOP-LEFT) -->
+                <div id="stage3-top-left" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] right-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Kubernetes</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Container service mesh routing &amp; scaling.</p>
+                </div>
+                <!-- Cloud Card 2 (TOP-RIGHT) -->
+                <div id="stage3-top-right" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] left-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 -translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">GitOps CI/CD</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Automated deployments &amp; Terraform.</p>
+                </div>
+                <!-- Cloud Card 3 (BOTTOM) -->
+                <div id="stage3-bottom" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute top-[130%] left-1/2 -translate-x-1/2 w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 -translate-y-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Telemetry</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Prometheus live alerts &amp; Jaeger tracing.</p>
+                </div>
+            </div>
 
-        <!-- BRANDING LOGO BADGE WITH VECTOR SVG LOGO -->
-        <div id="node-0" class="absolute" style="left: 80px; top: 495px;">
-            <div class="w-[380px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 text-slate-800 font-extrabold tracking-widest text-xl rounded-3xl gap-6 shadow-md transition-all duration-300">
-                <svg class="logo-cross" viewBox="0 0 200 200" width="40" height="40">
-                    <defs>
-                        <linearGradient id="logo-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#ff007f"/>
-                            <stop offset="50%" stop-color="#aa00ff"/>
-                            <stop offset="100%" stop-color="#00c8ff"/>
-                        </linearGradient>
-                    </defs>
-                    <g transform="translate(100, 100)">
-                        <path d="M-20,-90 C-20,-90 0,-100 20,-90 C40,-50 40,-20 90,-20 C90,-20 100,0 90,20 C50,40 20,40 20,90 C20,90 0,100 -20,90 C-40,50 -40,20 -90,20 C-90,20 -100,0 -90,-20 C-50,-40 -20,-40 -20,-90 Z" fill="url(#logo-grad-1)" />
-                        <path d="M0,-40 Q10,-10 40,0 Q10,10 0,40 Q-10,10 -40,0 Q-10,-10 0,-40 Z" fill="#ffffff" />
-                    </g>
-                </svg>
-                <span>CROSSTECCH</span>
+            <!-- Column 4: AI Automation -->
+            <div id="node-stage4" data-paths="path-3-4,path-4-5" class="flow-node group relative justify-self-center z-10 cursor-pointer transition-all duration-300 hover:scale-[1.03] select-none text-center">
+                <!-- Image Node -->
+                <img src="../images/Ai Automation.png" class="w-[260px] h-[173px] object-contain bg-black rounded-2xl border-3 border-sky-400 shadow-sm transition-all duration-300 group-hover:border-sky-500 group-hover:shadow-[0_0_15px_rgba(14,165,233,0.35)]" alt="AI Automation">
+                
+                <!-- Cloud Card 1 (TOP-LEFT) -->
+                <div id="stage4-top-left" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] right-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Autonomous</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Self-healing locators &amp; Playwright grids.</p>
+                </div>
+                <!-- Cloud Card 2 (TOP-RIGHT) -->
+                <div id="stage4-top-right" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] left-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 -translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">APIs &amp; Security</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">RestAssured automation &amp; OWASP scans.</p>
+                </div>
+                <!-- Cloud Card 3 (BOTTOM-LEFT) -->
+                <div id="stage4-bottom-left" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute top-[130%] right-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 -translate-y-3 translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">AI Reports</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">AI bug categorization &amp; dashboard overlays.</p>
+                </div>
             </div>
-        </div>
 
-        <!-- ======================================================= -->
-        <!-- 01 // MANUAL TESTING STATION + SUB-NODES                -->
-        <!-- ======================================================= -->
-        <div id="node-1" class="absolute" style="left: 1290px; top: 495px; z-index: 40;">
-            <div class="w-[420px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 rounded-3xl text-center font-bold text-xl tracking-[6px] text-slate-500 transition-all duration-300 shadow-md">
-                MANUAL TESTING
-            </div>
-        </div>
-        <!-- Center Core Pillar (Width 500px, Text-2xl/lg) -->
-        <div id="item-m-main" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in font-medium shadow-sm" style="left: 1250px; top: 215px;">
-            <!-- Connector node split up -->
-            <div class="absolute -top-[60px] left-1/2 -translate-x-1/2 w-0.5 h-[60px] bg-cyan-500"></div>
-            <div class="text-sky-500 font-extrabold mb-4 border-b border-slate-100 pb-4 text-2xl">Functional Testing</div>
-            <div class="text-slate-600 text-lg space-y-2 leading-relaxed">
-                • Sanity & Smoke Checks<br>• System Integration (SIT)<br>• End-to-End User Journeys
-            </div>
-        </div>
-        <!-- Left Sub-Branch (Width 500px, Text-xl/base) -->
-        <div id="item-m-left" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 700px; top: 15px;">
-            <div class="text-slate-700 font-bold mb-3 text-xl">Performance Core</div>
-            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
-                • High Load & Stress Limits<br>• Spike & Scalability Audits
-            </div>
-        </div>
-        <!-- Right Sub-Branch (Width 500px) -->
-        <div id="item-m-right" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 1800px; top: 15px;">
-            <div class="text-slate-700 font-bold mb-3 text-xl">Non-Functional QA</div>
-            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
-                • Exploratory Bug Hunting<br>• Cross-Browser Compatibility
-            </div>
-        </div>
+            <!-- Column 5: Production Active (CROSSTECCH Custom Branching Node) -->
+            <div id="node-stage5" data-paths="path-4-5" class="flow-node group relative justify-self-center z-10 cursor-pointer transition-all duration-300 hover:scale-[1.03] select-none w-[260px] h-[173px]">
+                
+                <!-- Center CROSSTECCH Logo Card -->
+                <div class="w-full h-full rounded-2xl border-3 border-emerald-400 overflow-hidden bg-white shadow-sm transition-all duration-300 group-hover:border-emerald-500 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.35)] flex flex-col justify-between p-3">
+                    <div class="flex-1 flex items-center justify-center p-2">
+                        <img src="../images/CROSSTECH.png" class="max-w-full max-h-full object-contain select-none" alt="CROSSTECCH">
+                    </div>
+                    <div class="text-center font-extrabold text-[9px] text-emerald-600 uppercase tracking-widest border-t border-slate-100 pt-2">
+                        Our Products
+                    </div>
+                </div>
 
+                <!-- Top Branch Product Card (Prompt Bug Finder) -->
+                <div id="top-product-card" class="absolute bottom-[130%] left-1/2 -translate-x-1/2 w-[260px] h-[173px] rounded-2xl border-2 border-emerald-400 overflow-hidden bg-black shadow-lg opacity-0 translate-y-4 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <img src="../images/Prompt Bug Finder.png" class="w-full h-full object-contain bg-black select-none" alt="Prompt Bug Finder">
+                </div>
 
-        <!-- ======================================================= -->
-        <!-- 02 // CLOUD SERVICES STATION + SUB-NODES                -->
-        <!-- ======================================================= -->
-        <div id="node-2" class="absolute" style="left: 2490px; top: 495px; z-index: 40;">
-            <div class="w-[420px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 rounded-3xl text-center font-bold text-xl tracking-[6px] text-slate-500 transition-all duration-300 shadow-md">
-                CLOUD SERVICES
-            </div>
-        </div>
-        <!-- Center Core Pillar -->
-        <div id="item-c-main" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in font-medium shadow-sm" style="left: 2450px; top: 645px;">
-            <!-- Connector node split down -->
-            <div class="absolute -bottom-[60px] left-1/2 -translate-x-1/2 w-0.5 h-[60px] bg-cyan-500"></div>
-            <div class="text-sky-500 font-extrabold mb-4 border-b border-slate-100 pb-4 text-2xl">Multi-Cloud Provisioning</div>
-            <div class="text-slate-600 text-lg space-y-2 leading-relaxed">
-                • AWS, Azure & GCP Nodes<br>• Serverless Architectures<br>• Hybrid Environment Setup
-            </div>
-        </div>
-        <!-- Left Sub-Branch -->
-        <div id="item-c-left" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 1900px; top: 925px;">
-            <div class="text-slate-700 font-bold mb-3 text-xl">Migration Engine</div>
-            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
-                • Zero-Downtime Database Shift<br>• Legacy-to-Cloud Lift & Shift
-            </div>
-        </div>
-        <!-- Right Sub-Branch -->
-        <div id="item-c-right" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 3000px; top: 925px;">
-            <div class="text-slate-700 font-bold mb-3 text-xl">Governance & IAM</div>
-            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
-                • Role-Based Access Gateways<br>• Real-time Cloud Cost Audits
-            </div>
-        </div>
+                <!-- Bottom Branch Product Card (Blog Craft AI) -->
+                <div id="bottom-product-card" class="absolute top-[130%] left-1/2 -translate-x-1/2 w-[260px] h-[173px] rounded-2xl border-2 border-emerald-400 overflow-hidden bg-black shadow-lg opacity-0 -translate-y-4 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <img src="../images/Blog Craft Ai.png" class="w-full h-full object-contain bg-black select-none" alt="Blog Craft AI">
+                </div>
 
+            </div>
 
-        <!-- ======================================================= -->
-        <!-- 03 // DEVOPS ENGINE STATION + SUB-NODES                 -->
-        <!-- ======================================================= -->
-        <div id="node-3" class="absolute" style="left: 3690px; top: 495px; z-index: 40;">
-            <div class="w-[420px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 rounded-3xl text-center font-bold text-xl tracking-[6px] text-slate-500 transition-all duration-300 shadow-md">
-                DEVOPS ENGINE
-            </div>
         </div>
-        <!-- Center Core Pillar -->
-        <div id="item-d-main" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in font-medium shadow-sm" style="left: 3650px; top: 215px;">
-            <div class="absolute -top-[60px] left-1/2 -translate-x-1/2 w-0.5 h-[60px] bg-cyan-500"></div>
-            <div class="text-sky-500 font-extrabold mb-4 border-b border-slate-100 pb-4 text-2xl">Container Infrastructure</div>
-            <div class="text-slate-600 text-lg space-y-2 leading-relaxed">
-                • Kubernetes Cluster Matrix<br>• Dockerized Microservices<br>• Service Mesh Routing
-            </div>
-        </div>
-        <!-- Left Sub-Branch -->
-        <div id="item-d-left" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 3100px; top: 15px;">
-            <div class="text-slate-700 font-bold mb-3 text-xl">GitOps CI/CD</div>
-            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
-                • Automated Blue-Green Deploy<br>• Declarative IaC (Terraform)
-            </div>
-        </div>
-        <!-- Right Sub-Branch -->
-        <div id="item-d-right" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 4200px; top: 15px;">
-            <div class="text-slate-700 font-bold mb-3 text-xl">Telemetry Systems</div>
-            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
-                • Prometheus Live Alerting<br>• Distributed Tracing (Jaeger)
-            </div>
-        </div>
-
-
-        <!-- ======================================================= -->
-        <!-- 04 // AI AUTOMATION QA STATION + SUB-NODES              -->
-        <!-- ======================================================= -->
-        <div id="node-4" class="absolute" style="left: 4890px; top: 495px; z-index: 40;">
-            <div class="w-[420px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 rounded-3xl text-center font-bold text-xl tracking-[6px] text-slate-500 transition-all duration-300 shadow-md">
-                AI AUTOMATION QA
-            </div>
-        </div>
-        <!-- Center Core Pillar -->
-        <div id="item-a-main" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in font-medium shadow-sm" style="left: 4850px; top: 645px;">
-            <div class="absolute -bottom-[60px] left-1/2 -translate-x-1/2 w-0.5 h-[60px] bg-cyan-500"></div>
-            <div class="text-sky-500 font-extrabold mb-4 border-b border-slate-100 pb-4 text-2xl">Autonomous Execution</div>
-            <div class="text-slate-600 text-lg space-y-2 leading-relaxed">
-                • Self-Healing Web Locators<br>• Playwright & Selenium Grid<br>• Parallel Multi-threading
-            </div>
-        </div>
-        <!-- Left Sub-Branch -->
-        <div id="item-a-left" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 4300px; top: 925px;">
-            <div class="text-slate-700 font-bold mb-3 text-xl">Security & APIs</div>
-            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
-                • RestAssured Automation<br>• Vulnerability & OWASP Scans
-            </div>
-        </div>
-        <!-- Right Sub-Branch -->
-        <div id="item-a-right" class="absolute bg-white border border-slate-200 p-6 rounded-3xl w-[500px] fade-scale-in shadow-sm" style="left: 5400px; top: 925px;">
-            <div class="text-slate-700 font-bold mb-3 text-xl">Advanced Reporting</div>
-            <div class="text-slate-500 text-base space-y-1.5 leading-relaxed">
-                • AI Defect Categorization<br>• CI Dashboard Integrations
-            </div>
-        </div>
-
-
-        <!-- ======================================================= -->
-        <!-- 05 // PROPRIETARY PRODUCTS CONTROL GATE                 -->
-        <!-- ======================================================= -->
-        <div id="node-5" class="absolute" style="left: 6090px; top: 495px; z-index: 40;">
-            <div id="product-hub-badge" class="w-[420px] h-[90px] flex items-center justify-center bg-white border-3 border-slate-200 rounded-3xl text-center text-xl font-bold tracking-[6px] text-slate-500 transition-all duration-300 shadow-md">
-                SYSTEM AGGREGATION...
-            </div>
-        </div>
-
-        <!-- HIGH-TECH PRODUCT CARD 1 (TOP - top: 195px) -->
-        <div id="item-p-left" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in transition-all duration-1000 shadow-sm" style="left: 6050px; top: 195px;">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4.5">
-                <span class="text-xl font-bold text-slate-800 tracking-wide">PROMPT BUG FINDER</span>
-                <span class="text-[10px] bg-emerald-50 border border-emerald-200 text-emerald-600 px-2.5 py-1 rounded font-mono font-bold">PROPRIETARY</span>
-            </div>
-            <p class="text-base text-slate-500 leading-relaxed font-normal">
-                Scans code repositories using natural language prompts to detect and auto-patch live logical exceptions and structural memory leaks.
-            </p>
-            <div class="mt-5 pt-3 border-t border-slate-100 flex justify-between items-center text-[10px] text-emerald-500 font-mono">
-                <span>SYSTEM // ACTIVE</span>
-                <span>VER 2.6</span>
-            </div>
-        </div>
-
-        <!-- HIGH-TECH PRODUCT CARD 2 (BOTTOM - top: 645px) -->
-        <div id="item-p-right" class="absolute bg-white border border-slate-200 p-8 rounded-3xl w-[500px] fade-scale-in transition-all duration-1000 shadow-sm" style="left: 6050px; top: 645px;">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4.5">
-                <span class="text-xl font-bold text-slate-800 tracking-wide">BLOG CRAFT AI</span>
-                <span class="text-[10px] bg-emerald-50 border border-emerald-200 text-emerald-600 px-2.5 py-1 rounded font-mono font-bold">AUTOMATION</span>
-            </div>
-            <p class="text-base text-slate-500 leading-relaxed font-normal">
-                Evaluates your system logs, test automation metrics, and structural architecture codebases to generate tech updates and release documentation.
-            </p>
-            <div class="mt-5 pt-3 border-t border-slate-100 flex justify-between items-center text-[10px] text-emerald-500 font-mono">
-                <span>SYSTEM // ACTIVE</span>
-                <span>VER 1.2</span>
-            </div>
-        </div>
-
     </div>
 
     <!-- ======================================================= -->
-    <!-- MOBILE VERTICAL PIPELINE VIEW                           -->
+    <!-- MOBILE VIEW (SCROLLING TIMELINE)                        -->
     <!-- ======================================================= -->
-    <div class="mobile-view tech-grid min-h-screen relative z-10">
-
-        <!-- Mobile Header with Company Logo -->
-        <div class="m-header">
-            <svg class="logo-cross" viewBox="0 0 200 200" width="26" height="26">
+    <div class="mobile-view min-h-screen relative z-10 w-full">
+        <!-- Mobile Header -->
+        <div class="flex items-center justify-center gap-3 py-6 border-b border-slate-100 bg-white">
+            <svg viewBox="0 0 200 200" width="22" height="22">
                 <g transform="translate(100, 100)">
                     <path d="M-20,-90 C-20,-90 0,-100 20,-90 C40,-50 40,-20 90,-20 C90,-20 100,0 90,20 C50,40 20,40 20,90 C20,90 0,100 -20,90 C-40,50 -40,20 -90,20 C-90,20 -100,0 -90,-20 C-50,-40 -20,-40 -20,-90 Z" fill="url(#logo-grad-1)" />
                     <path d="M0,-40 Q10,-10 40,0 Q10,10 0,40 Q-10,10 -40,0 Q-10,-10 0,-40 Z" fill="#ffffff" />
                 </g>
             </svg>
-            <span>CROSSTECCH</span>
+            <span class="font-extrabold tracking-widest text-slate-800 text-xs font-heading">CROSSTECCH</span>
         </div>
-        <p style="text-align:center;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;padding-bottom:24px;font-weight:700;">Enterprise Architecture Pipeline</p>
 
         <div class="m-pipeline">
-
-            <!-- 01 MANUAL TESTING -->
+            <!-- Stage 1 -->
             <div class="m-stage">
-                <div class="m-dot active">
-                    <div class="m-dot-inner"></div>
-                </div>
-                <div class="m-card active">
-                    <div class="m-stage-title">01 · Manual Testing</div>
-                    <div class="m-main-label">Functional Testing</div>
-                    <div class="m-main-detail">Sanity &amp; Smoke Checks · System Integration (SIT) · End-to-End User Journeys</div>
-                    <div class="m-subs">
-                        <div class="m-sub">
-                            <div class="m-sub-title">Performance Core</div>
-                            <div class="m-sub-detail">High Load &amp; Stress · Spike &amp; Scalability Audits</div>
-                        </div>
-                        <div class="m-sub">
-                            <div class="m-sub-title">Non-Functional QA</div>
-                            <div class="m-sub-detail">Exploratory Bug Hunting · Cross-Browser Compatibility</div>
-                        </div>
-                    </div>
+                <div class="m-dot active"><div class="m-dot-inner"></div></div>
+                <div class="m-card">
+                    <h3 class="text-xs font-bold text-slate-800 mb-2">MANUAL TESTING</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">• Functional QA · Performance · Smoke Checks</p>
                 </div>
             </div>
-
-            <!-- 02 CLOUD SERVICES -->
+            <!-- Stage 2 -->
             <div class="m-stage">
-                <div class="m-dot active">
-                    <div class="m-dot-inner"></div>
-                </div>
-                <div class="m-card active">
-                    <div class="m-stage-title">02 · Cloud Services</div>
-                    <div class="m-main-label">Multi-Cloud Provisioning</div>
-                    <div class="m-main-detail">AWS, Azure &amp; GCP Nodes · Serverless Architectures · Hybrid Environment Setup</div>
-                    <div class="m-subs">
-                        <div class="m-sub">
-                            <div class="m-sub-title">Migration Engine</div>
-                            <div class="m-sub-detail">Zero-Downtime DB Shift · Legacy-to-Cloud Lift &amp; Shift</div>
-                        </div>
-                        <div class="m-sub">
-                            <div class="m-sub-title">Governance &amp; IAM</div>
-                            <div class="m-sub-detail">Role-Based Access Gateways · Cloud Cost Audits</div>
-                        </div>
-                    </div>
+                <div class="m-dot active"><div class="m-dot-inner"></div></div>
+                <div class="m-card">
+                    <h3 class="text-xs font-bold text-slate-800 mb-2">CLOUD SERVICES</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">• Multi-Cloud · DB Migration · IAM Governance</p>
                 </div>
             </div>
-
-            <!-- 03 DEVOPS ENGINE -->
+            <!-- Stage 3 -->
             <div class="m-stage">
-                <div class="m-dot active">
-                    <div class="m-dot-inner"></div>
-                </div>
-                <div class="m-card active">
-                    <div class="m-stage-title">03 · DevOps Engine</div>
-                    <div class="m-main-label">Container Infrastructure</div>
-                    <div class="m-main-detail">Kubernetes Cluster Matrix · Dockerized Microservices · Service Mesh Routing</div>
-                    <div class="m-subs">
-                        <div class="m-sub">
-                            <div class="m-sub-title">GitOps CI/CD</div>
-                            <div class="m-sub-detail">Blue-Green Deploy · Declarative IaC (Terraform)</div>
-                        </div>
-                        <div class="m-sub">
-                            <div class="m-sub-title">Telemetry Systems</div>
-                            <div class="m-sub-detail">Prometheus Alerting · Distributed Tracing (Jaeger)</div>
-                        </div>
-                    </div>
+                <div class="m-dot active"><div class="m-dot-inner"></div></div>
+                <div class="m-card">
+                    <h3 class="text-xs font-bold text-slate-800 mb-2">DEVOPS ENGINE</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">• Kubernetes · GitOps CI/CD · Telemetry Metrics</p>
                 </div>
             </div>
-
-            <!-- 04 AI AUTOMATION QA -->
+            <!-- Stage 4 -->
             <div class="m-stage">
-                <div class="m-dot active">
-                    <div class="m-dot-inner"></div>
-                </div>
-                <div class="m-card active">
-                    <div class="m-stage-title">04 · AI Automation QA</div>
-                    <div class="m-main-label">Autonomous Execution</div>
-                    <div class="m-main-detail">Self-Healing Web Locators · Playwright &amp; Selenium Grid · Parallel Multi-threading</div>
-                    <div class="m-subs">
-                        <div class="m-sub">
-                            <div class="m-sub-title">Security &amp; APIs</div>
-                            <div class="m-sub-detail">RestAssured Automation · OWASP Vulnerability Scans</div>
-                        </div>
-                        <div class="m-sub">
-                            <div class="m-sub-title">Advanced Reporting</div>
-                            <div class="m-sub-detail">AI Defect Categorization · CI Dashboard Integrations</div>
-                        </div>
-                    </div>
+                <div class="m-dot active"><div class="m-dot-inner"></div></div>
+                <div class="m-card">
+                    <h3 class="text-xs font-bold text-slate-800 mb-2">AI AUTOMATION</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">• Autonomous QA · OWASP Scans · AI Reporting</p>
                 </div>
             </div>
-
-            <!-- 05 PRODUCTS -->
+            <!-- Stage 5 Success -->
             <div class="m-stage">
-                <div class="m-dot emerald">
-                    <div class="m-dot-inner"></div>
-                </div>
-                <div class="m-card emerald-active">
-                    <div class="m-stage-title">CrossTecch Products</div>
-                    <div class="m-subs" style="margin-top:0;flex-direction:column;">
-                        <div class="m-sub" style="min-width:unset; margin-bottom: 10px;">
-                            <div class="m-product-badge">PROPRIETARY</div>
-                            <div class="m-main-label" style="margin-bottom:4px;">PROMPT BUG FINDER</div>
-                            <div class="m-sub-detail">Scans code repositories using natural language prompts to detect and auto-patch live logical exceptions and structural memory leaks.</div>
-                            <div style="font-size:9px;color:var(--emerald);font-family:monospace;margin-top:8px;font-weight:700;">SYSTEM // ACTIVE · VER 2.6</div>
-                        </div>
-                        <div class="m-sub" style="min-width:unset;">
-                            <div class="m-product-badge">AUTOMATION</div>
-                            <div class="m-main-label" style="margin-bottom:4px;">BLOG CRAFT AI</div>
-                            <div class="m-sub-detail">Evaluates system logs, test automation metrics, and structural architecture codebases to generate tech updates and release documentation.</div>
-                            <div style="font-size:9px;color:var(--emerald);font-family:monospace;margin-top:8px;font-weight:700;">SYSTEM // ACTIVE · VER 1.2</div>
-                        </div>
-                    </div>
+                <div class="m-dot emerald"><div class="m-dot-inner"></div></div>
+                <div class="m-card">
+                    <h3 class="text-xs font-bold text-slate-800 mb-2">PRODUCTION ACTIVE</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">• Prompt Bug Finder (v2.6) · Blog Craft AI (v1.2)</p>
                 </div>
             </div>
-
         </div>
     </div>
 
     <!-- ======================================================= -->
-    <!-- INTERACTIVE HOVER-DRIVEN PIPELINE ENGINE                -->
+    <!-- INTERACTIVE LINE AND PORT CALCULATION SCRIPT            -->
     <!-- ======================================================= -->
     <script>
-        // True when this page is shown inside an iframe (e.g. on index.html)
-        const IS_EMBED = (window.self !== window.top);
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('pipeline-container');
 
-        // Matches the CSS breakpoint: phones and narrow screens get the
-        // simple vertical mobile view instead of the hover-driven desktop pipeline.
-        function isMobileMode() {
-            return window.innerWidth <= 860;
-        }
+            // Draw straight connecting paths
+            function drawLines() {
+                if (window.innerWidth <= 860) return; // Disabled on mobile scroll list
+                if (!container) return;
 
-        // DOM Elements mapping for interactive hover states
-        const zones = {
-            1: {
-                trigger: document.getElementById('zone-1'),
-                node: document.getElementById('node-1').firstElementChild,
-                pipes: [{
-                    el: document.getElementById('pipe-m-vert'),
-                    maxOffset: 105
-                }, {
-                    el: document.getElementById('pipe-m-left'),
-                    maxOffset: 580
-                }, {
-                    el: document.getElementById('pipe-m-right'),
-                    maxOffset: 580
-                }],
-                cards: [
-                    document.getElementById('item-m-main'),
-                    document.getElementById('item-m-left'),
-                    document.getElementById('item-m-right')
-                ],
-                color: '#0ea5e9',
-                glow: '0 16px 40px rgba(14, 165, 233, 0.20)'
-            },
-            2: {
-                trigger: document.getElementById('zone-2'),
-                node: document.getElementById('node-2').firstElementChild,
-                pipes: [{
-                    el: document.getElementById('pipe-c-vert'),
-                    maxOffset: 105
-                }, {
-                    el: document.getElementById('pipe-c-left'),
-                    maxOffset: 580
-                }, {
-                    el: document.getElementById('pipe-c-right'),
-                    maxOffset: 580
-                }],
-                cards: [
-                    document.getElementById('item-c-main'),
-                    document.getElementById('item-c-left'),
-                    document.getElementById('item-c-right')
-                ],
-                color: '#0ea5e9',
-                glow: '0 16px 40px rgba(14, 165, 233, 0.20)'
-            },
-            3: {
-                trigger: document.getElementById('zone-3'),
-                node: document.getElementById('node-3').firstElementChild,
-                pipes: [{
-                    el: document.getElementById('pipe-d-vert'),
-                    maxOffset: 105
-                }, {
-                    el: document.getElementById('pipe-d-left'),
-                    maxOffset: 580
-                }, {
-                    el: document.getElementById('pipe-d-right'),
-                    maxOffset: 580
-                }],
-                cards: [
-                    document.getElementById('item-d-main'),
-                    document.getElementById('item-d-left'),
-                    document.getElementById('item-d-right')
-                ],
-                color: '#0ea5e9',
-                glow: '0 16px 40px rgba(14, 165, 233, 0.20)'
-            },
-            4: {
-                trigger: document.getElementById('zone-4'),
-                node: document.getElementById('node-4').firstElementChild,
-                pipes: [{
-                    el: document.getElementById('pipe-a-vert'),
-                    maxOffset: 105
-                }, {
-                    el: document.getElementById('pipe-a-left'),
-                    maxOffset: 580
-                }, {
-                    el: document.getElementById('pipe-a-right'),
-                    maxOffset: 580
-                }],
-                cards: [
-                    document.getElementById('item-a-main'),
-                    document.getElementById('item-a-left'),
-                    document.getElementById('item-a-right')
-                ],
-                color: '#0ea5e9',
-                glow: '0 16px 40px rgba(14, 165, 233, 0.20)'
-            },
-            5: {
-                trigger: document.getElementById('zone-5'),
-                node: document.getElementById('product-hub-badge'),
-                pipes: [{
-                    el: document.getElementById('pipe-p-up'),
-                    maxOffset: 105
-                }, {
-                    el: document.getElementById('pipe-p-down'),
-                    maxOffset: 105
-                }],
-                cards: [
-                    document.getElementById('item-p-left'),
-                    document.getElementById('item-p-right')
-                ],
-                color: 'var(--emerald)',
-                glow: '0 16px 45px rgba(16, 185, 129, 0.4)',
-                emerald: true
-            }
-        };
+                const path1to2 = document.getElementById('path-1-2');
+                const path2to3 = document.getElementById('path-2-3');
+                const path3to4 = document.getElementById('path-3-4');
+                const path4to5 = document.getElementById('path-4-5');
+                const path5Top = document.getElementById('path-5-top');
+                const path5Bottom = document.getElementById('path-5-bottom');
 
-        // Reset all sections to completely hidden dormant state (opacity: 0, pointer-events: none)
-        function resetSection(zone) {
-            // Dormant Node
-            zone.node.style.borderColor = 'var(--border-dormant)';
-            zone.node.style.borderWidth = '3px';
-            zone.node.style.color = 'var(--muted)';
-            zone.node.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.02)';
-            zone.node.classList.remove('flow-on'); // dark wapas
-            if (zone.emerald) {
-                zone.node.style.backgroundColor = '';
-                zone.node.innerHTML = "SYSTEM AGGREGATION...";
-            }
-
-            // Dormant Pipes
-            zone.pipes.forEach(p => {
-                p.el.style.strokeDashoffset = p.maxOffset;
-                p.el.style.opacity = '0';
-                p.el.setAttribute('stroke', 'var(--border-dormant)');
-                p.el.setAttribute('stroke-width', p.el.id.includes('vert') ? '4.5' : '3.5');
-            });
-
-            // Dormant Cards - Completely Hidden (No blur, no opacity 0.35)
-            zone.cards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'scale(0.95)';
-                card.style.borderColor = 'var(--border-dormant)';
-                card.style.boxShadow = 'none';
-                card.style.pointerEvents = 'none';
-            });
-        }
-
-        // Activate specified section on hover (Full opacity, active borders, pipeline glow)
-        function activateSection(zone) {
-            // Active Node
-            zone.node.style.borderColor = zone.color;
-            zone.node.style.boxShadow = zone.glow;
-            zone.node.classList.add('flow-on'); // box black -> WHITE
-            if (zone.emerald) {
-                zone.node.innerHTML = "CROSSTECCH PRODUCTS";
-            }
-
-            // Active Pipes (Change pipeline color to active blue/emerald & flow energy)
-            zone.pipes.forEach(p => {
-                p.el.style.strokeDashoffset = '0';
-                p.el.style.opacity = '1';
-                p.el.setAttribute('stroke', zone.color);
-                p.el.setAttribute('stroke-width', p.el.id.includes('vert') ? '6.5' : '5.5');
-            });
-
-            // Active Cards (Pop open, scale to 1.02, full opacity)
-            zone.cards.forEach((card, i) => {
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'scale(1.02)';
-                    card.style.borderColor = zone.color;
-                    card.style.boxShadow = zone.emerald ?
-                        '0 30px 60px rgba(16, 185, 129, 0.12)' :
-                        '0 25px 50px rgba(14, 165, 233, 0.12)';
-                    card.style.pointerEvents = 'auto'; // Enable interactions when shown
-                }, i * 100);
-            });
-        }
-
-        // Reset all zones initially
-        Object.keys(zones).forEach(key => {
-            resetSection(zones[key]);
-        });
-
-        // Keep Main horizontal Line fully charged
-        document.getElementById('main-flow-line').style.strokeDashoffset = '0';
-
-        // FIT TO SCREEN (desktop scale calculation - horizontal scroll allowed, fits browser height)
-        function fitToScreen() {
-            if (IS_EMBED) return; // embed sizing handled by embed-mode script below
-            if (isMobileMode()) return;
-            var root = document.getElementById('pipeline-root');
-            var scaleY = window.innerHeight / 1080; // Fits 1080px canvas height perfectly
-            var scale = Math.min(1.2, scaleY) * 0.82; // thoda chhota -> width+height dono kam
-            var offsetX = Math.max(0, (window.innerWidth - 7200 * scale) / 2);
-            var offsetY = Math.max(0, (window.innerHeight - 1080 * scale) / 2);
-            root.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px) scale(' + scale + ')';
-
-            document.body.style.overflowX = 'auto';
-            document.body.style.overflowY = 'hidden';
-        }
-        fitToScreen();
-
-        // SCROLL-DRIVEN DYNAMIC ACTIVATION (Stations open as they slide into view)
-        function handleScrollActivation() {
-            if (isMobileMode()) return;
-            // When embedded, activation is driven by scroll progress sent from the parent
-            if (IS_EMBED) return;
-
-            var scrollX = window.scrollX || window.pageXOffset;
-            var viewportWidth = window.innerWidth;
-            var scaleY = window.innerHeight / 1080;
-            var scale = Math.min(1.2, scaleY);
-
-            // Map viewport center back to virtual canvas coordinates
-            var virtualCenter = (scrollX + viewportWidth / 2) / scale;
-
-            Object.keys(zones).forEach(key => {
-                var zone = zones[key];
-                var center = 1500 + (key - 1) * 1200; // 1500, 2700, 3900, 5100, 6300
-
-                // Calculate distance from screen focus center
-                var distance = Math.abs(virtualCenter - center);
-                var isFirstStationOnStart = (key == 1 && scrollX < 150);
-
-                // Activate only when the station is near the screen focus (center)
-                if (distance < 550 || isFirstStationOnStart) {
-                    activateSection(zone);
-                } else {
-                    resetSection(zone);
+                function getPort(elId, port) {
+                    const el = document.getElementById(elId);
+                    if (!el) return { x: 0, y: 0 };
+                    
+                    const cRect = container.getBoundingClientRect();
+                    const eRect = el.getBoundingClientRect();
+                    const x = eRect.left - cRect.left;
+                    const y = eRect.top - cRect.top;
+                    
+                    if (port === 'left') return { x: x, y: y + eRect.height / 2 };
+                    if (port === 'right') return { x: x + eRect.width, y: y + eRect.height / 2 };
+                    if (port === 'top') return { x: x + eRect.width / 2, y: y };
+                    if (port === 'bottom') return { x: x + eRect.width / 2, y: y + eRect.height };
                 }
-            });
-        }
 
-        // Bind events
-        window.addEventListener('scroll', handleScrollActivation);
-        window.addEventListener('load', handleScrollActivation);
-        window.addEventListener('resize', () => {
-            fitToScreen();
-            handleScrollActivation();
-        });
+                // Port calculations & SVG path updates
+                const p1Right = getPort('node-stage1', 'right');
+                const p2Left = getPort('node-stage2', 'left');
+                const midX1 = (p1Right.x + p2Left.x) / 2;
+                path1to2.setAttribute('d', `M ${p1Right.x} ${p1Right.y} C ${midX1} ${p1Right.y}, ${midX1} ${p2Left.y}, ${p2Left.x} ${p2Left.y}`);
 
-        // TRANSLATE VERTICAL SCROLL (WHEEL) TO HORIZONTAL SCROLL
-        window.addEventListener('wheel', function(e) {
-            if (IS_EMBED) return; // inside index.html: don't hijack scroll (was trapping the page)
-            if (isMobileMode()) return; // Keep vertical scrolling on mobile
-            if (e.deltaY !== 0) {
-                // Scroll horizontally instead of vertically
-                window.scrollBy(e.deltaY * 1.2, 0);
-                e.preventDefault();
-            }
-        }, {
-            passive: false
-        });
-    </script>
+                const p2Right = getPort('node-stage2', 'right');
+                const p3Left = getPort('node-stage3', 'left');
+                const midX2 = (p2Right.x + p3Left.x) / 2;
+                path2to3.setAttribute('d', `M ${p2Right.x} ${p2Right.y} C ${midX2} ${p2Right.y}, ${midX2} ${p3Left.y}, ${p3Left.x} ${p3Left.y}`);
 
-    <!-- ===== EMBED MODE: scroll-driven horizontal pipeline (index.html) ===== -->
-    <script>
-        (function() {
-            if (window.self === window.top) return;
-            var root = document.getElementById('pipeline-root');
-            var CANVAS_W = 7200,
-                CANVAS_H = 1080;
-            var progress = 0,
-                target = 0,
-                scale = 1,
-                travel = 0,
-                offsetY = 0;
-            var SCALE_FIT = 0.82; // pipeline ko full-screen se thoda chhota -> width+height dono kam
-            var rafId = null,
-                lastActive = -1;
+                const p3Right = getPort('node-stage3', 'right');
+                const p4Left = getPort('node-stage4', 'left');
+                const midX3 = (p3Right.x + p4Left.x) / 2;
+                path3to4.setAttribute('d', `M ${p3Right.x} ${p3Right.y} C ${midX3} ${p3Right.y}, ${midX3} ${p4Left.y}, ${p4Left.x} ${p4Left.y}`);
 
-            if (root) {
-                root.style.transformOrigin = 'top left';
-                root.style.willChange = 'transform';
-            }
+                const p4Right = getPort('node-stage4', 'right');
+                const p5Left = getPort('node-stage5', 'left');
+                const midX4 = (p4Right.x + p5Left.x) / 2;
+                path4to5.setAttribute('d', `M ${p4Right.x} ${p4Right.y} C ${midX4} ${p4Right.y}, ${midX4} ${p5Left.y}, ${p5Left.x} ${p5Left.y}`);
 
-            function reportHeight() {
-                var h = (function () {
-                    var b = document.body, max = 0, cs;
-                    for (var i = 0; i < b.children.length; i++) {
-                        cs = getComputedStyle(b.children[i]);
-                        if (cs.position === 'fixed' || cs.position === 'absolute' || cs.display === 'none') continue;
-                        var bot = b.children[i].offsetTop + b.children[i].offsetHeight + (parseFloat(cs.marginBottom) || 0);
-                        if (bot > max) max = bot;
-                    }
-                    return (max + (parseFloat(getComputedStyle(b).paddingBottom) || 0)) || b.scrollHeight;
-                })();
-                if (h > 0) parent.postMessage({
-                    ctSection: true,
-                    height: h
-                }, '*');
-            }
+                // Stage 1 Dynamic Line Math (Top-Right, Bottom-Right, Bottom)
+                const tRight1 = document.getElementById('path-1-top-right');
+                const bRight1 = document.getElementById('path-1-bottom-right');
+                const bPath1 = document.getElementById('path-1-bottom');
+                if (tRight1 && bRight1 && bPath1) {
+                    const el = document.getElementById('node-stage1');
+                    const cRect = container.getBoundingClientRect();
+                    const eRect = el.getBoundingClientRect();
+                    const left = eRect.left - cRect.left;
+                    const right = left + eRect.width;
+                    const top = eRect.top - cRect.top;
+                    const bottom = top + eRect.height;
+                    const centerX = left + eRect.width / 2;
 
-            function draw() {
-                if (!root || isMobileMode()) return;
-                // translate3d -> GPU compositing (smooth)
-                root.style.transform = 'translate3d(' + (-progress * travel) + 'px,' + offsetY + 'px,0) scale(' + scale + ')';
-                // sirf jab focused station badle tabhi DOM update karo (smooth, no per-frame thrash)
-                if (typeof zones !== 'undefined') {
-                    var virtualCenter = (progress * travel + window.innerWidth / 2) / scale;
-                    var idx = Math.round((virtualCenter - 1500) / 1200) + 1;
-                    idx = Math.max(1, Math.min(5, idx));
-                    if (idx !== lastActive) {
-                        lastActive = idx;
-                        Object.keys(zones).forEach(function(key) {
-                            if (parseInt(key, 10) === idx) activateSection(zones[key]);
-                            else resetSection(zones[key]);
-                        });
+                    tRight1.setAttribute('d', `M ${right} ${top} Q ${right + 45} ${top} ${right + 78} ${top - 52}`);
+                    bRight1.setAttribute('d', `M ${right} ${bottom} Q ${right + 45} ${bottom} ${right + 78} ${bottom + 52}`);
+                    bPath1.setAttribute('d', `M ${centerX} ${bottom} L ${centerX} ${bottom + 52}`);
+                }
+
+                // Stage 2 & 3 Dynamic Line Math (Symmetric Tripod)
+                for (let i = 2; i <= 3; i++) {
+                    const tLeft = document.getElementById(`path-${i}-top-left`);
+                    const tRight = document.getElementById(`path-${i}-top-right`);
+                    const bPath = document.getElementById(`path-${i}-bottom`);
+                    if (tLeft && tRight && bPath) {
+                        const el = document.getElementById(`node-stage${i}`);
+                        const cRect = container.getBoundingClientRect();
+                        const eRect = el.getBoundingClientRect();
+                        const left = eRect.left - cRect.left;
+                        const right = left + eRect.width;
+                        const top = eRect.top - cRect.top;
+                        const bottom = top + eRect.height;
+                        const centerX = left + eRect.width / 2;
+
+                        tLeft.setAttribute('d', `M ${left} ${top} Q ${left - 45} ${top} ${left - 78} ${top - 52}`);
+                        tRight.setAttribute('d', `M ${right} ${top} Q ${right + 45} ${top} ${right + 78} ${top - 52}`);
+                        bPath.setAttribute('d', `M ${centerX} ${bottom} L ${centerX} ${bottom + 52}`);
                     }
                 }
-            }
 
-            // ease current progress toward the scroll target -> butter-smooth
-            function animate() {
-                var diff = target - progress;
-                if (Math.abs(diff) < 0.0015) {
-                    progress = target;
-                    draw();
-                    rafId = null;
-                    return;
+                // Stage 4 Dynamic Line Math (Top-Left, Top-Right, Bottom-Left)
+                const tLeft4 = document.getElementById('path-4-top-left');
+                const tRight4 = document.getElementById('path-4-top-right');
+                const bLeft4 = document.getElementById('path-4-bottom-left');
+                if (tLeft4 && tRight4 && bLeft4) {
+                    const el = document.getElementById('node-stage4');
+                    const cRect = container.getBoundingClientRect();
+                    const eRect = el.getBoundingClientRect();
+                    const left = eRect.left - cRect.left;
+                    const right = left + eRect.width;
+                    const top = eRect.top - cRect.top;
+                    const bottom = top + eRect.height;
+
+                    tLeft4.setAttribute('d', `M ${left} ${top} Q ${left - 45} ${top} ${left - 78} ${top - 52}`);
+                    tRight4.setAttribute('d', `M ${right} ${top} Q ${right + 45} ${top} ${right + 78} ${top - 52}`);
+                    bLeft4.setAttribute('d', `M ${left} ${bottom} Q ${left - 45} ${bottom} ${left - 78} ${bottom + 52}`);
                 }
-                progress += diff * 0.18; // halka follow = butter-smooth scrub
-                draw();
-                rafId = requestAnimationFrame(animate);
-            }
 
-            function kick() {
-                if (rafId === null) rafId = requestAnimationFrame(animate);
-            }
-
-            function layout() {
-                if (isMobileMode()) {
-                    document.body.style.height = 'auto';
-                    document.body.style.minHeight = '0'; // embed me 100vh blank-space na de
-                    document.body.style.overflow = 'visible';
-                    if (root) root.style.transform = 'none';
-                    reportHeight();
-                    return;
+                // Stage 5 vertical branching lines (Offset y dynamically matches bottom-[130%] / top-[130%])
+                if (path5Top && path5Bottom) {
+                    const p5Top = getPort('node-stage5', 'top');
+                    const p5Bottom = getPort('node-stage5', 'bottom');
+                    
+                    // 173px * 0.30 = 52px branching gap offset
+                    path5Top.setAttribute('d', `M ${p5Top.x} ${p5Top.y} L ${p5Top.x} ${p5Top.y - 52}`);
+                    path5Bottom.setAttribute('d', `M ${p5Bottom.x} ${p5Bottom.y} L ${p5Bottom.x} ${p5Bottom.y + 52}`);
                 }
-                var vw = window.innerWidth,
-                    vh = window.innerHeight;
-                scale = (vh / CANVAS_H) * SCALE_FIT; // chhota -> width+height dono kam
-                offsetY = Math.max(0, (vh - CANVAS_H * scale) / 2); // vertically centre
-                travel = Math.max(0, CANVAS_W * scale - vw); // kitna horizontally scroll karna hai
-                document.body.style.height = vh + 'px';
-                document.body.style.overflow = 'hidden';
-                progress = target; // resize par turant settle
-                draw();
             }
 
-            window.addEventListener('message', function(e) {
-                if (e.data && typeof e.data.ctFlowProgress === 'number') {
-                    // sirf target set karo; animate() progress ko ease karega -> smooth scrub
-                    target = Math.max(0, Math.min(1, e.data.ctFlowProgress));
-                    kick();
-                }
-            });
+            // Draw initial paths and hook events
+            window.addEventListener('load', drawLines);
+            window.addEventListener('resize', drawLines);
+            setTimeout(drawLines, 100);
 
-            window.addEventListener('load', function() {
-                layout();
-                [200, 600, 1200].forEach(function(d) {
-                    setTimeout(layout, d);
+            // Hover event handlers to highlight connections
+            document.querySelectorAll('.flow-node').forEach(node => {
+                const paths = node.getAttribute('data-paths').split(',');
+                
+                node.addEventListener('mouseenter', () => {
+                    paths.forEach(pId => {
+                        const path = document.getElementById(pId);
+                        if (!path) return;
+                        
+                        if (pId === 'path-4-5') {
+                            path.classList.add('active-success');
+                            path.setAttribute('marker-end', 'url(#arrow-emerald)');
+                        } else {
+                            path.classList.add('active');
+                            path.setAttribute('marker-end', 'url(#arrow-active)');
+                        }
+                    });
+
+                    // Toggle branching lines for this node stage
+                    const stageNum = node.id.replace('node-stage', '');
+                    const tlPath = document.getElementById(`path-${stageNum}-top-left`);
+                    const trPath = document.getElementById(`path-${stageNum}-top-right`);
+                    const blPath = document.getElementById(`path-${stageNum}-bottom-left`);
+                    const brPath = document.getElementById(`path-${stageNum}-bottom-right`);
+                    const bPath = document.getElementById(`path-${stageNum}-bottom`);
+                    const tPath5 = document.getElementById(`path-${stageNum}-top`); // For stage 5
+
+                    if (tlPath) {
+                        tlPath.classList.remove('opacity-0');
+                        tlPath.classList.add('opacity-100');
+                    }
+                    if (trPath) {
+                        trPath.classList.remove('opacity-0');
+                        trPath.classList.add('opacity-100');
+                    }
+                    if (blPath) {
+                        blPath.classList.remove('opacity-0');
+                        blPath.classList.add('opacity-100');
+                    }
+                    if (brPath) {
+                        brPath.classList.remove('opacity-0');
+                        brPath.classList.add('opacity-100');
+                    }
+                    if (bPath) {
+                        bPath.classList.remove('opacity-0');
+                        bPath.classList.add('opacity-100');
+                    }
+                    if (tPath5) {
+                        tPath5.classList.remove('opacity-0');
+                        tPath5.classList.add('opacity-100');
+                        tPath5.setAttribute('marker-end', 'url(#arrow-emerald)');
+                    }
+                });
+
+                node.addEventListener('mouseleave', () => {
+                    paths.forEach(pId => {
+                        const path = document.getElementById(pId);
+                        if (!path) return;
+                        
+                        path.classList.remove('active', 'active-success');
+                        path.setAttribute('marker-end', 'url(#arrow)');
+                    });
+
+                    // Toggle branching lines for this node stage
+                    const stageNum = node.id.replace('node-stage', '');
+                    const tlPath = document.getElementById(`path-${stageNum}-top-left`);
+                    const trPath = document.getElementById(`path-${stageNum}-top-right`);
+                    const blPath = document.getElementById(`path-${stageNum}-bottom-left`);
+                    const brPath = document.getElementById(`path-${stageNum}-bottom-right`);
+                    const bPath = document.getElementById(`path-${stageNum}-bottom`);
+                    const tPath5 = document.getElementById(`path-${stageNum}-top`); // For stage 5
+
+                    if (tlPath) {
+                        tlPath.classList.add('opacity-0');
+                        tlPath.classList.remove('opacity-100');
+                    }
+                    if (trPath) {
+                        trPath.classList.add('opacity-0');
+                        trPath.classList.remove('opacity-100');
+                    }
+                    if (blPath) {
+                        blPath.classList.add('opacity-0');
+                        blPath.classList.remove('opacity-100');
+                    }
+                    if (brPath) {
+                        brPath.classList.add('opacity-0');
+                        brPath.classList.remove('opacity-100');
+                    }
+                    if (bPath) {
+                        bPath.classList.add('opacity-0');
+                        bPath.classList.remove('opacity-100');
+                    }
+                    if (tPath5) {
+                        tPath5.classList.add('opacity-0');
+                        tPath5.classList.remove('opacity-100');
+                        tPath5.setAttribute('marker-end', 'url(#arrow-emerald)');
+                    }
                 });
             });
-            window.addEventListener('resize', layout);
-        })();
+        });
     </script>
-
-    <!-- ===== Dark theme cards + white active + flowing motion ===== -->
-    <style>
-        /* LIGHT theme — baaki site (hero/services/footer) se match */
-        /* cards white rahein (dark override hata diya) */
-
-        .bg-white {
-            background: #ffffff !important;
-        }
-        /* slate text ki natural hierarchy waapas (flattener hata diya) */
-
-        .text-sky-500 {
-            color: #0ea5e9 !important;
-        }
-        /* filter drop-shadow har frame repaint karta tha (slow) -> hata diya, smooth scrub ke liye */
-
-        .glow-active,
-        .glow-prod {
-            filter: none !important;
-        }
-        /* jab indicator box tak pahunche -> wo box brand-gradient me light up ho jaye */
-
-        .flow-on {
-            background: linear-gradient(135deg, #fb3d64, #8b45dc 55%, #4f61fb) !important;
-            color: #ffffff !important;
-            border-color: transparent !important;
-            box-shadow: 0 16px 42px rgba(139, 69, 220, 0.32) !important;
-        }
-        /* main pipe brand sky line */
-
-        #main-flow-line {
-            stroke: #0ea5e9 !important;
-        }
-        /* mobile timeline -> dark + white active */
-        
-        .m-card {
-            background: #11141d !important;
-            border-color: rgba(255, 255, 255, 0.12) !important;
-        }
-        
-        .m-sub {
-            background: #181c28 !important;
-            border-color: rgba(255, 255, 255, 0.06) !important;
-        }
-        
-        .m-dot {
-            background: #11141d !important;
-        }
-        
-        .m-header,
-        .m-main-label,
-        .m-sub-title {
-            color: #eef2f8 !important;
-        }
-        
-        .m-stage-title,
-        .m-main-detail,
-        .m-sub-detail {
-            color: #aeb6c6 !important;
-        }
-        
-        .m-card.active,
-        .m-card.emerald-active {
-            border-color: #ffffff !important;
-            box-shadow: 0 8px 26px rgba(255, 255, 255, 0.1) !important;
-        }
-        
-        .m-card.active .m-stage-title,
-        .m-card.emerald-active .m-stage-title {
-            color: #ffffff !important;
-        }
-        
-        .m-dot.active,
-        .m-dot.emerald {
-            border-color: #ffffff !important;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.25) !important;
-        }
-        
-        .m-dot.active .m-dot-inner,
-        .m-dot.emerald .m-dot-inner {
-            background: #ffffff !important;
-        }
-        /* subtle dark dot-grid on the light screen */
-
-        body::before {
-            background-image: radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px) !important;
-        }
-        /* ===== Travelling focus indicator (sits on the pipe, boxes light up as they reach it) ===== */
-        
-        #flowIndicator {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 30px;
-            height: 30px;
-            z-index: 35;
-            pointer-events: none;
-        }
-        
-        #flowIndicator .dot {
-            position: absolute;
-            inset: 0;
-            margin: auto;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #8b45dc;
-            box-shadow: 0 0 14px 4px rgba(139, 69, 220, 0.5), 0 0 34px 12px rgba(79, 97, 251, 0.32);
-        }
-        /* rings/pulse animations hata diye -> kam compositor load = smoother scroll */
-        
-        #flowIndicator .ring {
-            display: none;
-        }
-        
-        @media (max-width: 860px) {
-            #flowIndicator {
-                display: none;
-            }
-        }
-        /* ===== MOBILE: light theme (dark/night nahi) ===== */
-        
-        @media (max-width: 860px) {
-            html,
-            body {
-                background: #e8eaf2 !important;
-            }
-            .m-card {
-                background: #ffffff !important;
-                border-color: rgba(15, 23, 42, 0.08) !important;
-            }
-            .m-sub {
-                background: #f8fafc !important;
-                border-color: rgba(0, 0, 0, 0.04) !important;
-            }
-            .m-dot {
-                background: #ffffff !important;
-            }
-            .m-header,
-            .m-main-label,
-            .m-sub-title {
-                color: #0f172a !important;
-            }
-            .m-stage-title,
-            .m-main-detail,
-            .m-sub-detail {
-                color: #64748b !important;
-            }
-            .m-card.active,
-            .m-card.emerald-active {
-                border-color: rgba(6, 182, 212, 0.3) !important;
-                box-shadow: 0 8px 25px rgba(6, 182, 212, 0.08) !important;
-            }
-            .m-card.active .m-stage-title {
-                color: #06b6d4 !important;
-            }
-            .m-card.emerald-active .m-stage-title {
-                color: #10b981 !important;
-            }
-            .m-dot.active {
-                border-color: #06b6d4 !important;
-                box-shadow: 0 0 10px rgba(6, 182, 212, 0.25) !important;
-            }
-            .m-dot.active .m-dot-inner {
-                background: #06b6d4 !important;
-            }
-            .m-dot.emerald {
-                border-color: #10b981 !important;
-            }
-            .m-dot.emerald .m-dot-inner {
-                background: #10b981 !important;
-            }
-            body::before {
-                background-image: radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px) !important;
-            }
-        }
-    </style>
-
-    <!-- Travelling indicator on the pipe -->
-    <div id="flowIndicator">
-        <span class="ring"></span>
-        <span class="ring r2"></span>
-        <span class="dot"></span>
-    </div>
-
-
 </body>
 
 </html>

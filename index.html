@@ -105,7 +105,7 @@
                 flowPin.style.height = 'auto';
                 flowFrame.style.height = ''; // height message/measure se aayegi
             } else {
-                flowPin.style.height = Math.round(window.innerHeight * 1.5) + 'px'; // scroll-track chhota -> kam vertical scroll, fast scrub
+                flowPin.style.height = window.innerHeight + 'px'; // pin track = ek hi viewport, extra "dead" scroll na ho (stuck feel fix)
                 flowFrame.style.height = window.innerHeight + 'px';
             }
         }
