@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Cross Tecch</title>
+    <!-- Google Fonts (Plus Jakarta Sans & Space Grotesk) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN (Used for page cards, header uses pure inline SVGs) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Reset & Base Variables */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+         :root {
+            --primary-font: 'Plus Jakarta Sans', sans-serif;
+            --bg-dark: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: rgba(15, 23, 42, 0.06);
+            --border-hover: rgba(99, 102, 241, 0.35);
+            --primary: #4f46e5;
+            /* Indigo 600 */
+            --secondary: #2563eb;
+            /* Royal Blue */
+            --accent: #c026d3;
+            /* Magenta 600 */
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Space Grotesk', monospace;
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-speed: 0.3s;
+            --shadow: rgba(15, 23, 42, 0.04) 0px 20px 40px -15px, rgba(15, 23, 42, 0.02) 0px 4px 6px -2px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            font-family: var(--primary-font);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.03) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.03) 0%, transparent 40%), linear-gradient(rgba(15, 23, 42, 0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.012) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.25rem;
+            }
+        }
+        /* --- Floating Header Bar Styling (Exact copy from header/style.css) --- */
+
+        .floating-header {
+            position: fixed;
+            top: 1.25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 2.5rem);
+            max-width: 1280px;
+            height: 76px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.05);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 0 2.5rem;
+        }
+
+        .header-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-svg {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logo:hover .logo-svg {
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .logo-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: 0.05em;
+        }
+
+        .search-bar {
+            display: none;
+            align-items: center;
+            background: #f4f6fa;
+            border-radius: 9999px;
+            padding: 4px 4px 4px 1.25rem;
+            width: 420px;
+            border: 1px solid rgba(15, 23, 42, 0.04);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-bar:focus-within {
+            background: #ffffff;
+            border-color: rgba(37, 99, 235, 0.4);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1), 0 10px 20px -10px rgba(15, 23, 42, 0.05);
+            width: 440px;
+        }
+
+        .search-icon-left {
+            flex-shrink: 0;
+            margin-right: 0.5rem;
+        }
+
+        .search-input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 0.85rem;
+            color: #1f2937;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .dropdown-trigger {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0 0.75rem;
+            border-left: 1px solid rgba(15, 23, 42, 0.1);
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #334155;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 50px;
+            margin-top: 0.5rem;
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            padding: 0.5rem 0;
+            z-index: 1100;
+            width: 110px;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: background var(--transition-speed);
+        }
+
+        .dropdown-item:hover {
+            background: #f1f5f9;
+            color: var(--text-primary);
+        }
+
+        .search-submit-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.25);
+            flex-shrink: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .search-submit-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .nav-links {
+            display: none;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            position: relative;
+            padding: 0.25rem 0;
+            transition: color var(--transition-speed);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #2563eb;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .nav-links a.active {
+            color: #2563eb !important;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .mobile-toggle {
+            display: flex;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .mobile-nav-overlay {
+            display: none;
+            position: fixed;
+            top: 96px;
+            left: 1.25rem;
+            right: 1.25rem;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.06);
+            z-index: 999;
+            padding: 1.5rem;
+            animation: slideDown 0.3s ease;
+        }
+
+        .mobile-nav-overlay.active {
+            display: block;
+        }
+
+        .mobile-nav-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .mobile-search {
+            display: flex;
+            align-items: center;
+            background: #f4f6fa;
+            border-radius: 9999px;
+            padding: 8px 1.25rem;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .mobile-search input {
+            border: none;
+            background: transparent;
+            outline: none;
+            margin-left: 0.5rem;
+            width: 100%;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .mobile-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 1.05rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+            padding-bottom: 0.5rem;
+            transition: color var(--transition-speed);
+        }
+
+        .mobile-link:hover {
+            color: #2563eb;
+        }
+
+        .mobile-link.active {
+            color: #2563eb !important;
+        }
+        /* --- General Section Settings --- */
+
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-tag {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition-smooth);
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 30px 50px -20px rgba(15, 23, 42, 0.08);
+            background: var(--bg-card-hover);
+        }
+        /* --- Scroll Animation Classes --- */
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .animate-on-scroll.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* --- Hero Section --- */
+
+        .hero-wrapper {
+            margin-top: 110px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .impact-text {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .arrow-icon {
+            margin-top: 0.5rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .checklist {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .check-icon {
+            background: rgba(79, 70, 229, 0.08);
+            color: var(--primary);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        /* 3D Orbit Graphics Section */
+
+        .orbit-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Orbit Rings */
+
+        .orbit-ring {
+            position: absolute;
+            border: 1px dashed rgba(15, 23, 42, 0.08);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .orbit-ring-1 {
+            width: 330px;
+            height: 330px;
+        }
+        /* Central Pedestal Cylinders */
+
+        .pedestal-base {
+            position: absolute;
+            width: 170px;
+            height: 60px;
+            background: #ffffff;
+            border-radius: 50%;
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            box-shadow: 0 25px 40px -10px rgba(15, 23, 42, 0.15);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateY(20px);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pedestal-top {
+            position: absolute;
+            width: 140px;
+            height: 50px;
+            background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+            border-radius: 50%;
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateY(10px);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-core {
+            position: absolute;
+            z-index: 3;
+            transform: translate(-50%, -50%) translateY(-10px);
+            top: 50%;
+            left: 50%;
+            animation: coreFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes coreFloat {
+            0%,
+            100% {
+                transform: translate(-50%, -50%) translateY(-5px);
+            }
+            50% {
+                transform: translate(-50%, -50%) translateY(-15px);
+            }
+        }
+        /* Orbital Nodes orbiting around the center */
+
+        .orbital-wrapper {
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            animation: spinOrbit 30s linear infinite;
+        }
+
+        @keyframes spinOrbit {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .orbit-node {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            background: #ffffff;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: keepUpright 30s linear infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .orbit-node:hover {
+            transform: scale(1.15);
+            border-color: var(--primary);
+        }
+
+        @keyframes keepUpright {
+            from {
+                transform: rotate(360deg);
+            }
+            to {
+                transform: rotate(0deg);
+            }
+        }
+        /* Position nodes circular coordinates around wrapper */
+
+        .node-code {
+            top: -24px;
+            left: calc(50% - 24px);
+            color: var(--primary);
+        }
+
+        .node-security {
+            top: calc(30% - 24px);
+            right: -12px;
+            color: #22c55e;
+        }
+
+        .node-cloud {
+            bottom: calc(20% - 24px);
+            right: 24px;
+            color: #f97316;
+        }
+
+        .node-chart {
+            bottom: calc(20% - 24px);
+            left: 24px;
+            color: var(--secondary);
+        }
+
+        .node-users {
+            top: calc(30% - 24px);
+            left: -12px;
+            color: #6366f1;
+        }
+        /* --- Metrics Bar --- */
+
+        .metrics-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 2.25rem;
+            margin-top: 2rem;
+        }
+
+        .metric-item {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .metric-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(79, 70, 229, 0.04);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .metric-num {
+            font-size: 2.25rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            line-height: 1.1;
+            color: var(--text-primary);
+        }
+
+        .metric-lbl {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        /* --- Purpose Section --- */
+
+        .purpose-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .purpose-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .purpose-card {
+            padding: 3rem;
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .purpose-icon-box {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(79, 70, 229, 0.04);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--primary);
+        }
+
+        .purpose-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .purpose-info p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        /* --- Values Section --- */
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+        }
+
+        .value-card {
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .value-icon-box {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(79, 70, 229, 0.04);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        /* --- Journey Section --- */
+
+        .timeline-container {
+            position: relative;
+            margin-top: 5rem;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 24px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(15, 23, 42, 0.08);
+            z-index: 1;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 24px;
+            left: 0;
+            width: 0%;
+            /* Animate on scroll */
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            z-index: 2;
+            transition: width 1.5s ease-out;
+        }
+
+        .timeline-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            position: relative;
+            z-index: 3;
+            gap: 2rem;
+        }
+
+        .timeline-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .node-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid rgba(15, 23, 42, 0.2);
+            margin-bottom: 1.5rem;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .timeline-node.active .node-dot {
+            background: var(--primary);
+            border-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+        }
+
+        .node-year {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            transition: color 0.5s ease;
+        }
+
+        .timeline-node.active .node-year {
+            color: var(--primary);
+        }
+
+        .node-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 180px;
+        }
+        /* --- Footer CTA Banner --- */
+
+        .footer-cta-card {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #3b82f6 100%);
+            border-radius: 24px;
+            padding: 3.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.25);
+        }
+
+        .footer-cta-info h3 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-cta-info p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05rem;
+        }
+
+        .cta-btn {
+            background: #ffffff;
+            color: var(--primary);
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: var(--transition-smooth);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        /* --- Footer --- */
+
+        .footer {
+            background: #090d16;
+            color: #ffffff;
+            padding: 6rem 0 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.2fr repeat(3, 0.8fr) 1.2fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #ffffff;
+        }
+
+        .footer-brand-desc {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .social-btn:hover {
+            color: #ffffff;
+            background: var(--primary);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #64748b;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-bottom-links a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* --- Keyframe Animations --- */
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .mobile-nav-overlay.active .mobile-link {
+            animation: fadeSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .mobile-nav-overlay.active .mobile-link:nth-child(2) {
+            animation-delay: 0.05s;
+        }
+
+        .mobile-nav-overlay.active .mobile-link:nth-child(3) {
+            animation-delay: 0.1s;
+        }
+
+        .mobile-nav-overlay.active .mobile-link:nth-child(4) {
+            animation-delay: 0.15s;
+        }
+
+        .mobile-nav-overlay.active .mobile-link:nth-child(5) {
+            animation-delay: 0.2s;
+        }
+
+        .mobile-nav-overlay.active .mobile-link:nth-child(6) {
+            animation-delay: 0.25s;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        /* --- Responsive Overrides --- */
+
+        @media (max-width: 1024px) {
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+            }
+            .values-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .floating-header {
+                height: 64px;
+            }
+            .hero-wrapper {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+            .checklist {
+                justify-content: center;
+            }
+            .arrow-icon {
+                display: none;
+            }
+            .orbit-container {
+                margin-top: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.25rem;
+            }
+            .purpose-grid {
+                grid-template-columns: 1fr;
+            }
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .timeline-line,
+            .timeline-progress {
+                display: none;
+            }
+            .timeline-row {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .timeline-node {
+                flex-direction: row;
+                text-align: left;
+                gap: 1.5rem;
+            }
+            .node-dot {
+                margin-bottom: 0;
+            }
+            .node-desc {
+                max-width: 100%;
+            }
+            .footer-cta-card {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+                padding: 2.5rem;
+            }
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 485px) {
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            .checklist {
+                grid-template-columns: 1fr;
+                text-align: left;
+                margin-inline: auto;
+                max-width: 250px;
+            }
+        }
+        /* --- Floating Header Responsiveness (Desktop view) --- */
+
+        @media (min-width: 900px) {
+            .search-bar {
+                display: flex !important;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .nav-links {
+                display: flex !important;
+            }
+            .mobile-toggle {
+                display: none !important;
+            }
+            .mobile-nav-overlay {
+                display: none !important;
+            }
+        }
+
+        .logo-img {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Raleway:wght@800&display=swap" rel="stylesheet">
+    <style>
+        /* Site-wide font: Plus Jakarta Sans (hero1.html chhod ke sab pages) */
+        :root { --font-body: 'Plus Jakarta Sans', sans-serif; --font-heading: 'Plus Jakarta Sans', sans-serif; --font: 'Plus Jakarta Sans', sans-serif; }
+        body, h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, button, input, textarea, select, label, strong, em, blockquote, small, th, td, figcaption {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating Header (Exact copy from header/index.html) -->
+    <header class="floating-header">
+        <div class="header-container">
+
+            <!-- Logo Section -->
+            <a href="index.html" class="logo">
+                <img loading="lazy" src="../images/bg.png" alt="Crosstecch Logo" class="logo-img" />
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="about.html" class="active">About</a>
+                <a href="../services.html">Services</a>
+                <a href="../solution.html">Solutions</a>
+                <a href="../blog.html">Blogs</a>
+                <a href="../Product.html">Product</a>
+                <a href="../ContactUs.html">Contact Us</a>
+            </nav>
+
+            <!-- Mobile Hamburger Button -->
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+        <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+        </div>
+    </header>
+
+    <!-- Mobile Dropdown Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+        <div class="mobile-nav-content">
+            <!-- Links -->
+            <a href="index.html" class="mobile-link active">Home</a>
+            <a href="about.html" class="mobile-link active">About</a>
+            <a href="../services.html" class="mobile-link">Services</a>
+            <a href="../solution.html" class="mobile-link">Solutions</a>
+            <a href="../blog.html" class="mobile-link">Blogs</a>
+            <a href="../Product.html" class="mobile-link">Product</a>
+            <a href="../ContactUs.html" class="mobile-link">Contact Us</a>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <main class="container">
+
+        <!-- Hero Section -->
+        <section class="section hero-wrapper" id="about">
+            <div class="animate-on-scroll">
+                <span class="section-tag">About Us</span>
+                <h1 class="section-title">
+                    Building Software.<br> Delivering <span class="impact-text">Impact.</span>
+                </h1>
+                <!-- Orange arrow SVG indicator -->
+                <svg class="arrow-icon" width="48" height="8" viewBox="0 0 48 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 4H44M44 4L40 1M44 4L40 7" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+
+                <p class="section-desc">
+                    At Cross Tecch, we help businesses transform ideas into powerful, scalable software solutions. From development to deployment, we stay with you at every step of the journey.
+                </p>
+
+                <ul class="checklist">
+                    <li class="checklist-item">
+                        <div class="check-icon"><i data-lucide="check" size="12"></i></div>
+                        <span>Modern Technology</span>
+                    </li>
+                    <li class="checklist-item">
+                        <div class="check-icon"><i data-lucide="check" size="12"></i></div>
+                        <span>Agile Approach</span>
+                    </li>
+                    <li class="checklist-item">
+                        <div class="check-icon"><i data-lucide="check" size="12"></i></div>
+                        <span>Client First Mindset</span>
+                    </li>
+                    <li class="checklist-item">
+                        <div class="check-icon"><i data-lucide="check" size="12"></i></div>
+                        <span>Result Driven Solutions</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right 3D Orbit Graphic Visual -->
+            <div class="orbit-container animate-on-scroll" style="transition-delay: 150ms;">
+                <!-- Ring Orbits -->
+                <div class="orbit-ring orbit-ring-1"></div>
+
+                <!-- Rotating Node wrapper -->
+                <div class="orbital-wrapper">
+                    <div class="orbit-node node-code" title="Software Development">
+                        <i data-lucide="code" size="20"></i>
+                    </div>
+                    <div class="orbit-node node-security" title="Cyber Security">
+                        <i data-lucide="shield" size="20"></i>
+                    </div>
+                    <div class="orbit-node node-cloud" title="Cloud Architectures">
+                        <i data-lucide="cloud" size="20"></i>
+                    </div>
+                    <div class="orbit-node node-chart" title="Product Strategy">
+                        <i data-lucide="trending-up" size="20"></i>
+                    </div>
+                    <div class="orbit-node node-users" title="Dedicated Team">
+                        <i data-lucide="users" size="20"></i>
+                    </div>
+                </div>
+
+                <!-- Pedestal Base Cylinders -->
+                <div class="pedestal-base"></div>
+                <div class="pedestal-top"></div>
+
+                <!-- Core Logo Float Element -->
+                <div class="logo-core">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L15.5 8.5L22 12L15.5 15.5L12 22L8.5 15.5L2 12L8.5 8.5L12 2Z" fill="url(#coreGradient)"/>
+            <defs>
+              <linearGradient id="coreGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#4f46e5"/>
+                <stop offset="100%" stop-color="#c026d3"/>
+              </linearGradient>
+            </defs>
+          </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metrics Bar Card -->
+        <section class="glass-card metrics-bar animate-on-scroll">
+            <div class="metric-item">
+                <div class="metric-icon-box"><i data-lucide="folder-git-2" size="22"></i></div>
+                <div>
+                    <div class="metric-num count-target" data-value="50" data-suffix="+">0+</div>
+                    <div class="metric-lbl">Projects Delivered</div>
+                </div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-icon-box"><i data-lucide="smile" size="22"></i></div>
+                <div>
+                    <div class="metric-num count-target" data-value="30" data-suffix="+">0+</div>
+                    <div class="metric-lbl">Happy Clients</div>
+                </div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-icon-box"><i data-lucide="layers" size="22"></i></div>
+                <div>
+                    <div class="metric-num count-target" data-value="15" data-suffix="+">0+</div>
+                    <div class="metric-lbl">Technologies</div>
+                </div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-icon-box"><i data-lucide="award" size="22"></i></div>
+                <div>
+                    <div class="metric-num count-target" data-value="98" data-suffix="%">0%</div>
+                    <div class="metric-lbl">Client Satisfaction</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Purpose Section -->
+        <section class="section" id="services">
+            <div class="purpose-header animate-on-scroll">
+                <span class="section-tag">Our Purpose</span>
+                <h2 class="section-title">Driven by Mission, Focused on Vision</h2>
+            </div>
+
+            <div class="purpose-grid">
+                <!-- Card 1 -->
+                <div class="glass-card purpose-card animate-on-scroll">
+                    <div class="purpose-icon-box"><i data-lucide="target" size="24"></i></div>
+                    <div class="purpose-info">
+                        <h3>Our Mission</h3>
+                        <p>To empower businesses with innovative software solutions that drive efficiency, growth, and digital transformation. We are committed to delivering excellence through technology and teamwork.</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="glass-card purpose-card animate-on-scroll" style="transition-delay: 100ms;">
+                    <div class="purpose-icon-box"><i data-lucide="eye" size="24"></i></div>
+                    <div class="purpose-info">
+                        <h3>Our Vision</h3>
+                        <p>To be a trusted global technology partner known for building impactful digital products that shape the future and create lasting value for businesses and communities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section class="section">
+            <div class="purpose-header animate-on-scroll">
+                <span class="section-tag">Our Values</span>
+                <h2 class="section-title">The Principles That Drive Us</h2>
+            </div>
+
+            <div class="values-grid">
+                <!-- Value 1 -->
+                <div class="glass-card value-card animate-on-scroll">
+                    <div class="value-icon-box"><i data-lucide="user" size="22"></i></div>
+                    <h3>Client Success</h3>
+                    <p>We put your goals first and work as your true technology partner.</p>
+                </div>
+                <!-- Value 2 -->
+                <div class="glass-card value-card animate-on-scroll" style="transition-delay: 50ms;">
+                    <div class="value-icon-box"><i data-lucide="lightbulb" size="22"></i></div>
+                    <h3>Innovation</h3>
+                    <p>We embrace new ideas and technologies to solve complex problems.</p>
+                </div>
+                <!-- Value 3 -->
+                <div class="glass-card value-card animate-on-scroll" style="transition-delay: 100ms;">
+                    <div class="value-icon-box"><i data-lucide="shield" size="22"></i></div>
+                    <h3>Quality</h3>
+                    <p>We follow best practices to deliver secure, reliable and high-quality solutions.</p>
+                </div>
+                <!-- Value 4 -->
+                <div class="glass-card value-card animate-on-scroll" style="transition-delay: 150ms;">
+                    <div class="value-icon-box"><i data-lucide="users" size="22"></i></div>
+                    <h3>Teamwork</h3>
+                    <p>We believe in collaboration, transparency and growing together.</p>
+                </div>
+                <!-- Value 5 -->
+                <div class="glass-card value-card animate-on-scroll" style="transition-delay: 200ms;">
+                    <div class="value-icon-box"><i data-lucide="rocket" size="22"></i></div>
+                    <h3>Ownership</h3>
+                    <p>We take responsibility and are committed to delivering measurable results.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Journey Section -->
+        <section class="section" id="resources">
+            <div class="purpose-header animate-on-scroll">
+                <span class="section-tag">Our Journey</span>
+                <h2 class="section-title">From Startups to Enterprises, We Grow Together</h2>
+            </div>
+
+            <!-- Horizontal Timeline -->
+            <div class="timeline-container animate-on-scroll">
+                <div class="timeline-line"></div>
+                <div class="timeline-progress" id="timelineProgress"></div>
+
+                <div class="timeline-row">
+                    <!-- Timeline point 1 -->
+                    <div class="timeline-node" data-percentage="10">
+                        <div class="node-dot"></div>
+                        <div class="node-year">2020</div>
+                        <p class="node-desc">Cross Tecch was founded with a vision to simplify software development.</p>
+                    </div>
+                    <!-- Timeline point 2 -->
+                    <div class="timeline-node" data-percentage="32.5">
+                        <div class="node-dot"></div>
+                        <div class="node-year">2021</div>
+                        <p class="node-desc">Expanded our team and delivered impactful solutions for our early clients.</p>
+                    </div>
+                    <!-- Timeline point 3 -->
+                    <div class="timeline-node" data-percentage="55">
+                        <div class="node-dot"></div>
+                        <div class="node-year">2022</div>
+                        <p class="node-desc">Scaled our services and onboarded clients across industries.</p>
+                    </div>
+                    <!-- Timeline point 4 -->
+                    <div class="timeline-node" data-percentage="77.5">
+                        <div class="node-dot"></div>
+                        <div class="node-year">2023</div>
+                        <p class="node-desc">Strengthened our expertise in cloud, devops and product engineering.</p>
+                    </div>
+                    <!-- Timeline point 5 -->
+                    <div class="timeline-node" data-percentage="100">
+                        <div class="node-dot"></div>
+                        <div class="node-year">2024</div>
+                        <p class="node-desc">Continuing our mission to build, innovate and deliver greater impact worldwide.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer CTA banner card -->
+        <section class="footer-cta-card animate-on-scroll" id="contact">
+            <div class="footer-cta-info">
+                <h3>Let's Build Something Great Together</h3>
+                <p>Have a project in mind? Let's turn your ideas into reality.</p>
+            </div>
+            <a href="../ContactUs.html" class="cta-btn">
+                <span>Get In Touch</span>
+                <i data-lucide="arrow-right" size="16"></i>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- ===== Site Footer (shared, from Footer.html) ===== -->
+    <iframe id="ctFooterFrame" src="../Footer.html" title="Footer" scrolling="no" style="width:100%;border:0;display:block;overflow:hidden;"></iframe>
+    <script>
+        (function() {
+            var f = document.getElementById('ctFooterFrame');
+            if (!f) return;
+            window.addEventListener('message', function(e) {
+                if (e.data && e.data.ctSection && e.data.height) {
+                    f.style.height = e.data.height + 'px';
+                }
+            });
+        })();
+    </script>
+
+    <!-- --- JAVASCRIPT --- -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Lucide Icons (only used inside page containers)
+            lucide.createIcons();
+
+            // --- Header Navigation & Menus (Exact copy from header/script.js) ---
+            const mobileToggle = document.getElementById('mobileToggle');
+            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+            const dropdownTrigger = document.getElementById('dropdownTrigger');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const selectedCategory = document.getElementById('selectedCategory');
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+            // Toggle Mobile Menu Overlay
+            if (mobileToggle && mobileNavOverlay) {
+                mobileToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    mobileNavOverlay.classList.toggle('active');
+
+                    const icon = mobileToggle.querySelector('svg');
+                    if (mobileNavOverlay.classList.contains('active')) {
+                        icon.innerHTML = `<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>`;
+                    } else {
+                        icon.innerHTML = `<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>`;
+                    }
+                });
+            }
+
+            // Toggle Category Dropdown Menu in Search
+            if (dropdownTrigger && dropdownMenu) {
+                dropdownTrigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdownMenu.classList.toggle('active');
+                });
+
+                // Handle Item Clicks inside Dropdown
+                dropdownItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        selectedCategory.textContent = e.target.textContent;
+                        dropdownMenu.classList.remove('active');
+                    });
+                });
+            }
+
+            // Close menus when clicking outside
+            document.addEventListener('click', (e) => {
+                if (dropdownMenu && !dropdownTrigger.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                    dropdownMenu.classList.remove('active');
+                }
+                if (mobileNavOverlay && !mobileToggle.contains(e.target) && !mobileNavOverlay.contains(e.target)) {
+                    mobileNavOverlay.classList.remove('active');
+
+                    const icon = mobileToggle.querySelector('svg');
+                    if (icon) {
+                        icon.innerHTML = `<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>`;
+                    }
+                }
+            });
+
+            // Handle Link Active Highlight States
+            const navLinksList = document.querySelectorAll('.nav-links a, .mobile-link');
+            navLinksList.forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinksList.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                });
+            });
+
+            // --- Intersection Observer for Scroll Animations ---
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const scrollObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+
+                        // If it contains the timeline container, trigger timeline line animation
+                        if (entry.target.classList.contains('timeline-container')) {
+                            animateTimeline();
+                        }
+
+                        // If it contains metrics box, trigger numbers count-up
+                        if (entry.target.classList.contains('metrics-bar')) {
+                            animateMetrics();
+                        }
+
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            animateElements.forEach(el => scrollObserver.observe(el));
+
+            // --- Numerical Metrics Counter Animation ---
+            function animateMetrics() {
+                const counters = document.querySelectorAll('.count-target');
+
+                counters.forEach(counter => {
+                    const target = parseFloat(counter.getAttribute('data-value'));
+                    const suffix = counter.getAttribute('data-suffix') || '';
+                    const duration = 2000; // 2 seconds
+                    let startTimestamp = null;
+
+                    const step = (timestamp) => {
+                        if (!startTimestamp) startTimestamp = timestamp;
+                        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                        const currentVal = Math.floor(progress * target);
+
+                        counter.textContent = currentVal + suffix;
+
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            counter.textContent = target + suffix;
+                        }
+                    };
+
+                    window.requestAnimationFrame(step);
+                });
+            }
+
+            // --- Horizontal Timeline Progression & Node Activation ---
+            function animateTimeline() {
+                const progressLine = document.getElementById('timelineProgress');
+                const nodes = document.querySelectorAll('.timeline-node');
+
+                if (!progressLine) return;
+
+                // Set line progression to 100% width
+                setTimeout(() => {
+                    progressLine.style.width = '100%';
+                }, 300);
+
+                // Sequentially activate timeline nodes based on their progress percentage
+                nodes.forEach(node => {
+                    const targetPct = parseFloat(node.getAttribute('data-percentage'));
+
+                    // Delay node activation to sync with the progress line moving across
+                    setTimeout(() => {
+                        node.classList.add('active');
+                    }, (targetPct / 100) * 1200 + 300);
+                });
+            }
+        });
+    </script>    <style>.floating-header{display:none!important;}</style>
+    <script src="../header.js"></script>
+    <script src="../crosstech-chatbot.js" defer></script>
+</body>
+
+</html>

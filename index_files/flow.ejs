@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROSSTECCH Complete Enterprise Architecture Pipeline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --cyan: #0ea5e9;
+            --emerald: #10b981;
+            --text: #334155;
+            --muted: #64748b;
+            --border-dormant: #cbd5e1;
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Desktop Locked Scroll */
+        @media (min-width: 861px) {
+            html, body {
+                height: 100vh;
+                width: 100vw;
+                overflow: hidden;
+                margin: 0;
+                padding: 0;
+            }
+            .desktop-view {
+                display: flex !important;
+            }
+            .mobile-view {
+                display: none !important;
+            }
+        }
+
+        /* Mobile Scrolling View */
+        @media (max-width: 860px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+                min-height: 100vh;
+            }
+            .desktop-view {
+                display: none !important;
+            }
+            .mobile-view {
+                display: block !important;
+            }
+        }
+
+        body {
+            background: linear-gradient(to bottom, #000000 0%, #1e293b 45%, #cbd5e1 85%, #f8fafc 100%);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            position: relative;
+        }
+
+        /* Subtle Cyber Tech Grid matching branding theme */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(rgba(148, 163, 184, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Connection lines styling */
+        .flow-path {
+            stroke: var(--border-dormant);
+            stroke-width: 2.5;
+            fill: none;
+            transition: stroke 0.3s ease, stroke-width 0.3s ease;
+        }
+
+        .flow-path.active {
+            stroke: var(--cyan);
+            stroke-width: 3.5;
+        }
+
+        .flow-path.active-success {
+            stroke: var(--emerald);
+            stroke-width: 3.5;
+        }
+
+        /* Animated Background Floating Orbs Keyframes */
+        @keyframes float-1 {
+            0% { transform: translate(10vw, 10vh) scale(1); }
+            50% { transform: translate(50vw, 40vh) scale(1.15); }
+            100% { transform: translate(10vw, 10vh) scale(1); }
+        }
+        @keyframes float-2 {
+            0% { transform: translate(75vw, 65vh) scale(1.2); }
+            50% { transform: translate(25vw, 15vh) scale(0.9); }
+            100% { transform: translate(75vw, 65vh) scale(1.2); }
+        }
+        @keyframes float-3 {
+            0% { transform: translate(35vw, 75vh) scale(0.95); }
+            50% { transform: translate(65vw, 25vh) scale(1.1); }
+            100% { transform: translate(35vw, 75vh) scale(0.95); }
+        }
+
+        .animate-float-slow-1 {
+            animation: float-1 25s infinite ease-in-out;
+        }
+        .animate-float-slow-2 {
+            animation: float-2 30s infinite ease-in-out;
+        }
+        .animate-float-slow-3 {
+            animation: float-3 22s infinite ease-in-out;
+        }
+
+        /* Mobile timeline track track */
+        @media (max-width: 860px) {
+            .m-pipeline {
+                padding: 16px 16px 48px;
+                position: relative;
+            }
+            .m-pipeline::before {
+                content: '';
+                position: absolute;
+                left: 30px;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background: linear-gradient(to bottom, var(--border-dormant) 0%, rgba(226, 232, 240, 0.3) 100%);
+            }
+            .m-stage {
+                display: flex;
+                gap: 16px;
+                margin-bottom: 28px;
+            }
+            .m-dot {
+                flex-shrink: 0;
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background: #ffffff;
+                border: 2px solid var(--border-dormant);
+                margin-top: 10px;
+                position: relative;
+                z-index: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .m-dot-inner {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--border-dormant);
+            }
+            .m-dot.active {
+                border-color: var(--cyan);
+            }
+            .m-dot.active .m-dot-inner {
+                background: var(--cyan);
+            }
+            .m-dot.emerald {
+                border-color: var(--emerald);
+            }
+            .m-dot.emerald .m-dot-inner {
+                background: var(--emerald);
+            }
+            .m-card {
+                flex: 1;
+                background: #ffffff;
+                border: 1px solid var(--border-dormant);
+                border-radius: 18px;
+                padding: 18px 20px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body, h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, button, input, textarea, select, label, strong, em, blockquote, small, th, td, figcaption {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col">
+
+    <!-- Animated Background Floating Nebula Orbs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute w-[350px] h-[350px] rounded-full bg-sky-500/10 blur-[120px] animate-float-slow-1"></div>
+        <div class="absolute w-[400px] h-[400px] rounded-full bg-emerald-500/5 blur-[130px] animate-float-slow-2"></div>
+        <div class="absolute w-[300px] h-[300px] rounded-full bg-indigo-500/5 blur-[110px] animate-float-slow-3"></div>
+    </div>
+
+    <!-- Global Shared SVG Definitions for Gradients and Arrows -->
+    <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="logo-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff007f"/>
+                <stop offset="50%" stop-color="#aa00ff"/>
+                <stop offset="100%" stop-color="#00c8ff"/>
+            </linearGradient>
+
+            <!-- SVG Arrow Markers -->
+            <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1" />
+            </marker>
+            <marker id="arrow-active" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#0ea5e9" />
+            </marker>
+            <marker id="arrow-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+            </marker>
+        </defs>
+    </svg>
+
+    <!-- ======================================================= -->
+    <!-- DESKTOP SCREEN-FIT FLOW CHART VIEW                      -->
+    <!-- ======================================================= -->
+    <div class="desktop-view flex-col h-full relative z-10 w-full">
+
+        <!-- Grid Workspace (5 Columns Layout - Stretched to Full Screen) -->
+        <div id="pipeline-container" class="flex-1 grid grid-cols-5 gap-x-6 w-full max-w-full px-12 mx-auto relative items-center py-6 justify-items-center">
+
+            <!-- SVG Arrow Canvas -->
+            <svg id="svg-connections" class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
+                <path id="path-1-2" class="flow-path" marker-end="url(#arrow)" />
+                <path id="path-2-3" class="flow-path" marker-end="url(#arrow)" />
+                <path id="path-3-4" class="flow-path" marker-end="url(#arrow)" />
+                <path id="path-4-5" class="flow-path" marker-end="url(#arrow)" />
+
+                <!-- Stage 1 Branching Connectors (Top-Right, Bottom-Right, Bottom) -->
+                <path id="path-1-top-right" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-1-bottom-right" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-1-bottom" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+
+                <!-- Stage 2 Branching Connectors (Symmetric Tripod) -->
+                <path id="path-2-top-left" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-2-top-right" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-2-bottom" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+
+                <!-- Stage 3 Branching Connectors (Symmetric Tripod) -->
+                <path id="path-3-top-left" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-3-top-right" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-3-bottom" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+
+                <!-- Stage 4 Branching Connectors (Top-Left, Top-Right, Bottom-Left) -->
+                <path id="path-4-top-left" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-4-top-right" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+                <path id="path-4-bottom-left" class="flow-path opacity-0 transition-opacity duration-300 active" marker-end="url(#arrow-active)" />
+
+                <!-- Stage 5 Branching Connectors -->
+                <path id="path-5-top" class="flow-path opacity-0 transition-opacity duration-300 active-success" marker-end="url(#arrow-emerald)" />
+                <path id="path-5-bottom" class="flow-path opacity-0 transition-opacity duration-300 active-success" marker-end="url(#arrow-emerald)" />
+            </svg>
+
+            <!-- Column 1: Manual Testing -->
+            <div id="node-stage1" data-paths="path-1-2" class="flow-node group relative justify-self-center z-10 cursor-pointer transition-all duration-300 hover:scale-[1.03] select-none text-center">
+                <!-- Image Node -->
+                <img src="../images/Manual Testing.png" class="w-[260px] h-[173px] object-contain bg-black rounded-2xl border-3 border-sky-400 shadow-sm transition-all duration-300 group-hover:border-sky-500 group-hover:shadow-[0_0_15px_rgba(14,165,233,0.35)]" alt="Manual Testing">
+
+                <!-- Cloud Card 1 (BOTTOM) -->
+                <div id="stage1-bottom" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute top-[130%] left-1/2 -translate-x-1/2 w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 -translate-y-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Functional</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Sanity, Smoke Checks &amp; End-to-End User Journeys.</p>
+                </div>
+                <!-- Cloud Card 2 (TOP-RIGHT) -->
+                <div id="stage1-top-right" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] left-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 -translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Performance</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">High Load, Stress Limits &amp; Spike Audits.</p>
+                </div>
+                <!-- Cloud Card 3 (BOTTOM-RIGHT) -->
+                <div id="stage1-bottom-right" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute top-[130%] left-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 -translate-y-3 -translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Non-Functional</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Exploratory Bug Hunting &amp; Compatibility.</p>
+                </div>
+            </div>
+
+            <!-- Column 2: Cloud Services -->
+            <div id="node-stage2" data-paths="path-1-2,path-2-3" class="flow-node group relative justify-self-center z-10 cursor-pointer transition-all duration-300 hover:scale-[1.03] select-none text-center">
+                <!-- Image Node -->
+                <img src="../images/Cloud Services.png" class="w-[260px] h-[173px] object-contain bg-black rounded-2xl border-3 border-sky-400 shadow-sm transition-all duration-300 group-hover:border-sky-500 group-hover:shadow-[0_0_15px_rgba(14,165,233,0.35)]" alt="Cloud Services">
+
+                <!-- Cloud Card 1 (TOP-LEFT) -->
+                <div id="stage2-top-left" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] right-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Multi-Cloud</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">AWS, Azure &amp; GCP node configurations.</p>
+                </div>
+                <!-- Cloud Card 2 (TOP-RIGHT) -->
+                <div id="stage2-top-right" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] left-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 -translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Migration</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Zero-downtime database &amp; server migrations.</p>
+                </div>
+                <!-- Cloud Card 3 (BOTTOM) -->
+                <div id="stage2-bottom" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute top-[130%] left-1/2 -translate-x-1/2 w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 -translate-y-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Governance</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">IAM role access gates &amp; cost audits.</p>
+                </div>
+            </div>
+
+            <!-- Column 3: DevOps Engine -->
+            <div id="node-stage3" data-paths="path-2-3,path-3-4" class="flow-node group relative justify-self-center z-10 cursor-pointer transition-all duration-300 hover:scale-[1.03] select-none text-center">
+                <!-- Image Node -->
+                <img src="../images/Dev Ops.png" class="w-[260px] h-[173px] object-contain bg-black rounded-2xl border-3 border-sky-400 shadow-sm transition-all duration-300 group-hover:border-sky-500 group-hover:shadow-[0_0_15px_rgba(14,165,233,0.35)]" alt="DevOps">
+
+                <!-- Cloud Card 1 (TOP-LEFT) -->
+                <div id="stage3-top-left" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] right-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Kubernetes</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Container service mesh routing &amp; scaling.</p>
+                </div>
+                <!-- Cloud Card 2 (TOP-RIGHT) -->
+                <div id="stage3-top-right" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] left-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 -translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">GitOps CI/CD</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Automated deployments &amp; Terraform.</p>
+                </div>
+                <!-- Cloud Card 3 (BOTTOM) -->
+                <div id="stage3-bottom" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute top-[130%] left-1/2 -translate-x-1/2 w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 -translate-y-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Telemetry</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Prometheus live alerts &amp; Jaeger tracing.</p>
+                </div>
+            </div>
+
+            <!-- Column 4: AI Automation -->
+            <div id="node-stage4" data-paths="path-3-4,path-4-5" class="flow-node group relative justify-self-center z-10 cursor-pointer transition-all duration-300 hover:scale-[1.03] select-none text-center">
+                <!-- Image Node -->
+                <img src="../images/Ai Automation.png" class="w-[260px] h-[173px] object-contain bg-black rounded-2xl border-3 border-sky-400 shadow-sm transition-all duration-300 group-hover:border-sky-500 group-hover:shadow-[0_0_15px_rgba(14,165,233,0.35)]" alt="AI Automation">
+
+                <!-- Cloud Card 1 (TOP-LEFT) -->
+                <div id="stage4-top-left" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] right-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">Autonomous</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">Self-healing locators &amp; Playwright grids.</p>
+                </div>
+                <!-- Cloud Card 2 (TOP-RIGHT) -->
+                <div id="stage4-top-right" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute bottom-[130%] left-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 translate-y-3 -translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">APIs &amp; Security</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">RestAssured automation &amp; OWASP scans.</p>
+                </div>
+                <!-- Cloud Card 3 (BOTTOM-LEFT) -->
+                <div id="stage4-bottom-left" class="bg-white/95 border border-sky-200/50 shadow-lg rounded-[28px] absolute top-[130%] right-[130%] w-[170px] h-[85px] p-3 text-left flex flex-col justify-center text-slate-800 opacity-0 -translate-y-3 translate-x-3 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 mb-0.5">AI Reports</h4>
+                    <p class="text-[9px] text-slate-600 leading-normal">AI bug categorization &amp; dashboard overlays.</p>
+                </div>
+            </div>
+
+            <!-- Column 5: Production Active (CROSSTECCH Custom Branching Node) -->
+            <div id="node-stage5" data-paths="path-4-5" class="flow-node group relative justify-self-center z-10 cursor-pointer transition-all duration-300 hover:scale-[1.03] select-none w-[260px] h-[173px]">
+
+                <!-- Center CROSSTECCH Logo Card -->
+                <div class="w-full h-full rounded-2xl border-3 border-emerald-400 overflow-hidden bg-white shadow-sm transition-all duration-300 group-hover:border-emerald-500 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.35)] flex flex-col justify-between p-3">
+                    <div class="flex-1 flex items-center justify-center p-2">
+                        <img src="../images/CROSSTECH.png" class="max-w-full max-h-full object-contain select-none" alt="CROSSTECCH">
+                    </div>
+                    <div class="text-center font-extrabold text-[9px] text-emerald-600 uppercase tracking-widest border-t border-slate-100 pt-2">
+                        Our Products
+                    </div>
+                </div>
+
+                <!-- Top Branch Product Card (Prompt Bug Finder) -->
+                <div id="top-product-card" class="absolute bottom-[130%] left-1/2 -translate-x-1/2 w-[260px] h-[173px] rounded-2xl border-2 border-emerald-400 overflow-hidden bg-black shadow-lg opacity-0 translate-y-4 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <img src="../images/Prompt Bug Finder.png" class="w-full h-full object-contain bg-black select-none" alt="Prompt Bug Finder">
+                </div>
+
+                <!-- Bottom Branch Product Card (Blog Craft AI) -->
+                <div id="bottom-product-card" class="absolute top-[130%] left-1/2 -translate-x-1/2 w-[260px] h-[173px] rounded-2xl border-2 border-emerald-400 overflow-hidden bg-black shadow-lg opacity-0 -translate-y-4 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <img src="../images/Blog Craft Ai.png" class="w-full h-full object-contain bg-black select-none" alt="Blog Craft AI">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- MOBILE VIEW (SCROLLING TIMELINE)                        -->
+    <!-- ======================================================= -->
+    <div class="mobile-view min-h-screen relative z-10 w-full">
+        <!-- Mobile Header -->
+        <div class="flex items-center justify-center gap-3 py-6 border-b border-slate-100 bg-white">
+            <svg viewBox="0 0 200 200" width="22" height="22">
+                <g transform="translate(100, 100)">
+                    <path d="M-20,-90 C-20,-90 0,-100 20,-90 C40,-50 40,-20 90,-20 C90,-20 100,0 90,20 C50,40 20,40 20,90 C20,90 0,100 -20,90 C-40,50 -40,20 -90,20 C-90,20 -100,0 -90,-20 C-50,-40 -20,-40 -20,-90 Z" fill="url(#logo-grad-1)" />
+                    <path d="M0,-40 Q10,-10 40,0 Q10,10 0,40 Q-10,10 -40,0 Q-10,-10 0,-40 Z" fill="#ffffff" />
+                </g>
+            </svg>
+            <span class="font-extrabold tracking-widest text-slate-800 text-xs font-heading">CROSSTECCH</span>
+        </div>
+
+        <div class="m-pipeline">
+            <!-- Stage 1 -->
+            <div class="m-stage">
+                <div class="m-dot active"><div class="m-dot-inner"></div></div>
+                <div class="m-card">
+                    <h3 class="text-xs font-bold text-slate-800 mb-2">MANUAL TESTING</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">• Functional QA · Performance · Smoke Checks</p>
+                </div>
+            </div>
+            <!-- Stage 2 -->
+            <div class="m-stage">
+                <div class="m-dot active"><div class="m-dot-inner"></div></div>
+                <div class="m-card">
+                    <h3 class="text-xs font-bold text-slate-800 mb-2">CLOUD SERVICES</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">• Multi-Cloud · DB Migration · IAM Governance</p>
+                </div>
+            </div>
+            <!-- Stage 3 -->
+            <div class="m-stage">
+                <div class="m-dot active"><div class="m-dot-inner"></div></div>
+                <div class="m-card">
+                    <h3 class="text-xs font-bold text-slate-800 mb-2">DEVOPS ENGINE</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">• Kubernetes · GitOps CI/CD · Telemetry Metrics</p>
+                </div>
+            </div>
+            <!-- Stage 4 -->
+            <div class="m-stage">
+                <div class="m-dot active"><div class="m-dot-inner"></div></div>
+                <div class="m-card">
+                    <h3 class="text-xs font-bold text-slate-800 mb-2">AI AUTOMATION</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">• Autonomous QA · OWASP Scans · AI Reporting</p>
+                </div>
+            </div>
+            <!-- Stage 5 Success -->
+            <div class="m-stage">
+                <div class="m-dot emerald"><div class="m-dot-inner"></div></div>
+                <div class="m-card">
+                    <h3 class="text-xs font-bold text-slate-800 mb-2">PRODUCTION ACTIVE</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">• Prompt Bug Finder (v2.6) · Blog Craft AI (v1.2)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- INTERACTIVE LINE AND PORT CALCULATION SCRIPT            -->
+    <!-- ======================================================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('pipeline-container');
+
+            // Draw straight connecting paths
+            function drawLines() {
+                if (window.innerWidth <= 860) return; // Disabled on mobile scroll list
+                if (!container) return;
+
+                const path1to2 = document.getElementById('path-1-2');
+                const path2to3 = document.getElementById('path-2-3');
+                const path3to4 = document.getElementById('path-3-4');
+                const path4to5 = document.getElementById('path-4-5');
+                const path5Top = document.getElementById('path-5-top');
+                const path5Bottom = document.getElementById('path-5-bottom');
+
+                function getPort(elId, port) {
+                    const el = document.getElementById(elId);
+                    if (!el) return { x: 0, y: 0 };
+
+                    const cRect = container.getBoundingClientRect();
+                    const eRect = el.getBoundingClientRect();
+                    const x = eRect.left - cRect.left;
+                    const y = eRect.top - cRect.top;
+
+                    if (port === 'left') return { x: x, y: y + eRect.height / 2 };
+                    if (port === 'right') return { x: x + eRect.width, y: y + eRect.height / 2 };
+                    if (port === 'top') return { x: x + eRect.width / 2, y: y };
+                    if (port === 'bottom') return { x: x + eRect.width / 2, y: y + eRect.height };
+                }
+
+                // Port calculations & SVG path updates
+                const p1Right = getPort('node-stage1', 'right');
+                const p2Left = getPort('node-stage2', 'left');
+                const midX1 = (p1Right.x + p2Left.x) / 2;
+                path1to2.setAttribute('d', `M ${p1Right.x} ${p1Right.y} C ${midX1} ${p1Right.y}, ${midX1} ${p2Left.y}, ${p2Left.x} ${p2Left.y}`);
+
+                const p2Right = getPort('node-stage2', 'right');
+                const p3Left = getPort('node-stage3', 'left');
+                const midX2 = (p2Right.x + p3Left.x) / 2;
+                path2to3.setAttribute('d', `M ${p2Right.x} ${p2Right.y} C ${midX2} ${p2Right.y}, ${midX2} ${p3Left.y}, ${p3Left.x} ${p3Left.y}`);
+
+                const p3Right = getPort('node-stage3', 'right');
+                const p4Left = getPort('node-stage4', 'left');
+                const midX3 = (p3Right.x + p4Left.x) / 2;
+                path3to4.setAttribute('d', `M ${p3Right.x} ${p3Right.y} C ${midX3} ${p3Right.y}, ${midX3} ${p4Left.y}, ${p4Left.x} ${p4Left.y}`);
+
+                const p4Right = getPort('node-stage4', 'right');
+                const p5Left = getPort('node-stage5', 'left');
+                const midX4 = (p4Right.x + p5Left.x) / 2;
+                path4to5.setAttribute('d', `M ${p4Right.x} ${p4Right.y} C ${midX4} ${p4Right.y}, ${midX4} ${p5Left.y}, ${p5Left.x} ${p5Left.y}`);
+
+                // Stage 1 Dynamic Line Math (Top-Right, Bottom-Right, Bottom)
+                const tRight1 = document.getElementById('path-1-top-right');
+                const bRight1 = document.getElementById('path-1-bottom-right');
+                const bPath1 = document.getElementById('path-1-bottom');
+                if (tRight1 && bRight1 && bPath1) {
+                    const el = document.getElementById('node-stage1');
+                    const cRect = container.getBoundingClientRect();
+                    const eRect = el.getBoundingClientRect();
+                    const left = eRect.left - cRect.left;
+                    const right = left + eRect.width;
+                    const top = eRect.top - cRect.top;
+                    const bottom = top + eRect.height;
+                    const centerX = left + eRect.width / 2;
+
+                    tRight1.setAttribute('d', `M ${right} ${top} Q ${right + 45} ${top} ${right + 78} ${top - 52}`);
+                    bRight1.setAttribute('d', `M ${right} ${bottom} Q ${right + 45} ${bottom} ${right + 78} ${bottom + 52}`);
+                    bPath1.setAttribute('d', `M ${centerX} ${bottom} L ${centerX} ${bottom + 52}`);
+                }
+
+                // Stage 2 & 3 Dynamic Line Math (Symmetric Tripod)
+                for (let i = 2; i <= 3; i++) {
+                    const tLeft = document.getElementById(`path-${i}-top-left`);
+                    const tRight = document.getElementById(`path-${i}-top-right`);
+                    const bPath = document.getElementById(`path-${i}-bottom`);
+                    if (tLeft && tRight && bPath) {
+                        const el = document.getElementById(`node-stage${i}`);
+                        const cRect = container.getBoundingClientRect();
+                        const eRect = el.getBoundingClientRect();
+                        const left = eRect.left - cRect.left;
+                        const right = left + eRect.width;
+                        const top = eRect.top - cRect.top;
+                        const bottom = top + eRect.height;
+                        const centerX = left + eRect.width / 2;
+
+                        tLeft.setAttribute('d', `M ${left} ${top} Q ${left - 45} ${top} ${left - 78} ${top - 52}`);
+                        tRight.setAttribute('d', `M ${right} ${top} Q ${right + 45} ${top} ${right + 78} ${top - 52}`);
+                        bPath.setAttribute('d', `M ${centerX} ${bottom} L ${centerX} ${bottom + 52}`);
+                    }
+                }
+
+                // Stage 4 Dynamic Line Math (Top-Left, Top-Right, Bottom-Left)
+                const tLeft4 = document.getElementById('path-4-top-left');
+                const tRight4 = document.getElementById('path-4-top-right');
+                const bLeft4 = document.getElementById('path-4-bottom-left');
+                if (tLeft4 && tRight4 && bLeft4) {
+                    const el = document.getElementById('node-stage4');
+                    const cRect = container.getBoundingClientRect();
+                    const eRect = el.getBoundingClientRect();
+                    const left = eRect.left - cRect.left;
+                    const right = left + eRect.width;
+                    const top = eRect.top - cRect.top;
+                    const bottom = top + eRect.height;
+
+                    tLeft4.setAttribute('d', `M ${left} ${top} Q ${left - 45} ${top} ${left - 78} ${top - 52}`);
+                    tRight4.setAttribute('d', `M ${right} ${top} Q ${right + 45} ${top} ${right + 78} ${top - 52}`);
+                    bLeft4.setAttribute('d', `M ${left} ${bottom} Q ${left - 45} ${bottom} ${left - 78} ${bottom + 52}`);
+                }
+
+                // Stage 5 vertical branching lines (Offset y dynamically matches bottom-[130%] / top-[130%])
+                if (path5Top && path5Bottom) {
+                    const p5Top = getPort('node-stage5', 'top');
+                    const p5Bottom = getPort('node-stage5', 'bottom');
+
+                    // 173px * 0.30 = 52px branching gap offset
+                    path5Top.setAttribute('d', `M ${p5Top.x} ${p5Top.y} L ${p5Top.x} ${p5Top.y - 52}`);
+                    path5Bottom.setAttribute('d', `M ${p5Bottom.x} ${p5Bottom.y} L ${p5Bottom.x} ${p5Bottom.y + 52}`);
+                }
+            }
+
+            // Draw initial paths and hook events
+            window.addEventListener('load', drawLines);
+            window.addEventListener('resize', drawLines);
+            setTimeout(drawLines, 100);
+
+            // Hover event handlers to highlight connections
+            document.querySelectorAll('.flow-node').forEach(node => {
+                const paths = node.getAttribute('data-paths').split(',');
+
+                node.addEventListener('mouseenter', () => {
+                    paths.forEach(pId => {
+                        const path = document.getElementById(pId);
+                        if (!path) return;
+
+                        if (pId === 'path-4-5') {
+                            path.classList.add('active-success');
+                            path.setAttribute('marker-end', 'url(#arrow-emerald)');
+                        } else {
+                            path.classList.add('active');
+                            path.setAttribute('marker-end', 'url(#arrow-active)');
+                        }
+                    });
+
+                    // Toggle branching lines for this node stage
+                    const stageNum = node.id.replace('node-stage', '');
+                    const tlPath = document.getElementById(`path-${stageNum}-top-left`);
+                    const trPath = document.getElementById(`path-${stageNum}-top-right`);
+                    const blPath = document.getElementById(`path-${stageNum}-bottom-left`);
+                    const brPath = document.getElementById(`path-${stageNum}-bottom-right`);
+                    const bPath = document.getElementById(`path-${stageNum}-bottom`);
+                    const tPath5 = document.getElementById(`path-${stageNum}-top`); // For stage 5
+
+                    if (tlPath) {
+                        tlPath.classList.remove('opacity-0');
+                        tlPath.classList.add('opacity-100');
+                    }
+                    if (trPath) {
+                        trPath.classList.remove('opacity-0');
+                        trPath.classList.add('opacity-100');
+                    }
+                    if (blPath) {
+                        blPath.classList.remove('opacity-0');
+                        blPath.classList.add('opacity-100');
+                    }
+                    if (brPath) {
+                        brPath.classList.remove('opacity-0');
+                        brPath.classList.add('opacity-100');
+                    }
+                    if (bPath) {
+                        bPath.classList.remove('opacity-0');
+                        bPath.classList.add('opacity-100');
+                    }
+                    if (tPath5) {
+                        tPath5.classList.remove('opacity-0');
+                        tPath5.classList.add('opacity-100');
+                        tPath5.setAttribute('marker-end', 'url(#arrow-emerald)');
+                    }
+                });
+
+                node.addEventListener('mouseleave', () => {
+                    paths.forEach(pId => {
+                        const path = document.getElementById(pId);
+                        if (!path) return;
+
+                        path.classList.remove('active', 'active-success');
+                        path.setAttribute('marker-end', 'url(#arrow)');
+                    });
+
+                    // Toggle branching lines for this node stage
+                    const stageNum = node.id.replace('node-stage', '');
+                    const tlPath = document.getElementById(`path-${stageNum}-top-left`);
+                    const trPath = document.getElementById(`path-${stageNum}-top-right`);
+                    const blPath = document.getElementById(`path-${stageNum}-bottom-left`);
+                    const brPath = document.getElementById(`path-${stageNum}-bottom-right`);
+                    const bPath = document.getElementById(`path-${stageNum}-bottom`);
+                    const tPath5 = document.getElementById(`path-${stageNum}-top`); // For stage 5
+
+                    if (tlPath) {
+                        tlPath.classList.add('opacity-0');
+                        tlPath.classList.remove('opacity-100');
+                    }
+                    if (trPath) {
+                        trPath.classList.add('opacity-0');
+                        trPath.classList.remove('opacity-100');
+                    }
+                    if (blPath) {
+                        blPath.classList.add('opacity-0');
+                        blPath.classList.remove('opacity-100');
+                    }
+                    if (brPath) {
+                        brPath.classList.add('opacity-0');
+                        brPath.classList.remove('opacity-100');
+                    }
+                    if (bPath) {
+                        bPath.classList.add('opacity-0');
+                        bPath.classList.remove('opacity-100');
+                    }
+                    if (tPath5) {
+                        tPath5.classList.add('opacity-0');
+                        tPath5.classList.remove('opacity-100');
+                        tPath5.setAttribute('marker-end', 'url(#arrow-emerald)');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CROSSTECCH — We Build. Test. Deploy.</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+         :root {
+            /* ---- silver / chrome palette ---- */
+            --bg-0: #C8CDD6;
+            /* deep silver-slate */
+            --bg-1: #D8DDE6;
+            /* mid silver        */
+            --bg-2: #EDF0F5;
+            /* bright silver     */
+            --ink: #0F172A;
+            /* deep navy         */
+            --ink-dim: rgba(15, 23, 42, .52);
+            --line: #6B7A99;
+            /* steel blue-gray (pipeline lines) */
+            --glass: rgba(255, 255, 255, .42);
+            --glass-line: rgba(100, 120, 160, .18);
+            --accent: #3B82F6;
+            /* electric blue */
+            --accent-2: #8B5CF6;
+            /* violet        */
+            --accent-3: #06B6D4;
+            /* cyan          */
+            --shadow: 0 30px 70px -24px rgba(15, 30, 60, .30);
+            --font: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            font-family: var(--font);
+            color: var(--ink);
+            background: radial-gradient(ellipse 900px 700px at 80% -5%, rgba(139, 92, 246, .13), transparent 60%), radial-gradient(ellipse 700px 600px at -5% 80%, rgba(59, 130, 246, .11), transparent 55%), radial-gradient(ellipse 600px 500px at 105% 60%, rgba(6, 182, 212, .08), transparent 50%), linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 55%, var(--bg-0) 100%);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* ================================================================
+     IDE SECTION
+  ================================================================ */
+
+        .ide-section {
+            position: relative;
+            padding: 100px clamp(16px, 5vw, 80px) 120px;
+            background: linear-gradient(180deg, var(--bg-0) 0%, #1a1410 18%, #0d0b08 100%);
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .ide-bg-grid {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(255, 255, 255, .028) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .028) 1px, transparent 1px);
+            background-size: 48px 48px;
+            -webkit-mask-image: radial-gradient(80% 60% at 50% 40%, #000 20%, transparent 75%);
+            mask-image: radial-gradient(80% 60% at 50% 40%, #000 20%, transparent 75%);
+        }
+
+        .ide-bg-glow {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: .18
+        }
+
+        .ide-bg-glow--l {
+            width: 600px;
+            height: 500px;
+            top: 10%;
+            left: -10%;
+            background: radial-gradient(#b26a3a, transparent 70%)
+        }
+
+        .ide-bg-glow--r {
+            width: 500px;
+            height: 400px;
+            top: 20%;
+            right: -8%;
+            background: radial-gradient(#3178c6, transparent 70%)
+        }
+        /* header */
+
+        .ide-header {
+            text-align: center;
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 2
+        }
+
+        .ide-label {
+            font-size: 11.5px;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: rgba(178, 106, 58, .85);
+            margin-bottom: 14px
+        }
+
+        .ide-title {
+            font-size: clamp(28px, 4vw, 52px);
+            font-weight: 800;
+            letter-spacing: -.025em;
+            color: #f0e8da;
+            margin-bottom: 16px;
+            line-height: 1.05
+        }
+
+        .ide-subtitle {
+            font-size: clamp(14px, 1.5vw, 17px);
+            color: rgba(240, 232, 218, .5);
+            max-width: 540px;
+            margin: 0 auto;
+            line-height: 1.6
+        }
+        /* tech tab bar */
+
+        .ide-tabs-outer {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 20px;
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .ide-tabs-scroll {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none
+        }
+
+        .ide-tabs-scroll::-webkit-scrollbar {
+            display: none
+        }
+
+        .ide-tab {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: rgba(255, 255, 255, .04);
+            color: rgba(240, 232, 218, .5);
+            font-size: 12.5px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all .22s ease;
+            font-family: var(--font);
+        }
+
+        .ide-tab:hover {
+            background: rgba(255, 255, 255, .08);
+            color: rgba(240, 232, 218, .85);
+            border-color: rgba(255, 255, 255, .15)
+        }
+
+        .ide-tab.active {
+            background: rgba(255, 255, 255, .10);
+            color: #f0e8da;
+            border-color: rgba(255, 255, 255, .2);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, .04)
+        }
+
+        .ide-tab-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+        /* IDE window */
+
+        .ide-window {
+            position: relative;
+            z-index: 2;
+            max-width: 1280px;
+            margin: 0 auto;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: #1e1e1e;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, .4), 0 40px 100px -30px rgba(0, 0, 0, .7), 0 0 60px -20px rgba(178, 106, 58, .08);
+            overflow: hidden;
+        }
+        /* title bar */
+
+        .ide-titlebar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            background: #2d2d2d;
+            border-bottom: 1px solid rgba(255, 255, 255, .07);
+            user-select: none;
+        }
+
+        .ide-traffic {
+            display: flex;
+            gap: 7px
+        }
+
+        .ide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%
+        }
+
+        .ide-dot.red {
+            background: #ff5f56
+        }
+
+        .ide-dot.yellow {
+            background: #ffbd2e
+        }
+
+        .ide-dot.green {
+            background: #27c93f
+        }
+
+        .ide-filename {
+            flex: 1;
+            text-align: center;
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .5);
+            font-family: 'SF Mono', 'Fira Code', monospace
+        }
+
+        .ide-statusline {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, .3);
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            white-space: nowrap
+        }
+
+        .ide-status-badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            background: rgba(57, 197, 187, .15);
+            color: #39c5bb
+        }
+
+        .ide-status-badge.fail {
+            background: rgba(241, 76, 76, .15);
+            color: #f14c4c
+        }
+
+        .ide-status-badge.pass {
+            background: rgba(39, 201, 63, .15);
+            color: #27c93f
+        }
+        /* body layout */
+
+        .ide-body {
+            display: flex;
+            height: clamp(420px, 52vh, 640px)
+        }
+        /* explorer */
+
+        .ide-explorer {
+            width: 180px;
+            flex-shrink: 0;
+            background: #252526;
+            border-right: 1px solid rgba(255, 255, 255, .06);
+            padding: 8px 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ide-explorer-title {
+            font-size: 10px;
+            letter-spacing: .15em;
+            color: rgba(255, 255, 255, .3);
+            padding: 4px 14px 8px;
+            text-transform: uppercase
+        }
+
+        .ide-tree {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .55);
+            flex: 1;
+            font-family: 'SF Mono', 'Fira Code', monospace
+        }
+
+        .ide-tree-folder {
+            padding: 3px 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background .15s
+        }
+
+        .ide-tree-folder:hover {
+            background: rgba(255, 255, 255, .05)
+        }
+
+        .ide-tree-file {
+            padding: 3px 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background .15s;
+            font-size: 11.5px
+        }
+
+        .ide-tree-file:hover {
+            background: rgba(255, 255, 255, .05)
+        }
+
+        .ide-tree-file.active {
+            background: rgba(255, 255, 255, .08);
+            color: #fff
+        }
+
+        .ide-tree-icon {
+            font-size: 13px
+        }
+        /* editor column */
+
+        .ide-editor-col {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, .06)
+        }
+        /* editor pane */
+
+        .ide-editor-pane {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden
+        }
+
+        .ide-editor-tabs {
+            display: flex;
+            background: #2d2d2d;
+            border-bottom: 1px solid rgba(255, 255, 255, .06)
+        }
+
+        .ide-etab {
+            padding: 8px 18px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, .5);
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            border-right: 1px solid rgba(255, 255, 255, .06);
+            cursor: pointer
+        }
+
+        .ide-etab.active {
+            color: #fff;
+            background: #1e1e1e;
+            border-bottom: 1px solid #1e1e1e;
+            margin-bottom: -1px
+        }
+
+        .ide-editor-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden
+        }
+
+        .ide-gutter {
+            width: 46px;
+            flex-shrink: 0;
+            padding: 14px 0;
+            text-align: right;
+            font-size: 12px;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, .2);
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #1e1e1e;
+            border-right: 1px solid rgba(255, 255, 255, .04);
+            user-select: none;
+            overflow: hidden;
+        }
+
+        .ide-gutter span {
+            display: block;
+            padding-right: 10px
+        }
+
+        .ide-code-area {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            padding: 14px 20px
+        }
+
+        .ide-code {
+            font-size: 13px;
+            line-height: 1.65;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            color: #d4d4d4;
+            white-space: pre;
+            overflow: hidden;
+            tab-size: 2;
+        }
+
+        .ide-cursor {
+            display: inline-block;
+            color: #aeafad;
+            font-size: 14px;
+            line-height: 1;
+            animation: blink-cursor .9s step-end infinite;
+            font-family: 'SF Mono', monospace;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        @keyframes blink-cursor {
+            0%,
+            100% {
+                opacity: 1
+            }
+            50% {
+                opacity: 0
+            }
+        }
+
+        .ide-autocomplete {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #252526;
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .5);
+            display: none;
+            z-index: 10;
+            min-width: 200px;
+            overflow: hidden;
+        }
+
+        .ide-ac-item {
+            padding: 5px 12px;
+            color: rgba(255, 255, 255, .7);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .ide-ac-item.sel {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .ide-ac-icon {
+            font-size: 11px;
+            color: #c586c0;
+            width: 14px;
+            text-align: center
+        }
+
+        .ide-ac-type {
+            font-size: 10px;
+            color: rgba(255, 255, 255, .3);
+            margin-left: auto
+        }
+        /* terminal */
+
+        .ide-terminal-pane {
+            height: 165px;
+            background: #0a0a0a;
+            border-top: 1px solid rgba(255, 255, 255, .07);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0
+        }
+
+        .ide-terminal-tabs {
+            display: flex;
+            background: #1e1e1e;
+            border-bottom: 1px solid rgba(255, 255, 255, .06)
+        }
+
+        .ide-ttab {
+            padding: 6px 14px;
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, .35);
+            cursor: pointer;
+            font-family: var(--font)
+        }
+
+        .ide-ttab.active {
+            color: rgba(255, 255, 255, .8);
+            border-bottom: 1px solid #569cd6
+        }
+
+        .ide-terminal-body {
+            flex: 1;
+            padding: 10px 16px;
+            overflow: hidden;
+            position: relative
+        }
+
+        .ide-term-out {
+            font-size: 12px;
+            line-height: 1.6;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            color: #cccccc;
+            white-space: pre-wrap;
+            word-break: break-all;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .ide-term-cursor {
+            color: #aeafad;
+            animation: blink-cursor .9s step-end infinite;
+            font-size: 13px
+        }
+        /* dashboard panel */
+
+        .ide-dashboard {
+            width: 220px;
+            flex-shrink: 0;
+            background: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            padding: 14px;
+            gap: 10px;
+            overflow-y: auto;
+        }
+
+        .ide-dash-title {
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .3);
+            margin-bottom: 4px;
+            font-family: var(--font)
+        }
+
+        .ide-dash-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+        /* dashboard cards */
+
+        .ide-stat-card {
+            background: #252526;
+            border-radius: 8px;
+            padding: 10px 12px;
+            border: 1px solid rgba(255, 255, 255, .06)
+        }
+
+        .ide-stat-label {
+            font-size: 10.5px;
+            color: rgba(255, 255, 255, .4);
+            margin-bottom: 4px;
+            font-family: var(--font)
+        }
+
+        .ide-stat-val {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            font-family: 'SF Mono', 'Fira Code', monospace
+        }
+
+        .ide-stat-val.green {
+            color: #27c93f
+        }
+
+        .ide-stat-val.red {
+            color: #f14c4c
+        }
+
+        .ide-stat-val.yellow {
+            color: #ffbd2e
+        }
+
+        .ide-stat-val.blue {
+            color: #569cd6
+        }
+
+        .ide-prog-bar {
+            background: #2a2a2a;
+            border-radius: 4px;
+            height: 5px;
+            overflow: hidden;
+            margin-top: 6px
+        }
+
+        .ide-prog-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.4s ease
+        }
+
+        .ide-prog-fill.green {
+            background: #27c93f
+        }
+
+        .ide-prog-fill.red {
+            background: #f14c4c
+        }
+
+        .ide-prog-fill.blue {
+            background: #569cd6
+        }
+
+        .ide-test-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, .6);
+            font-family: 'SF Mono', monospace;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .04)
+        }
+
+        .ide-test-row:last-child {
+            border: none
+        }
+
+        .ide-dot-s {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .ide-pipeline-stage {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, .6);
+            font-family: var(--font);
+            background: rgba(255, 255, 255, .03);
+            margin-bottom: 4px;
+            border: 1px solid rgba(255, 255, 255, .05);
+        }
+
+        .ide-pipeline-icon {
+            font-size: 14px
+        }
+
+        .ide-pipeline-status {
+            margin-left: auto;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .06em
+        }
+
+        @media(max-width:900px) {
+            .ide-explorer {
+                display: none
+            }
+            .ide-dashboard {
+                display: none
+            }
+        }
+
+        @media(max-width:640px) {
+            .ide-body {
+                height: 360px
+            }
+            .ide-terminal-pane {
+                height: 130px
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Raleway:wght@800&display=swap" rel="stylesheet">
+    <style>
+        /* Site-wide font: Plus Jakarta Sans (code/mono blocks untouched) */
+        :root { --font-body: 'Plus Jakarta Sans', sans-serif; --font-heading: 'Plus Jakarta Sans', sans-serif; --font: 'Plus Jakarta Sans', sans-serif; }
+        body, h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, button, input, textarea, select, label, strong, em, blockquote, small, th, td, figcaption {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="ide-section" id="ide-section">
+        <!-- subtle bg elements -->
+        <div class="ide-bg-grid"></div>
+        <div class="ide-bg-glow ide-bg-glow--l"></div>
+        <div class="ide-bg-glow ide-bg-glow--r"></div>
+
+        <div class="ide-header">
+            <div class="ide-label">Live Engineering Environment</div>
+            <h2 class="ide-title">Watch Code Come to Life</h2>
+            <p class="ide-subtitle">From test automation to cloud deployments — an engineer's world, animated in real time.</p>
+        </div>
+
+        <!-- Tech tab bar -->
+        <div class="ide-tabs-outer" id="ideTabs">
+            <div class="ide-tabs-scroll">
+                <button class="ide-tab active" data-tab="playwright"><span class="ide-tab-dot" style="background:#e2574c"></span>Playwright</button>
+                <button class="ide-tab" data-tab="selenium"><span class="ide-tab-dot" style="background:#43B02A"></span>Selenium</button>
+                <button class="ide-tab" data-tab="cypress"><span class="ide-tab-dot" style="background:#3ec88f"></span>Cypress</button>
+                <button class="ide-tab" data-tab="api"><span class="ide-tab-dot" style="background:#f7df1e"></span>API Testing</button>
+                <button class="ide-tab" data-tab="devops"><span class="ide-tab-dot" style="background:#fc6d26"></span>DevOps Pipeline</button>
+                <button class="ide-tab" data-tab="linux"><span class="ide-tab-dot" style="background:#98c379"></span>Linux Terminal</button>
+                <button class="ide-tab" data-tab="docker"><span class="ide-tab-dot" style="background:#2496ed"></span>Docker</button>
+                <button class="ide-tab" data-tab="kubernetes"><span class="ide-tab-dot" style="background:#326ce5"></span>Kubernetes</button>
+                <button class="ide-tab" data-tab="jenkins"><span class="ide-tab-dot" style="background:#d33833"></span>Jenkins</button>
+                <button class="ide-tab" data-tab="terraform"><span class="ide-tab-dot" style="background:#7b42bc"></span>Terraform</button>
+                <button class="ide-tab" data-tab="aws"><span class="ide-tab-dot" style="background:#ff9900"></span>AWS</button>
+            </div>
+        </div>
+
+        <!-- The IDE window -->
+        <div class="ide-window" id="ideWindow">
+            <!-- title bar -->
+            <div class="ide-titlebar">
+                <div class="ide-traffic">
+                    <span class="ide-dot red"></span>
+                    <span class="ide-dot yellow"></span>
+                    <span class="ide-dot green"></span>
+                </div>
+                <div class="ide-filename" id="ideFilename">playwright.spec.ts</div>
+                <div class="ide-statusline">
+                    <span id="ideStatusLang">TypeScript</span>
+                    <span>·</span>
+                    <span>UTF-8</span>
+                    <span>·</span>
+                    <span id="ideStatusLine">Ln 1</span>
+                    <span>·</span>
+                    <span class="ide-status-badge" id="ideStatusBadge">● RUNNING</span>
+                </div>
+            </div>
+
+            <div class="ide-body">
+                <!-- file explorer -->
+                <div class="ide-explorer" id="ideExplorer">
+                    <div class="ide-explorer-title">EXPLORER</div>
+                    <div class="ide-tree" id="ideTree"></div>
+                </div>
+
+                <!-- editor + terminal split -->
+                <div class="ide-editor-col">
+                    <!-- editor -->
+                    <div class="ide-editor-pane" id="ideEditorPane">
+                        <div class="ide-editor-tabs">
+                            <div class="ide-etab active" id="ideEtab">playwright.spec.ts</div>
+                        </div>
+                        <div class="ide-editor-body">
+                            <div class="ide-gutter" id="ideGutter"></div>
+                            <div class="ide-code-area">
+                                <pre class="ide-code" id="ideCode"></pre>
+                                <span class="ide-cursor" id="ideCursor">|</span>
+                                <div class="ide-autocomplete" id="ideAutocomplete"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- terminal panel -->
+                    <div class="ide-terminal-pane" id="ideTerminal">
+                        <div class="ide-terminal-tabs">
+                            <span class="ide-ttab active">TERMINAL</span>
+                            <span class="ide-ttab">OUTPUT</span>
+                            <span class="ide-ttab">PROBLEMS</span>
+                        </div>
+                        <div class="ide-terminal-body" id="ideTerminalBody">
+                            <pre class="ide-term-out" id="ideTermOut"></pre>
+                            <span class="ide-term-cursor" id="ideTermCursor">█</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- mini dashboard panel -->
+                <div class="ide-dashboard" id="ideDashboard">
+                    <div class="ide-dash-title" id="ideDashTitle">Test Results</div>
+                    <div class="ide-dash-body" id="ideDashBody"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script>
+        /* ----------------------------------------------------------------------------
+                   STRIVE living pipeline — native SVG path sampling + custom rope/pendulum physics
+                ---------------------------------------------------------------------------- */
+
+        /* ---------- brand logo marks (drawn inside a 0..32 box, centered) ---------- */
+        const L = {
+            React: `<g fill="none" stroke="#61DAFB" stroke-width="1.7">
+      <circle cx="16" cy="16" r="2.5" fill="#61DAFB" stroke="none"/>
+      <ellipse cx="16" cy="16" rx="13" ry="5"/>
+      <ellipse cx="16" cy="16" rx="13" ry="5" transform="rotate(60 16 16)"/>
+      <ellipse cx="16" cy="16" rx="13" ry="5" transform="rotate(120 16 16)"/></g>`,
+            TypeScript: `<rect x="2" y="2" width="28" height="28" rx="5" fill="#3178C6"/>
+      <text x="16" y="22" font-family="Arial" font-weight="800" font-size="13" fill="#fff" text-anchor="middle">TS</text>`,
+            JavaScript: `<rect x="2" y="2" width="28" height="28" rx="5" fill="#F7DF1E"/>
+      <text x="16" y="22" font-family="Arial" font-weight="800" font-size="13" fill="#111" text-anchor="middle">JS</text>`,
+            "Node.js": `<path d="M16 2.5 27 8.6V23.4L16 29.5 5 23.4V8.6Z" fill="#539E43"/>
+      <path d="M16 2.5 27 8.6V23.4L16 29.5Z" fill="#417b33"/>
+      <text x="16" y="20.5" font-family="Arial" font-weight="800" font-size="9" fill="#fff" text-anchor="middle">node</text>`,
+            "Next.js": `<circle cx="16" cy="16" r="14" fill="#000" stroke="rgba(255,255,255,.5)" stroke-width="1"/>
+      <path d="M11 10v12M11 10l11 14M21 10v9" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+            Notion: `<rect x="3" y="3" width="26" height="26" rx="4" fill="#fff" stroke="#111" stroke-width="1.4"/>
+      <path d="M10 23V11l11 11M10 11l11 0M21 11v12" stroke="#111" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+            Selenium: `<circle cx="16" cy="16" r="14" fill="#43B02A"/>
+      <text x="16" y="21" font-family="Georgia" font-weight="700" font-size="14" fill="#fff" text-anchor="middle">Se</text>`,
+            Cypress: `<circle cx="16" cy="16" r="14" fill="#1B1E2B"/>
+      <text x="16" y="21" font-family="Arial" font-weight="700" font-size="13" fill="#3ec88f" text-anchor="middle">cy</text>`,
+            Playwright: `<circle cx="16" cy="16" r="14" fill="#2D3138"/>
+      <circle cx="11.5" cy="14" r="4.2" fill="#E2574C"/><circle cx="20.5" cy="14" r="4.2" fill="#45ba4b"/>
+      <path d="M9 22q7 5 14 0" stroke="#f2c14e" stroke-width="2.2" fill="none" stroke-linecap="round"/>`,
+            AWS: `<rect x="2" y="2" width="28" height="28" rx="5" fill="#232F3E"/>
+      <text x="16" y="17" font-family="Arial" font-weight="800" font-size="9.5" fill="#fff" text-anchor="middle">aws</text>
+      <path d="M9 22q7 4 14 0" stroke="#FF9900" stroke-width="2.2" fill="none" stroke-linecap="round"/>`,
+            Azure: `<path d="M13 5 7 25h5l-3 2h12L13 5Z" fill="#0078D4"/>
+      <path d="M14.5 11 22 27H10l4-2h4L14.5 11Z" fill="#3aa0ee"/>`,
+            Docker: `<g fill="#2496ED"><rect x="6" y="14" width="4" height="4"/><rect x="11" y="14" width="4" height="4"/>
+      <rect x="16" y="14" width="4" height="4"/><rect x="11" y="9" width="4" height="4"/><rect x="16" y="9" width="4" height="4"/>
+      <path d="M5 18h20c0 4-3 7-8 7-6 0-9-3-12-7Z"/></g>
+      <path d="M24 12c1.5-1 3 .5 3 .5s-.5 2-2.4 1.6" fill="none" stroke="#2496ED" stroke-width="1.6"/>`,
+            Kubernetes: `<path d="M16 3 27 9v14L16 29 5 23V9Z" fill="#326CE5"/>
+      <g fill="none" stroke="#fff" stroke-width="1.5"><circle cx="16" cy="16" r="3"/>
+      <path d="M16 16V8M16 16l7 4M16 16l-7 4M16 16l6-3M16 16l-6-3"/></g>`,
+            Clerk: `<rect x="2" y="2" width="28" height="28" rx="7" fill="#1b1726"/>
+      <circle cx="16" cy="16" r="5" fill="none" stroke="#6c47ff" stroke-width="2.4"/>
+      <path d="M11 22l3-3M21 10l-3 3" stroke="#6c47ff" stroke-width="2.4" stroke-linecap="round"/>`,
+            PostgreSQL: `<circle cx="16" cy="16" r="14" fill="#336791"/>
+      <text x="16" y="21" font-family="Georgia" font-weight="700" font-size="12" fill="#fff" text-anchor="middle">Pg</text>`,
+            MongoDB: `<path d="M16 3c4 6 7 9 7 14 0 6-4 10-7 12-3-2-7-6-7-12 0-5 3-8 7-14Z" fill="#47A248"/>
+      <path d="M16 6c0 7 0 16 0 22" stroke="#2f7a30" stroke-width="1.6"/>`,
+            JMeter: `<rect x="2" y="2" width="28" height="28" rx="6" fill="#D22128"/>
+      <path d="M20 6c-6 3-10 8-10 14 0 3 1.5 5 4 6-1-3 .5-6 4-9-1 4 2 5 2 8 3-2 4-5 4-9 0-5-3-8-4-10Z" fill="#fff"/>`,
+            GitHub: `<circle cx="16" cy="16" r="14" fill="#fff"/>
+      <path d="M16 6.5a9.5 9.5 0 0 0-3 18.5c.5.1.65-.2.65-.45v-1.7c-2.6.55-3.2-1.1-3.2-1.1-.45-1.1-1.05-1.4-1.05-1.4-.85-.6.07-.58.07-.58.95.07 1.45.97 1.45.97.84 1.45 2.2 1.03 2.74.79.08-.6.33-1.03.6-1.27-2.08-.24-4.27-1.04-4.27-4.64 0-1.03.37-1.86.97-2.52-.1-.24-.42-1.2.09-2.5 0 0 .8-.25 2.6.96a9 9 0 0 1 4.74 0c1.8-1.21 2.6-.96 2.6-.96.51 1.3.19 2.26.09 2.5.6.66.97 1.49.97 2.52 0 3.61-2.2 4.4-4.29 4.63.34.3.64.87.64 1.76v2.6c0 .26.15.56.66.46A9.5 9.5 0 0 0 16 6.5Z" fill="#111"/>`,
+            GitLab: `<path d="M16 28 5 19.7l1.7-5.2L9 6l2.8 8.5h8.4L23 6l2.3 8.5 1.7 5.2Z" fill="#E24329"/>
+      <path d="M16 28 11.8 14.5H6.7L5 19.7Z" fill="#FC6D26"/>
+      <path d="M16 28 20.2 14.5h5.1L27 19.7Z" fill="#FC6D26"/>
+      <path d="M6.7 14.5 5 19.7 6.7 14.5 9 6Z" fill="#FCA326"/>
+      <path d="M25.3 14.5 27 19.7 25.3 14.5 23 6Z" fill="#FCA326"/>`,
+            Jenkins: `<circle cx="16" cy="16" r="14" fill="#fff"/>
+      <ellipse cx="16" cy="13" rx="6" ry="7" fill="#D33833"/>
+      <ellipse cx="16" cy="12" rx="4.5" ry="5" fill="#f0d8c0"/>
+      <path d="M12 23l4-4 4 4-1 4h-6Z" fill="#335061"/>
+      <path d="M16 19l1.5 2-1.5 1.5L14.5 21Z" fill="#D33833"/>`
+        };
+
+        const ORDER = ["Selenium", "Cypress", "Playwright", "React", "Next.js", "Node.js", "TypeScript", "JavaScript",
+            "AWS", "Azure", "Docker", "Kubernetes", "Clerk", "Notion", "PostgreSQL", "MongoDB", "JMeter", "GitHub", "GitLab", "Jenkins"
+        ];
+
+        const SVGNS = "http://www.w3.org/2000/svg";
+        const svg = document.getElementById("svg");
+        const path = document.getElementById("flowPath");
+        const capsLayer = document.getElementById("capsules");
+        const nubsLayer = document.getElementById("nubs");
+        const card = document.getElementById("card");
+        const ropeL = document.getElementById("ropeL");
+        const ropeR = document.getElementById("ropeR");
+        const sweep = document.getElementById("sweep");
+        const spotlight = document.getElementById("spotlight");
+
+        /* ---- sine geometry:  y = MID + AMP·sin(k·(x+PHASE))  (a real sin θ graph) ---- */
+        const MID = 380,
+            AMP = 96,
+            HALF = 66,
+            PERIOD = 760,
+            PHASE = 180; // wider strip (HALF), trough under the card
+        const THETA_OFFSET = 10 * Math.PI / 180; // "sin θ + 10°" phase shift
+        const kw = 2 * Math.PI / PERIOD;
+        const yc = x => MID + AMP * Math.sin(kw * (x + PHASE) + THETA_OFFSET); // centerline of the channel
+        const bandFill = document.getElementById("bandFill"),
+            glassOver = document.getElementById("glassOver"),
+            railTop = document.getElementById("railTop"),
+            railBot = document.getElementById("railBot"),
+            railTop2 = document.getElementById("railTop2"),
+            railBot2 = document.getElementById("railBot2");
+
+        function buildPipe() {
+            const x0 = -200,
+                x1 = 1640,
+                step = 6;
+            let c = "",
+                t = "",
+                b = "";
+            for (let x = x0; x <= x1; x += step) {
+                const y = yc(x);
+                c += (x === x0 ? "M" : "L") + x.toFixed(1) + " " + y.toFixed(1) + " ";
+                t += (x === x0 ? "M" : "L") + x.toFixed(1) + " " + (y - HALF).toFixed(1) + " ";
+                b += (x === x0 ? "M" : "L") + x.toFixed(1) + " " + (y + HALF).toFixed(1) + " ";
+            }
+            // glass band = top rail forward, bottom rail back, closed
+            let band = t;
+            for (let x = x1; x >= x0; x -= step) {
+                band += "L" + x.toFixed(1) + " " + (yc(x) + HALF).toFixed(1) + " ";
+            }
+            band += "Z";
+            path.setAttribute("d", c);
+            railTop.setAttribute("d", t);
+            railBot.setAttribute("d", b);
+            railTop2.setAttribute("d", t);
+            railBot2.setAttribute("d", b);
+            bandFill.setAttribute("d", band);
+            glassOver.setAttribute("d", band);
+            sweep.setAttribute("d", t);
+        }
+        buildPipe();
+
+        let PATH_LEN = path.getTotalLength();
+        const N = ORDER.length;
+
+        /* build capsules */
+        const capsules = ORDER.map((name, i) => {
+            const g = document.createElementNS(SVGNS, "g");
+            g.setAttribute("filter", "url(#capShadow)");
+            const inner = document.createElementNS(SVGNS, "g");
+            inner.innerHTML = `<g transform="translate(-33.6,-33.6) scale(2.1)">${L[name]||""}</g>`;
+            g.appendChild(inner);
+            capsLayer.appendChild(g);
+            return {
+                el: g,
+                name,
+                i
+            };
+        });
+
+        /* ---- falling wordmark: letters drop, bounce on an invisible line, settle ---- */
+        const WORD = "CROSSTECCH"; // change here if the brand should read differently
+        const SPACE_IDX = 5; // split point CROSS | TECCH (kept for optional 2-tone)
+        const wordmark = document.getElementById("wordmark");
+        const letters = [];
+        [...WORD].forEach((ch, idx) => {
+            if (ch === " ") {
+                const s = document.createElement("span");
+                s.className = "sp";
+                wordmark.appendChild(s);
+                return;
+            }
+            const sp = document.createElement("span");
+            sp.className = "ltr " + (idx < SPACE_IDX ? "c1" : "c2"); // "cross" = ink, "tecch" = accent
+            sp.textContent = ch;
+            wordmark.appendChild(sp);
+            letters.push({
+                el: sp,
+                y: -(520 + Math.random() * 150),
+                vy: 0,
+                delay: 0.3 + letters.length * 0.1,
+                t: 0,
+                settled: false
+            });
+        });
+
+        /* ---- geometry helpers ---- */
+        function ptAt(len) { // wrap
+            len = ((len % PATH_LEN) + PATH_LEN) % PATH_LEN;
+            return path.getPointAtLength(len);
+        }
+
+        function smoothstep(a, b, x) {
+            x = Math.max(0, Math.min(1, (x - a) / (b - a)));
+            return x * x * (3 - 2 * x);
+        }
+
+        /* anchors on the pipe (svg space) — within the horizontal mid segment */
+        const PIVOT = {
+            x: 720,
+            y: yc(720) + HALF
+        }; // lowest point of the lower line (sine trough)
+        const ANCHOR_L = {
+            x: 662,
+            y: yc(662) + HALF
+        };
+        const ANCHOR_R = {
+            x: 778,
+            y: yc(778) + HALF
+        };
+        // little nubs
+        [ANCHOR_L, ANCHOR_R].forEach(a => {
+            const n = document.createElementNS(SVGNS, "circle");
+            n.setAttribute("cx", a.x);
+            n.setAttribute("cy", a.y - 4);
+            n.setAttribute("r", "5");
+            n.setAttribute("fill", "url(#rimGrad)");
+            n.setAttribute("opacity", ".9");
+            nubsLayer.appendChild(n);
+        });
+
+        /* ---- pendulum / rope physics ---- */
+        const CARD_W = 320,
+            CARD_H = 188; // svg units (also used to size the html card)
+        const ATTACH_DX = 118; // horizontal offset of rope attach from card center
+        const REST_LEN = 308; // pivot -> card center at rest (longer thread)
+        let ang = 0.12,
+            angVel = 0; // pendulum angle (rad)
+        let stretch = 0,
+            stretchVel = 0; // vertical elastic bob
+        let gustTimer = 1.4; // countdown to next random wind gust
+        let cardScrX = innerWidth / 2,
+            cardScrY = innerHeight / 2; // card center in screen px
+
+        /* place the static wordmark behind the card's rest position */
+        const stageEl = document.getElementById("stage");
+
+        function placeWord() {
+            const m = svg.getScreenCTM();
+            if (!m) return;
+            const r = stageEl.getBoundingClientRect();
+            const p = new DOMPoint(PIVOT.x, PIVOT.y + REST_LEN).matrixTransform(m);
+            wordmark.style.left = (p.x - r.left) + "px";
+            wordmark.style.top = (p.y - r.top + 30) + "px"; // sit behind the lower card & extend below
+            wordmark.style.transform = "translate(-50%,-50%)";
+        }
+        placeWord();
+
+        /* ---- master flow ---- */
+        let flow = 0;
+        const BASE_SPEED = 1 / 26; // full path traversal in ~26s
+
+        /* ---- main loop via gsap ticker ---- */
+        let last = performance.now() / 1000;
+
+        function tick() {
+            const now = performance.now() / 1000;
+            let dt = now - last;
+            last = now;
+            dt = Math.min(dt, 0.05);
+            const time = now;
+
+            /* breathing airflow — shared so spacing never collides */
+            const speed = BASE_SPEED * (1 + 0.16 * Math.sin(time * 0.7));
+            flow = (flow + dt * speed) % 1;
+
+            /* capsules */
+            for (const c of capsules) {
+                const frac = ((c.i / N) + flow) % 1;
+                const len = frac * PATH_LEN;
+                const p = ptAt(len);
+                const p2 = ptAt(len + 1.2);
+                const ax = p2.x - p.x,
+                    ay = p2.y - p.y;
+                const al = Math.hypot(ax, ay) || 1;
+                // unit normal
+                const nx = -ay / al,
+                    ny = ax / al;
+                const bob = Math.sin(time * 1.6 + c.i * 0.9) * 3.2;
+                const x = p.x + nx * bob;
+                const y = p.y + ny * bob;
+                // curvature -> gentle squeeze/scale near turns
+                const p0 = ptAt(len - 26);
+                const a0 = Math.atan2(p.y - p0.y, p.x - p0.x);
+                const a1 = Math.atan2(p2.y - p.y, p2.x - p.x);
+                let dA = Math.abs(a1 - a0);
+                if (dA > Math.PI) dA = 2 * Math.PI - dA;
+                const sc = 1 + Math.min(dA * 0.9, 0.12) + Math.sin(time * 2 + c.i) * 0.012;
+                // edge fade
+                const fade = smoothstep(20, 150, p.x) * (1 - smoothstep(1300, 1440, p.x));
+                c.el.setAttribute("transform", `translate(${x.toFixed(2)},${y.toFixed(2)}) scale(${sc.toFixed(3)})`);
+                c.el.style.opacity = fade.toFixed(3);
+            }
+
+            /* ---- falling letters: gravity + bounce + settle ---- */
+            for (const Lr of letters) {
+                if (Lr.settled) continue;
+                Lr.t += dt;
+                if (Lr.t < Lr.delay) {
+                    Lr.el.style.transform = `translateY(${Lr.y}px)`;
+                    continue;
+                }
+                Lr.el.style.opacity = "1";
+                Lr.vy += 2600 * dt; // gravity (px/s^2)
+                Lr.y += Lr.vy * dt;
+                if (Lr.y >= 0) { // hit the invisible line
+                    Lr.y = 0;
+                    if (Math.abs(Lr.vy) > 42) {
+                        Lr.vy = -Lr.vy * 0.5;
+                    } // bounce w/ restitution
+                    else {
+                        Lr.vy = 0;
+                        Lr.settled = true;
+                    } // come to rest
+                }
+                Lr.el.style.transform = `translateY(${Lr.y.toFixed(1)}px)`;
+            }
+
+            /* ---- pendulum integrate ---- */
+            const k = 2.2; // restoring stiffness
+            // layered "wind" — several frequencies modulated by a slow gust envelope
+            const gustEnv = 0.6 + 0.4 * Math.sin(time * 0.21);
+            const wind = (0.55 * Math.sin(time * 0.53) + 0.32 * Math.sin(time * 1.09 + 1.3) +
+                0.16 * Math.sin(time * 2.27 + 0.5)) * gustEnv;
+            // occasional random gusts so it never looks looped
+            gustTimer -= dt;
+            if (gustTimer <= 0) {
+                angVel += (Math.random() - 0.5) * 0.22;
+                gustTimer = 2.4 + Math.random() * 3.2;
+            }
+            const angAcc = -k * Math.sin(ang) - 0.7 * angVel + wind * 0.42;
+            angVel += angAcc * dt;
+            ang += angVel * dt;
+            ang = Math.max(-0.36, Math.min(0.36, ang)); // keep the sway sane
+
+            // elastic vertical bob (rope stretch/relax) — spring
+            const sAcc = -28 * stretch - 5 * stretchVel + Math.sin(time * 1.7) * 2.0 + Math.abs(angVel) * 6;
+            stretchVel += sAcc * dt;
+            stretch += stretchVel * dt;
+            stretch = Math.max(-6, Math.min(10, stretch));
+
+            const lenDyn = REST_LEN + stretch;
+            const cx = PIVOT.x + lenDyn * Math.sin(ang);
+            const cy = PIVOT.y + lenDyn * Math.cos(ang);
+            const rot = ang * 0.62 + 0.010 * Math.sin(time * 2.1); // card rotation (rad)
+
+            /* place html card via CTM, then derive rope ends from its REAL corners
+               (card size comes from CSS so text stays readable at any width) */
+            const m = svg.getScreenCTM();
+            if (m) {
+                const sp = new DOMPoint(cx, cy).matrixTransform(m); // card center in screen px
+                cardScrX = sp.x;
+                cardScrY = sp.y;
+                const stageRect = document.getElementById("stage").getBoundingClientRect();
+                card.style.left = (sp.x - stageRect.left) + "px";
+                card.style.top = (sp.y - stageRect.top) + "px";
+                card.style.transform = `translate(-50%,-50%) rotate(${(rot*180/Math.PI).toFixed(2)}deg)`;
+
+                // rope attach points: offsets in screen px from the card's own size, rotated,
+                // then converted screen -> svg so they line up with the anchors on the line
+                const w = card.offsetWidth,
+                    h = card.offsetHeight;
+                const ax = w * 0.34,
+                    ay = h * 0.5 - 4;
+                const cosR = Math.cos(rot),
+                    sinR = Math.sin(rot);
+                const inv = m.inverse();
+                const toSvg = (dx, dy) => new DOMPoint(sp.x + dx * cosR - dy * sinR, sp.y + dx * sinR + dy * cosR).matrixTransform(inv);
+                const cL = toSvg(-ax, -ay),
+                    cR = toSvg(ax, -ay);
+
+                const sag = 18 + 14 * Math.cos(ang) - stretch * 0.5;
+                const rope = (el, a, b) => {
+                    const mx = (a.x + b.x) / 2,
+                        my = (a.y + b.y) / 2;
+                    el.setAttribute("d", `M ${a.x} ${a.y} Q ${mx} ${my+sag} ${b.x} ${b.y}`);
+                };
+                rope(ropeL, ANCHOR_L, cL);
+                rope(ropeR, ANCHOR_R, cR);
+
+                spotlight.style.left = (sp.x) + "px";
+                spotlight.style.top = (sp.y + 40) + "px";
+                spotlight.style.transform = `translate(-50%,-50%) scale(${(1+Math.sin(time*0.8)*0.03).toFixed(3)})`;
+            }
+
+            /* moving reflection streak */
+            const off = (-(time * 120) % 2580);
+            sweep.setAttribute("stroke-dashoffset", off.toFixed(1));
+        }
+        gsap.ticker.add(tick);
+
+        /* paint an immediate first frame so the hero is never blank before the
+           animation loop starts (some embedded/headless previews throttle rAF) */
+        function primeFrame() {
+            try {
+                for (let i = 0; i < 24; i++) tick();
+            } catch (e) {}
+        }
+
+        /* size the hero so it always contains the hanging card — on wide screens the
+           width:100% SVG scales tall and the long ropes would otherwise drop the card
+           into the IDE section below. Keeps a clean gap before "Watch Code Come to Life". */
+        function fitHero() {
+            const hero = document.querySelector(".hero");
+            const cardEl = document.getElementById("card");
+            if (!hero || !cardEl) return;
+            const hr = hero.getBoundingClientRect();
+            const cr = cardEl.getBoundingClientRect();
+            const cardBottomRel = (cr.bottom - hr.top); // card bottom from hero top
+            const needed = cardBottomRel + 140; // breathing room before IDE
+            hero.style.minHeight = Math.max(window.innerHeight, needed) + "px";
+        }
+
+        function refresh() {
+            primeFrame();
+            fitHero();
+        }
+        refresh();
+        requestAnimationFrame(refresh);
+        window.addEventListener("load", refresh);
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(refresh);
+        }
+
+        /* recompute on resize */
+        const ro = new ResizeObserver(() => {
+            PATH_LEN = path.getTotalLength();
+        });
+        ro.observe(svg);
+        window.addEventListener("resize", () => {
+            PATH_LEN = path.getTotalLength();
+            placeWord();
+            primeFrame();
+            fitHero();
+        });
+
+        /* moving the mouse acts like a gust of wind touching the card — the closer
+           and faster you move, the stronger the push it feels */
+        let lastMx = null,
+            lastMt = 0;
+        document.getElementById("stage").addEventListener("pointermove", (e) => {
+            const now = performance.now();
+            if (lastMx !== null) {
+                const dt2 = Math.max(16, now - lastMt);
+                const vx = (e.clientX - lastMx) / dt2; // px per ms
+                const dist = Math.hypot(e.clientX - cardScrX, e.clientY - cardScrY);
+                const prox = Math.max(0, 1 - dist / 460); // 1 right on the card, 0 far away
+                angVel += vx * 0.020 * (0.35 + prox); // wind push (swing)
+                stretchVel += Math.abs(vx) * 0.5 * prox; // tiny lift on the ropes
+            }
+            lastMx = e.clientX;
+            lastMt = now;
+        });
+
+        /* ---------------- ambient particle field ---------------- */
+        const cv = document.getElementById("particles");
+        const ctx = cv.getContext("2d");
+        let parts = [];
+
+        function resizeCv() {
+            cv.width = innerWidth * devicePixelRatio;
+            cv.height = innerHeight * devicePixelRatio;
+            cv.style.width = innerWidth + "px";
+            cv.style.height = innerHeight + "px";
+            ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+            const count = Math.min(70, Math.floor(innerWidth / 22));
+            parts = Array.from({
+                length: count
+            }, () => ({
+                x: Math.random() * innerWidth,
+                y: Math.random() * innerHeight,
+                r: Math.random() * 1.8 + 0.4,
+                vx: (Math.random() - 0.5) * 0.12,
+                vy: (Math.random() - 0.5) * 0.12,
+                a: Math.random() * 0.5 + 0.15,
+                tw: Math.random() * Math.PI * 2
+            }));
+        }
+        resizeCv();
+        window.addEventListener("resize", resizeCv);
+
+        function drawParts(t) {
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (const p of parts) {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.tw += 0.02;
+                if (p.x < 0) p.x = innerWidth;
+                if (p.x > innerWidth) p.x = 0;
+                if (p.y < 0) p.y = innerHeight;
+                if (p.y > innerHeight) p.y = 0;
+                const a = p.a * (0.6 + 0.4 * Math.sin(p.tw));
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, 7);
+                ctx.fillStyle = `rgba(86,64,38,${a*0.6})`;
+                ctx.shadowBlur = 0;
+                ctx.fill();
+            }
+            requestAnimationFrame(drawParts);
+        }
+        requestAnimationFrame(drawParts);
+    </script>
+    <script>
+        /* ================================================================
+                   CROSSTECCH — Interactive IDE engine (rebuilt)
+                   Drives: tab switching · typing animation · syntax highlight ·
+                           file tree · terminal output · live dashboard
+                ================================================================ */
+        (function() {
+            const $ = id => document.getElementById(id);
+            const codeEl = $("ideCode"),
+                cursorEl = $("ideCursor"),
+                gutterEl = $("ideGutter"),
+                treeEl = $("ideTree"),
+                termEl = $("ideTermOut"),
+                termCur = $("ideTermCursor"),
+                fnameEl = $("ideFilename"),
+                etabEl = $("ideEtab"),
+                langEl = $("ideStatusLang"),
+                lineEl = $("ideStatusLine"),
+                badgeEl = $("ideStatusBadge"),
+                dashTitle = $("ideDashTitle"),
+                dashBody = $("ideDashBody"),
+                codeArea = codeEl ? codeEl.parentElement : null;
+            if (!codeEl) return;
+
+            /* ---------- syntax highlighter (token-safe) ---------- */
+            const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            const KW = /\b(const|let|var|function|return|await|async|import|from|export|if|else|for|while|class|new|try|catch|throw|def|end|do|then|fi|in|of|true|false|null|None|True|False|public|void|require|module|describe|it|test|expect|beforeEach|afterEach)\b/;
+
+            function highlight(line, lang) {
+                // comments first
+                let cm = null;
+                const cIdx = (lang === "py" || lang === "yaml" || lang === "hcl" || lang === "bash" || lang === "ini") ?
+                    line.indexOf("#") : line.indexOf("//");
+                if (cIdx > -1 && !/["'].*(#|\/\/)/.test(line.slice(0, cIdx))) {
+                    cm = line.slice(cIdx);
+                    line = line.slice(0, cIdx);
+                }
+                let out = "",
+                    i = 0;
+                const tokenRe = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|(\b\d[\d._]*\b)|([A-Za-z_$][\w$]*)/g;
+                let m, last = 0;
+                while ((m = tokenRe.exec(line))) {
+                    out += esc(line.slice(last, m.index));
+                    if (m[1]) out += '<span style="color:#ce9178">' + esc(m[1]) + '</span>';
+                    else if (m[2]) out += '<span style="color:#b5cea8">' + esc(m[2]) + '</span>';
+                    else if (m[3]) {
+                        const w = m[3];
+                        if (KW.test(w)) out += '<span style="color:#569cd6">' + esc(w) + '</span>';
+                        else if (/^[A-Z]/.test(w)) out += '<span style="color:#4ec9b0">' + esc(w) + '</span>';
+                        else if (line[tokenRe.lastIndex] === "(") out += '<span style="color:#dcdcaa">' + esc(w) + '</span>';
+                        else out += esc(w);
+                    }
+                    last = tokenRe.lastIndex;
+                }
+                out += esc(line.slice(last));
+                if (cm !== null) out += '<span style="color:#6a9955">' + esc(cm) + '</span>';
+                return out;
+            }
+
+            /* ---------- per-stack data ---------- */
+            const STACKS = {
+                playwright: {
+                    file: "login.spec.ts",
+                    lang: "TypeScript",
+                    langKey: "ts",
+                    badge: "pass",
+                    tree: [
+                        ["📁", "tests", 1],
+                        ["📄", "login.spec.ts", 2, 1],
+                        ["📄", "checkout.spec.ts", 2],
+                        ["📁", "fixtures", 1],
+                        ["📄", "playwright.config.ts", 1]
+                    ],
+                    code: [
+                        "import { test, expect } from '@playwright/test';", "",
+                        "test('user can log in', async ({ page }) => {",
+                        "  await page.goto('https://app.crosstecch.io');",
+                        "  await page.fill('#email', 'qa@crosstecch.io');",
+                        "  await page.fill('#password', 'secret');",
+                        "  await page.click('button[type=submit]');",
+                        "  await expect(page).toHaveURL(/dashboard/);",
+                        "  await expect(page.locator('.welcome')).toBeVisible();",
+                        "});"
+                    ],
+                    term: ["$ npx playwright test", "Running 24 tests on 3 browsers...", "  ✓ chromium › user can log in (1.2s)", "  ✓ firefox  › user can log in (1.4s)", "  ✓ webkit   › user can log in (1.1s)", "24 passed (12.4s)"],
+                    dash: {
+                        title: "Test Results",
+                        html: `
+        <div class="ide-stat-card"><div class="ide-stat-label">Passed</div><div class="ide-stat-val green">24/24</div><div class="ide-prog-bar"><div class="ide-prog-fill green" style="width:100%"></div></div></div>
+        <div class="ide-test-row"><span class="ide-dot-s" style="background:#27c93f"></span>chromium<span style="margin-left:auto">1.2s</span></div>
+        <div class="ide-test-row"><span class="ide-dot-s" style="background:#27c93f"></span>firefox<span style="margin-left:auto">1.4s</span></div>
+        <div class="ide-test-row"><span class="ide-dot-s" style="background:#27c93f"></span>webkit<span style="margin-left:auto">1.1s</span></div>`
+                    }
+                },
+
+                selenium: {
+                    file: "LoginTest.java",
+                    lang: "Java",
+                    langKey: "java",
+                    badge: "pass",
+                    tree: [
+                        ["📁", "src/test", 1],
+                        ["📄", "LoginTest.java", 2, 1],
+                        ["📄", "BaseTest.java", 2],
+                        ["📄", "pom.xml", 1]
+                    ],
+                    code: [
+                        "@Test", "public void userCanLogIn() {",
+                        "  driver.get(\"https://app.crosstecch.io\");",
+                        "  driver.findElement(By.id(\"email\")).sendKeys(\"qa@crosstecch.io\");",
+                        "  driver.findElement(By.id(\"password\")).sendKeys(\"secret\");",
+                        "  driver.findElement(By.cssSelector(\"button[type=submit]\")).click();",
+                        "  new WebDriverWait(driver, ofSeconds(10))",
+                        "    .until(urlContains(\"dashboard\"));",
+                        "  assertTrue(driver.findElement(By.className(\"welcome\")).isDisplayed());", "}"
+                    ],
+                    term: ["$ mvn test", "[INFO] Running com.crosstecch.LoginTest", "[INFO] Tests run: 8, Failures: 0, Errors: 0", "[INFO] BUILD SUCCESS", "[INFO] Total time: 18.633 s"],
+                    dash: {
+                        title: "Suite Status",
+                        html: `
+        <div class="ide-stat-card"><div class="ide-stat-label">Tests run</div><div class="ide-stat-val green">8</div></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">Failures</div><div class="ide-stat-val">0</div></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">Build</div><div class="ide-stat-val green">SUCCESS</div></div>`
+                    }
+                },
+
+                cypress: {
+                    file: "checkout.cy.js",
+                    lang: "JavaScript",
+                    langKey: "js",
+                    badge: "pass",
+                    tree: [
+                        ["📁", "cypress/e2e", 1],
+                        ["📄", "checkout.cy.js", 2, 1],
+                        ["📄", "login.cy.js", 2],
+                        ["📄", "cypress.config.js", 1]
+                    ],
+                    code: [
+                        "describe('Checkout flow', () => {",
+                        "  it('completes a purchase', () => {",
+                        "    cy.visit('/shop');",
+                        "    cy.get('[data-cy=add-to-cart]').first().click();",
+                        "    cy.get('[data-cy=cart]').click();",
+                        "    cy.get('[data-cy=checkout]').click();",
+                        "    cy.contains('Order confirmed').should('be.visible');",
+                        "  });", "});"
+                    ],
+                    term: ["$ npx cypress run", "  Checkout flow", "    ✓ completes a purchase (2.3s)", "  1 passing (2.4s)", "  ✓ All specs passed!"],
+                    dash: {
+                        title: "Run Summary",
+                        html: `
+        <div class="ide-stat-card"><div class="ide-stat-label">Passing</div><div class="ide-stat-val green">1/1</div><div class="ide-prog-bar"><div class="ide-prog-fill green" style="width:100%"></div></div></div>
+        <div class="ide-test-row"><span class="ide-dot-s" style="background:#27c93f"></span>completes a purchase<span style="margin-left:auto">2.3s</span></div>`
+                    }
+                },
+
+                api: {
+                    file: "users.test.js",
+                    lang: "JavaScript",
+                    langKey: "js",
+                    badge: "pass",
+                    tree: [
+                        ["📁", "api-tests", 1],
+                        ["📄", "users.test.js", 2, 1],
+                        ["📄", "auth.test.js", 2],
+                        ["📄", "jest.config.js", 1]
+                    ],
+                    code: [
+                        "const request = require('supertest');", "",
+                        "test('GET /api/users returns 200', async () => {",
+                        "  const res = await request(app).get('/api/users');",
+                        "  expect(res.status).toBe(200);",
+                        "  expect(res.body).toHaveLength(12);",
+                        "});", "",
+                        "test('POST /api/login authenticates', async () => {",
+                        "  const res = await request(app).post('/api/login')",
+                        "    .send({ email: 'qa@crosstecch.io', password: 'secret' });",
+                        "  expect(res.body.token).toBeDefined();", "});"
+                    ],
+                    term: ["$ npm test", "PASS  api-tests/users.test.js", "  ✓ GET /api/users returns 200 (44ms)", "  ✓ POST /api/login authenticates (61ms)", "Tests: 2 passed, 2 total"],
+                    dash: {
+                        title: "Endpoints",
+                        html: `
+        <div class="ide-test-row"><span class="ide-dot-s" style="background:#569cd6"></span>GET /users<span style="margin-left:auto;color:#27c93f">200</span></div>
+        <div class="ide-test-row"><span class="ide-dot-s" style="background:#27c93f"></span>POST /login<span style="margin-left:auto;color:#27c93f">200</span></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">Avg latency</div><div class="ide-stat-val blue">52ms</div></div>`
+                    }
+                },
+
+                devops: {
+                    file: ".gitlab-ci.yml",
+                    lang: "YAML",
+                    langKey: "yaml",
+                    badge: "running",
+                    tree: [
+                        ["📄", ".gitlab-ci.yml", 1, 1],
+                        ["📁", ".github/workflows", 1],
+                        ["📄", "deploy.yml", 2]
+                    ],
+                    code: [
+                        "stages: [build, test, deploy]", "",
+                        "build:", "  stage: build", "  script:", "    - npm ci", "    - npm run build", "",
+                        "deploy:", "  stage: deploy", "  script:", "    - kubectl apply -f k8s/", "  only: [main]"
+                    ],
+                    term: ["$ pipeline triggered #247", "✓ build      passed  (1m12s)", "✓ test       passed  (2m48s)", "→ deploy     running...", "Deploying to production..."],
+                    dash: {
+                        title: "Pipeline #247",
+                        html: `
+        <div class="ide-pipeline-stage"><span class="ide-pipeline-icon">✓</span>build<span class="ide-pipeline-status" style="color:#27c93f">PASSED</span></div>
+        <div class="ide-pipeline-stage"><span class="ide-pipeline-icon">✓</span>test<span class="ide-pipeline-status" style="color:#27c93f">PASSED</span></div>
+        <div class="ide-pipeline-stage"><span class="ide-pipeline-icon">●</span>deploy<span class="ide-pipeline-status" style="color:#569cd6">RUNNING</span></div>`
+                    }
+                },
+
+                linux: {
+                    file: "deploy.sh",
+                    lang: "Shell",
+                    langKey: "bash",
+                    badge: "running",
+                    tree: [
+                        ["📄", "deploy.sh", 1, 1],
+                        ["📄", "backup.sh", 1],
+                        ["📄", "healthcheck.sh", 1]
+                    ],
+                    code: [
+                        "#!/usr/bin/env bash", "set -euo pipefail", "",
+                        "echo \"Pulling latest image...\"", "docker pull crosstecch/api:latest", "",
+                        "echo \"Rolling restart...\"", "systemctl restart crosstecch-api", "",
+                        "curl -fsS http://localhost:8080/health && echo \" OK\""
+                    ],
+                    term: ["$ ./deploy.sh", "Pulling latest image...", "latest: digest sha256:9f2c... done", "Rolling restart...", "  OK", "Deploy complete ✓"],
+                    dash: {
+                        title: "System",
+                        html: `
+        <div class="ide-stat-card"><div class="ide-stat-label">CPU</div><div class="ide-stat-val green">23%</div><div class="ide-prog-bar"><div class="ide-prog-fill green" style="width:23%"></div></div></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">Memory</div><div class="ide-stat-val blue">3.1 GB</div><div class="ide-prog-bar"><div class="ide-prog-fill blue" style="width:48%"></div></div></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">Uptime</div><div class="ide-stat-val">42d</div></div>`
+                    }
+                },
+
+                docker: {
+                    file: "Dockerfile",
+                    lang: "Dockerfile",
+                    langKey: "bash",
+                    badge: "pass",
+                    tree: [
+                        ["📄", "Dockerfile", 1, 1],
+                        ["📄", "docker-compose.yml", 1],
+                        ["📄", ".dockerignore", 1]
+                    ],
+                    code: [
+                        "FROM node:20-alpine AS build", "WORKDIR /app", "COPY package*.json ./",
+                        "RUN npm ci", "COPY . .", "RUN npm run build", "",
+                        "FROM nginx:alpine", "COPY --from=build /app/dist /usr/share/nginx/html", "EXPOSE 80"
+                    ],
+                    term: ["$ docker build -t crosstecch/web .", "[+] Building 24.1s (12/12) FINISHED", "  => exporting to image", "  => naming to crosstecch/web:latest", "Successfully built ✓"],
+                    dash: {
+                        title: "Image",
+                        html: `
+        <div class="ide-stat-card"><div class="ide-stat-label">Size</div><div class="ide-stat-val blue">48.2 MB</div></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">Layers</div><div class="ide-stat-val">12</div></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">Build</div><div class="ide-stat-val green">24.1s</div></div>`
+                    }
+                },
+
+                kubernetes: {
+                    file: "deployment.yaml",
+                    lang: "YAML",
+                    langKey: "yaml",
+                    badge: "pass",
+                    tree: [
+                        ["📁", "k8s", 1],
+                        ["📄", "deployment.yaml", 2, 1],
+                        ["📄", "service.yaml", 2],
+                        ["📄", "ingress.yaml", 2]
+                    ],
+                    code: [
+                        "apiVersion: apps/v1", "kind: Deployment", "metadata:", "  name: crosstecch-api", "spec:",
+                        "  replicas: 3", "  selector:", "    matchLabels: { app: api }", "  template:",
+                        "    spec:", "      containers:", "        - name: api", "          image: crosstecch/api:latest"
+                    ],
+                    term: ["$ kubectl apply -f k8s/", "deployment.apps/crosstecch-api created", "service/crosstecch-api created", "$ kubectl get pods", "NAME            READY   STATUS", "api-7d9f-x2k   1/1     Running"],
+                    dash: {
+                        title: "Pods",
+                        html: `
+        <div class="ide-test-row"><span class="ide-dot-s" style="background:#27c93f"></span>api-7d9f-x2k<span style="margin-left:auto;color:#27c93f">Running</span></div>
+        <div class="ide-test-row"><span class="ide-dot-s" style="background:#27c93f"></span>api-7d9f-p4m<span style="margin-left:auto;color:#27c93f">Running</span></div>
+        <div class="ide-test-row"><span class="ide-dot-s" style="background:#27c93f"></span>api-7d9f-q8w<span style="margin-left:auto;color:#27c93f">Running</span></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">Replicas</div><div class="ide-stat-val green">3/3</div></div>`
+                    }
+                },
+
+                jenkins: {
+                    file: "Jenkinsfile",
+                    lang: "Groovy",
+                    langKey: "java",
+                    badge: "pass",
+                    tree: [
+                        ["📄", "Jenkinsfile", 1, 1],
+                        ["📁", "scripts", 1],
+                        ["📄", "notify.groovy", 2]
+                    ],
+                    code: [
+                        "pipeline {", "  agent any", "  stages {",
+                        "    stage('Build') { steps { sh 'npm ci && npm run build' } }",
+                        "    stage('Test')  { steps { sh 'npm test' } }",
+                        "    stage('Deploy'){ steps { sh 'kubectl apply -f k8s/' } }",
+                        "  }", "}"
+                    ],
+                    term: ["Started by user qa", "[Pipeline] stage (Build)", "[Pipeline] stage (Test)", "[Pipeline] stage (Deploy)", "Finished: SUCCESS"],
+                    dash: {
+                        title: "Build #1042",
+                        html: `
+        <div class="ide-pipeline-stage"><span class="ide-pipeline-icon">✓</span>Build<span class="ide-pipeline-status" style="color:#27c93f">OK</span></div>
+        <div class="ide-pipeline-stage"><span class="ide-pipeline-icon">✓</span>Test<span class="ide-pipeline-status" style="color:#27c93f">OK</span></div>
+        <div class="ide-pipeline-stage"><span class="ide-pipeline-icon">✓</span>Deploy<span class="ide-pipeline-status" style="color:#27c93f">OK</span></div>`
+                    }
+                },
+
+                terraform: {
+                    file: "main.tf",
+                    lang: "HCL",
+                    langKey: "hcl",
+                    badge: "pass",
+                    tree: [
+                        ["📄", "main.tf", 1, 1],
+                        ["📄", "variables.tf", 1],
+                        ["📄", "outputs.tf", 1]
+                    ],
+                    code: [
+                        "resource \"aws_instance\" \"api\" {",
+                        "  ami           = \"ami-0c55b159cbfafe1f0\"",
+                        "  instance_type = \"t3.medium\"",
+                        "  tags = { Name = \"crosstecch-api\" }", "}", "",
+                        "resource \"aws_s3_bucket\" \"assets\" {",
+                        "  bucket = \"crosstecch-assets\"", "}"
+                    ],
+                    term: ["$ terraform apply", "Plan: 2 to add, 0 to change, 0 to destroy.", "aws_instance.api: Creating...", "aws_s3_bucket.assets: Creation complete", "Apply complete! Resources: 2 added."],
+                    dash: {
+                        title: "Plan",
+                        html: `
+        <div class="ide-stat-card"><div class="ide-stat-label">To add</div><div class="ide-stat-val green">2</div></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">To change</div><div class="ide-stat-val">0</div></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">To destroy</div><div class="ide-stat-val">0</div></div>`
+                    }
+                },
+
+                aws: {
+                    file: "handler.py",
+                    lang: "Python",
+                    langKey: "py",
+                    badge: "pass",
+                    tree: [
+                        ["📁", "lambda", 1],
+                        ["📄", "handler.py", 2, 1],
+                        ["📄", "template.yaml", 1]
+                    ],
+                    code: [
+                        "import json, boto3", "",
+                        "s3 = boto3.client('s3')", "",
+                        "def handler(event, context):",
+                        "    # process uploaded object",
+                        "    key = event['Records'][0]['s3']['object']['key']",
+                        "    s3.copy_object(Bucket='backups',",
+                        "        CopySource=f'uploads/{key}', Key=key)",
+                        "    return { 'statusCode': 200, 'body': json.dumps('ok') }"
+                    ],
+                    term: ["$ sam deploy", "Deploying CloudFormation changeset...", "CREATE_COMPLETE  ProcessFunction", "Successfully created/updated stack", "Lambda live ✓"],
+                    dash: {
+                        title: "Lambda",
+                        html: `
+        <div class="ide-stat-card"><div class="ide-stat-label">Invocations</div><div class="ide-stat-val blue">1.2k</div></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">Errors</div><div class="ide-stat-val green">0</div></div>
+        <div class="ide-stat-card"><div class="ide-stat-label">Avg duration</div><div class="ide-stat-val">112ms</div></div>`
+                    }
+                }
+            };
+
+            const ORDER = ["playwright", "selenium", "cypress", "api", "devops", "linux", "docker", "kubernetes", "jenkins", "terraform", "aws"];
+            const tabs = [...document.querySelectorAll(".ide-tab")];
+
+            /* ---------- render helpers ---------- */
+            function renderTree(stack) {
+                treeEl.innerHTML = stack.tree.map(([icon, name, lvl, active]) => {
+                    const cls = lvl === 1 ? "ide-tree-folder" : "ide-tree-file" + (active ? " active" : "");
+                    return `<div class="${cls}"><span class="ide-tree-icon">${icon}</span>${name}</div>`;
+                }).join("");
+            }
+
+            function setGutter(n) {
+                let g = "";
+                for (let i = 1; i <= n; i++) g += `<span>${i}</span>`;
+                gutterEl.innerHTML = g;
+            }
+
+            function badgeClass(b) {
+                return b === "pass" ? "pass" : (b === "running" ? "" : "fail");
+            }
+
+            function setBadge(state) {
+                badgeEl.className = "ide-status-badge " + (state === "pass" ? "pass" : state === "running" ? "" : "fail");
+                badgeEl.textContent = state === "pass" ? "● PASSED" : state === "running" ? "● RUNNING" : "● TESTING";
+            }
+
+            let typer = null,
+                termTimer = null,
+                cycleTimer = null;
+
+            function clearTimers() {
+                clearTimeout(typer);
+                clearTimeout(termTimer);
+                clearTimeout(cycleTimer);
+            }
+
+            function load(key, autoCycle) {
+                const s = STACKS[key];
+                if (!s) return;
+                clearTimers();
+                tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === key));
+                fnameEl.textContent = s.file;
+                etabEl.textContent = s.file;
+                langEl.textContent = s.lang;
+                renderTree(s);
+                dashTitle.textContent = s.dash.title;
+                dashBody.innerHTML = s.dash.html;
+                setBadge("running");
+                codeEl.innerHTML = "";
+                termEl.innerHTML = "";
+                lineEl.textContent = "Ln 1";
+                const lines = s.code;
+                const total = lines.length;
+                setGutter(total);
+
+                // type the code, line by line, char by char
+                let li = 0,
+                    ci = 0,
+                    acc = [];
+
+                function typeStep() {
+                    if (li >= total) {
+                        cursorEl.style.display = "none";
+                        runTerminal(s);
+                        if (autoCycle) {
+                            cycleTimer = setTimeout(() => {
+                                const ni = (ORDER.indexOf(key) + 1) % ORDER.length;
+                                load(ORDER[ni], true);
+                                scrollTab(ORDER[ni]);
+                            }, 4200);
+                        }
+                        return;
+                    }
+                    cursorEl.style.display = "inline-block";
+                    const line = lines[li];
+                    ci++;
+                    const shown = acc.concat([line.slice(0, ci)]);
+                    codeEl.innerHTML = shown.map((l, idx) => highlight(l, s.langKey)).join("\n");
+                    lineEl.textContent = "Ln " + (li + 1);
+                    // position cursor after the code block
+                    placeCursor();
+                    if (ci >= line.length) {
+                        acc.push(line);
+                        li++;
+                        ci = 0;
+                        typer = setTimeout(typeStep, 60);
+                    } else {
+                        typer = setTimeout(typeStep, 12 + Math.random() * 26);
+                    }
+                }
+                typeStep();
+            }
+
+            function placeCursor() {
+                // append cursor visually at end of last line
+                const r = codeEl.getBoundingClientRect();
+                // simple: keep cursor after pre via inline-block flow
+            }
+
+            function runTerminal(s) {
+                setBadge(s.badge);
+                let i = 0,
+                    lines = s.term;
+                termEl.innerHTML = "";
+
+                function step() {
+                    if (i >= lines.length) {
+                        termCur.style.display = "inline";
+                        return;
+                    }
+                    const color = /✓|passed|SUCCESS|complete|OK|created|live/i.test(lines[i]) ? "#27c93f" :
+                        /✗|fail|error/i.test(lines[i]) ? "#f14c4c" :
+                        /\$/.test(lines[i]) ? "#569cd6" : "#cccccc";
+                    termEl.innerHTML += `<span style="color:${color}">${lines[i].replace(/</g,"&lt;")}</span>\n`;
+                    i++;
+                    termTimer = setTimeout(step, 360);
+                }
+                step();
+            }
+
+            function scrollTab(key) {
+                // Sirf andar ki tab-strip ko horizontally scroll karo.
+                // (scrollIntoView parent page ko apni taraf kheench leta tha — wo hata diya)
+                const t = tabs.find(x => x.dataset.tab === key);
+                if (!t) return;
+                const c = t.closest('.ide-tabs-scroll') || t.parentElement;
+                if (!c || c.scrollWidth <= c.clientWidth + 2) return;
+                const cr = c.getBoundingClientRect(), tr = t.getBoundingClientRect();
+                const delta = (tr.left - cr.left) - (c.clientWidth - tr.width) / 2;
+                c.scrollBy({ left: delta, behavior: 'smooth' });
+            }
+
+            // click handlers
+            tabs.forEach(t => t.addEventListener("click", () => load(t.dataset.tab, false)));
+
+            // start when the section scrolls into view, then auto-cycle
+            let started = false;
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting && !started) {
+                        started = true;
+                        load("playwright", true);
+                    }
+                });
+            }, {
+                threshold: 0.25
+            });
+            io.observe(document.getElementById("ide-section"));
+        })();
+    </script>
+    <!-- ===== EMBED MODE (sirf index1.html ke andar; standalone par koi asar nahi) ===== -->
+    <script>
+        (function () {
+            if (window.self === window.top) return;
+            function report() {
+                var h = (function () {
+                    var b = document.body, max = 0, cs;
+                    for (var i = 0; i < b.children.length; i++) {
+                        cs = getComputedStyle(b.children[i]);
+                        if (cs.position === 'fixed' || cs.position === 'absolute' || cs.display === 'none') continue;
+                        var bot = b.children[i].offsetTop + b.children[i].offsetHeight + (parseFloat(cs.marginBottom) || 0);
+                        if (bot > max) max = bot;
+                    }
+                    return (max + (parseFloat(getComputedStyle(b).paddingBottom) || 0)) || b.scrollHeight;
+                })();
+                if (h > 0) parent.postMessage({ ctSection: true, height: h }, '*');
+            }
+            window.__ctReport = report;
+            window.addEventListener('load', function () { report();[200, 600, 1200, 2500].forEach(function (d) { setTimeout(report, d); }); });
+            window.addEventListener('resize', report);
+            if (window.ResizeObserver) { try { new ResizeObserver(report).observe(document.body); } catch (e) {} }
+        })();
+    </script></body>
+
+</html>

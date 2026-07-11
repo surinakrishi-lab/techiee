@@ -101,19 +101,23 @@ Object.entries(PAGES).forEach(([route, file]) => {
 
 // index_files/ fragments (the sections embedded via iframe on several
 // pages) - also rendered through EJS now instead of express.static.
-const INDEX_FILES_PAGES = [
-  'hero1.html',
-  'flow.html',
-  'code.html',
-  'WhyChooseUs_preview.html',
-  'Our Services.html',
-  'index.html',
-  'hero.html',
-  'about.html',
-];
+// The source templates were converted from .html to .ejs; the public
+// URLs (still ending in .html) are kept exactly as before so every
+// existing link/iframe src across the site keeps working unchanged -
+// only the on-disk file each route renders has changed.
+const INDEX_FILES_PAGES = {
+  'hero1.html': 'hero1.ejs',
+  'flow.html': 'flow.ejs',
+  'code.html': 'code.ejs',
+  'WhyChooseUs_preview.html': 'WhyChooseUs_preview.ejs',
+  'Our Services.html': 'Our Services.ejs',
+  'index.html': 'index.ejs',
+  'hero.html': 'hero.ejs',
+  'about.html': 'about.ejs',
+};
 
-INDEX_FILES_PAGES.forEach((file) => {
-  app.get('/index_files/' + file, (req, res) =>
+Object.entries(INDEX_FILES_PAGES).forEach(([route, file]) => {
+  app.get('/index_files/' + route, (req, res) =>
     renderPage(res, path.join(ROOT, 'index_files', file))
   );
 });

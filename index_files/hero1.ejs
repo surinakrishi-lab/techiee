@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crosstecch — Hero Animation</title>
+
+    <!-- Raleway (used for the cycling verbs) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+        }
+        /* ── FIXED BACKGROUND ─────────────────────── */
+
+        .fixedBackground {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(ellipse 80% 70% at 50% 40%, #e8eaf2 0%, #d0d4e0 30%, #b8bece 60%, #9ea8bc 100%);
+            overflow: hidden;
+        }
+
+        .fixedBackground::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, transparent 45%, rgba(180, 190, 210, 0.2) 100%);
+            pointer-events: none;
+        }
+
+        .fixedBackground::after {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 50%;
+            background: radial-gradient(ellipse at center top, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .heroSection {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+        }
+        /* ── ORBS ─────────────────────────────────── */
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .orb1 {
+            width: 260px;
+            height: 260px;
+            top: 5%;
+            left: 4%;
+            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.55), rgba(210, 220, 240, 0.15) 60%, transparent);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            animation: orbFloat1 8s ease-in-out infinite;
+        }
+
+        .orb2 {
+            width: 180px;
+            height: 180px;
+            top: 55%;
+            right: 6%;
+            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.45), rgba(200, 210, 235, 0.1) 60%, transparent);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            animation: orbFloat2 11s ease-in-out infinite;
+        }
+
+        .orb3 {
+            width: 100px;
+            height: 100px;
+            bottom: 10%;
+            left: 12%;
+            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.4), rgba(220, 225, 245, 0.1) 60%, transparent);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: orbFloat3 14s ease-in-out infinite;
+        }
+
+        .orb4 {
+            width: 70px;
+            height: 70px;
+            top: 20%;
+            right: 18%;
+            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.35), transparent 70%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            animation: orbFloat2 9s ease-in-out infinite reverse;
+        }
+
+        @keyframes orbFloat1 {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(12px, -18px) scale(1.02);
+            }
+        }
+
+        @keyframes orbFloat2 {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-10px, 14px);
+            }
+        }
+
+        @keyframes orbFloat3 {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(8px, -10px) scale(0.97);
+            }
+        }
+        /* ── BLOOM ────────────────────────────────── */
+
+        .glow {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 420px;
+            height: 560px;
+            transform: translate(-50%, -48%);
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.55) 0%, rgba(210, 218, 240, 0.25) 50%, transparent 75%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(30px);
+        }
+        /* ── SIDE LABELS ──────────────────────────── */
+
+        .sideLabel {
+            position: absolute;
+            writing-mode: vertical-rl;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(26, 26, 46, 0.4);
+            font-weight: 500;
+            z-index: 20;
+        }
+
+        .left {
+            left: 32px;
+            top: 50%;
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .right {
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        /* ── TYPOGRAPHY ───────────────────────────── */
+
+        .typo {
+            position: absolute;
+            top: max(120px, 15vh);
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            z-index: 20;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .typo.visible {
+            opacity: 1;
+        }
+
+        .weLine {
+            font-family: 'Monument Extended', sans-serif;
+            font-size: clamp(40px, 11vw, 140px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.9;
+            color: transparent;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.4) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+
+        .verbWrap {
+            position: relative;
+            width: 100%;
+            height: clamp(80px, 12vw, 160px);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .verb {
+            position: absolute;
+            left: 50%;
+            font-family: 'Raleway', sans-serif;
+            font-size: clamp(60px, 11vw, 150px);
+            font-weight: 800;
+            letter-spacing: 8px;
+            line-height: 1;
+            color: transparent;
+            background: linear-gradient(to right, #00f2fe 0%, #4facfe 35%, #ff0844 70%, #ffb199 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            opacity: 0;
+            transform: translate(-50%, 12px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .verb.active {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .accentLine {
+            display: block;
+            width: 40px;
+            height: 1.5px;
+            background: rgba(100, 116, 150, 0.45);
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+        /* ── IMAGE CONTAINER ──────────────────────── */
+
+        .imageContainer {
+            position: absolute;
+            bottom: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 65%;
+            max-width: 1000px;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 15;
+            pointer-events: none;
+        }
+
+        .girlGlow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140%;
+            height: 140%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.8;
+            mix-blend-mode: overlay;
+            filter: blur(30px) brightness(1.2);
+            border-radius: 50%;
+        }
+
+        .girlImage {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            object-position: center;
+            mix-blend-mode: multiply;
+            animation: floatImage 6s ease-in-out infinite;
+            -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 40%, black 40%, transparent 75%);
+            mask-image: radial-gradient(ellipse 50% 50% at 50% 40%, black 40%, transparent 75%);
+            filter: drop-shadow(0 -10px 40px rgba(0, 255, 200, 0.5)) drop-shadow(0 0 25px rgba(255, 0, 255, 0.3)) contrast(1.2) brightness(1.1);
+        }
+
+        @keyframes floatImage {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .fogOverlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 18;
+            background: linear-gradient(to top, rgba(232, 234, 242, 1) 0%, rgba(232, 234, 242, 0) 30%), radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(232, 234, 242, 0.4) 75%, rgba(200, 205, 220, 0.9) 100%);
+            mix-blend-mode: normal;
+            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        }
+        /* ── GLASS CARDS ──────────────────────────── */
+
+        .glassCard {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 24px;
+            width: 220px;
+            z-index: 20;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            animation: floatCard 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .glassCard h3 {
+            font-size: 42px;
+            font-weight: 800;
+            margin: 0;
+            color: #1a1a2e;
+            letter-spacing: -1px;
+        }
+
+        .glassCard p {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0;
+            color: #4a4a5e;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .cardLeft1 {
+            top: 25%;
+            left: 8%;
+            animation-delay: 0s;
+        }
+
+        .cardLeft2 {
+            top: 55%;
+            left: 12%;
+            animation-delay: -2s;
+        }
+
+        .cardRight1 {
+            top: 30%;
+            right: 8%;
+            animation-delay: -4s;
+        }
+
+        .cardRight2 {
+            top: 60%;
+            right: 12%;
+            animation-delay: -6s;
+        }
+
+        @keyframes floatCard {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .glassCard {
+                transform: scale(0.8);
+            }
+            .cardLeft1 {
+                left: 2%;
+            }
+            .cardLeft2 {
+                left: 4%;
+            }
+            .cardRight1 {
+                right: 2%;
+            }
+            .cardRight2 {
+                right: 4%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .glassCard {
+                display: none;
+            }
+            .sideLabel {
+                display: none;
+            }
+            .typo {
+                top: 100px;
+            }
+            .imageContainer {
+                width: 110%;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: -15%;
+            }
+            .girlImage {
+                opacity: 0.85;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ── FIXED BACKGROUND ── -->
+    <div class="fixedBackground">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        <div class="orb orb4"></div>
+        <div class="glow"></div>
+    </div>
+
+    <!-- ── HERO SECTION ── -->
+    <div class="heroSection">
+        <!-- side labels -->
+        <span class="sideLabel left">Infrastructure · Scale · Precision</span>
+        <span class="sideLabel right">Est. 2024 · Global</span>
+
+        <!-- typography -->
+        <div class="typo" id="typo">
+            <span class="weLine">CROSSTECCH</span>
+            <div class="verbWrap">
+                <span class="verb" data-verb="0">BUILD.</span>
+                <span class="verb" data-verb="1">TEST.</span>
+                <span class="verb" data-verb="2">DEPLOY.</span>
+            </div>
+            <span class="accentLine"></span>
+        </div>
+
+        <!-- floating glass cards -->
+        <div class="glassCard cardLeft1">
+            <h3>240+</h3>
+            <p>PARTNERS</p>
+        </div>
+        <div class="glassCard cardLeft2">
+            <h3>92%</h3>
+            <p>FASTER TECHNOLOGY</p>
+        </div>
+        <div class="glassCard cardRight1">
+            <h3>1M+</h3>
+            <p>USERS GLOBALLY</p>
+        </div>
+        <div class="glassCard cardRight2">
+            <h3>99.9%</h3>
+            <p>UPTIME SECURED</p>
+        </div>
+
+        <!-- animated image -->
+        <div class="imageContainer">
+            <img loading="lazy" src="images/glow.jpeg" alt="Glow Effect" class="girlGlow" />
+            <img loading="lazy" src="images/landy2.png" alt="Hero Graphic" class="girlImage" />
+        </div>
+
+        <!-- fog overlay -->
+        <div class="fogOverlay"></div>
+    </div>
+
+    <script>
+        (function() {
+            var typo = document.getElementById('typo');
+            var verbs = Array.prototype.slice.call(document.querySelectorAll('.verb'));
+            var activeIndex = 0;
+            var isVisible = true;
+
+            function render() {
+                verbs.forEach(function(el, i) {
+                    if (i === activeIndex && isVisible) {
+                        el.classList.add('active');
+                    } else {
+                        el.classList.remove('active');
+                    }
+                });
+            }
+
+            // Show typography block after delay
+            setTimeout(function() {
+                typo.classList.add('visible');
+            }, 600);
+
+            // start with first verb active
+            render();
+
+            // Cycle through verbs
+            setInterval(function() {
+                isVisible = false; // fade out
+                render();
+                setTimeout(function() {
+                    activeIndex = (activeIndex + 1) % 3;
+                    isVisible = true; // fade in
+                    render();
+                }, 200);
+            }, 1500);
+        })();
+    </script>
+
+</body>
+
+</html>
