@@ -702,7 +702,7 @@
         .card {
             transition: box-shadow 0.4s ease, transform 0.4s ease !important;
         }
-        
+
         .card:hover {
             transform: translateY(-6px);
             box-shadow: 0 24px 50px rgba(15, 23, 42, 0.18);
@@ -794,6 +794,118 @@
                 font-size: 12.5px !important;
                 line-height: 1.5 !important;
             }
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           FULLSCREEN 3D STEP MODE (desktop only)
+           The section pins on screen (parent handles that). Only the active
+           card is visible, filling the stage with a real 3D transform;
+           scrolling swaps in the next card, one at a time.
+        ══════════════════════════════════════════════════════════════ */
+        @media (min-width: 901px) {
+            /* Decorative blobs are expensive (large blur + infinite animation).
+               They're not needed while the section is pinned/stepping, so stop
+               them from competing with the transform animation for GPU time. */
+            .bg-blob-1, .bg-blob-2 {
+                animation: none !important;
+            }
+
+            html, body {
+                height: 100vh;
+                overflow: hidden;
+                padding: 0;
+                display: block;
+            }
+
+            .section {
+                height: 100vh;
+                max-width: 1100px;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                padding: 26px 24px 22px;
+                box-sizing: border-box;
+            }
+
+            .eyebrow { margin-bottom: 6px; }
+            .headline { margin-bottom: 4px; font-size: clamp(24px, 3.2vw, 40px); }
+            .subline { margin-bottom: 16px; }
+
+            .cards {
+                position: relative;
+                flex: 1;
+                min-height: 0;
+                height: auto;
+                perspective: 1600px;
+            }
+
+            /* Only opacity/transform (+ visibility, which is free) animate here.
+               box-shadow and backdrop-filter are NOT animated — those force a
+               repaint every frame and were the main cause of the stutter. */
+            .card,
+            .cards.deck-active .card,
+            .cards.deck-active .card.card-open {
+                position: absolute !important;
+                inset: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                max-width: none !important;
+                flex: none !important;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transform-origin: center bottom;
+                transform: translateZ(-160px) rotateX(-22deg) translateY(50px) scale(0.9);
+                backface-visibility: hidden;
+                box-shadow: none !important;
+                will-change: transform, opacity;
+                transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.6s !important;
+                z-index: 1;
+            }
+
+            .card.card-open,
+            .cards.deck-active .card.card-open {
+                opacity: 1 !important;
+                visibility: visible !important;
+                pointer-events: auto !important;
+                transform: translateZ(0) rotateX(0deg) translateY(0) scale(1) !important;
+                transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0s !important;
+                z-index: 2;
+            }
+
+            .card-collapsed { display: none !important; }
+
+            .card-expanded {
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center;
+                gap: 18px !important;
+                padding: 32px 70px !important;
+                max-width: 720px;
+                margin: 0 auto;
+                background: #fff !important;
+                -webkit-backdrop-filter: none !important;
+                backdrop-filter: none !important;
+                /* the outer .card already animates in/out; don't also animate
+                   this inner panel separately (fewer compositing layers) */
+                transform: none !important;
+                transition: none !important;
+            }
+
+            .card-expanded-icon {
+                width: 104px;
+                height: 104px;
+            }
+            .card-expanded-icon img { width: 78px; height: 78px; }
+
+            .card-expanded-title { font-size: clamp(30px, 4vw, 46px); }
+
+            .card-expanded-desc {
+                font-size: 16px;
+                flex: none;
+            }
+
+            .services-footer { margin-top: 14px; }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Raleway:wght@800&display=swap" rel="stylesheet">
@@ -990,8 +1102,70 @@
         const deck = document.getElementById('deck');
         const cards = Array.from(deck.querySelectorAll('.card'));
 
+        // ══ Desktop: only one card shown at a time (3D), scrolling steps to
+        // the next. Mobile: keeps its own always-visible tap-to-open layout. ══
+        let activeIndex = -1; // -1 = not set yet, so the very first call always applies
+
+        function isDesktop() {
+            return window.innerWidth > 900;
+        }
+
+        function setActive(i) {
+            if (!isDesktop()) return; // mobile: no-op, CSS/tap-layout handles it
+            i = Math.max(0, Math.min(cards.length - 1, i));
+            if (i === activeIndex) return; // already showing this card -> skip all DOM writes
+            activeIndex = i;
+            deck.classList.add('deck-active');
+            cards.forEach(c => c.classList.remove('card-open'));
+            cards[activeIndex].classList.add('card-open');
+        }
+
+        // Show the first card immediately (only one shows at a time on desktop).
+        setActive(0);
+
+        // Parent page (index.html) does the actual scrolling; it works out which
+        // card should be active and only messages in when that index changes —
+        // so this only ever fires a few times per visit, never per scroll pixel.
+        window.addEventListener('message', function (e) {
+            if (e.data && typeof e.data.ctServicesIndex === 'number') {
+                setActive(e.data.ctServicesIndex);
+            }
+        });
+
+        // Opened standalone (not inside the iframe, e.g. for testing) -> step
+        // through the cards using this window's own scroll position instead.
+        if (window.self === window.top) {
+            var n = cards.length;
+            var ticking = false;
+
+            function ownIndex() {
+                var rect = deck.getBoundingClientRect();
+                var vh = window.innerHeight;
+                var start = vh;
+                var end = vh * 0.15;
+                var p = (start - rect.top) / (start - end);
+                p = Math.min(Math.max(p, 0), 1);
+                return Math.min(n - 1, Math.floor(p * n));
+            }
+
+            function onScroll() {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(function () {
+                    ticking = false;
+                    setActive(ownIndex());
+                });
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            onScroll();
+        }
+
+        // Hover still lets you glance at another card; leaving reverts to
+        // whichever card scrolling last selected (desktop only).
         cards.forEach(card => {
             card.addEventListener('mouseenter', () => {
+                if (!isDesktop()) return;
                 deck.classList.add('deck-active');
                 cards.forEach(c => c.classList.remove('card-open'));
                 card.classList.add('card-open');
@@ -999,8 +1173,10 @@
         });
 
         deck.addEventListener('mouseleave', () => {
-            deck.classList.remove('deck-active');
-            cards.forEach(c => c.classList.remove('card-open'));
+            if (!isDesktop()) return;
+            var restore = activeIndex;
+            activeIndex = -1; // force setActive to actually re-apply
+            setActive(Math.max(0, restore));
         });
 
         // "Explore Service" -> services.html (poora page, iframe nahi)

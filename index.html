@@ -77,6 +77,34 @@
                 height: auto;
             }
         }
+        /* Services section = same pin technique as Flow.
+       Section locks on screen; scrolling steps through the cards one by one.
+       (Only the active index is pushed in, and only when it actually changes,
+       so this stays cheap and doesn't stutter.) */
+
+        .services-pin {
+            position: relative;
+            width: 100%;
+        }
+
+        .services-pin .services-frame {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            display: block;
+            border: 0;
+        }
+
+        @media (max-width: 900px) {
+            .services-pin {
+                height: auto !important;
+            }
+            .services-pin .services-frame {
+                position: static;
+                height: auto;
+            }
+        }
     </style>
 </head>
 
@@ -86,7 +114,8 @@
     <!-- 1 --><iframe class="section-frame" src="index_files/hero.html" title="Hero" scrolling="no"></iframe>
     <!-- 2 -->
     <div class="flow-pin" id="flowPin"><iframe class="section-frame flow-frame" id="flowFrame" src="index_files/flow.html" title="Flow" scrolling="no"></iframe></div>
-    <!-- 3 --><iframe class="section-frame" src="index_files/Our Services.html" title="Our Services" scrolling="no"></iframe>
+    <!-- 3 -->
+    <div class="services-pin" id="servicesPin"><iframe class="section-frame services-frame" id="servicesFrame" data-steps="5" src="index_files/Our Services.html" title="Our Services" scrolling="no"></iframe></div>
     <!-- 4 --><iframe class="section-frame" src="index_files/code.html" title="Code" scrolling="no"></iframe>
     <!-- 5 --><iframe class="section-frame" src="index_files/WhyChooseUs_preview.html" title="Why Choose Us" scrolling="no"></iframe>
     <!-- 6 --><iframe class="section-frame" src="Footer.html" title="Footer" scrolling="no"></iframe>
@@ -131,12 +160,13 @@
             });
         }
 
-        // 1) Child se height aati hai -> us iframe ki height set (flow pinned ho to skip)
+        // 1) Child se height aati hai -> us iframe ki height set (flow/services pinned ho to skip)
         window.addEventListener('message', function(e) {
             if (!e.data || !e.data.ctSection || !e.data.height) return;
             frames.forEach(function(f) {
                 if (f.contentWindow !== e.source) return;
                 if (f === flowFrame && flowPinned) return; // pinned flow ki height CSS handle karta hai
+                if (f === servicesFrame && servicesPinned) return; // pinned services ki height CSS handle karta hai
                 f.style.height = e.data.height + 'px';
             });
         });
@@ -152,9 +182,10 @@
             });
         }
 
-        // 3) Fallback: same-origin par direct measure (flow pinned ho to skip)
+        // 3) Fallback: same-origin par direct measure (flow/services pinned ho to skip)
         function measure(f) {
             if (f === flowFrame && flowPinned) return;
+            if (f === servicesFrame && servicesPinned) return;
             try {
                 var d = f.contentDocument || f.contentWindow.document;
                 if (d && d.body) {
@@ -173,7 +204,60 @@
             } catch (e) { /* cross-origin: postMessage path use hoga */ }
         }
 
+        // Services section: same pin as Flow, but only ever pushes a message when
+        // the active card INDEX actually changes (not on every scroll pixel). The
+        // previous version pushed continuous progress every frame and the child
+        // re-toggled classList every tick even when nothing changed — that's what
+        // was stuttering. Now: cheap math every frame, DOM/message only on change.
+        var servicesPin = document.getElementById('servicesPin');
+        var servicesFrame = document.getElementById('servicesFrame');
+        var servicesPinned = false; // desktop par true (pinned), mobile par false
+        var servicesTick = false;
+        var servicesLastIndex = -1;
+
+        function setupServices() {
+            var mobile = window.innerWidth <= 900;
+            servicesPinned = !mobile;
+            servicesLastIndex = -1;
+            if (mobile) {
+                servicesPin.style.height = 'auto';
+                servicesFrame.style.height = ''; // height message/measure se aayegi
+            } else {
+                var steps = parseInt(servicesFrame.getAttribute('data-steps') || '5', 10);
+                var multiplier = 1 + (steps - 1) * 0.55; // har step ke liye ~0.55 viewport scroll room
+                servicesPin.style.height = (window.innerHeight * multiplier) + 'px';
+                servicesFrame.style.height = window.innerHeight + 'px';
+            }
+        }
+
+        function servicesScroll() {
+            if (!servicesPinned || !servicesFrame.contentWindow) return;
+            if (servicesTick) return;
+            servicesTick = true;
+            requestAnimationFrame(function() {
+                servicesTick = false;
+                if (!servicesPinned || !servicesFrame.contentWindow) return;
+                var steps = parseInt(servicesFrame.getAttribute('data-steps') || '5', 10);
+                var total = servicesPin.offsetHeight - window.innerHeight;
+                var scrolled = Math.min(Math.max(-servicesPin.getBoundingClientRect().top, 0), total);
+                var p = total > 0 ? scrolled / total : 0;
+                var idx = Math.min(steps - 1, Math.floor(p * steps));
+                if (idx === servicesLastIndex) return; // no change -> no message, no repaint
+                servicesLastIndex = idx;
+                try {
+                    servicesFrame.contentWindow.postMessage({
+                        ctServicesIndex: idx
+                    }, '*');
+                } catch (e) {}
+            });
+        }
+
         setupFlow();
+        setupServices();
+
+        window.addEventListener('scroll', servicesScroll, {
+            passive: true
+        });
 
         frames.forEach(function(f) {
             f.addEventListener('load', function() {
@@ -189,6 +273,7 @@
                 setTimeout(function() {
                     measure(f);
                     flowScroll();
+                    if (f === servicesFrame) servicesScroll();
                 }, 1200);
             });
         });
@@ -204,6 +289,7 @@
                     pushParentVH();
                     frames.forEach(measure);
                     flowScroll();
+                    servicesScroll();
                 }, d);
             });
         });
@@ -213,9 +299,11 @@
             clearTimeout(t);
             t = setTimeout(function() {
                 setupFlow();
+                setupServices();
                 pushParentVH();
                 frames.forEach(measure);
                 flowScroll();
+                servicesScroll();
             }, 150);
         });
     </script>
