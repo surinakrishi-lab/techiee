@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Services — Individual Card Layout</title>
+<style>
+  :root{
+    --primary:#5b4bff;
+    --primary-dark:#3d2fd6;
+    --text-dark:#1a1a2e;
+    --text-muted:#5f6172;
+    --bg-light:#f7f7fb;
+    --card-bg:#ffffff;
+    --border:#ececf3;
+    --radius:20px;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{
+    scroll-behavior:smooth; /* smooth scrolling like sarasanalytics.com */
+  }
+
+  body{
+    margin:0;
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:var(--bg-light);
+    color:var(--text-dark);
+  }
+
+  .services-wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:80px 24px 100px;
+  }
+
+  .services-header{
+    text-align:center;
+    margin-bottom:60px;
+  }
+
+  .services-header h2{
+    font-size:2.4rem;
+    margin:0 0 12px;
+  }
+
+  .services-header p{
+    color:var(--text-muted);
+    font-size:1.1rem;
+    margin:0;
+  }
+
+  /* Each service is its own separate, independent card */
+  .service-card{
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:0 6px 24px rgba(20,20,50,0.05);
+    padding:44px;
+    margin-bottom:40px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+
+    /* scroll-reveal starting state */
+    opacity:0;
+    transform:translateY(40px);
+    transition:opacity .7s ease, transform .7s ease, box-shadow .3s ease;
+  }
+
+  .service-card:nth-child(even){
+    grid-template-columns:1fr 1fr;
+  }
+  .service-card:nth-child(even) .service-visual{
+    order:2;
+  }
+
+  .service-card.is-visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  .service-card:hover{
+    box-shadow:0 14px 36px rgba(20,20,50,0.10);
+  }
+
+  .service-visual{
+    height:220px;
+    border-radius:14px;
+    background:linear-gradient(135deg, var(--primary), #8b7dff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:3rem;
+  }
+
+  .service-tag{
+    display:inline-block;
+    font-size:0.75rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--primary);
+    background:rgba(91,75,255,0.08);
+    padding:6px 12px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+
+  .service-content h3{
+    font-size:1.5rem;
+    margin:0 0 10px;
+  }
+
+  .service-content p.desc{
+    color:var(--text-muted);
+    margin:0 0 18px;
+    line-height:1.55;
+  }
+
+  .service-features{
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+
+  .service-features li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:10px;
+    font-size:0.97rem;
+  }
+
+  .service-features li .check{
+    flex:0 0 20px;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:var(--primary);
+    color:#fff;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:2px;
+  }
+
+  .service-cta{
+    margin-top:20px;
+  }
+
+  .service-cta a{
+    color:var(--primary);
+    font-weight:600;
+    text-decoration:none;
+    font-size:0.95rem;
+  }
+  .service-cta a:hover{ text-decoration:underline; }
+
+  @media (max-width:760px){
+    .service-card, .service-card:nth-child(even){
+      grid-template-columns:1fr;
+    }
+    .service-card:nth-child(even) .service-visual{
+      order:0;
+    }
+    .service-card{ padding:28px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="services-wrap" id="services">
+  <div class="services-header">
+    <h2>Our Services</h2>
+    <p>Every service, its own card — scroll down to see each one come into focus.</p>
+  </div>
+
+  <div class="service-card">
+    <div class="service-visual">🧪</div>
+    <div class="service-content">
+      <span class="service-tag">Manual Testing</span>
+      <h3>Comprehensive Manual QA</h3>
+      <p class="desc">Hands-on exploratory and scripted testing that catches what automation misses.</p>
+      <ul class="service-features">
+        <li><span class="check">✓</span> Functional &amp; regression test coverage</li>
+        <li><span class="check">✓</span> Cross-browser and cross-device validation</li>
+        <li><span class="check">✓</span> Detailed defect reports with repro steps</li>
+      </ul>
+      <div class="service-cta"><a href="#">Learn more →</a></div>
+    </div>
+  </div>
+
+  <div class="service-card">
+    <div class="service-visual">⚙️</div>
+    <div class="service-content">
+      <span class="service-tag">Test Automation</span>
+      <h3>Automation That Scales With You</h3>
+      <p class="desc">Custom-built automation frameworks that cut release cycles without cutting quality.</p>
+      <ul class="service-features">
+        <li><span class="check">✓</span> Selenium, Playwright &amp; Appium frameworks</li>
+        <li><span class="check">✓</span> CI/CD pipeline integration</li>
+        <li><span class="check">✓</span> Maintainable, reusable test suites</li>
+      </ul>
+      <div class="service-cta"><a href="#">Learn more →</a></div>
+    </div>
+  </div>
+
+  <div class="service-card">
+    <div class="service-visual">🚀</div>
+    <div class="service-content">
+      <span class="service-tag">Performance Testing</span>
+      <h3>Built to Handle Real-World Load</h3>
+      <p class="desc">Load, stress, and scalability testing so your app holds up under pressure.</p>
+      <ul class="service-features">
+        <li><span class="check">✓</span> JMeter &amp; LoadRunner based load simulations</li>
+        <li><span class="check">✓</span> Bottleneck &amp; latency diagnostics</li>
+        <li><span class="check">✓</span> Scalability benchmarking reports</li>
+      </ul>
+      <div class="service-cta"><a href="#">Learn more →</a></div>
+    </div>
+  </div>
+
+  <div class="service-card">
+    <div class="service-visual">🔒</div>
+    <div class="service-content">
+      <span class="service-tag">Security Testing</span>
+      <h3>Find the Gaps Before Attackers Do</h3>
+      <p class="desc">Vulnerability assessments and penetration testing to keep your product safe.</p>
+      <ul class="service-features">
+        <li><span class="check">✓</span> OWASP Top 10 vulnerability scans</li>
+        <li><span class="check">✓</span> Manual penetration testing</li>
+        <li><span class="check">✓</span> Compliance-ready security reports</li>
+      </ul>
+      <div class="service-cta"><a href="#">Learn more →</a></div>
+    </div>
+  </div>
+
+  <div class="service-card">
+    <div class="service-visual">🤖</div>
+    <div class="service-content">
+      <span class="service-tag">AI &amp; Agentic Testing</span>
+      <h3>Quality Assurance for the AI Era</h3>
+      <p class="desc">Testing frameworks purpose-built for AI agents, LLM outputs, and agentic workflows.</p>
+      <ul class="service-features">
+        <li><span class="check">✓</span> LLM response &amp; hallucination testing</li>
+        <li><span class="check">✓</span> Agent workflow validation</li>
+        <li><span class="check">✓</span> Prompt regression testing</li>
+      </ul>
+      <div class="service-cta"><a href="#">Learn more →</a></div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  // Smooth scroll for any in-page anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(link=>{
+    link.addEventListener('click', function(e){
+      const target = document.querySelector(this.getAttribute('href'));
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+
+  // Reveal each card individually as it scrolls into view (Saras-style)
+  const cards = document.querySelectorAll('.service-card');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  cards.forEach(card=> observer.observe(card));
+</script>
+
+</body>
+</html>

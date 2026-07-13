@@ -136,187 +136,75 @@
             font-weight: 400;
         }
         /* ══════════════════════════════════
-       CARD DECK
-    ══════════════════════════════════ */
+           SERVICE CARDS — individual, stacked cards.
+           Each card is its own separate block in normal page flow (not a
+           pinned/overlapping deck). As you scroll, each card slides up from
+           below and fades in on its own, one after another — driven
+           continuously off the actual scroll position, so speed/direction
+           always follows the scroll exactly (scroll back up = they reverse).
+        ══════════════════════════════════ */
 
         .cards {
             display: flex;
-            gap: 14px;
-            justify-content: center;
-            align-items: stretch;
-            height: 460px;
+            flex-direction: column;
+            gap: 28px;
             width: 100%;
+            max-width: 880px;
+            margin: 0 auto;
         }
-        /* Base card */
 
         .card {
             position: relative;
-            flex: 1 1 0;
-            min-width: 0;
-            max-width: 420px;
-            border-radius: 04px;
+            border-radius: 24px;
             overflow: hidden;
-            cursor: pointer;
-            transition: flex-basis 0.7s cubic-bezier(0.4, 0, 0.15, 1), flex-grow 0.7s cubic-bezier(0.4, 0, 0.15, 1), box-shadow 0.5s ease;
+            min-height: 300px;
             display: flex;
-            flex-direction: column;
+            align-items: flex-end;
+            text-align: left;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.14);
+            /* JS sets these two continuously off scroll position — no CSS
+               transition here on purpose, the scroll itself is the easing. */
+            opacity: 0;
+            transform: translateY(80px);
         }
-        /* ── When deck is active: shrink all, grow hovered ── */
-
-        .cards.deck-active .card {
-            flex: 0 0 84px;
-            max-width: 84px;
-        }
-
-        .cards.deck-active .card.card-open {
-            flex: 0 0 480px;
-            max-width: 480px;
-        }
-        /* ══ Card background layers ══ */
 
         .card-bg {
             position: absolute;
             inset: 0;
-            border-radius: 04px;
-            transition: opacity 0.5s ease;
-        }
-        /* Default: light tinted glass bg */
-
-        .card-bg-default {
-            opacity: 1;
-        }
-        /* Active: vivid soft gradient bg */
-
-        .card-bg-active {
-            opacity: 0;
         }
 
-        .card-open .card-bg-default {
-            opacity: 0;
-        }
-
-        .card-open .card-bg-active {
-            opacity: 1;
-        }
-        /* Sheen / gloss overlay */
+        .card-bg-default { opacity: 1; }
+        .card-bg-active { opacity: 0; }
 
         .card-sheen {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
-            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, transparent 55%);
             pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.4s ease;
             z-index: 2;
         }
-
-        .card-open .card-sheen {
-            opacity: 1;
-        }
-        /* Border glow */
 
         .card::before {
             content: '';
             position: absolute;
-            inset: -1px;
-            border-radius: 25px;
-            padding: 1px;
-            background: var(--glow);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-            z-index: 3;
-        }
-
-        .card-open::before {
-            opacity: 1;
-        }
-        /* ══ COLLAPSED STATE — vertical layout ══ */
-
-        .card-collapsed {
-            position: absolute;
             inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 20px;
-            padding: 0 0 26px;
-            z-index: 4;
-            transition: opacity 0.3s ease;
-        }
-        /* image ab card ke bg me hai -> chhota icon tile hide */
-
-        .card-collapsed-icon {
-            display: none !important;
-        }
-
-        .card-open .card-collapsed {
-            opacity: 0;
+            background: linear-gradient(0deg, rgba(15, 23, 42, 0.08) 0%, transparent 45%);
             pointer-events: none;
+            z-index: 2;
         }
 
-        .card-collapsed-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(15, 23, 42, 0.05);
-            border: 1px solid rgba(15, 23, 42, 0.06);
-            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-            flex-shrink: 0;
-            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:not(.card-open):hover .card-collapsed-icon {
-            transform: scale(1.15) translateY(-4px);
-            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
-        }
-
-        .card-collapsed-icon svg {
-            width: 36px;
-            height: 36px;
-        }
-
-        .card-collapsed-label {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            transform: rotate(180deg);
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-            white-space: nowrap;
-        }
-        /* ══ EXPANDED STATE — full layout ══ */
+        /* Collapsed sidebar tab isn't needed in a stacked layout */
+        .card-collapsed { display: none !important; }
 
         .card-expanded {
-            position: absolute;
-            inset: 0;
+            position: relative;
+            z-index: 3;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            padding: 36px 32px;
-            gap: 18px;
-            z-index: 4;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease 0.15s;
-            min-width: 380px;
-            /* prevent text wrap during transition */
-        }
-
-        .card-open .card-expanded {
-            opacity: 1;
-            pointer-events: auto;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 40px 44px;
         }
 
         .card-expanded-tag {
@@ -327,78 +215,68 @@
             font-weight: 700;
             letter-spacing: 2.5px;
             text-transform: uppercase;
-            color: #334155;
-            background: rgba(15, 23, 42, 0.06);
-            padding: 5px 12px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(8px);
+            padding: 6px 14px;
             border-radius: 20px;
             width: fit-content;
         }
 
         .card-expanded-icon {
-            width: 92px;
-            height: 92px;
-            border-radius: 24px;
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(8px);
         }
 
         .card-expanded-icon svg {
-            width: 48px;
-            height: 48px;
-        }
-        /* PNG service icons */
-
-        .card-collapsed-icon img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            border-radius: 12px;
+            width: 36px;
+            height: 36px;
         }
 
         .card-expanded-icon img {
-            width: 70px;
-            height: 70px;
+            width: 42px;
+            height: 42px;
             object-fit: contain;
-            border-radius: 16px;
         }
 
         .card-expanded-title {
-            font-size: 26px;
+            font-size: clamp(24px, 3vw, 32px);
             font-weight: 900;
-            color: #0f172a;
+            color: #fff;
             line-height: 1.2;
             letter-spacing: -0.5px;
         }
 
         .card-expanded-desc {
-            font-size: 14px;
-            color: #475569;
-            line-height: 1.75;
-            flex: 1;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            max-width: 560px;
         }
 
         .card-expanded-cta {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: var(--glow);
-            color: #fff;
+            background: #fff;
+            color: #0f172a;
             font-size: 13px;
             font-weight: 700;
             padding: 12px 22px;
             border-radius: 40px;
             width: fit-content;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            margin-top: 4px;
+            transition: transform 0.25s ease;
         }
 
         .card-expanded-cta:hover {
             transform: translateX(3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
 
         .card-expanded-cta svg {
@@ -440,472 +318,50 @@
         .btn-view-all:active {
             transform: translateY(-1px) scale(0.98);
         }
-        /* ══ CARD THEMES (LIGHT VERSION) ══ */
-        /* 1 – Blue */
-
-        .card-1 {
-            --glow: linear-gradient(135deg, #3b82f6, #2563eb);
-        }
+        /* ══ CARD THEMES — background image + accent per service ══ */
 
         .card-1 .card-bg-default {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.12) 0%, rgba(15, 23, 42, 0.62) 100%), url('../images/manual qa.png') center/cover no-repeat;
-            border: 1px solid rgba(219, 234, 254, 0.5);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.74) 100%), url('../images/manual qa.png') center/cover no-repeat;
         }
-
-        .card-1 .card-bg-active {
-            background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
-        }
-
-        .card-1:hover:not(.card-open) {
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.06);
-        }
-
-        .card-1.card-open {
-            box-shadow: 0 25px 60px rgba(37, 99, 235, 0.12);
-        }
-
-        .card-1 .card-expanded-icon {
-            background: rgba(37, 99, 235, 0.08);
-            border: 1px solid rgba(37, 99, 235, 0.15);
-        }
-        /* 2 – Violet */
-
-        .card-2 {
-            --glow: linear-gradient(135deg, #a855f7, #8b5cf6);
-        }
+        .card-1 .card-expanded-cta { color: #2563eb; }
 
         .card-2 .card-bg-default {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.12) 0%, rgba(15, 23, 42, 0.62) 100%), url('../images/automated qa.png') center/cover no-repeat;
-            border: 1px solid rgba(243, 232, 255, 0.5);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.74) 100%), url('../images/automated qa.png') center/cover no-repeat;
         }
-
-        .card-2 .card-bg-active {
-            background: linear-gradient(145deg, #f5f3ff 0%, #e9d5ff 100%);
-        }
-
-        .card-2:hover:not(.card-open) {
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.06);
-        }
-
-        .card-2.card-open {
-            box-shadow: 0 25px 60px rgba(139, 92, 246, 0.12);
-        }
-
-        .card-2 .card-expanded-icon {
-            background: rgba(139, 92, 246, 0.08);
-            border: 1px solid rgba(139, 92, 246, 0.15);
-        }
-        /* 3 – Amber */
-
-        .card-3 {
-            --glow: linear-gradient(135deg, #f59e0b, #d97706);
-        }
+        .card-2 .card-expanded-cta { color: #8b5cf6; }
 
         .card-3 .card-bg-default {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.12) 0%, rgba(15, 23, 42, 0.62) 100%), url('../images/devops.png') center/cover no-repeat;
-            border: 1px solid rgba(254, 243, 199, 0.5);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.74) 100%), url('../images/devops.png') center/cover no-repeat;
         }
-
-        .card-3 .card-bg-active {
-            background: linear-gradient(145deg, #fffbeb 0%, #fef3c7 100%);
-        }
-
-        .card-3:hover:not(.card-open) {
-            box-shadow: 0 10px 30px rgba(217, 119, 6, 0.06);
-        }
-
-        .card-3.card-open {
-            box-shadow: 0 25px 60px rgba(217, 119, 6, 0.12);
-        }
-
-        .card-3 .card-expanded-icon {
-            background: rgba(217, 119, 6, 0.08);
-            border: 1px solid rgba(217, 119, 6, 0.15);
-        }
-        /* 4 – Emerald */
-
-        .card-4 {
-            --glow: linear-gradient(135deg, #10b981, #059669);
-        }
+        .card-3 .card-expanded-cta { color: #d97706; }
 
         .card-4 .card-bg-default {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.12) 0%, rgba(15, 23, 42, 0.62) 100%), url('../images/uiux.png') center/cover no-repeat;
-            border: 1px solid rgba(209, 250, 229, 0.5);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.74) 100%), url('../images/uiux.png') center/cover no-repeat;
         }
-
-        .card-4 .card-bg-active {
-            background: linear-gradient(145deg, #ecfdf5 0%, #d1fae5 100%);
-        }
-
-        .card-4:hover:not(.card-open) {
-            box-shadow: 0 10px 30px rgba(5, 150, 105, 0.06);
-        }
-
-        .card-4.card-open {
-            box-shadow: 0 25px 60px rgba(5, 150, 105, 0.12);
-        }
-
-        .card-4 .card-expanded-icon {
-            background: rgba(5, 150, 105, 0.08);
-            border: 1px solid rgba(5, 150, 105, 0.15);
-        }
-        /* 5 – Cyan */
-
-        .card-5 {
-            --glow: linear-gradient(135deg, #06b6d4, #0891b2);
-        }
+        .card-4 .card-expanded-cta { color: #059669; }
 
         .card-5 .card-bg-default {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.12) 0%, rgba(15, 23, 42, 0.62) 100%), url('../images/cloud.png') center/cover no-repeat;
-            border: 1px solid rgba(207, 250, 254, 0.5);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.74) 100%), url('../images/cloud.png') center/cover no-repeat;
         }
-
-        .card-5 .card-bg-active {
-            background: linear-gradient(145deg, #ecfeff 0%, #cffafe 100%);
-        }
-
-        .card-5:hover:not(.card-open) {
-            box-shadow: 0 10px 30px rgba(8, 145, 178, 0.06);
-        }
-
-        .card-5.card-open {
-            box-shadow: 0 25px 60px rgba(8, 145, 178, 0.12);
-        }
-
-        .card-5 .card-expanded-icon {
-            background: rgba(8, 145, 178, 0.08);
-            border: 1px solid rgba(8, 145, 178, 0.15);
-        }
-        /* Collapsed icon tints */
-
-        .card-1 .card-collapsed-icon svg {
-            stroke: #2563eb;
-        }
-
-        .card-2 .card-collapsed-icon svg {
-            stroke: #8b5cf6;
-        }
-
-        .card-3 .card-collapsed-icon svg {
-            stroke: #d97706;
-        }
-
-        .card-4 .card-collapsed-icon svg {
-            stroke: #059669;
-        }
-
-        .card-5 .card-collapsed-icon svg {
-            stroke: #0891b2;
-        }
-        /* Collapsed icon colored tints (attractive per-service color) */
-
-        .card-1 .card-collapsed-icon {
-            background: rgba(37, 99, 235, 0.09);
-            border-color: rgba(37, 99, 235, 0.18);
-        }
-
-        .card-2 .card-collapsed-icon {
-            background: rgba(139, 92, 246, 0.09);
-            border-color: rgba(139, 92, 246, 0.18);
-        }
-
-        .card-3 .card-collapsed-icon {
-            background: rgba(217, 119, 6, 0.09);
-            border-color: rgba(217, 119, 6, 0.18);
-        }
-
-        .card-4 .card-collapsed-icon {
-            background: rgba(5, 150, 105, 0.09);
-            border-color: rgba(5, 150, 105, 0.18);
-        }
-
-        .card-5 .card-collapsed-icon {
-            background: rgba(8, 145, 178, 0.09);
-            border-color: rgba(8, 145, 178, 0.18);
-        }
-        /* Expanded icon tints */
-
-        .card-1 .card-expanded-icon svg {
-            stroke: #2563eb;
-        }
-
-        .card-2 .card-expanded-icon svg {
-            stroke: #8b5cf6;
-        }
-
-        .card-3 .card-expanded-icon svg {
-            stroke: #d97706;
-        }
-
-        .card-4 .card-expanded-icon svg {
-            stroke: #059669;
-        }
-
-        .card-5 .card-expanded-icon svg {
-            stroke: #0891b2;
-        }
+        .card-5 .card-expanded-cta { color: #0891b2; }
         /* ── Responsive ── */
 
         @media (max-width: 900px) {
-            .cards {
-                flex-direction: column;
-                height: auto;
-                align-items: stretch;
-                gap: 14px;
-            }
-            .card {
-                flex: 0 0 auto !important;
-                width: 100% !important;
-                max-width: none !important;
-                height: 80px;
-            }
-            .card-open {
-                height: 440px !important;
-            }
-            .cards.deck-active .card {
-                flex: 0 0 auto !important;
-                width: 100% !important;
-                max-width: none !important;
-            }
-            .cards.deck-active .card.card-open {
-                flex: 0 0 auto !important;
-            }
-            .card-collapsed {
-                flex-direction: row;
-            }
-            .card-collapsed-label {
-                writing-mode: horizontal-tb;
-                transform: none;
-            }
-            .card-expanded {
-                min-width: unset;
-            }
+            .card { min-height: 260px; }
+            .card-expanded { padding: 28px 26px; }
+            .card-expanded-icon { width: 56px; height: 56px; border-radius: 14px; }
+            .card-expanded-icon img { width: 34px; height: 34px; }
+            .card-expanded-icon svg { width: 26px; height: 26px; }
+            .card-expanded-title { font-size: 21px; }
+            .card-expanded-desc { font-size: 13px; line-height: 1.55; }
         }
-        /* ===== Mobile: smooth scroll (heavy blurred animated blobs band karo) ===== */
+        /* ===== Mobile: hide the heavy blurred animated blobs ===== */
 
         @media (max-width: 860px) {
-            /* absolute blob neeche tak extend ho ke trailing gap deta tha -> mobile par hide */
             .bg-blob-1,
             .bg-blob-2 {
                 display: none !important;
             }
-        }
-        /* ===== NO squeeze: equal cards + hover par intro neeche se slide-up ===== */
-
-        .card,
-        .cards.deck-active .card,
-        .cards.deck-active .card.card-open {
-            flex: 1 1 0 !important;
-            max-width: 320px !important;
-        }
-
-        .card {
-            transition: box-shadow 0.4s ease, transform 0.4s ease !important;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 24px 50px rgba(15, 23, 42, 0.18);
-        }
-        /* image hamesha dikhe (squeeze/fade nahi) */
-
-        .card-bg-default,
-        .card-open .card-bg-default {
-            opacity: 1 !important;
-        }
-
-        .card-bg-active {
-            opacity: 0 !important;
-        }
-
-        .card-open .card-collapsed {
-            opacity: 1 !important;
-        }
-        /* intro panel: niche chhupa hua -> hover (card-open) par slide-up, photo ki jagah */
-
-        .card-expanded {
-            position: absolute !important;
-            inset: 0 !important;
-            min-width: 0 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: center !important;
-            align-items: flex-start !important;
-            gap: 13px !important;
-            padding: 28px 22px !important;
-            background: rgba(255, 255, 255, 0.97) !important;
-            -webkit-backdrop-filter: blur(6px);
-            backdrop-filter: blur(6px);
-            opacity: 1 !important;
-            transform: translateY(100%);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.15, 1) !important;
-            pointer-events: none;
-            z-index: 6 !important;
-        }
-
-        .card-open .card-expanded {
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        @media (max-width: 900px) {
-            /* mobile: full-width cards, fixed height; tap/hover par panel slide-up */
-            .card,
-            .cards.deck-active .card,
-            .cards.deck-active .card.card-open {
-                flex: 0 0 auto !important;
-                width: 100% !important;
-                max-width: none !important;
-                height: 240px !important;
-            }
-            .card-open {
-                height: 360px !important;
-            }
-            .card-collapsed {
-                flex-direction: column;
-            }
-            .card-collapsed-label {
-                writing-mode: vertical-rl;
-                transform: rotate(180deg);
-            }
-            /* expanded panel mobile: poora content (Explore Service tak) dikhe, cut na ho */
-            .card-expanded {
-                justify-content: flex-start !important;
-                padding: 20px 18px !important;
-                gap: 10px !important;
-            }
-            .card-expanded-icon {
-                width: 56px !important;
-                height: 56px !important;
-                border-radius: 14px !important;
-            }
-            .card-expanded-icon img {
-                width: 40px !important;
-                height: 40px !important;
-            }
-            .card-expanded-icon svg {
-                width: 28px !important;
-                height: 28px !important;
-            }
-            .card-expanded-title {
-                font-size: 21px !important;
-            }
-            .card-expanded-desc {
-                font-size: 12.5px !important;
-                line-height: 1.5 !important;
-            }
-        }
-
-        /* ══════════════════════════════════════════════════════════════
-           FULLSCREEN 3D STEP MODE (desktop only)
-           The section pins on screen (parent handles that). Only the active
-           card is visible, filling the stage with a real 3D transform;
-           scrolling swaps in the next card, one at a time.
-        ══════════════════════════════════════════════════════════════ */
-        @media (min-width: 901px) {
-            /* Decorative blobs are expensive (large blur + infinite animation).
-               They're not needed while the section is pinned/stepping, so stop
-               them from competing with the transform animation for GPU time. */
-            .bg-blob-1, .bg-blob-2 {
-                animation: none !important;
-            }
-
-            html, body {
-                height: 100vh;
-                overflow: hidden;
-                padding: 0;
-                display: block;
-            }
-
-            .section {
-                height: 100vh;
-                max-width: 1100px;
-                margin: 0 auto;
-                display: flex;
-                flex-direction: column;
-                padding: 26px 24px 22px;
-                box-sizing: border-box;
-            }
-
-            .eyebrow { margin-bottom: 6px; }
-            .headline { margin-bottom: 4px; font-size: clamp(24px, 3.2vw, 40px); }
-            .subline { margin-bottom: 16px; }
-
-            .cards {
-                position: relative;
-                flex: 1;
-                min-height: 0;
-                height: auto;
-                perspective: 1600px;
-            }
-
-            /* Only opacity/transform (+ visibility, which is free) animate here.
-               box-shadow and backdrop-filter are NOT animated — those force a
-               repaint every frame and were the main cause of the stutter. */
-            .card,
-            .cards.deck-active .card,
-            .cards.deck-active .card.card-open {
-                position: absolute !important;
-                inset: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
-                max-width: none !important;
-                flex: none !important;
-                opacity: 0;
-                visibility: hidden;
-                pointer-events: none;
-                transform-origin: center bottom;
-                transform: translateZ(-160px) rotateX(-22deg) translateY(50px) scale(0.9);
-                backface-visibility: hidden;
-                box-shadow: none !important;
-                will-change: transform, opacity;
-                transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.6s !important;
-                z-index: 1;
-            }
-
-            .card.card-open,
-            .cards.deck-active .card.card-open {
-                opacity: 1 !important;
-                visibility: visible !important;
-                pointer-events: auto !important;
-                transform: translateZ(0) rotateX(0deg) translateY(0) scale(1) !important;
-                transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0s !important;
-                z-index: 2;
-            }
-
-            .card-collapsed { display: none !important; }
-
-            .card-expanded {
-                align-items: center !important;
-                justify-content: center !important;
-                text-align: center;
-                gap: 18px !important;
-                padding: 32px 70px !important;
-                max-width: 720px;
-                margin: 0 auto;
-                background: #fff !important;
-                -webkit-backdrop-filter: none !important;
-                backdrop-filter: none !important;
-                /* the outer .card already animates in/out; don't also animate
-                   this inner panel separately (fewer compositing layers) */
-                transform: none !important;
-                transition: none !important;
-            }
-
-            .card-expanded-icon {
-                width: 104px;
-                height: 104px;
-            }
-            .card-expanded-icon img { width: 78px; height: 78px; }
-
-            .card-expanded-title { font-size: clamp(30px, 4vw, 46px); }
-
-            .card-expanded-desc {
-                font-size: 16px;
-                flex: none;
-            }
-
-            .services-footer { margin-top: 14px; }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Raleway:wght@800&display=swap" rel="stylesheet">
@@ -1102,81 +558,78 @@
         const deck = document.getElementById('deck');
         const cards = Array.from(deck.querySelectorAll('.card'));
 
-        // ══ Desktop: only one card shown at a time (3D), scrolling steps to
-        // the next. Mobile: keeps its own always-visible tap-to-open layout. ══
-        let activeIndex = -1; // -1 = not set yet, so the very first call always applies
+        // ══ Individual cards, stacked normally on the page. Each one slides up
+        // from below and fades in as it scrolls into view, and reverses if you
+        // scroll back up — driven continuously off actual scroll position, so
+        // the speed/direction always matches the scroll exactly (no fixed
+        // duration timer, no pinning, no single-slot deck). ══
+        var embedded = (window.self !== window.top);
+        var viewportH = window.innerHeight;
+        var frameTop = 0;   // this iframe's own position in the parent viewport (embedded mode)
+        var cardTops = [];  // each card's fixed position within this page's own layout (embedded mode)
 
-        function isDesktop() {
-            return window.innerWidth > 900;
+        function measureCardTops() {
+            if (!embedded) return;
+            cardTops = cards.map(function (c) { return c.getBoundingClientRect().top; });
         }
+        measureCardTops();
 
-        function setActive(i) {
-            if (!isDesktop()) return; // mobile: no-op, CSS/tap-layout handles it
-            i = Math.max(0, Math.min(cards.length - 1, i));
-            if (i === activeIndex) return; // already showing this card -> skip all DOM writes
-            activeIndex = i;
-            deck.classList.add('deck-active');
-            cards.forEach(c => c.classList.remove('card-open'));
-            cards[activeIndex].classList.add('card-open');
+        function reveal() {
+            cards.forEach(function (card, i) {
+                var top = embedded ? (frameTop + cardTops[i]) : card.getBoundingClientRect().top;
+                var start = viewportH * 0.92; // starts revealing near the bottom edge of the screen
+                var end = viewportH * 0.55;   // fully revealed by the time it reaches mid-upper screen
+                var p = (start - top) / (start - end);
+                p = Math.max(0, Math.min(1, p));
+                card.style.opacity = p;
+                card.style.transform = 'translateY(' + (80 * (1 - p)) + 'px)';
+            });
         }
+        reveal();
 
-        // Show the first card immediately (only one shows at a time on desktop).
-        setActive(0);
-
-        // Parent page (index.html) does the actual scrolling; it works out which
-        // card should be active and only messages in when that index changes —
-        // so this only ever fires a few times per visit, never per scroll pixel.
+        // Embedded: parent page (index.html) forwards its own viewport height
+        // and this iframe's position within it every rAF tick while scrolling.
         window.addEventListener('message', function (e) {
-            if (e.data && typeof e.data.ctServicesIndex === 'number') {
-                setActive(e.data.ctServicesIndex);
+            if (!e.data) return;
+            if (typeof e.data.ctParentVH === 'number') {
+                viewportH = e.data.ctParentVH;
+                reveal();
+            }
+            if (typeof e.data.ctServicesFrameTop === 'number') {
+                frameTop = e.data.ctServicesFrameTop;
+                reveal();
             }
         });
 
-        // Opened standalone (not inside the iframe, e.g. for testing) -> step
-        // through the cards using this window's own scroll position instead.
-        if (window.self === window.top) {
-            var n = cards.length;
+        // Opened standalone (not inside the iframe, e.g. for testing) -> use
+        // this window's own scroll directly.
+        if (!embedded) {
             var ticking = false;
-
-            function ownIndex() {
-                var rect = deck.getBoundingClientRect();
-                var vh = window.innerHeight;
-                var start = vh;
-                var end = vh * 0.15;
-                var p = (start - rect.top) / (start - end);
-                p = Math.min(Math.max(p, 0), 1);
-                return Math.min(n - 1, Math.floor(p * n));
-            }
 
             function onScroll() {
                 if (ticking) return;
                 ticking = true;
                 requestAnimationFrame(function () {
                     ticking = false;
-                    setActive(ownIndex());
+                    reveal();
                 });
             }
             window.addEventListener('scroll', onScroll, { passive: true });
-            window.addEventListener('resize', onScroll);
             onScroll();
         }
 
-        // Hover still lets you glance at another card; leaving reverts to
-        // whichever card scrolling last selected (desktop only).
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                if (!isDesktop()) return;
-                deck.classList.add('deck-active');
-                cards.forEach(c => c.classList.remove('card-open'));
-                card.classList.add('card-open');
-            });
+        window.addEventListener('resize', function () {
+            viewportH = window.innerHeight;
+            measureCardTops();
+            reveal();
         });
 
-        deck.addEventListener('mouseleave', () => {
-            if (!isDesktop()) return;
-            var restore = activeIndex;
-            activeIndex = -1; // force setActive to actually re-apply
-            setActive(Math.max(0, restore));
+        // Fonts/images can shift layout slightly after first paint — remeasure
+        // a few times so card positions stay accurate.
+        window.addEventListener('load', function () {
+            [200, 600, 1200].forEach(function (d) {
+                setTimeout(function () { measureCardTops(); reveal(); }, d);
+            });
         });
 
         // "Explore Service" -> services.html (poora page, iframe nahi)
@@ -1189,18 +642,6 @@
             cta.style.cursor = 'pointer';
             cta.addEventListener('click', goServices);
         });
-
-        // Mobile/touch: hover nahi hota -> tap par card khule (Explore Service dikhe)
-        if (window.matchMedia('(hover: none)').matches || 'ontouchstart' in window) {
-            cards.forEach(function (card) {
-                card.addEventListener('click', function () {
-                    var wasOpen = card.classList.contains('card-open');
-                    deck.classList.add('deck-active');
-                    cards.forEach(function (c) { c.classList.remove('card-open'); });
-                    if (!wasOpen) card.classList.add('card-open');
-                });
-            });
-        }
     </script>
     <!-- ===== EMBED MODE (sirf index1.html ke andar; standalone par koi asar nahi) ===== -->
     <script>
