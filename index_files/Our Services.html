@@ -162,10 +162,25 @@
             align-items: flex-end;
             text-align: left;
             box-shadow: 0 18px 45px rgba(15, 23, 42, 0.14);
+            background: #fff;
+            /* white shows through as the media below shrinks inward */
             /* JS sets these two continuously off scroll position — no CSS
                transition here on purpose, the scroll itself is the easing. */
             opacity: 0;
             transform: translateY(80px);
+        }
+
+        /* Media wrapper holds the image layers. JS shrinks its inset +
+           rounds its corners continuously as the card scrolls up past the
+           top of the viewport, revealing the card's white background in
+           the gap — and reverses just as smoothly on scroll back down.
+           No CSS transition on purpose, same reasoning as .card above. */
+
+        .card-media {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: 0px;
         }
 
         .card-bg {
@@ -184,7 +199,7 @@
             z-index: 2;
         }
 
-        .card::before {
+        .card-media::after {
             content: '';
             position: absolute;
             inset: 0;
@@ -389,9 +404,11 @@
 
             <!-- ── Card 1: Manual QA ── -->
             <div class="card card-1" data-index="0">
-                <div class="card-bg card-bg-default"></div>
-                <div class="card-bg card-bg-active"></div>
-                <div class="card-sheen"></div>
+                <div class="card-media">
+                    <div class="card-bg card-bg-default"></div>
+                    <div class="card-bg card-bg-active"></div>
+                    <div class="card-sheen"></div>
+                </div>
 
                 <!-- Collapsed -->
                 <div class="card-collapsed">
@@ -421,9 +438,11 @@
 
             <!-- ── Card 2: Automation Testing ── -->
             <div class="card card-2" data-index="1">
-                <div class="card-bg card-bg-default"></div>
-                <div class="card-bg card-bg-active"></div>
-                <div class="card-sheen"></div>
+                <div class="card-media">
+                    <div class="card-bg card-bg-default"></div>
+                    <div class="card-bg card-bg-active"></div>
+                    <div class="card-sheen"></div>
+                </div>
 
                 <div class="card-collapsed">
                     <div class="card-collapsed-icon">
@@ -451,9 +470,11 @@
 
             <!-- ── Card 3: DevOps ── -->
             <div class="card card-3" data-index="2">
-                <div class="card-bg card-bg-default"></div>
-                <div class="card-bg card-bg-active"></div>
-                <div class="card-sheen"></div>
+                <div class="card-media">
+                    <div class="card-bg card-bg-default"></div>
+                    <div class="card-bg card-bg-active"></div>
+                    <div class="card-sheen"></div>
+                </div>
 
                 <div class="card-collapsed">
                     <div class="card-collapsed-icon">
@@ -481,9 +502,11 @@
 
             <!-- ── Card 4: UI/UX Design ── -->
             <div class="card card-4" data-index="3">
-                <div class="card-bg card-bg-default"></div>
-                <div class="card-bg card-bg-active"></div>
-                <div class="card-sheen"></div>
+                <div class="card-media">
+                    <div class="card-bg card-bg-default"></div>
+                    <div class="card-bg card-bg-active"></div>
+                    <div class="card-sheen"></div>
+                </div>
 
                 <div class="card-collapsed">
                     <div class="card-collapsed-icon">
@@ -511,9 +534,11 @@
 
             <!-- ── Card 5: Cloud Services ── -->
             <div class="card card-5" data-index="4">
-                <div class="card-bg card-bg-default"></div>
-                <div class="card-bg card-bg-active"></div>
-                <div class="card-sheen"></div>
+                <div class="card-media">
+                    <div class="card-bg card-bg-default"></div>
+                    <div class="card-bg card-bg-active"></div>
+                    <div class="card-sheen"></div>
+                </div>
 
                 <div class="card-collapsed">
                     <div class="card-collapsed-icon">
@@ -575,6 +600,11 @@
         }
         measureCardTops();
 
+        // Max inward inset (px) and corner radius the media shrinks to once
+        // a card has fully scrolled past the top of the viewport.
+        var MAX_SHRINK_INSET = 34;
+        var MAX_SHRINK_RADIUS = 22;
+
         function reveal() {
             cards.forEach(function (card, i) {
                 var top = embedded ? (frameTop + cardTops[i]) : card.getBoundingClientRect().top;
@@ -584,6 +614,24 @@
                 p = Math.max(0, Math.min(1, p));
                 card.style.opacity = p;
                 card.style.transform = 'translateY(' + (80 * (1 - p)) + 'px)';
+
+                // Shrink phase: once the card starts passing the top of the
+                // viewport (scrolling "upside"), its image shrinks inward and
+                // the white card background fills in around it. Reverses the
+                // same way when scrolling back down. Driven off scroll
+                // position exactly like the reveal above — no fixed timers.
+                var height = card.offsetHeight || 300;
+                var shrinkStart = viewportH * 0.1;   // begins shrinking near the top edge
+                var shrinkEnd = -height * 0.6;        // fully shrunk once well past the top
+                var sp = (shrinkStart - top) / (shrinkStart - shrinkEnd);
+                sp = Math.max(0, Math.min(1, sp));
+
+                var media = card.querySelector('.card-media');
+                if (media) {
+                    var inset = sp * MAX_SHRINK_INSET;
+                    media.style.inset = inset + 'px';
+                    media.style.borderRadius = (sp * MAX_SHRINK_RADIUS) + 'px';
+                }
             });
         }
         reveal();

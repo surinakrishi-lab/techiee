@@ -44,27 +44,6 @@
             border: 1px solid rgba(226, 232, 240, 0.8);
             box-shadow: 0 15px 35px -15px rgba(0, 0, 0, 0.04);
         }
-        /* GPU-Accelerated Slowly Animated Background (Lightweight/Light on performance) */
-        
-        @keyframes bg-float {
-            0% {
-                transform: scale(1.05) translate(0px, 0px) rotate(0deg);
-            }
-            33% {
-                transform: scale(1.08) translate(8px, -6px) rotate(0.4deg);
-            }
-            66% {
-                transform: scale(1.04) translate(-8px, 6px) rotate(-0.4deg);
-            }
-            100% {
-                transform: scale(1.05) translate(0px, 0px) rotate(0deg);
-            }
-        }
-        
-        .animated-bg {
-            animation: bg-float 24s ease-in-out infinite;
-            will-change: transform;
-        }
     </style>
     <style>
         /* Site-wide font: Plus Jakarta Sans (hero1.html chhod ke sab pages) */
@@ -77,11 +56,8 @@
 
 <body class="antialiased overflow-x-hidden">
 
-    <!-- Animated Background Layer (Using the new lavender liquid smoke image) -->
-    <div class="fixed inset-0 z-[-1] overflow-hidden bg-[#f3edfe]">
-        <div class="animated-bg absolute inset-0 bg-cover bg-center opacity-95" style="background-image: url('images/bug_blog_bg.png');"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#f3edfe]/40 via-transparent to-[#f3edfe]/10"></div>
-    </div>
+    <!-- Flat background layer (formal, no imagery) -->
+    <div class="fixed inset-0 z-[-1] bg-[#f3edfe]"></div>
 
     <!-- ===== Shared Header styles (from hero.html) ===== -->
     <style>
@@ -170,7 +146,7 @@
                     </div>
                     <div class="mega-col">
                         <span class="mega-head">SOLUTIONS</span>
-                        <a href="services.html" target="_top" class="mega-link"><strong>Content Engine</strong><span>AI-powered, SEO-ready content</span></a>
+                        <a href="services.html" target="_top" class="mega-link"><strong>Crosstecch Content Pilot</strong><span>AI-powered, SEO-ready content</span></a>
                         <a href="services.html" target="_top" class="mega-link"><strong>Cloud Services</strong><span>AWS, GCP &amp; Azure architecture</span></a>
                     </div>
                 </div>
@@ -213,7 +189,7 @@
                     <div class="mega-col">
                         <span class="mega-head">PRODUCTS</span>
                         <a href="bug-finder.html" target="_top" class="mega-link"><strong>Bug Finder</strong><span>Detect &amp; resolve issues before production</span></a>
-                        <a href="blog-engine.html" target="_top" class="mega-link"><strong>Blog Engine</strong><span>Create &amp; publish content fast</span></a>
+                        <a href="blog-engine.html" target="_top" class="mega-link"><strong>Crosstecch Content Pilot</strong><span>Create &amp; publish content fast</span></a>
                     </div>
                     <div class="mega-col">
                         <span class="mega-head">PLATFORM</span>
@@ -314,22 +290,127 @@
     <main class="flex-grow max-w-5xl w-full mx-auto px-6 py-8 relative z-10">
 
         <!-- Hero / Title -->
-        <div class="mb-12">
-            <div class="flex items-center gap-2 mb-3">
-                <span class="text-xs font-bold font-mono bg-blue-100 text-blue-600 border border-blue-200 px-3 py-1 rounded-full uppercase tracking-wider">
-          AI Debugger
-        </span>
-                <span class="text-xs font-bold font-mono bg-emerald-100 text-emerald-600 border border-emerald-200 px-3 py-1 rounded-full uppercase tracking-wider">
-          v2.6 Stable
-        </span>
+        <div class="relative mb-16 overflow-hidden">
+            <div class="pointer-events-none absolute -top-24 -left-16 w-72 h-72 rounded-full bg-blue-300/25 blur-3xl"></div>
+            <div class="pointer-events-none absolute -top-10 -right-10 w-64 h-64 rounded-full bg-indigo-300/20 blur-3xl"></div>
+            <div class="relative">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xs font-bold font-mono bg-blue-100 text-blue-600 border border-blue-200 px-3 py-1 rounded-full uppercase tracking-wider">
+              AI Debugger
+            </span>
+                    <span class="text-xs font-bold font-mono bg-emerald-100 text-emerald-600 border border-emerald-200 px-3 py-1 rounded-full uppercase tracking-wider">
+              v2.6 Stable
+            </span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight mb-2">
+                    Bug Finder
+                </h1>
+                <p class="text-lg md:text-xl font-bold text-blue-600 mb-4">Catch bugs before they reach production.</p>
+                <p class="text-slate-600 w-full max-w-2xl text-base leading-relaxed font-medium">
+                    An autonomous, AI-driven runtime inspection and codebase analysis agent. Scan your code repositories using natural language, detect subtle logic errors, leaks, and vulnerabilities, and review clean patches generated in seconds.
+                </p>
+                <div class="flex flex-wrap items-center gap-4 mt-6">
+                    <a href="future.html" target="_top" class="btn-gradient text-white font-bold text-sm uppercase tracking-wider px-7 py-3.5 rounded-full inline-block">Book a Demo &rarr;</a>
+                    <a href="ContactUs.html" target="_top" class="border border-slate-300 text-slate-700 font-bold text-sm uppercase tracking-wider px-7 py-3.5 rounded-full hover:bg-white transition inline-block">Talk to an Expert</a>
+                </div>
+                <div class="flex flex-wrap gap-x-12 gap-y-4 mt-10 pt-8 border-t border-slate-200/70">
+                    <div>
+                        <div class="text-2xl font-black text-slate-800">60%</div>
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-0.5">Fewer Escaped Bugs</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black text-slate-800">3x</div>
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-0.5">Faster Code Reviews</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black text-slate-800">24/7</div>
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-0.5">Continuous Scanning</div>
+                    </div>
+                </div>
             </div>
-            <h1 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight mb-4">
-                Bug Finder
-            </h1>
-            <p class="text-slate-600 w-full text-base leading-relaxed font-medium">
-                An autonomous, AI-driven runtime inspection and codebase analysis agent. Scan your code repositories using natural language, detect subtle logic errors, leaks, and vulnerabilities, and review clean patches generated in seconds.
-            </p>
         </div>
+
+        <!-- ============================================ -->
+        <!-- SECTION: HOW IT WORKS                        -->
+        <!-- ============================================ -->
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-[3px] font-bold text-slate-400 mb-6 flex items-center gap-2">
+                <i data-lucide="workflow" class="w-4 h-4 text-blue-500"></i> How It Works
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="panel-card rounded-2xl p-6 relative">
+                    <div class="absolute top-5 right-5 text-4xl font-black text-blue-100">01</div>
+                    <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
+                        <i data-lucide="plug" class="w-5 h-5 text-blue-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">Connect your repo</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Point Bug Finder at your codebase or CI pipeline — most teams are set up in minutes.</p>
+                </div>
+                <div class="panel-card rounded-2xl p-6 relative">
+                    <div class="absolute top-5 right-5 text-4xl font-black text-blue-100">02</div>
+                    <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
+                        <i data-lucide="scan-search" class="w-5 h-5 text-blue-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">AI scans every commit</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Natural-language analysis flags logic errors, leaks and vulnerabilities as they happen.</p>
+                </div>
+                <div class="panel-card rounded-2xl p-6 relative">
+                    <div class="absolute top-5 right-5 text-4xl font-black text-blue-100">03</div>
+                    <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-blue-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">Ship with confidence</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Review clear, traceable reports and clean auto-generated patches before you release.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SECTION: KEY CAPABILITIES                    -->
+        <!-- ============================================ -->
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-[3px] font-bold text-slate-400 mb-6 flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-blue-500"></i> Key Capabilities
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="panel-card rounded-2xl p-5 flex items-start gap-4">
+                    <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="check" class="w-4 h-4 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm mb-1">Full-Flow Detection</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-medium">Automatically detects and pinpoints bugs across web &amp; mobile flows</p>
+                    </div>
+                </div>
+                <div class="panel-card rounded-2xl p-5 flex items-start gap-4">
+                    <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="check" class="w-4 h-4 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm mb-1">Traceable Reports</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-medium">Clear, traceable reports — no guesswork, no noise</p>
+                    </div>
+                </div>
+                <div class="panel-card rounded-2xl p-5 flex items-start gap-4">
+                    <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="check" class="w-4 h-4 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm mb-1">Early Regression Catch</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-medium">Catches regressions early so releases never slip</p>
+                    </div>
+                </div>
+                <div class="panel-card rounded-2xl p-5 flex items-start gap-4">
+                    <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="check" class="w-4 h-4 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm mb-1">CI/CD Native</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-medium">Plugs into your CI/CD to test on every commit</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- ============================================ -->
         <!-- SECTION 1: SCREENSHOTS - FLOATING            -->
@@ -339,12 +420,15 @@
                 <i data-lucide="image" class="w-4 h-4 text-blue-500"></i> UI Main Interface
             </h2>
 
-            <!-- Screenshot Viewport (Completely borderless, no backgrounds or cards behind screenshots) -->
-            <div class="relative w-full">
-                <!-- Main Screenshot Image -->
-                <div class="block">
-                    <img loading="lazy" src="images/bug_finder_screenshot_main.png" alt="Main Interface" class="w-full h-auto rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-100">
+            <!-- Screenshot Viewport, framed like a browser window for a premium product feel -->
+            <div class="relative w-full rounded-[28px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200 bg-white">
+                <div class="flex items-center gap-2 px-5 py-3.5 bg-slate-50 border-b border-slate-200">
+                    <span class="w-3 h-3 rounded-full bg-rose-300"></span>
+                    <span class="w-3 h-3 rounded-full bg-amber-300"></span>
+                    <span class="w-3 h-3 rounded-full bg-emerald-300"></span>
+                    <span class="ml-3 text-xs font-mono text-slate-400">app.crosstecch.com / bug-finder</span>
                 </div>
+                <img loading="lazy" src="images/bug_finder_screenshot_main.png" alt="Main Interface" class="w-full h-auto">
             </div>
         </section>
 
@@ -372,6 +456,92 @@
                     <div class="bg-[#020205] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-slate-200 relative w-full aspect-video flex items-center justify-center">
                         <video src="videos/BugFinder2.mp4" class="w-full h-full object-contain" controls autoplay muted loop></video>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SECTION: WHY BUG FINDER                      -->
+        <!-- ============================================ -->
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-[3px] font-bold text-slate-400 mb-6 flex items-center gap-2">
+                <i data-lucide="sparkles" class="w-4 h-4 text-blue-500"></i> Why Teams Choose Bug Finder
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="panel-card rounded-2xl p-6">
+                    <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
+                        <i data-lucide="zap" class="w-5 h-5 text-blue-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">Faster releases</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Automated checks on every commit mean fewer late-stage surprises and smoother launches.</p>
+                </div>
+                <div class="panel-card rounded-2xl p-6">
+                    <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
+                        <i data-lucide="target" class="w-5 h-5 text-blue-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">Fewer escaped bugs</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Issues are caught and pinpointed early — before your users ever run into them.</p>
+                </div>
+                <div class="panel-card rounded-2xl p-6">
+                    <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
+                        <i data-lucide="plug-zap" class="w-5 h-5 text-blue-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">Fits your stack</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Slots into your existing CI/CD pipeline with minimal setup.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SECTION: FAQ                                 -->
+        <!-- ============================================ -->
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-[3px] font-bold text-slate-400 mb-6 flex items-center gap-2">
+                <i data-lucide="help-circle" class="w-4 h-4 text-blue-500"></i> Frequently Asked Questions
+            </h2>
+            <div class="panel-card rounded-2xl divide-y divide-slate-200/70 overflow-hidden">
+                <details class="group p-5">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-800 text-sm">
+                        How does Bug Finder integrate with our existing CI/CD?
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium mt-3">Bug Finder plugs into most CI/CD pipelines — GitHub Actions, GitLab CI, Jenkins and more — with a lightweight config. Most teams run their first scan within the hour.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-800 text-sm">
+                        What kind of issues does it catch?
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium mt-3">Logic errors, memory and resource leaks, security vulnerabilities, and regressions across web and mobile codebases — with clear, traceable reports.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-800 text-sm">
+                        Does it replace our QA team?
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium mt-3">No — it's built to support your QA and engineering teams, catching issues earlier so your team can focus on higher-value testing and release work.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-800 text-sm">
+                        Is our code ever stored or shared?
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium mt-3">Your code stays within your environment and pipeline; scans run in isolated, secure contexts. Full details are covered in a live walkthrough with our team.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SECTION: CLOSING CTA                         -->
+        <!-- ============================================ -->
+        <section class="mb-4">
+            <div class="rounded-3xl p-10 md:p-12 text-center text-white relative overflow-hidden" style="background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);">
+                <div class="pointer-events-none absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/10 blur-3xl"></div>
+                <h2 class="text-2xl md:text-3xl font-black tracking-tight mb-3 relative">See Bug Finder in action</h2>
+                <p class="text-blue-100 text-base leading-relaxed font-medium mb-6 max-w-xl mx-auto relative">Book a live demo and we'll show you how Bug Finder fits into your workflow. No obligation, just a straight look at the product.</p>
+                <div class="flex flex-wrap items-center justify-center gap-4 relative">
+                    <a href="future.html" target="_top" class="bg-white text-blue-700 font-bold text-sm uppercase tracking-wider px-8 py-3.5 rounded-full inline-block hover:shadow-lg transition">Book a Demo &rarr;</a>
+                    <a href="ContactUs.html" target="_top" class="border border-white/50 text-white font-bold text-sm uppercase tracking-wider px-8 py-3.5 rounded-full hover:bg-white/10 transition inline-block">Talk to an Expert</a>
                 </div>
             </div>
         </section>

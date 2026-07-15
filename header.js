@@ -144,7 +144,7 @@
     <div class="mega" id="mega-product"><div class="mega-inner"><div class="mega-cols">
         <div class="mega-col"><span class="mega-head">OUR PRODUCTS</span>
             <a href="${B}bug-finder.html" target="_top" class="mega-link"><strong>Bug Finder</strong><span>AI that catches bugs before production</span></a>
-            <a href="${B}blog-engine.html" target="_top" class="mega-link"><strong>Content Engine</strong><span>SEO-ready content, drafted in minutes</span></a></div>
+            <a href="${B}blog-engine.html" target="_top" class="mega-link"><strong>Crosstecch Content Pilot</strong><span>SEO-ready content, drafted in minutes</span></a></div>
         <div class="mega-col"><span class="mega-head">EXPLORE</span>
             <a href="${B}solution.html" target="_top" class="mega-link"><strong>All Solutions</strong><span>See both tools in action</span></a>
             <a href="${B}future.html" target="_top" class="mega-link"><strong>Book a Demo</strong><span>Watch them live</span></a></div>

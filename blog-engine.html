@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Engine - Tech Content AI | Cross Tecch</title>
+    <title>Crosstecch Content Pilot - Tech Content AI | Cross Tecch</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,27 +44,6 @@
             border: 1px solid rgba(226, 232, 240, 0.8);
             box-shadow: 0 15px 35px -15px rgba(0, 0, 0, 0.04);
         }
-        /* GPU-Accelerated Slowly Animated Background (Lightweight/Light on performance) */
-        
-        @keyframes bg-float {
-            0% {
-                transform: scale(1.05) translate(0px, 0px) rotate(0deg);
-            }
-            33% {
-                transform: scale(1.08) translate(8px, -6px) rotate(0.4deg);
-            }
-            66% {
-                transform: scale(1.04) translate(-8px, 6px) rotate(-0.4deg);
-            }
-            100% {
-                transform: scale(1.05) translate(0px, 0px) rotate(0deg);
-            }
-        }
-        
-        .animated-bg {
-            animation: bg-float 24s ease-in-out infinite;
-            will-change: transform;
-        }
     </style>
     <style>
         /* Site-wide font: Plus Jakarta Sans (hero1.html chhod ke sab pages) */
@@ -77,11 +56,8 @@
 
 <body class="antialiased overflow-x-hidden">
 
-    <!-- Animated Background Layer (Using the new lavender liquid smoke image) -->
-    <div class="fixed inset-0 z-[-1] overflow-hidden bg-[#f3edfe]">
-        <div class="animated-bg absolute inset-0 bg-cover bg-center opacity-95" style="background-image: url('images/bug_blog_bg.png');"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#f3edfe]/40 via-transparent to-[#f3edfe]/10"></div>
-    </div>
+    <!-- Flat background layer (formal, no imagery) -->
+    <div class="fixed inset-0 z-[-1] bg-[#f3edfe]"></div>
 
     <!-- ===== Shared Header styles (from hero.html) ===== -->
     <style>
@@ -168,7 +144,7 @@
                     </div>
                     <div class="mega-col">
                         <span class="mega-head">SOLUTIONS</span>
-                        <a href="services.html" target="_top" class="mega-link"><strong>Content Engine</strong><span>AI-powered, SEO-ready content</span></a>
+                        <a href="services.html" target="_top" class="mega-link"><strong>Crosstecch Content Pilot</strong><span>AI-powered, SEO-ready content</span></a>
                         <a href="services.html" target="_top" class="mega-link"><strong>Cloud Services</strong><span>AWS, GCP &amp; Azure architecture</span></a>
                     </div>
                 </div>
@@ -211,7 +187,7 @@
                     <div class="mega-col">
                         <span class="mega-head">PRODUCTS</span>
                         <a href="bug-finder.html" target="_top" class="mega-link"><strong>Bug Finder</strong><span>Detect &amp; resolve issues before production</span></a>
-                        <a href="blog-engine.html" target="_top" class="mega-link"><strong>Blog Engine</strong><span>Create &amp; publish content fast</span></a>
+                        <a href="blog-engine.html" target="_top" class="mega-link"><strong>Crosstecch Content Pilot</strong><span>Create &amp; publish content fast</span></a>
                     </div>
                     <div class="mega-col">
                         <span class="mega-head">PLATFORM</span>
@@ -312,22 +288,127 @@
     <main class="flex-grow max-w-5xl w-full mx-auto px-6 py-8 relative z-10">
 
         <!-- Hero / Title -->
-        <div class="mb-12">
-            <div class="flex items-center gap-2 mb-3">
-                <span class="text-xs font-bold font-mono bg-purple-100 text-purple-600 border border-purple-200 px-3 py-1 rounded-full uppercase tracking-wider">
-          Content AI
-        </span>
-                <span class="text-xs font-bold font-mono bg-slate-100 text-slate-555 border border-slate-200 px-3 py-1 rounded-full uppercase tracking-wider">
-          v1.2 Open Beta
-        </span>
+        <div class="relative mb-16 overflow-hidden">
+            <div class="pointer-events-none absolute -top-24 -left-16 w-72 h-72 rounded-full bg-purple-300/25 blur-3xl"></div>
+            <div class="pointer-events-none absolute -top-10 -right-10 w-64 h-64 rounded-full bg-fuchsia-300/20 blur-3xl"></div>
+            <div class="relative">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xs font-bold font-mono bg-purple-100 text-purple-600 border border-purple-200 px-3 py-1 rounded-full uppercase tracking-wider">
+              Content AI
+            </span>
+                    <span class="text-xs font-bold font-mono bg-slate-100 text-slate-555 border border-slate-200 px-3 py-1 rounded-full uppercase tracking-wider">
+              v1.2 Open Beta
+            </span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight mb-2">
+                    Crosstecch Content Pilot
+                </h1>
+                <p class="text-lg md:text-xl font-bold text-purple-600 mb-4">Publish SEO-ready content at scale.</p>
+                <p class="text-slate-600 w-full max-w-2xl text-base leading-relaxed font-medium">
+                    Streamline your publication workflow. Evaluate system logs, commit messages, and deployment data to automatically compile comprehensive technical blogs, release notes, and documentation updates.
+                </p>
+                <div class="flex flex-wrap items-center gap-4 mt-6">
+                    <a href="future.html" target="_top" class="btn-gradient text-white font-bold text-sm uppercase tracking-wider px-7 py-3.5 rounded-full inline-block">Book a Demo &rarr;</a>
+                    <a href="ContactUs.html" target="_top" class="border border-slate-300 text-slate-700 font-bold text-sm uppercase tracking-wider px-7 py-3.5 rounded-full hover:bg-white transition inline-block">Talk to an Expert</a>
+                </div>
+                <div class="flex flex-wrap gap-x-12 gap-y-4 mt-10 pt-8 border-t border-slate-200/70">
+                    <div>
+                        <div class="text-2xl font-black text-slate-800">10x</div>
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-0.5">Faster First Drafts</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black text-slate-800">100%</div>
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-0.5">SEO-Ready Structure</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black text-slate-800">1</div>
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-0.5">Consistent Brand Voice</div>
+                    </div>
+                </div>
             </div>
-            <h1 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight mb-4">
-                Blog Engine
-            </h1>
-            <p class="text-slate-600 w-full text-base leading-relaxed font-medium">
-                Streamline your publication workflow. Evaluate system logs, commit messages, and deployment data to automatically compile comprehensive technical blogs, release notes, and documentation updates.
-            </p>
         </div>
+
+        <!-- ============================================ -->
+        <!-- SECTION: HOW IT WORKS                        -->
+        <!-- ============================================ -->
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-[3px] font-bold text-slate-400 mb-6 flex items-center gap-2">
+                <i data-lucide="workflow" class="w-4 h-4 text-purple-500"></i> How It Works
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="panel-card rounded-2xl p-6 relative">
+                    <div class="absolute top-5 right-5 text-4xl font-black text-purple-100">01</div>
+                    <div class="w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
+                        <i data-lucide="file-text" class="w-5 h-5 text-purple-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">Drop in a brief</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Give Content Pilot your topic, audience and goals — no lengthy setup required.</p>
+                </div>
+                <div class="panel-card rounded-2xl p-6 relative">
+                    <div class="absolute top-5 right-5 text-4xl font-black text-purple-100">02</div>
+                    <div class="w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-purple-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">AI drafts &amp; structures</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Get an on-brand, SEO-ready draft with headings and metadata built in.</p>
+                </div>
+                <div class="panel-card rounded-2xl p-6 relative">
+                    <div class="absolute top-5 right-5 text-4xl font-black text-purple-100">03</div>
+                    <div class="w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
+                        <i data-lucide="send" class="w-5 h-5 text-purple-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">Review &amp; publish</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Fine-tune the draft and ship it in a fraction of the usual time.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SECTION: KEY CAPABILITIES                    -->
+        <!-- ============================================ -->
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-[3px] font-bold text-slate-400 mb-6 flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-purple-500"></i> Key Capabilities
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="panel-card rounded-2xl p-5 flex items-start gap-4">
+                    <div class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="check" class="w-4 h-4 text-purple-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm mb-1">Rapid Drafting</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-medium">Brief in, polished draft out — in minutes, not days</p>
+                    </div>
+                </div>
+                <div class="panel-card rounded-2xl p-5 flex items-start gap-4">
+                    <div class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="check" class="w-4 h-4 text-purple-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm mb-1">Built-in SEO</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-medium">SEO-ready structure, headings and metadata built in</p>
+                    </div>
+                </div>
+                <div class="panel-card rounded-2xl p-5 flex items-start gap-4">
+                    <div class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="check" class="w-4 h-4 text-purple-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm mb-1">Brand Consistency</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-medium">Keeps a consistent, on-brand voice across every piece</p>
+                    </div>
+                </div>
+                <div class="panel-card rounded-2xl p-5 flex items-start gap-4">
+                    <div class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="check" class="w-4 h-4 text-purple-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm mb-1">Team Leverage</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-medium">Publish faster and free your team for higher-value work</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- ============================================ -->
         <!-- SECTION 1: SCREENSHOTS - FLOATING            -->
@@ -337,12 +418,13 @@
                 <i data-lucide="layout" class="w-4 h-4 text-purple-500"></i> UI Pipeline Flowchart
             </h2>
 
-            <!-- Screenshot Viewport (Completely borderless, no backgrounds or cards behind screenshots) -->
-            <div class="relative w-full">
-                <!-- AI Pipeline Flowchart Image -->
-                <div class="block">
-                    <img loading="lazy" src="images/blog_pipeline_diagram.png" alt="AI Pipeline Flowchart" class="w-full h-auto rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-100">
+            <!-- AI Pipeline Flowchart, presented as a labeled diagram card -->
+            <div class="relative w-full rounded-[28px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200 bg-white">
+                <div class="flex items-center gap-2 px-5 py-3.5 bg-slate-50 border-b border-slate-200">
+                    <i data-lucide="git-branch" class="w-4 h-4 text-purple-500"></i>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Content Pipeline Overview</span>
                 </div>
+                <img loading="lazy" src="images/blog_pipeline_diagram.png" alt="AI Pipeline Flowchart" class="w-full h-auto">
             </div>
         </section>
 
@@ -357,6 +439,92 @@
             <!-- Borderless Video frame (aspect-ratio matched to make sure the video fully fits) -->
             <div class="bg-[#020205] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-slate-200 relative w-full aspect-video flex items-center justify-center">
                 <video src="videos/blog2.mp4" class="w-full h-full object-contain" controls autoplay muted loop></video>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SECTION: WHY CROSSTECCH CONTENT PILOT        -->
+        <!-- ============================================ -->
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-[3px] font-bold text-slate-400 mb-6 flex items-center gap-2">
+                <i data-lucide="sparkles" class="w-4 h-4 text-purple-500"></i> Why Teams Choose Crosstecch Content Pilot
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="panel-card rounded-2xl p-6">
+                    <div class="w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
+                        <i data-lucide="zap" class="w-5 h-5 text-purple-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">Faster publishing</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Turns a simple brief into a polished, ready-to-ship draft in minutes, not days.</p>
+                </div>
+                <div class="panel-card rounded-2xl p-6">
+                    <div class="w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
+                        <i data-lucide="target" class="w-5 h-5 text-purple-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">Consistently on-brand</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Keeps tone, structure and voice consistent across every piece you publish.</p>
+                </div>
+                <div class="panel-card rounded-2xl p-6">
+                    <div class="w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
+                        <i data-lucide="plug-zap" class="w-5 h-5 text-purple-600"></i>
+                    </div>
+                    <h3 class="font-black text-slate-800 mb-2">Fits your workflow</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Plugs into your existing content and publishing pipeline with minimal setup.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SECTION: FAQ                                 -->
+        <!-- ============================================ -->
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-[3px] font-bold text-slate-400 mb-6 flex items-center gap-2">
+                <i data-lucide="help-circle" class="w-4 h-4 text-purple-500"></i> Frequently Asked Questions
+            </h2>
+            <div class="panel-card rounded-2xl divide-y divide-slate-200/70 overflow-hidden">
+                <details class="group p-5">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-800 text-sm">
+                        Will content sound like it was written by AI?
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium mt-3">Content Pilot is tuned to your brand voice and style guide, so drafts read like your team wrote them — not like generic AI output.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-800 text-sm">
+                        Does it handle SEO on its own?
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium mt-3">Yes — every draft comes with SEO-ready headings, structure and metadata built in, so you're not bolting it on afterward.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-800 text-sm">
+                        Can we edit before publishing?
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium mt-3">Always. Content Pilot hands you a polished draft, not a black box — review, tweak and approve before anything goes live.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-800 text-sm">
+                        What content types does it support?
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium mt-3">Technical blogs, release notes and documentation updates, generated from your commits, system logs and briefs.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SECTION: CLOSING CTA                         -->
+        <!-- ============================================ -->
+        <section class="mb-4">
+            <div class="rounded-3xl p-10 md:p-12 text-center text-white relative overflow-hidden" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);">
+                <div class="pointer-events-none absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/10 blur-3xl"></div>
+                <h2 class="text-2xl md:text-3xl font-black tracking-tight mb-3 relative">See Crosstecch Content Pilot in action</h2>
+                <p class="text-purple-100 text-base leading-relaxed font-medium mb-6 max-w-xl mx-auto relative">Book a live demo and we'll show you how Crosstecch Content Pilot fits into your workflow. No obligation, just a straight look at the product.</p>
+                <div class="flex flex-wrap items-center justify-center gap-4 relative">
+                    <a href="future.html" target="_top" class="bg-white text-purple-700 font-bold text-sm uppercase tracking-wider px-8 py-3.5 rounded-full inline-block hover:shadow-lg transition">Book a Demo &rarr;</a>
+                    <a href="ContactUs.html" target="_top" class="border border-white/50 text-white font-bold text-sm uppercase tracking-wider px-8 py-3.5 rounded-full hover:bg-white/10 transition inline-block">Talk to an Expert</a>
+                </div>
             </div>
         </section>
 
