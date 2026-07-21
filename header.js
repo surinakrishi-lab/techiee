@@ -119,67 +119,67 @@
 
     /* ---------- 2) MARKUP ---------- */
     var html = `
-    <a href="${B}index.html" target="_top" class="navLogo">
-        <img src="${B}images/bg.png" alt="CrossTecch Logo" class="logoImage" />
+    <a href="/" target="_top" class="navLogo">
+        <img src="${B}images/bg.webp" alt="CrossTecch Logo" class="logoImage" />
     </a>
     <ul class="navLinks">
-        <li class="nav-item" data-mega="platform"><a href="${B}solution.html" target="_top">Platform <svg class="caret" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
-        <li class="nav-item" data-mega="product"><a href="${B}solution.html" target="_top">Product <svg class="caret" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
-        <li class="nav-item" data-mega="service"><a href="${B}services.html" target="_top">Service <svg class="caret" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
-        <li class="nav-item" data-mega="resources"><a href="${B}blog.html" target="_top">Resources <svg class="caret" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
+        <li class="nav-item" data-mega="platform"><a href="/solution" target="_top">Platform <svg class="caret" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
+        <li class="nav-item" data-mega="product"><a href="/solution" target="_top">Product <svg class="caret" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
+        <li class="nav-item" data-mega="service"><a href="/services" target="_top">Service <svg class="caret" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
+        <li class="nav-item" data-mega="resources"><a href="/blog" target="_top">Resources <svg class="caret" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
     </ul>
 
     <div class="mega" id="mega-platform"><div class="mega-inner"><div class="mega-cols">
         <div class="mega-col"><span class="mega-head">PLATFORM</span>
-            <a href="${B}solution.html" target="_top" class="mega-link"><strong>QA Cloud</strong><span>Scalable, cloud-based test infrastructure</span></a>
-            <a href="${B}solution.html" target="_top" class="mega-link"><strong>AI Test Engine</strong><span>The AI core that powers our products</span></a>
-            <a href="${B}solution.html" target="_top" class="mega-link"><strong>Integrations</strong><span>Plug into your CI/CD &amp; tools</span></a></div>
+            <a href="/solution" target="_top" class="mega-link"><strong>QA Cloud</strong><span>Scalable, cloud-based test infrastructure</span></a>
+            <a href="/solution" target="_top" class="mega-link"><strong>AI Test Engine</strong><span>The AI core that powers our products</span></a>
+            <a href="/solution" target="_top" class="mega-link"><strong>Integrations</strong><span>Plug into your CI/CD &amp; tools</span></a></div>
         <div class="mega-col"><span class="mega-head">WHY CROSSTECCH</span>
-            <a href="${B}services.html" target="_top" class="mega-link"><strong>How We Work</strong><span>Our process &amp; approach</span></a>
-            <a href="${B}index_files/WhyChooseUs_preview.html" target="_top" class="mega-link"><strong>Why CrossTecch</strong><span>What sets us apart</span></a></div>
-        </div><div class="mega-feature"><img src="${B}images/robo2.png" alt="" class="mega-feature-img" />
+            <a href="/services" target="_top" class="mega-link"><strong>How We Work</strong><span>Our process &amp; approach</span></a>
+            <a href="/" target="_top" class="mega-link"><strong>Why CrossTecch</strong><span>What sets us apart</span></a></div>
+        </div><div class="mega-feature"><img src="${B}images/robo2.webp" alt="" class="mega-feature-img" />
         <h4>One platform,<br>full coverage</h4><p class="mega-feature-sub">Test, build &amp; ship with confidence.</p>
-        <a href="${B}solution.html" target="_top" class="mega-feature-btn">Explore the Platform</a></div></div></div>
+        <a href="/solution" target="_top" class="mega-feature-btn">Explore the Platform</a></div></div></div>
 
     <div class="mega" id="mega-product"><div class="mega-inner"><div class="mega-cols">
         <div class="mega-col"><span class="mega-head">OUR PRODUCTS</span>
-            <a href="${B}bug-finder.html" target="_top" class="mega-link"><strong>Bug Finder</strong><span>AI that catches bugs before production</span></a>
-            <a href="${B}blog-engine.html" target="_top" class="mega-link"><strong>Crosstecch Content Pilot</strong><span>SEO-ready content, drafted in minutes</span></a></div>
+            <a href="/bug-finder" target="_top" class="mega-link"><strong>Bug Finder</strong><span>AI that catches bugs before production</span></a>
+            <a href="/blog-engine" target="_top" class="mega-link"><strong>Crosstecch Content Pilot</strong><span>SEO-ready content, drafted in minutes</span></a></div>
         <div class="mega-col"><span class="mega-head">EXPLORE</span>
-            <a href="${B}solution.html" target="_top" class="mega-link"><strong>All Solutions</strong><span>See both tools in action</span></a>
-            <a href="${B}future.html" target="_top" class="mega-link"><strong>Book a Demo</strong><span>Watch them live</span></a></div>
-        </div><div class="mega-feature"><img src="${B}images/robo3.png" alt="" class="mega-feature-img" />
+            <a href="/solution" target="_top" class="mega-link"><strong>All Solutions</strong><span>See both tools in action</span></a>
+            <a href="/future" target="_top" class="mega-link"><strong>Book a Demo</strong><span>Watch them live</span></a></div>
+        </div><div class="mega-feature"><img src="${B}images/robo3.webp" alt="" class="mega-feature-img" />
         <h4>Build. Test.<br>Deploy.</h4><p class="mega-feature-sub">Two products, everything your team needs.</p>
-        <a href="${B}solution.html" target="_top" class="mega-feature-btn">See Products</a></div></div></div>
+        <a href="/solution" target="_top" class="mega-feature-btn">See Products</a></div></div></div>
 
     <div class="mega" id="mega-service"><div class="mega-inner"><div class="mega-cols">
         <div class="mega-col"><span class="mega-head">TESTING &amp; QA</span>
-            <a href="${B}services.html" target="_top" class="mega-link"><strong>Manual QA Testing</strong><span>Human-driven test cycles for every flow</span></a>
-            <a href="${B}services.html" target="_top" class="mega-link"><strong>Automation Testing</strong><span>Selenium, Playwright &amp; Cypress at scale</span></a>
-            <a href="${B}services.html" target="_top" class="mega-link"><strong>Performance Testing</strong><span>Load &amp; stress at any scale</span></a>
-            <a href="${B}services.html" target="_top" class="mega-link"><strong>Functional &amp; Security Testing</strong><span>UI, DB, API &amp; security audits</span></a></div>
+            <a href="/services" target="_top" class="mega-link"><strong>Manual QA Testing</strong><span>Human-driven test cycles for every flow</span></a>
+            <a href="/services" target="_top" class="mega-link"><strong>Automation Testing</strong><span>Selenium, Playwright &amp; Cypress at scale</span></a>
+            <a href="/services" target="_top" class="mega-link"><strong>Performance Testing</strong><span>Load &amp; stress at any scale</span></a>
+            <a href="/services" target="_top" class="mega-link"><strong>Functional &amp; Security Testing</strong><span>UI, DB, API &amp; security audits</span></a></div>
         <div class="mega-col"><span class="mega-head">ENGINEERING</span>
-            <a href="${B}services.html" target="_top" class="mega-link"><strong>DevOps Services</strong><span>CI/CD, Docker &amp; Kubernetes</span></a>
-            <a href="${B}services.html" target="_top" class="mega-link"><strong>Cloud Services</strong><span>AWS, GCP &amp; Azure architecture</span></a>
-            <a href="${B}services.html" target="_top" class="mega-link"><strong>UI/UX &amp; Web Design</strong><span>Fast, usable, on-brand interfaces</span></a></div>
-        </div><div class="mega-feature"><img src="${B}images/robok.png" alt="" class="mega-feature-img" />
+            <a href="/services" target="_top" class="mega-link"><strong>DevOps Services</strong><span>CI/CD, Docker &amp; Kubernetes</span></a>
+            <a href="/services" target="_top" class="mega-link"><strong>Cloud Services</strong><span>AWS, GCP &amp; Azure architecture</span></a>
+            <a href="/services" target="_top" class="mega-link"><strong>UI/UX &amp; Web Design</strong><span>Fast, usable, on-brand interfaces</span></a></div>
+        </div><div class="mega-feature"><img src="${B}images/robok.webp" alt="" class="mega-feature-img" />
         <h4>End-to-end<br>delivery</h4><p class="mega-feature-sub">From QA to cloud, one expert team.</p>
-        <a href="${B}services.html" target="_top" class="mega-feature-btn">View All Services</a></div></div></div>
+        <a href="/services" target="_top" class="mega-feature-btn">View All Services</a></div></div></div>
 
     <div class="mega" id="mega-resources"><div class="mega-inner"><div class="mega-cols">
         <div class="mega-col"><span class="mega-head">LEARN</span>
-            <a href="${B}blog.html" target="_top" class="mega-link"><strong>Blog</strong><span>Latest articles &amp; insights</span></a>
-            <a href="${B}blog.html" target="_top" class="mega-link"><strong>Case Studies</strong><span>Real-world client results</span></a>
-            <a href="${B}blog.html" target="_top" class="mega-link"><strong>Guides</strong><span>Deep-dive tutorials</span></a></div>
+            <a href="/blog" target="_top" class="mega-link"><strong>Blog</strong><span>Latest articles &amp; insights</span></a>
+            <a href="/blog" target="_top" class="mega-link"><strong>Case Studies</strong><span>Real-world client results</span></a>
+            <a href="/blog" target="_top" class="mega-link"><strong>Guides</strong><span>Deep-dive tutorials</span></a></div>
         <div class="mega-col"><span class="mega-head">COMPANY</span>
-            <a href="${B}about.html" target="_top" class="mega-link"><strong>About CrossTecch</strong><span>Who we are</span></a>
-            <a href="${B}ContactUs.html" target="_top" class="mega-link"><strong>Contact</strong><span>Talk to our team</span></a></div>
-        </div><div class="mega-feature"><img src="${B}images/girl.png" alt="" class="mega-feature-img" />
+            <a href="/about" target="_top" class="mega-link"><strong>About CrossTecch</strong><span>Who we are</span></a>
+            <a href="/ContactUs" target="_top" class="mega-link"><strong>Contact</strong><span>Talk to our team</span></a></div>
+        </div><div class="mega-feature"><img src="${B}images/girl.webp" alt="" class="mega-feature-img" />
         <h4>Read.<br>Learn. Grow.</h4><p class="mega-feature-sub">Insights for modern teams.</p>
-        <a href="${B}blog.html" target="_top" class="mega-feature-btn">Visit the Blog</a></div></div></div>
+        <a href="/blog" target="_top" class="mega-feature-btn">Visit the Blog</a></div></div></div>
 
     <div class="navActions">
-        <a href="${B}future.html" target="_top" class="navCta">Future &rarr;</a>
+        <a href="/future" target="_top" class="navCta">Future &rarr;</a>
     </div>
     <div class="hamburger" aria-label="Menu" role="button" tabindex="0"><span></span><span></span><span></span></div>`;
 

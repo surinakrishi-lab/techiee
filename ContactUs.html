@@ -412,6 +412,36 @@
             font-weight: 600;
             color: var(--text);
         }
+
+        .info-row-link {
+            color: inherit;
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        .info-row-link:hover {
+            color: var(--blue);
+        }
+
+        .info-row-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .info-row-icon-email {
+            background: linear-gradient(135deg, var(--blue), var(--cyan));
+            box-shadow: 0 3px 10px rgba(99, 102, 241, 0.35);
+        }
+
+        .info-row-icon-phone {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            box-shadow: 0 3px 10px rgba(236, 72, 153, 0.35);
+        }
         
         .map-block {
             border-radius: 18px;
@@ -952,15 +982,15 @@
 
     <nav class="nav">
         <div class="nav-inner">
-            <a href="/index_files/index.html" class="nav-logo"><img loading="lazy" src="images/bg.png" alt="Crosstecch Logo" class="logo-img" /></a>
+            <a href="/" class="nav-logo"><img loading="lazy" src="images/bg.webp" alt="Crosstecch Logo" class="logo-img" /></a>
             <div class="nav-links" id="navLinks">
-                <a href="/index_files/index.html">Home</a>
-                <a href="/index_files/about.html">About Us</a>
-                <a href="services.html">Services</a>
-                <a href="solution.html">Solutions</a>
-                <a href="blog.html">Blogs</a>
-                <a href="Product.html">Product</a>
-                <a href="ContactUs.html">Contact Us</a>
+                <a href="/">Home</a>
+                <a href="/about">About Us</a>
+                <a href="/services">Services</a>
+                <a href="/solution">Solutions</a>
+                <a href="/blog">Blogs</a>
+                <a href="/Product">Product</a>
+                <a href="/ContactUs">Contact Us</a>
             </div>
             <span id="menu-icon " onclick="toggleMenu() ">
       <svg width="22 " height="22 " viewBox="0 0 24 24 " fill="none " stroke="#64748b " stroke-width="2 " stroke-linecap="round ">
@@ -972,7 +1002,7 @@
 
     <div class="hero ">
         <div class="hero-bg "></div>
-        <img loading="lazy" class="hero-img-fill " src="images/img2.png " alt="CrossTecch " />
+        <img loading="lazy" class="hero-img-fill " src="images/img2.webp " alt="CrossTecch " />
         <div class="hero-content ">
             <div class="hero-eyebrow ">Reach Out</div>
             <h1 class="hero-title ">Let's <span>Build</span><br>Together</h1>
@@ -995,12 +1025,12 @@
                     </div>
 
                     <div class="info-row ">
-                        <span class="info-row-key ">📧 EMAIL</span>
-                        <span class="info-row-val ">info@crosstecch.ai</span>
+                        <span class="info-row-key "><span class="info-row-icon info-row-icon-email"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 6.5 12 13l9-6.5"></path></svg></span> EMAIL</span>
+                        <span class="info-row-val "><a href="mailto:info@crosstecch.com" class="info-row-link">info@crosstecch.com</a></span>
                     </div>
                     <div class="info-row ">
-                        <span class="info-row-key ">📞 PHONE</span>
-                        <span class="info-row-val ">+91 00000 00000</span>
+                        <span class="info-row-key "><span class="info-row-icon info-row-icon-phone"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span> PHONE</span>
+                        <span class="info-row-val "><a href="tel:+919708167618" class="info-row-link">+91-9708167618</a></span>
                     </div>
                     <div class="info-row ">
                         <span class="info-row-key ">📍 LOCATION</span>
@@ -1138,7 +1168,7 @@
                 <div class="form-feedback " id="feedbackError">
                     <div class="feedback-icon err " style="font-size:36px; background:rgba(239,68,68,0.1); ">❌</div>
                     <h3 class="feedback-title ">Something went wrong</h3>
-                    <p class="feedback-msg ">Couldn't send. Email us directly at <strong>info@bnxt.ai</strong></p>
+                    <p class="feedback-msg ">Couldn't send. Email us directly at <strong>info@crosstecch.com</strong></p>
                     <button class="btn-again " onclick="resetForm() ">Try Again</button>
                 </div>
 

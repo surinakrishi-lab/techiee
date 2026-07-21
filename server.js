@@ -69,13 +69,19 @@ async function renderPage(res, absFilePath) {
   }
 }
 
-// Root-level pages, at the same URLs the site already used (so every
-// existing relative link - "about.html", "solution.html", header.js's
-// nav links, etc. - keeps working unchanged).
+// Root-level pages. Keyed by the *clean* (no .html) URL a person should
+// actually see in the address bar - that's what gets rendered below.
+// Legacy .html URLs still work, but only as 301 redirects to the clean
+// URL (see the redirect block further down), so the ".html" never shows.
+//
+// Note: /about.html used to render the standalone about.html file, which
+// was itself just a meta-refresh/JS redirect into /index_files/about.html
+// - i.e. visiting /about used to flash "index_files/about.html" in the
+// address bar. That's fixed here by rendering the real about content
+// (index_files/about.ejs) directly at the clean URL, no bounce.
 const PAGES = {
   '/': 'index.html',
-  '/index.html': 'index.html',
-  '/about.html': 'about.html',
+  '/about.html': 'index_files/about.ejs',
   '/blog.html': 'blog.html',
   '/future.html': 'future.html',
   '/ContactUs.html': 'ContactUs.html',
@@ -84,20 +90,29 @@ const PAGES = {
   '/blog-engine.html': 'blog-engine.html',
   '/Product.html': 'Product.html',
   '/solution.html': 'solution.html',
-  '/Footer.html': 'Footer.html',
 };
 
+// Serve every page at its clean URL - this is what the browser's address
+// bar should show.
 Object.entries(PAGES).forEach(([route, file]) => {
-  app.get(route, (req, res) => renderPage(res, path.join(ROOT, file)));
-});
-
-// Clean-URL aliases (e.g. /about -> about.html) for nicer production URLs,
-// on top of the existing .html links, which keep working unchanged.
-Object.entries(PAGES).forEach(([route, file]) => {
-  if (route === '/' || !route.endsWith('.html')) return;
-  const clean = route.replace(/\.html$/, '');
+  const clean = route === '/' ? '/' : route.replace(/\.html$/, '');
   app.get(clean, (req, res) => renderPage(res, path.join(ROOT, file)));
 });
+
+// Legacy .html URLs (and /index.html) 301-redirect to the clean URL, so
+// old links/bookmarks/search results still work but always land on the
+// no-.html address.
+app.get('/index.html', (req, res) => res.redirect(301, '/'));
+Object.entries(PAGES).forEach(([route]) => {
+  if (route === '/') return;
+  const clean = route.replace(/\.html$/, '');
+  app.get(route, (req, res) => res.redirect(301, clean));
+});
+
+// Footer.html is only ever loaded as an internal iframe fragment (every
+// page's footer), never a URL a person navigates to directly - so it's
+// served as-is with no clean-URL alias or redirect.
+app.get('/Footer.html', (req, res) => renderPage(res, path.join(ROOT, 'Footer.html')));
 
 // index_files/ fragments (the sections embedded via iframe on several
 // pages) - also rendered through EJS now instead of express.static.

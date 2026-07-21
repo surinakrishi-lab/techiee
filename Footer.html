@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="CROSS TECCH - Building modern digital products, enterprise architectures, and seamless framework integrations with Next.js, React, Angular, Vue, and Laravel.">
     <title>Modern SaaS Footer - CROSS TECCH</title>
-    <link rel="icon" type="image/png" href="images/bg.png" />
+    <link rel="icon" type="image/png" href="images/bg.webp" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         html {
@@ -337,6 +337,49 @@
         .footer-link:hover {
             color: #4f46e5;
             transform: translateX(6px);
+        }
+        /* Colorful contact pills (email + phone) in the footer brand area */
+        .brand-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 6px;
+        }
+        .contact-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            color: #111827;
+            transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.25s;
+        }
+        .contact-pill:hover {
+            transform: translateX(6px);
+        }
+        .contact-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .contact-icon-email {
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+        }
+        .contact-icon-phone {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            box-shadow: 0 4px 14px rgba(236, 72, 153, 0.35);
+        }
+        .contact-pill-email:hover {
+            color: #4f46e5;
+        }
+        .contact-pill-phone:hover {
+            color: #ec4899;
         }
         /* Premium Badges for Footer Links */
         
@@ -693,8 +736,8 @@
                 <p class="sub">We help startups and enterprises build, test and deploy high-quality digital products with speed and reliability.</p>
             </div>
             <div class="btns">
-                <button class="btn primary" id="btnSchedule" onclick="window.top.location.href='ContactUs.html'">Schedule a Call</button>
-                <button class="btn secondary" id="btnContact" onclick="window.top.location.href='ContactUs.html'">Contact Us</button>
+                <button class="btn primary" id="btnSchedule" onclick="window.top.location.href='/ContactUs'">Schedule a Call</button>
+                <button class="btn secondary" id="btnContact" onclick="window.top.location.href='/ContactUs'">Contact Us</button>
             </div>
         </div>
 
@@ -713,7 +756,21 @@
             <!-- Brand Area -->
             <div class="brand-area">
                 <div class="brand-logo" id="footerLogo">
-                    <img loading="lazy" src="images/bg.png" alt="CROSSTECCH Logo" style="height: 158px; width: auto; object-fit: contain; display: block;">
+                    <img loading="lazy" src="images/bg.webp" alt="CROSSTECCH Logo" style="height: 158px; width: auto; object-fit: contain; display: block;">
+                </div>
+                <div class="brand-contact">
+                    <a href="mailto:info@crosstecch.com" class="contact-pill contact-pill-email" target="_top">
+                        <span class="contact-icon contact-icon-email">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 6.5 12 13l9-6.5"></path></svg>
+                        </span>
+                        info@crosstecch.com
+                    </a>
+                    <a href="tel:+919708167618" class="contact-pill contact-pill-phone" target="_top">
+                        <span class="contact-icon contact-icon-phone">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        </span>
+                        +91-9708167618
+                    </a>
                 </div>
             </div>
 
@@ -721,55 +778,55 @@
             <div class="links-col">
                 <span class="col-title">Product</span>
                 <ul>
-                    <li><a href="Product.html" target="_top" class="footer-link">Authentication</a></li>
-                    <li><a href="Product.html" target="_top" class="footer-link">B2B Authentication <span class="badge badge-indigo">New</span></a></li>
-                    <li><a href="Product.html" target="_top" class="footer-link">Billing <span class="badge badge-violet">Beta</span></a></li>
-                    <li><a href="Product.html" target="_top" class="footer-link">User Management</a></li>
-                    <li><a href="bug-finder.html" target="_top" class="footer-link">Bug Finder</a></li>
+                    <li><a href="/Product" target="_top" class="footer-link">Authentication</a></li>
+                    <li><a href="/Product" target="_top" class="footer-link">B2B Authentication <span class="badge badge-indigo">New</span></a></li>
+                    <li><a href="/Product" target="_top" class="footer-link">Billing <span class="badge badge-violet">Beta</span></a></li>
+                    <li><a href="/Product" target="_top" class="footer-link">User Management</a></li>
+                    <li><a href="/bug-finder" target="_top" class="footer-link">Bug Finder</a></li>
                 </ul>
             </div>
 
             <div class="links-col">
                 <span class="col-title">SDKs</span>
                 <ul>
-                    <li><a href="services.html" target="_top" class="footer-link">React</a></li>
-                    <li><a href="services.html" target="_top" class="footer-link">Next.js</a></li>
-                    <li><a href="services.html" target="_top" class="footer-link">Expo</a></li>
-                    <li><a href="services.html" target="_top" class="footer-link">Astro <span class="badge badge-indigo">New</span></a></li>
-                    <li><a href="services.html" target="_top" class="footer-link">View all</a></li>
+                    <li><a href="/services" target="_top" class="footer-link">React</a></li>
+                    <li><a href="/services" target="_top" class="footer-link">Next.js</a></li>
+                    <li><a href="/services" target="_top" class="footer-link">Expo</a></li>
+                    <li><a href="/services" target="_top" class="footer-link">Astro <span class="badge badge-indigo">New</span></a></li>
+                    <li><a href="/services" target="_top" class="footer-link">View all</a></li>
                 </ul>
             </div>
 
             <div class="links-col">
                 <span class="col-title">Resources</span>
                 <ul>
-                    <li><a href="blog.html" target="_top" class="footer-link">Documentation</a></li>
-                    <li><a href="blog-engine.html" target="_top" class="footer-link">Crosstecch Content Pilot</a></li>
-                    <li><a href="solution.html" target="_top" class="footer-link">Solutions <span class="badge badge-emerald">Stable</span></a></li>
-                    <li><a href="ContactUs.html" target="_top" class="footer-link">Support</a></li>
-                    <li><a href="blog.html" target="_top" class="footer-link">Blog</a></li>
+                    <li><a href="/blog" target="_top" class="footer-link">Documentation</a></li>
+                    <li><a href="/blog-engine" target="_top" class="footer-link">Crosstecch Content Pilot</a></li>
+                    <li><a href="/solution" target="_top" class="footer-link">Solutions <span class="badge badge-emerald">Stable</span></a></li>
+                    <li><a href="/ContactUs" target="_top" class="footer-link">Support</a></li>
+                    <li><a href="/blog" target="_top" class="footer-link">Blog</a></li>
                 </ul>
             </div>
 
             <div class="links-col">
                 <span class="col-title">Company</span>
                 <ul>
-                    <li><a href="about.html" target="_top" class="footer-link">About</a></li>
-                    <li><a href="ContactUs.html" target="_top" class="footer-link">Careers <span class="badge badge-indigo">Hiring</span></a></li>
-                    <li><a href="blog.html" target="_top" class="footer-link">Blog</a></li>
-                    <li><a href="ContactUs.html" target="_top" class="footer-link">Contact</a></li>
-                    <li><a href="future.html" target="_top" class="footer-link">The Future</a></li>
+                    <li><a href="/about" target="_top" class="footer-link">About</a></li>
+                    <li><a href="/ContactUs" target="_top" class="footer-link">Careers <span class="badge badge-indigo">Hiring</span></a></li>
+                    <li><a href="/blog" target="_top" class="footer-link">Blog</a></li>
+                    <li><a href="/ContactUs" target="_top" class="footer-link">Contact</a></li>
+                    <li><a href="/future" target="_top" class="footer-link">The Future</a></li>
                 </ul>
             </div>
 
             <div class="links-col">
                 <span class="col-title">Legal</span>
                 <ul>
-                    <li><a href="ContactUs.html" target="_top" class="footer-link">Terms and conditions</a></li>
-                    <li><a href="ContactUs.html" target="_top" class="footer-link">Privacy policy</a></li>
-                    <li><a href="ContactUs.html" target="_top" class="footer-link">DPA <span class="badge badge-violet">Updated</span></a></li>
-                    <li><a href="ContactUs.html" target="_top" class="footer-link">Legal Resources</a></li>
-                    <li><a href="ContactUs.html" target="_top" class="footer-link">Cookie manager</a></li>
+                    <li><a href="/ContactUs" target="_top" class="footer-link">Terms and conditions</a></li>
+                    <li><a href="/ContactUs" target="_top" class="footer-link">Privacy policy</a></li>
+                    <li><a href="/ContactUs" target="_top" class="footer-link">DPA <span class="badge badge-violet">Updated</span></a></li>
+                    <li><a href="/ContactUs" target="_top" class="footer-link">Legal Resources</a></li>
+                    <li><a href="/ContactUs" target="_top" class="footer-link">Cookie manager</a></li>
                 </ul>
             </div>
         </div>
@@ -967,7 +1024,7 @@
             modalBody.innerHTML = `
     <div class="modal-info">
       <div style="margin-bottom: 24px; display: flex; justify-content: center;">
-        <img loading="lazy" src="images/bg.png" alt="CROSSTECCH Logo" style="height: 44px; width: auto; object-fit: contain;">
+        <img loading="lazy" src="images/bg.webp" alt="CROSSTECCH Logo" style="height: 44px; width: auto; object-fit: contain;">
       </div>
       <div class="modal-title">CROSSTECCH Platform</div>
       <div class="modal-desc">Delivering world-class frontend engineering, cloud infrastructure scale, and beautiful automated digital workflows. Built to execute, born to lead.</div>
@@ -1017,12 +1074,12 @@
         document.getElementById("btnSchedule").onclick = () => {
             // Take the user to the real Contact Us page (works standalone
             // and inside an iframe), same as btnContact below.
-            (window.top || window).location.href = "ContactUs.html";
+            (window.top || window).location.href = "/ContactUs";
         };
 
         document.getElementById("btnContact").onclick = () => {
             // Open the full Contact Us page (works standalone and inside an iframe)
-            (window.top || window).location.href = "ContactUs.html";
+            (window.top || window).location.href = "/ContactUs";
         };
 
         // Dynamic Word Rotator with Fade, Blur, and Auto-Width adjustment
