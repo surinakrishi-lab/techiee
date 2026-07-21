@@ -44,15 +44,15 @@ app.use('/images', express.static(path.join(ROOT, 'images')));
 app.use('/videos', express.static(path.join(ROOT, 'videos')));
 
 app.get('/header.js', (req, res) => {
-  res.sendFile(path.join(ROOT, 'header.js'));
+    res.sendFile(path.join(ROOT, 'header.js'));
 });
 
 app.get('/crosstech-chatbot.js', (req, res) => {
-  res.sendFile(path.join(ROOT, 'crosstech-chatbot.js'));
+    res.sendFile(path.join(ROOT, 'crosstech-chatbot.js'));
 });
 
 app.get('/fx.js', (req, res) => {
-  res.sendFile(path.join(ROOT, 'fx.js'));
+    res.sendFile(path.join(ROOT, 'fx.js'));
 });
 
 // ---------------------------------------------------------------------
@@ -60,13 +60,13 @@ app.get('/fx.js', (req, res) => {
 // instead of sending it as a static file.
 // ---------------------------------------------------------------------
 async function renderPage(res, absFilePath) {
-  try {
-    const html = await ejs.renderFile(absFilePath);
-    res.type('html').send(html);
-  } catch (err) {
-    console.error('Template render error for', absFilePath, err);
-    res.status(500).send('Server error rendering page.');
-  }
+    try {
+        const html = await ejs.renderFile(absFilePath);
+        res.type('html').send(html);
+    } catch (err) {
+        console.error('Template render error for', absFilePath, err);
+        res.status(500).send('Server error rendering page.');
+    }
 }
 
 // Root-level pages. Keyed by the *clean* (no .html) URL a person should
@@ -80,23 +80,23 @@ async function renderPage(res, absFilePath) {
 // address bar. That's fixed here by rendering the real about content
 // (index_files/about.ejs) directly at the clean URL, no bounce.
 const PAGES = {
-  '/': 'index.html',
-  '/about.html': 'index_files/about.ejs',
-  '/blog.html': 'blog.html',
-  '/future.html': 'future.html',
-  '/ContactUs.html': 'ContactUs.html',
-  '/services.html': 'services.html',
-  '/bug-finder.html': 'bug-finder.html',
-  '/blog-engine.html': 'blog-engine.html',
-  '/Product.html': 'Product.html',
-  '/solution.html': 'solution.html',
+    '/': 'index.html',
+    '/about.html': 'index_files/about.ejs',
+    '/blog.html': 'blog.html',
+    '/future.html': 'future.html',
+    '/ContactUs.html': 'ContactUs.html',
+    '/services.html': 'services.html',
+    '/bug-finder.html': 'bug-finder.html',
+    '/blog-engine.html': 'blog-engine.html',
+    '/Product.html': 'Product.html',
+    '/solution.html': 'solution.html',
 };
 
 // Serve every page at its clean URL - this is what the browser's address
 // bar should show.
 Object.entries(PAGES).forEach(([route, file]) => {
-  const clean = route === '/' ? '/' : route.replace(/\.html$/, '');
-  app.get(clean, (req, res) => renderPage(res, path.join(ROOT, file)));
+    const clean = route === '/' ? '/' : route.replace(/\.html$/, '');
+    app.get(clean, (req, res) => renderPage(res, path.join(ROOT, file)));
 });
 
 // Legacy .html URLs (and /index.html) 301-redirect to the clean URL, so
@@ -104,9 +104,9 @@ Object.entries(PAGES).forEach(([route, file]) => {
 // no-.html address.
 app.get('/index.html', (req, res) => res.redirect(301, '/'));
 Object.entries(PAGES).forEach(([route]) => {
-  if (route === '/') return;
-  const clean = route.replace(/\.html$/, '');
-  app.get(route, (req, res) => res.redirect(301, clean));
+    if (route === '/') return;
+    const clean = route.replace(/\.html$/, '');
+    app.get(route, (req, res) => res.redirect(301, clean));
 });
 
 // Footer.html is only ever loaded as an internal iframe fragment (every
@@ -121,20 +121,20 @@ app.get('/Footer.html', (req, res) => renderPage(res, path.join(ROOT, 'Footer.ht
 // existing link/iframe src across the site keeps working unchanged -
 // only the on-disk file each route renders has changed.
 const INDEX_FILES_PAGES = {
-  'hero1.html': 'hero1.ejs',
-  'flow.html': 'flow.ejs',
-  'code.html': 'code.ejs',
-  'WhyChooseUs_preview.html': 'WhyChooseUs_preview.ejs',
-  'Our Services.html': 'Our Services.ejs',
-  'index.html': 'index.ejs',
-  'hero.html': 'hero.ejs',
-  'about.html': 'about.ejs',
+    'hero1.html': 'hero1.ejs',
+    'flow.html': 'flow.ejs',
+    'code.html': 'code.ejs',
+    'WhyChooseUs_preview.html': 'WhyChooseUs_preview.ejs',
+    'Our Services.html': 'Our Services.ejs',
+    'index.html': 'index.ejs',
+    'hero.html': 'hero.ejs',
+    'about.html': 'about.ejs',
 };
 
 Object.entries(INDEX_FILES_PAGES).forEach(([route, file]) => {
-  app.get('/index_files/' + route, (req, res) =>
-    renderPage(res, path.join(ROOT, 'index_files', file))
-  );
+    app.get('/index_files/' + route, (req, res) =>
+        renderPage(res, path.join(ROOT, 'index_files', file))
+    );
 });
 
 // Fallback static mount for index_files/ in case a non-HTML asset ever
@@ -149,36 +149,36 @@ app.use('/api/contact', contactRoutes);
 
 // Diagnostics: open /api/health in the browser to see exactly why the DB
 // isn't saving (missing URI, bad password, IP not whitelisted, etc.).
-app.get('/api/health', async (req, res) => {
-  const mongoose = require('mongoose');
-  const { ensureConnected, getLastError } = require('./config/db');
-  const out = {
-    hasMongoUri: !!process.env.MONGODB_URI,
-    uriScheme: (process.env.MONGODB_URI || '').split('://')[0] || null,
-    onVercel: !!process.env.VERCEL,
-  };
-  try {
-    out.connected = await ensureConnected();
-  } catch (e) {
-    out.connected = false;
-  }
-  out.readyState = mongoose.connection.readyState; // 1 = connected
-  out.dbName = mongoose.connection.name || null;
-  out.lastError = getLastError();
-  res.json(out);
+app.get('/api/health', async(req, res) => {
+    const mongoose = require('mongoose');
+    const { ensureConnected, getLastError } = require('./config/db');
+    const out = {
+        hasMongoUri: !!process.env.MONGODB_URI,
+        uriScheme: (process.env.MONGODB_URI || '').split('://')[0] || null,
+        onVercel: !!process.env.VERCEL,
+    };
+    try {
+        out.connected = await ensureConnected();
+    } catch (e) {
+        out.connected = false;
+    }
+    out.readyState = mongoose.connection.readyState; // 1 = connected
+    out.dbName = mongoose.connection.name || null;
+    out.lastError = getLastError();
+    res.json(out);
 });
 
 // Server-rendered (EJS) admin view over the submissions the API stores.
-app.get('/admin/submissions', async (req, res) => {
-  const submissions = await store.readAll();
-  res.render('admin-submissions', { submissions });
+app.get('/admin/submissions', async(req, res) => {
+    const submissions = await store.readAll();
+    res.render('admin-submissions', { submissions });
 });
 
 // ---------------------------------------------------------------------
 // 404
 // ---------------------------------------------------------------------
 app.use((req, res) => {
-  res.status(404).send('404 - Not Found');
+    res.status(404).send('404 - Not Found');
 });
 
 // Connect to MongoDB (or log a clear warning if not configured yet).
@@ -189,9 +189,11 @@ connectDB();
 // binding a port. Locally (npm start / npm run dev) we need the real
 // listener.
 if (!process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`CrossTecch server running at http://localhost:${PORT}`);
-  });
+    app.listen(PORT, () => {
+        console.log(`CrossTecch server running at http://localhost:${PORT}`);
+    });
 }
-
+app.use(express.static('public', {
+    maxAge: '30d' // 30 din tak browser cache karega
+}));
 module.exports = app;
